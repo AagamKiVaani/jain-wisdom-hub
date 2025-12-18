@@ -1,4 +1,5 @@
 "use client"; // <--- 1. This makes useState work
+import Link from "next/link";
 
 import { Search, Sparkles, BookOpen } from "lucide-react";
 import { useState, use } from "react"; // <--- 2. Import 'use' to handle the new params
@@ -44,10 +45,37 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
         />
       </div>
 
-      {/* Quick Links */}
-      <div className="mt-12 flex gap-4 text-sm text-gray-500">
-        <span className="flex items-center gap-2"><Sparkles size={16}/> Namokar Mantra</span>
-        <span className="flex items-center gap-2"><BookOpen size={16}/> Ahimsa</span>
+      {/* Quick Links / Featured Topics */}
+      <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
+        
+        {/* Card 1: Namokar Mantra */}
+        <Link 
+          href={`/${lang}/learn/namokar-mantra`}
+          className="group flex items-center p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl hover:border-orange-500 dark:hover:border-orange-500 transition-all shadow-sm hover:shadow-xl"
+        >
+          <div className="h-12 w-12 rounded-xl bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+            <Sparkles size={24} />
+          </div>
+          <div className="text-left">
+            <h3 className="font-bold text-gray-900 dark:text-white">Namokar Mantra</h3>
+            <p className="text-sm text-gray-500">The Eternal Prayer</p>
+          </div>
+        </Link>
+
+        {/* Card 2: Ahimsa */}
+        <Link 
+          href={`/${lang}/learn/ahimsa`}
+          className="group flex items-center p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl hover:border-orange-500 dark:hover:border-orange-500 transition-all shadow-sm hover:shadow-xl"
+        >
+          <div className="h-12 w-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center mr-4 group-hover:scale-110 transition-transform">
+            <BookOpen size={24} />
+          </div>
+          <div className="text-left">
+            <h3 className="font-bold text-gray-900 dark:text-white">Ahimsa</h3>
+            <p className="text-sm text-gray-500">Non-Violence</p>
+          </div>
+        </Link>
+
       </div>
 
     </div>
