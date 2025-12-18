@@ -23,7 +23,7 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
       </div>
 
       {/* Title */}
-      <h1 className="text-4xl md:text-7xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-br from-gray-900 to-gray-500 dark:from-white dark:to-gray-500 mb-6">
+      <h1 className="text-4xl md:text-7xl font-bold text-center bg-clip-text text-transparent bg-linear-to-br from-gray-900 to-gray-500 dark:from-white dark:to-gray-500 mb-6">
         {title}
       </h1>
       

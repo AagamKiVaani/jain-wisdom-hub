@@ -25,7 +25,7 @@ export default async function RootLayout({
       <body className={`${inter.className} bg-white dark:bg-black text-gray-900 dark:text-gray-100 min-h-screen flex flex-col`}>
         <Providers>
           <Navbar lang={lang} />
-          <main className="flex-grow">
+          <main className="grow">
             {children}
           </main>
         </Providers>
