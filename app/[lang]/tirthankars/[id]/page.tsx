@@ -16,7 +16,7 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
     return n + (s[(v - 20) % 10] || s[v] || s[0]);
   };
 
-  // --- Aura Color Logic (Based on your grouping) ---
+  // --- Aura Color Logic ---
   const getAuraColor = (id: number) => {
     if ([6, 12].includes(id)) return "#ef4444"; // Red
     if ([7, 23].includes(id)) return "#22c55e"; // Green
@@ -31,6 +31,8 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
     { label: { en: "Father", hi: "पिता", kn: "ತಂದೆ" }, value: t.father[l] },
     { label: { en: "Mother", hi: "माता", kn: "ತಾಯಿ" }, value: t.mother[l] },
     { label: { en: "Dynasty", hi: "वंश", kn: "ವಂಶ" }, value: `${t.dynasty[l]} (${t.caste[l]})` },
+    { label: { en: "Gotra", hi: "गोत्र", kn: "ಗೋತ್ರ" }, value: t.gotra[l] },
+    { label: { en: "Symbol", hi: "चिह्न", kn: "ಲಾಂಛನ" }, value: t.symbol[l] },
     { label: { en: "Kevala Tree", hi: "केवल वृक्ष", kn: "ಕೇವಲ ವೃಕ್ಷ" }, value: t.kevalaVriksha[l] },
     { label: { en: "Birthplace", hi: "जन्मस्थान", kn: "ಜನ್ಮಸ್ಥಳ" }, value: t.birthPlace[l] },
     { label: { en: "Lifespan", hi: "आयु", kn: "ಆಯಸ್ಸು" }, value: t.lifespan[l] },
@@ -50,58 +52,85 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
   ];
 
   return (
-    <div className="bg-white dark:bg-black text-gray-900 dark:text-white min-h-screen selection:bg-orange-500 selection:text-white transition-colors duration-500">
+    <div className="bg-white dark:bg-black text-gray-900 dark:text-white min-h-screen selection:bg-orange-500 selection:text-white transition-colors duration-500 overflow-x-hidden">
       
       {/* 1. FIXED NAVIGATION */}
       <Link 
         href={`/${lang}/tirthankars`} 
-        className="fixed top-24 left-6 md:left-12 z-[100] flex items-center gap-2 text-gray-500 hover:text-orange-500 transition-all bg-white/90 dark:bg-black/60 px-5 py-2.5 rounded-full backdrop-blur-2xl border border-gray-200 dark:border-white/10 shadow-xl shadow-black/5 group"
+        className="fixed top-20 left-4 md:top-24 md:left-8 z-40 flex items-center gap-2 text-gray-500 hover:text-orange-500 transition-all bg-white/80 dark:bg-black/40 px-4 py-2 rounded-full backdrop-blur-md border border-gray-200 dark:border-white/10 shadow-sm"
       >
-        <ArrowLeft className="group-hover:-translate-x-1 transition-transform" size={18} /> 
-        <span className="text-[10px] font-black uppercase tracking-[0.2em]">Back to Gallery</span>
+        <ArrowLeft className="group-hover:-translate-x-1 transition-transform" size={16} /> 
+        <span className="text-[10px] font-black uppercase tracking-[0.2em]">Back</span>
       </Link>
 
       {/* 2. HERO SECTION */}
-      <div className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-20 overflow-hidden">
+      <div className="relative min-h-screen flex flex-col items-center justify-center px-4 md:px-6 pt-24 md:pt-32 pb-20 overflow-hidden">
         
         {/* Atmosphere Background */}
         <div 
-          className="absolute w-[500px] md:w-[800px] h-[500px] md:h-[800px] rounded-full opacity-20 dark:opacity-30 blur-[150px] -z-20 animate-pulse"
+          className="absolute w-[300px] md:w-[800px] h-[300px] md:h-[800px] rounded-full opacity-20 dark:opacity-30 blur-[100px] md:blur-[150px] -z-20 animate-pulse"
           style={{ backgroundColor: t.colorHex }}
         ></div>
 
         {/* --- ARHAT & AURA CONTAINER --- */}
-        <div className="relative mb-16 animate-subtle-float z-10">
+        <div className="relative mb-8 md:mb-16 animate-subtle-float z-10 w-full flex justify-center">
             {/* Pulsing Glow Aura */}
             <div 
-               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] rounded-full blur-[100px] opacity-70 dark:opacity-60 animate-pulse -z-10"
+               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100%] md:w-[110%] h-[100%] md:h-[110%] rounded-full blur-[80px] md:blur-[100px] opacity-70 dark:opacity-60 animate-pulse -z-10"
                style={{ backgroundColor: auraColorHex }}
             ></div>
 
-            {/* Arhat Idol - Enlarged */}
+            {/* Arhat Idol */}
             <img 
               src={t.tirthankaraImage} 
               alt={t.name[l]} 
-              className="w-[85vw] md:w-[650px] lg:w-[750px] h-auto object-contain drop-shadow-2xl relative z-20"
+              className="w-[80vw] max-w-[350px] md:max-w-[750px] md:w-auto h-auto object-contain drop-shadow-2xl relative z-20"
             />
         </div>
 
-        <div className="text-center max-w-5xl z-20">
-            <div className="text-orange-500 text-xs font-black tracking-[0.8em] mb-4 uppercase">
+        {/* Text Container */}
+        <div className="text-center w-full max-w-5xl z-20 px-2 flex flex-col items-center">
+            
+            {/* --- SACRED SYMBOL (ROYAL CREST) --- */}
+            <div className="mb-6 relative group cursor-pointer">
+                {/* Glow Effect on Hover */}
+                <div className="absolute inset-0 bg-orange-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                {/* Symbol Image: BIGGER & COLORFUL */}
+                <img 
+                    src={t.symbol.imagePath} 
+                    alt={t.symbol.en} 
+                    className="w-24 h-24 md:w-32 md:h-32 object-contain opacity-100 group-hover:scale-110 transition-all duration-500 drop-shadow-lg" 
+                />
+                
+                {/* Label on Hover */}
+                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                    <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-orange-500 bg-white/90 dark:bg-black/90 px-2 py-1 rounded-full border border-orange-500/20">
+                        {t.symbol[l]}
+                    </span>
+                </div>
+            </div>
+
+            <div className="text-orange-500 text-[10px] md:text-xs font-black tracking-[0.5em] md:tracking-[0.8em] mb-2 md:mb-4 uppercase">
                 The {getOrdinal(t.id)} Arhat
             </div>
-            <h1 className="text-6xl md:text-9xl font-black mb-16 tracking-tighter uppercase leading-none">
+            
+            {/* TITLE FIX: Reduced base size to text-3xl for mobile. 
+                Added more breakpoints for smooth scaling.
+                Kept whitespace-nowrap to ensure single line.
+            */}
+            <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black mb-10 tracking-tighter uppercase leading-none whitespace-nowrap w-full">
                 {t.name[l]}
             </h1>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-left">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 text-left w-full">
                 {stats.map((stat, i) => (
-                    <div key={i} className="bg-gray-50 dark:bg-white/[0.03] border border-gray-200 dark:border-white/10 p-5 rounded-[1.5rem] backdrop-blur-md hover:border-orange-500/50 transition-colors group">
-                        <div className="text-[10px] uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 mb-2 font-bold group-hover:text-orange-500 transition-colors">
+                    <div key={i} className="bg-white/40 dark:bg-white/[0.03] border border-gray-200 dark:border-white/10 p-3 md:p-5 rounded-2xl md:rounded-[1.5rem] backdrop-blur-md hover:border-orange-500/50 transition-colors group">
+                        <div className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-gray-500 dark:text-gray-500 mb-1 font-bold group-hover:text-orange-500 transition-colors">
                             {stat.label[l]}
                         </div>
-                        <div className="text-sm md:text-base font-bold text-gray-800 dark:text-gray-100 italic">
+                        <div className="text-xs md:text-base font-bold text-gray-800 dark:text-gray-100 italic break-words">
                             {stat.value}
                         </div>
                     </div>
@@ -109,9 +138,9 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
             </div>
         </div>
         
-        <div className="mt-24 flex flex-col items-center gap-4 opacity-100">
+        <div className="mt-16 md:mt-24 flex flex-col items-center gap-4 opacity-100">
            <span className="text-[10px] tracking-[0.3em] uppercase text-gray-400 dark:text-gray-500 font-bold">Scroll the Life</span>
-           <div className="w-px h-16 bg-gradient-to-b from-orange-500 to-transparent"></div>
+           <div className="w-px h-12 md:h-16 bg-gradient-to-b from-orange-500 to-transparent"></div>
         </div>
       </div>
 
@@ -139,7 +168,7 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
         ))}
 
         {/* 4. FOOTER NAVIGATION */}
-        <div className="min-h-[60vh] flex flex-col items-center justify-center px-6 text-center border-t border-gray-100 dark:border-white/5 bg-gray-50 dark:bg-gradient-to-b dark:from-black dark:to-zinc-950 transition-colors duration-500">
+        <div className="min-h-[50vh] flex flex-col items-center justify-center px-6 text-center border-t border-gray-100 dark:border-white/5 bg-gray-50 dark:bg-gradient-to-b dark:from-black dark:to-zinc-950 transition-colors duration-500 pb-32 pt-20">
            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mb-20">
               {prevT && (
                 <Link href={`/${lang}/tirthankars/${prevT.id}`} 

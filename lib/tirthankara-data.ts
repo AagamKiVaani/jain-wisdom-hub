@@ -1,5 +1,4 @@
 export type Tirthankara = {
-  // --- The 6 things you already had ---
   id: number;
   name: { en: string; hi: string; kn: string };
   symbol: { en: string; hi: string; kn: string; imagePath: string };
@@ -7,16 +6,17 @@ export type Tirthankara = {
   placeOfNirvana: { en: string; hi: string; kn: string };
   colorHex: string; 
 
-  // --- The 9 NEW things to add now ---
-  caste: { en: string; hi: string; kn: string };      // "Kshatriya"
-  dynasty: { en: string; hi: string; kn: string };    // "Ikshvaku"
-  kevalaVriksha: { en: string; hi: string; kn: string }; // "Dhavala", "Vata", etc.
+  // --- Extended Details ---
+  caste: { en: string; hi: string; kn: string };
+  dynasty: { en: string; hi: string; kn: string };
+  gotra: { en: string; hi: string; kn: string }; // <--- NEW FIELD
+  kevalaVriksha: { en: string; hi: string; kn: string };
   birthPlace: { en: string; hi: string; kn: string };
   mother: { en: string; hi: string; kn: string };
   father: { en: string; hi: string; kn: string };
   lifespan: { en: string; hi: string; kn: string };
   height: { en: string; hi: string; kn: string };
-  tirthankaraImage: string; // Path for the 3D Arhat image (e.g., "/arhats/1.png")
+  tirthankaraImage: string;
 };
 
 export const tirthankaras: Tirthankara[] = [
@@ -29,6 +29,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Mount Kailash (Ashtapad)", hi: "कैलाश पर्वत (अष्टापद)", kn: "ಕೈಲಾಸ ಪರ್ವತ (ಅಷ್ಟಾಪದ)" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Banyan Tree", hi: "वट वृक्ष", kn: "ಆಲದ ಮರ" },
     birthPlace: { en: "Ayodhya", hi: "अयोध्या", kn: "ಅಯೋಧ್ಯೆ" },
     mother: { en: "Marudevi Mata", hi: "मरुदेवी माता", kn: "ಮರುದೇವಿ ಮಾತಾ" },
@@ -47,6 +48,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Sala Tree", hi: "साल वृक्ष", kn: "ಸಾಲ ಮರ" },
     birthPlace: { en: "Ayodhya", hi: "अयोध्या", kn: "ಅಯೋಧ್ಯೆ" },
     mother: { en: "Vijaya Mata", hi: "विजया माता", kn: "ವಿಜಯಾ ಮಾತಾ" },
@@ -65,6 +67,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Sala Tree", hi: "साल वृक्ष", kn: "ಸಾಲ ಮರ" },
     birthPlace: { en: "Shravasti", hi: "श्रावस्ती", kn: "ಶ್ರಾವಸ್ತಿ" },
     mother: { en: "Senadevi Mata", hi: "सेनादेवी माता", kn: "ಸೇನಾದೇವಿ ಮಾತಾ" },
@@ -83,6 +86,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Priyangu Tree", hi: "प्रियंगु वृक्ष", kn: "ಪ್ರಿಯಂಗು ಮರ" },
     birthPlace: { en: "Ayodhya", hi: "अयोध्या", kn: "ಅಯೋಧ್ಯೆ" },
     mother: { en: "Siddhartha Mata", hi: "सिद्धार्था माता", kn: "ಸಿದ್ಧಾರ್ಥಾ ಮಾತಾ" },
@@ -101,6 +105,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Priyangu Tree", hi: "प्रियंगु वृक्ष", kn: "ಪ್ರಿಯಂಗು ಮರ" },
     birthPlace: { en: "Ayodhya", hi: "अयोध्या", kn: "ಅಯೋಧ್ಯೆ" },
     mother: { en: "Mangala Mata", hi: "मंगला माता", kn: "ಮಂಗಳಾ ಮಾತಾ" },
@@ -119,6 +124,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Banyan Tree", hi: "वट वृक्ष", kn: "ಆಲದ ಮರ" },
     birthPlace: { en: "Kaushambi", hi: "कौशाम्बी", kn: "ಕೌಶಾಂಬಿ" },
     mother: { en: "Susima Mata", hi: "सुसिमा माता", kn: "ಸುಸಿಮಾ ಮಾತಾ" },
@@ -137,6 +143,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Sirisha Tree", hi: "शिरीष वृक्ष", kn: "ಶಿರೀಷ ಮರ" },
     birthPlace: { en: "Vishala", hi: "विशाला", kn: "ವಿಶಾಲಾ" },
     mother: { en: "Prithvi Mata", hi: "पृथ्वी माता", kn: "ಪೃಥ್ವಿ ಮಾತಾ" },
@@ -155,6 +162,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Nag Tree", hi: "नाग वृक्ष", kn: "ನಾಗ ಮರ" },
     birthPlace: { en: "Chandrapuri", hi: "चन्द्रपुरी", kn: "ಚಂದ್ರಪುರಿ" },
     mother: { en: "Lakshmana Mata", hi: "लक्ष्मणा माता", kn: "ಲಕ್ಷ್ಮಣಾ ಮಾತಾ" },
@@ -173,6 +181,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Sal Tree", hi: "साल वृक्ष", kn: "ಸಾಲ ಮರ" },
     birthPlace: { en: "Kakandi", hi: "काकंदी", kn: "ಕಾಕಂದಿ" },
     mother: { en: "Sujata Mata", hi: "सुजाता माता", kn: "ಸುಜಾತಾ ಮಾತಾ" },
@@ -191,6 +200,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Priyangu Tree", hi: "प्रियंगु वृक्ष", kn: "ಪ್ರಿಯಂಗು ಮರ" },
     birthPlace: { en: "Bhadrika", hi: "भद्रिका", kn: "ಭದ್ರಿಕಾ" },
     mother: { en: "Sunanda Mata", hi: "सुनन्दा माता", kn: "ಸುನಂದಾ ಮಾತಾ" },
@@ -209,6 +219,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Tinduka Tree", hi: "तिंदुक वृक्ष", kn: "ತಿಂದುಕ ಮರ" },
     birthPlace: { en: "Simhapuri", hi: "सिंहपुरी", kn: "ಸಿಂಹಪುರಿ" },
     mother: { en: "Vishnu Mata", hi: "विष्णु माता", kn: "ವಿಷ್ಣು ಮಾತಾ" },
@@ -227,6 +238,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Champapuri", hi: "चंपापुरी", kn: "ಚಂಪಾಪುರಿ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Patala Tree", hi: "पाताल वृक्ष", kn: "ಪಾತಾಳ ಮರ" },
     birthPlace: { en: "Champapuri", hi: "चंपापुरी", kn: "ಚಂಪಾಪುರಿ" },
     mother: { en: "Jaya Mata", hi: "जया माता", kn: "ಜಯಾ ಮಾತಾ" },
@@ -245,6 +257,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Jambu Tree", hi: "जम्बू वृक्ष", kn: "ಜಂಬೂ ಮರ" },
     birthPlace: { en: "Kampilya", hi: "कम्पिल्य", kn: "ಕಂಪಿಲ್ಯ" },
     mother: { en: "Shyama Mata", hi: "श्यामा माता", kn: "ಶ್ಯಾಮಾ ಮಾತಾ" },
@@ -263,6 +276,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Ashoka Tree", hi: "अशोक वृक्ष", kn: "ಅಶೋಕ ಮರ" },
     birthPlace: { en: "Ayodhya", hi: "अयोध्या", kn: "ಅಯೋಧ್ಯೆ" },
     mother: { en: "Suyasha Mata", hi: "सुयशा माता", kn: "ಸುಯಶಾ ಮಾತಾ" },
@@ -280,7 +294,8 @@ export const tirthankaras: Tirthankara[] = [
     colorHex: "#EAB308",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
-    dynasty: { en: "Ikshvaku", hi: "इಕ್ಷ್ವಾಕು",  kn: "ದಧಿಪರ್ಣ ಮರ" },
+    dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Dadhiparna Tree", hi: "दधिपर्ण वृक्ष", kn: "ದಧಿಪರ್ಣ ಮರ" },
     birthPlace: { en: "Ratnapuri", hi: "रत्नपुरी", kn: "ರತ್ನಪುರಿ" },
     mother: { en: "Suprabha Mata", hi: "सुप्रभा माता", kn: "ಸುಪ್ರಭಾ ಮಾತಾ" },
@@ -299,6 +314,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Nandi Tree", hi: "नंदी वृक्ष", kn: "ನಂದಿ ಮರ" },
     birthPlace: { en: "Hastinapur", hi: "हस्तिनापुर", kn: "ಹಸ್ತಿನಾಪುರ" },
     mother: { en: "Achira Mata", hi: "अचिरा माता", kn: "ಅಚಿರಾ ಮಾತಾ" },
@@ -317,6 +333,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Nandi Tree", hi: "नंदी वृक्ष", kn: "ನಂದಿ ಮರ" },
     birthPlace: { en: "Hastinapur", hi: "हस्तिनापुर", kn: "ಹಸ್ತಿನಾಪುರ" },
     mother: { en: "Shri Mata", hi: "श्री माता", kn: "ಶ್ರೀ ಮಾತಾ" },
@@ -335,6 +352,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Ashoka Tree", hi: "अशोक वृक्ष", kn: "ಅಶೋಕ ಮರ" },
     birthPlace: { en: "Hastinapur", hi: "हस्तिनापुर", kn: "ಹಸ್ತಿನಾಪುರ" },
     mother: { en: "Mitra Mata", hi: "मित्रा माता", kn: "ಮಿತ್ರಾ ಮಾತಾ" },
@@ -353,6 +371,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Ashoka Tree", hi: "अशोक वृक्ष", kn: "ಅಶೋಕ ಮರ" },
     birthPlace: { en: "Mithila", hi: "मिथिला", kn: "ಮಿಥಿಲಾ" },
     mother: { en: "Prabhavati Mata", hi: "प्रभावती माता", kn: "ಪ್ರಭಾವತಿ ಮಾತಾ" },
@@ -372,13 +391,14 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Harivansha", hi: "हरिवंश", kn: "ಹರಿವಂಶ" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Champaka Tree", hi: "चम्पक वृक्ष", kn: "ಚಂಪಕ ಮರ" },
     birthPlace: { en: "Rajagriha", hi: "राजगृह", kn: "ರಾಜಗೃಹ" },
     mother: { en: "Padmavati Mata", hi: "पद्मावती माता", kn: "ಪದ್ಮಾವತಿ ಮಾತಾ" },
     father: { en: "Sumitra Raja", hi: "सुमित्र राजा", kn: "ಸುಮಿತ್ರ ರಾಜ" },
     lifespan: { en: "30 Thousand Purva", hi: "३० हजार पूर्व", kn: "೩೦ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "20 Dhanush", hi: "२० धनुष", kn: "೨೦ ಧನುಷ್" },
-    tirthankaraImage: "/arhats/munisuvratnath.png"
+    tirthankaraImage: "/arhats/munisuvrat.png"
     },
 
     {
@@ -390,6 +410,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Bakula Tree", hi: "बकुल वृक्ष", kn: "ಬಕುಲ ಮರ" },
     birthPlace: { en: "Mithila", hi: "मिथिला", kn: "ಮಿಥಿಲಾ" },
     mother: { en: "Vipra Mata", hi: "विप्रा माता", kn: "ವಿಪ್ರಾ ಮಾತಾ" },
@@ -408,6 +429,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Girnar Ji", hi: "गिरनार जी", kn: "ಗಿರಿನಾರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Harivansha", hi: "हरिवंश", kn: "ಹರಿವಂಶ" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Vetasa Tree", hi: "वेतस वृक्ष", kn: "ವೇತಸ ಮರ" },
     birthPlace: { en: "Sauripura", hi: "सौरिपुर", kn: "ಸೌರಿಪುರ" },
     mother: { en: "Shivadevi Mata", hi: "शिवादेवी माता", kn: "ಶಿವಾದೇವಿ ಮಾತಾ" },
@@ -426,6 +448,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Ikshvaku", hi: "इक्ष्वाकु", kn: "ಇಕ್ಷ್ವಾಕು" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Dhataki Tree", hi: "धातकी वृक्ष", kn: "ಧಾತಕಿ ಮರ" },
     birthPlace: { en: "Varanasi", hi: "वाराणसी", kn: "ವಾರಾಣಸಿ" },
     mother: { en: "Vama Mata", hi: "वामा माता", kn: "ವಾಮಾ ಮಾತಾ" },
@@ -444,6 +467,7 @@ export const tirthankaras: Tirthankara[] = [
     placeOfNirvana: { en: "Pawapuri", hi: "पावापुरी", kn: "ಪಾವಾಪುರಿ" },
     caste: { en: "Kshatriya", hi: "क्षत्रिय", kn: "ಕ್ಷತ್ರಿಯ" },
     dynasty: { en: "Jnatrika", hi: "ज्ञात्रिक", kn: "ಜ್ಞಾತ್ರಿಕ" },
+    gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Sala Tree", hi: "साल वृक्ष", kn: "ಸಾಲ ಮರ" },
     birthPlace: { en: "Kundagrama", hi: "कुंडग्राम", kn: "ಕುಂಡಗ್ರಾಮ" },
     mother: { en: "Trishala Mata", hi: "त्रिशला माता", kn: "ತ್ರಿಶಲಾ ಮಾತಾ" },
