@@ -94,6 +94,10 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
           </div>
         </Link>
 
+        <Link href={`/${lang}/learn/kalchakra`} className="group flex flex-col p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-3xl hover:border-orange-500 dark:hover:border-orange-500 transition-all shadow-sm hover:shadow-xl">
+          <h3>The Wheel of Time</h3>
+          <p>Visualizing the cosmic cycle of Jainism.</p>
+        </Link>
       </div>
     </div>
   );
