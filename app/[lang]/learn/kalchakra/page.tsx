@@ -71,8 +71,6 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
   const [isMuted, setIsMuted] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isWheelInView, setIsWheelInView] = useState(false);
-  
-  // NEW: Entrance State
   const [hasEntered, setHasEntered] = useState(false);
 
   // --- REFS ---
@@ -81,40 +79,51 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
   const bgMusicRef = useRef<HTMLAudioElement | null>(null);
   const wheelSectionRef = useRef<HTMLDivElement>(null);
 
-  // --- 1. INITIALIZE AUDIO ---
+  // --- 1. INITIALIZE AUDIO & CLEANUP (Fixes Issue #2) ---
   useEffect(() => {
     bgMusicRef.current = new Audio();
     bgMusicRef.current.loop = true;
-    bgMusicRef.current.volume = 0; // Silent start
+    bgMusicRef.current.volume = 0; 
     
     clickAudioRef.current = new Audio("/sounds/click.mp3");
     hoverAudioRef.current = new Audio("/sounds/click2.mp3");
+
+    // CLEANUP FUNCTION: This runs when you leave the page (Back button / Link click)
+    return () => {
+        if (bgMusicRef.current) {
+            bgMusicRef.current.pause();
+            bgMusicRef.current.currentTime = 0; // Reset track
+        }
+    };
   }, []);
 
-  // --- 2. ENTRANCE HANDLER (The "Magic" Interaction) ---
+  // --- 2. SCROLL LOCK FOR MODAL (Fixes Issue #1) ---
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden"; // FREEZE BACKGROUND
+    } else {
+      document.body.style.overflow = "auto";   // UNFREEZE
+    }
+    // Safety cleanup
+    return () => { document.body.style.overflow = "auto"; };
+  }, [showModal]);
+
+  // --- 3. ENTRANCE HANDLER ---
   const handleEnterExperience = () => {
-    // A. Play a click sound immediately for feedback
     if (clickAudioRef.current) {
         clickAudioRef.current.volume = 0.5;
         clickAudioRef.current.play().catch(() => {});
     }
-
-    // B. "Bless" the Background Music Player
-    // We play it for a millisecond and then pause it. 
-    // This tells the mobile browser: "The user allowed this audio."
     if (bgMusicRef.current) {
         bgMusicRef.current.play().then(() => {
-            // Once promise resolves, we can safely pause and reset
             bgMusicRef.current!.pause(); 
             bgMusicRef.current!.currentTime = 0;
         }).catch((e) => console.log("Audio unlock failed", e));
     }
-
-    // C. Unlock the UI
     setHasEntered(true);
   };
 
-  // --- 3. SCROLL DETECTION ---
+  // --- 4. SCROLL OBSERVER ---
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -130,7 +139,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
     return () => observer.disconnect();
   }, []);
 
-  // --- 4. DATA PREP ---
+  // --- 5. DATA PREP ---
   const wheelData = [
     ...aras.map(a => ({ ...a, cycle: "Avasarpini" })), 
     ...[...aras].reverse().map((a, i) => ({ ...a, id: i + 7, cycle: "Utsarpini" }))
@@ -140,22 +149,23 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
   const getNormalizedId = (id: number) => (id > 6 ? 13 - id : id);
   const normalizedId = getNormalizedId(activeWheelAra.id);
 
-  // --- 5. BACKGROUND MUSIC ENGINE ---
+  // --- 6. BACKGROUND MUSIC ENGINE ---
   useEffect(() => {
     if (!bgMusicRef.current) return;
     const player = bgMusicRef.current;
     
-    const shouldPlay = isWheelInView && !isMuted && hasEntered; // Added hasEntered check
+    // Only play if entered, visible, and not muted
+    const shouldPlay = isWheelInView && !isMuted && hasEntered;
     const targetVolume = shouldPlay ? 0.3 : 0;
     const targetSrc = `/sounds/ara${normalizedId}.mp3`;
 
-    // Ensure source is set
+    // Ensure correct source
     const currentSrcPath = player.getAttribute('src') || "";
     if (!currentSrcPath.includes(targetSrc)) {
         player.src = targetSrc;
     }
 
-    // Play Logic
+    // Play if logic says yes
     if (shouldPlay) {
         if (player.paused) {
             player.play().catch(() => {});
@@ -179,7 +189,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
   }, [activeWheelIndex, isWheelInView, isMuted, normalizedId, hasEntered]);
 
 
-  // --- 6. UI SOUNDS ---
+  // --- 7. UI SOUNDS ---
   const playSound = (type: 'click' | 'hover') => {
       if (isMuted || !isMounted) return;
       const audio = type === 'click' ? clickAudioRef.current : hoverAudioRef.current;
@@ -239,7 +249,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
   return (
     <div className={`min-h-screen text-zinc-900 dark:text-white overflow-hidden font-sans selection:bg-orange-500 selection:text-white relative ${!hasEntered ? 'h-screen overflow-hidden' : ''}`}>
       
-      {/* --- 0. ENTRANCE GATE (The Audio Unlocker) --- */}
+      {/* --- 0. ENTRANCE GATE --- */}
       <AnimatePresence>
         {!hasEntered && (
             <motion.div 
@@ -302,7 +312,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
          <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
       </div>
 
-      {/* --- CONTENT LAYER (z-10) --- */}
+      {/* --- CONTENT LAYER --- */}
       <div className="relative z-10">
 
         {/* Navbar */}
@@ -389,12 +399,15 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                        <marker id="arrowhead-up" markerWidth="4" markerHeight="4" refX="0" refY="2" orient="auto"><polygon points="0 0, 4 2, 0 4" fill="#10b981" /></marker>
                      </defs>
                      <line x1="-1.75" y1="0" x2="1.75" y2="0" className="stroke-zinc-400 dark:stroke-zinc-600" strokeWidth="0.025" strokeDasharray="0.05 0.05" strokeLinecap="round" />
+                     {/* AVASARPINI */}
                      <path id="avasarpiniArc" d={rightPath} fill="none" stroke="#f97316" strokeWidth="0.03" strokeDasharray="0.1 0.05" opacity="0.8" markerEnd="url(#arrowhead-down)" />
                      <text fontSize="0.11" fontWeight="bold" fill="#f97316" dy="-0.06" letterSpacing="0.02"><textPath href="#avasarpiniArc" startOffset="50%" textAnchor="middle">AVASARPINI (DECLINE)</textPath></text>
                      <text fontSize="0.07" fontWeight="bold" fill="#f97316" dy="0.12" letterSpacing="0.05" opacity="0.8"><textPath href="#avasarpiniArc" startOffset="50%" textAnchor="middle">10 KODAKODI SAGAROPAM</textPath></text>
+                     {/* UTSARPINI */}
                      <path id="utsarpiniArc" d={leftPath} fill="none" stroke="#10b981" strokeWidth="0.03" strokeDasharray="0.1 0.05" opacity="0.8" markerEnd="url(#arrowhead-up)" />
                      <text fontSize="0.11" fontWeight="bold" fill="#10b981" dy="-0.06" letterSpacing="0.02"><textPath href="#utsarpiniArc" startOffset="50%" textAnchor="middle">UTSARPINI (RISE)</textPath></text>
                      <text fontSize="0.07" fontWeight="bold" fill="#10b981" dy="0.12" letterSpacing="0.05" opacity="0.8"><textPath href="#utsarpiniArc" startOffset="50%" textAnchor="middle">10 KODAKODI SAGAROPAM</textPath></text>
+                     {/* SLICES */}
                      {totalSlices.map((slicePercent, index) => {
                          const startPercent = cumulativePercent;
                          cumulativePercent += slicePercent / 100;
@@ -484,7 +497,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
         </div>
       </div>
 
-      {/* --- DETAILED MODAL --- */}
+      {/* --- DETAILED MODAL (FIXED CLOSE BUTTON) --- */}
       <AnimatePresence>
         {showModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8">
@@ -511,6 +524,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                   <h2 className="text-2xl font-black text-white">{currentDetails.title}</h2>
                 </div>
               </div>
+
               <div className="p-6 md:p-8 space-y-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                    <div className="space-y-2">
@@ -522,18 +536,23 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                       <p className="text-sm md:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed">{currentDetails.food}</p>
                    </div>
                 </div>
+
                 <div className="p-6 rounded-2xl bg-zinc-50 dark:bg-black/40 border border-zinc-100 dark:border-zinc-800">
                     <div className="flex items-center gap-2 text-blue-600 font-bold uppercase text-xs tracking-widest mb-4"><Crown size={14} /> Key Figures</div>
                     <div className="flex flex-wrap gap-2">
                       {currentDetails.keyFigures.map((fig, i) => (
-                        <span key={i} className="px-3 py-1 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-full text-xs font-bold shadow-sm">{fig}</span>
+                        <span key={i} className="px-3 py-1 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-full text-xs font-bold shadow-sm">
+                          {fig}
+                        </span>
                       ))}
                     </div>
                 </div>
+
                 <div>
                    <h3 className="font-bold text-lg mb-2">History & Evolution</h3>
                    <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">{currentDetails.events}</p>
                 </div>
+
               </div>
             </motion.div>
           </div>
