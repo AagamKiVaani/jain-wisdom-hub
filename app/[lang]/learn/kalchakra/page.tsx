@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Kalchakra: The Eternal Wheel of Time',
     description: 'Explore the rise and fall of civilization in this interactive 3D experience.',
-    images: ['/images/kalchakra-preview.jpg'], // Make sure this image exists in public/images/
+    images: ['/images/kalchakra-preview.png'], // Make sure this image exists in public/images/
   },
 };
 
