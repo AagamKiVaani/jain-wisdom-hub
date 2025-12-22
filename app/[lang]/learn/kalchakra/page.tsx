@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     // This looks for public/images/kalchakra-preview.jpg
     images: [
       {
-        url: '/images/kalchakra-preview.jpg',
+        url: '/images/kalchakra-preview.png',
         width: 1200,
         height: 630,
         alt: 'Kalchakra Time Wheel Preview',
