@@ -1,6 +1,6 @@
 "use client"; // <--- 1. This makes useState work
 import Link from "next/link";
-import { Search, Sparkles, BookOpen, Users, ArrowRight } from "lucide-react";
+import { Search, Sparkles, BookOpen, Users, ArrowRight, Ghost, Clock } from "lucide-react";
 import { useState, use } from "react"; // <--- 2. Import 'use' to handle the new params
 
 export default function Home({ params }: { params: Promise<{ lang: string }> }) {
@@ -61,26 +61,34 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
             <h3 className="font-bold text-gray-900 dark:text-white uppercase tracking-tight">Namokar Mantra</h3>
             <p className="text-sm text-gray-500">{lang === 'hi' ? "अनादि मंत्र" : "The Eternal Prayer"}</p>
           </div>
-        </Link>
-
-        {/* Card 2: 24 Tirthankara Gallery (THE NEW LINK) */}
-        <Link 
-          href={`/${lang}/tirthankars`}
-          className="group flex flex-col p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-3xl hover:border-orange-500 dark:hover:border-orange-500 transition-all shadow-sm hover:shadow-xl ring-2 ring-orange-500/10"
-        >
-          <div className="h-12 w-12 rounded-2xl bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <Users size={24} />
-          </div>
-          <div className="text-left">
-            <h3 className="font-bold text-gray-900 dark:text-white uppercase tracking-tight">24 Tirthankaras</h3>
-            <p className="text-sm text-gray-500">{lang === 'hi' ? "तीर्थंकर दर्शन" : "Sacred Gallery"}</p>
-          </div>
           <div className="mt-4 flex items-center text-[10px] font-bold text-orange-500 tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
             EXPLORE <ArrowRight size={12} className="ml-1" />
           </div>
         </Link>
 
-        {/* Card 3: Ahimsa */}
+        {/* Card 2: 24 Tirthankara Gallery */}
+        <Link 
+          href={`/${lang}/tirthankars`}
+          className="group flex flex-col p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-3xl hover:border-rose-500 dark:hover:border-rose-500 transition-all shadow-sm hover:shadow-xl"
+        >
+          {/* Icon Box - ROSE Color */}
+          <div className="h-12 w-12 rounded-2xl bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <Users size={24} />
+          </div>
+          
+          {/* Text Content */}
+          <div className="text-left">
+            <h3 className="font-bold text-gray-900 dark:text-white uppercase tracking-tight">24 Tirthankaras</h3>
+            <p className="text-sm text-gray-500">{lang === 'hi' ? "तीर्थंकर दर्शन" : "Sacred Gallery"}</p>
+          </div>
+
+          {/* Hover Text - ROSE Color */}
+          <div className="mt-4 flex items-center text-[10px] font-bold text-rose-500 tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+            EXPLORE <ArrowRight size={12} className="ml-1" />
+          </div>
+        </Link>
+
+        {/* Card 3: Ahimsa
         <Link 
           href={`/${lang}/learn/ahimsa`}
           className="group flex flex-col p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-3xl hover:border-orange-500 dark:hover:border-orange-500 transition-all shadow-sm hover:shadow-xl"
@@ -92,11 +100,46 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
             <h3 className="font-bold text-gray-900 dark:text-white uppercase tracking-tight">Ahimsa</h3>
             <p className="text-sm text-gray-500">{lang === 'hi' ? "परमो धर्म:" : "Non-Violence"}</p>
           </div>
+        </Link> */}
+
+        {/* Card 3: Kalchakra (Wheel of Time) */}
+        <Link 
+          href={`/${lang}/learn/kalchakra`}
+          className="group flex flex-col p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-3xl hover:border-green-500 dark:hover:border-green-500 transition-all shadow-sm hover:shadow-xl"
+        >
+          <div className="h-12 w-12 rounded-2xl bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            {/* Make sure you imported Clock from lucide-react */}
+            <Clock size={24} />
+          </div>
+          <div className="text-left">
+            <h3 className="font-bold text-gray-900 dark:text-white uppercase tracking-tight">The Wheel of Time</h3>
+            <p className="text-sm text-gray-500">
+              {lang === 'hi' ? "कालचक्र का रहस्य" : "The Cosmic Cycle"}
+            </p>
+          </div>
+          <div className="mt-4 flex items-center text-[10px] font-bold text-green-500 tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+            EXPLORE <ArrowRight size={12} className="ml-1" />
+          </div>
         </Link>
 
-        <Link href={`/${lang}/learn/kalchakra`} className="group flex flex-col p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-3xl hover:border-orange-500 dark:hover:border-orange-500 transition-all shadow-sm hover:shadow-xl">
-          <h3>The Wheel of Time</h3>
-          <p>Visualizing the cosmic cycle of Jainism.</p>
+        {/* Card 4: Soul & Karma */}
+        <Link 
+          href={`/${lang}/learn/soul-karma`}
+          className="group flex flex-col p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-3xl hover:border-purple-500 dark:hover:border-purple-500 transition-all shadow-sm hover:shadow-xl"
+        >
+          <div className="h-12 w-12 rounded-2xl bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            {/* Make sure you imported Ghost from lucide-react */}
+            <Ghost size={24} />
+          </div>
+          <div className="text-left">
+            <h3 className="font-bold text-gray-900 dark:text-white uppercase tracking-tight">Soul & Karma</h3>
+            <p className="text-sm text-gray-500">
+              {lang === 'hi' ? "आत्मा और कर्म का विज्ञान" : "The Physics of the Soul"}
+            </p>
+          </div>
+          <div className="mt-4 flex items-center text-[10px] font-bold text-purple-500 tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+            EXPLORE <ArrowRight size={12} className="ml-1" />
+          </div>
         </Link>
       </div>
     </div>
