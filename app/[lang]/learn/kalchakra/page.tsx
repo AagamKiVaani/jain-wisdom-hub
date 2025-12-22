@@ -508,7 +508,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                                     {Array.from({ length: 11 }).map((_, i) => (
                                         <img 
                                             key={i} 
-                                            src={`/images/ara${normalizedId}-${i + 1}.png`} 
+                                            src={`/images/ara${normalizedId}-${i + 1}.webp`} 
                                             className="h-full w-auto object-cover min-w-[50vw] md:min-w-[33vw] mix-blend-overlay" 
                                             alt="Atmosphere"
                                             onError={(e) => (e.currentTarget.style.display = 'none')} 
@@ -542,12 +542,17 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                            <marker id="arrowhead-up" markerWidth="4" markerHeight="4" refX="0" refY="2" orient="auto"><polygon points="0 0, 4 2, 0 4" fill="#10b981" /></marker>
                          </defs>
                          <line x1="-1.75" y1="0" x2="1.75" y2="0" className="stroke-zinc-400 dark:stroke-zinc-600" strokeWidth="0.025" strokeDasharray="0.05 0.05" strokeLinecap="round" />
-                         <path id="avasarpiniArc" d={rightPath} fill="none" stroke="#f97316" strokeWidth="0.03" strokeDasharray="0.1 0.05" opacity="0.8" markerEnd="url(#arrowhead-down)" />
-                         <text fontSize="0.11" fontWeight="bold" fill="#f97316" dy="-0.06" letterSpacing="0.02"><textPath href="#avasarpiniArc" startOffset="50%" textAnchor="middle">AVASARPINI (DECLINE)</textPath></text>
-                         <text fontSize="0.07" fontWeight="bold" fill="#f97316" dy="0.12" letterSpacing="0.05" opacity="0.8"><textPath href="#avasarpiniArc" startOffset="50%" textAnchor="middle">10 KODAKODI SAGAROPAM</textPath></text>
-                         <path id="utsarpiniArc" d={leftPath} fill="none" stroke="#10b981" strokeWidth="0.03" strokeDasharray="0.1 0.05" opacity="0.8" markerEnd="url(#arrowhead-up)" />
-                         <text fontSize="0.11" fontWeight="bold" fill="#10b981" dy="-0.06" letterSpacing="0.02"><textPath href="#utsarpiniArc" startOffset="50%" textAnchor="middle">UTSARPINI (RISE)</textPath></text>
-                         <text fontSize="0.07" fontWeight="bold" fill="#10b981" dy="0.12" letterSpacing="0.05" opacity="0.8"><textPath href="#utsarpiniArc" startOffset="50%" textAnchor="middle">10 KODAKODI SAGAROPAM</textPath></text>
+                         {/* --- 2. Avasarpini (Down) Arc & Text --- */}
+                         {/* Removed opacity, Added drop-shadow-md, Increased strokeWidth to 0.04 */}
+                         <path id="avasarpiniArc" d={rightPath} fill="none" stroke="#f97316" strokeWidth="0.04" strokeDasharray="0.1 0.05" markerEnd="url(#arrowhead-down)" className="drop-shadow-md" />
+                         <text fontSize="0.11" fontWeight="900" fill="#f97316" dy="-0.06" letterSpacing="0.02" className="drop-shadow-md"><textPath href="#avasarpiniArc" startOffset="50%" textAnchor="middle">AVASARPINI (DECLINE)</textPath></text>
+                         <text fontSize="0.07" fontWeight="bold" fill="#f97316" dy="0.12" letterSpacing="0.05" className="drop-shadow-md"><textPath href="#avasarpiniArc" startOffset="50%" textAnchor="middle">10 KODAKODI SAGAROPAM</textPath></text>
+                         
+                         {/* --- 3. Utsarpini (Up) Arc & Text --- */}
+                         {/* Removed opacity, Added drop-shadow-md, Increased strokeWidth to 0.04 */}
+                         <path id="utsarpiniArc" d={leftPath} fill="none" stroke="#10b981" strokeWidth="0.04" strokeDasharray="0.1 0.05" markerEnd="url(#arrowhead-up)" className="drop-shadow-md" />
+                         <text fontSize="0.11" fontWeight="900" fill="#10b981" dy="-0.06" letterSpacing="0.02" className="drop-shadow-md"><textPath href="#utsarpiniArc" startOffset="50%" textAnchor="middle">UTSARPINI (RISE)</textPath></text>
+                         <text fontSize="0.07" fontWeight="bold" fill="#10b981" dy="0.12" letterSpacing="0.05" className="drop-shadow-md"><textPath href="#utsarpiniArc" startOffset="50%" textAnchor="middle">10 KODAKODI SAGAROPAM</textPath></text>
                          {totalSlices.map((slicePercent, index) => {
                              const startPercent = cumulativePercent;
                              cumulativePercent += slicePercent / 100;
