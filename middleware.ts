@@ -28,11 +28,14 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * - sounds (your audio folder)
-     * - images (if you have an images folder)
-     * * OR paths ending with these extensions:
+     * - images (your images folder)
+     * - models (your 3D models folder)  <-- ADDED THIS
+     *
+     * OR paths ending with these extensions:
      * - .png, .jpg, .jpeg, .svg, .webp (Images)
      * - .mp3, .wav (Audio)
+     * - .glb, .gltf (3D Models)         <-- ADDED THIS
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|sounds|images|.*\\.(?:svg|png|jpg|jpeg|gif|webp|mp3|wav)$).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|sounds|images|models|.*\\.(?:svg|png|jpg|jpeg|gif|webp|mp3|wav|glb|gltf)$).*)',
   ],
 };
