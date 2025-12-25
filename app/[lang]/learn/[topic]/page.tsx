@@ -1,4 +1,4 @@
-import { jainTopics } from "@/lib/jain-data";
+import { jainTopics } from "@/lib/namokar-data";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Play, Info, BookOpen, Quote } from "lucide-react";
 import Link from "next/link";
