@@ -1,7 +1,69 @@
 "use client";
 
 import Link from "next/link";
-import { Mail, ArrowUp } from "lucide-react"; // Only keeping generic UI icons from lucide
+import { Mail, ArrowUp, Instagram } from "lucide-react"; 
+
+// --- TRANSLATIONS CONFIGURATION ---
+const translations = {
+  en: {
+    brand: "Jain Wisdom",
+    desc: "Digitizing the ancient legacy of the Tirthankaras for the modern world. A visual journey through time, philosophy, and divinity.",
+    subscribe: "Subscribe",
+    explore: "Explore",
+    project: "Project",
+    
+    // Links
+    tirthankars: "Tirthankar Gallery",
+    soul: "Soul & Karma",
+    time: "Wheel of Time",
+    namokar: "Namokar Mantra",
+    
+    about: "About Us",
+    contact: "Contact",
+    donate: "Donate / Support",
+    
+    backToTop: "Back to Top",
+    rights: "All rights reserved."
+  },
+  hi: {
+    brand: "जैन ज्ञान", // Jain Wisdom
+    desc: "आधुनिक दुनिया के लिए तीर्थंकरों की प्राचीन विरासत का डिजिटलीकरण। समय, दर्शन और देवत्व के माध्यम से एक दृश्य यात्रा।",
+    subscribe: "सब्सक्राइब",
+    explore: "अन्वेषण",
+    project: "प्रोजेक्ट",
+    
+    tirthankars: "तीर्थंकर गैलरी",
+    soul: "आत्मा और कर्म",
+    time: "कालचक्र",
+    namokar: "णमोकार मंत्र",
+    
+    about: "हमारे बारे में",
+    contact: "संपर्क",
+    donate: "दान / सहयोग",
+    
+    backToTop: "ऊपर जाएं",
+    rights: "सर्वाधिकार सुरक्षित।"
+  },
+  kn: {
+    brand: "ಜೈನ ಜ್ಞಾನ", // Jain Wisdom
+    desc: "ಆಧುನಿಕ ಜಗತ್ತಿಗಾಗಿ ತೀರ್ಥಂಕರರ ಪ್ರಾಚೀನ ಪರಂಪರೆಯನ್ನು ಡಿಜಿಟಲೀಕರಣಗೊಳಿಸುವುದು. ಸಮಯ, ತತ್ವಶಾಸ್ತ್ರ ಮತ್ತು ದೈವತ್ವದ ದೃಶ್ಯ ಪ್ರಯಾಣ.",
+    subscribe: "ಚಂದಾದಾರರಾಗಿ",
+    explore: "ಅನ್ವೇಷಿಸಿ",
+    project: "ಯೋಜನೆ",
+    
+    tirthankars: "ತೀರ್ಥಂಕರ ಗ್ಯಾಲರಿ",
+    soul: "ಆತ್ಮ ಮತ್ತು ಕರ್ಮ",
+    time: "ಕಾಲಚಕ್ರ",
+    namokar: "ನಮೋಕಾರ ಮಂತ್ರ",
+    
+    about: "ನಮ್ಮ ಬಗ್ಗೆ",
+    contact: "ಸಂಪರ್ಕಿಸಿ",
+    donate: "ದೇಣಿಗೆ / ಬೆಂಬಲ",
+    
+    backToTop: "ಮೇಲಕ್ಕೆ ಹಿಂತಿರುಗಿ",
+    rights: "ಎಲ್ಲಾ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ."
+  }
+};
 
 export default function Footer({ lang }: { lang: string }) {
   
@@ -9,8 +71,14 @@ export default function Footer({ lang }: { lang: string }) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // 1. Select Language
+  const t = translations[lang as keyof typeof translations] || translations.en;
+  
+  // 2. Check for Indic scripts to fix line-height spacing
+  const isIndic = lang === 'hi' || lang === 'kn';
+
   return (
-    <footer className="relative bg-zinc-50 dark:bg-zinc-950 text-gray-600 dark:text-gray-400 border-t border-gray-200 dark:border-white/5 pt-20 pb-10 overflow-hidden">
+    <footer className="relative bg-zinc-50 dark:bg-black text-gray-600 dark:text-gray-400 border-t border-gray-200 dark:border-white/5 pt-20 pb-10 overflow-hidden">
       
       {/* Decorative Background Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-px bg-gradient-to-r from-transparent via-orange-500/50 to-transparent"></div>
@@ -18,17 +86,16 @@ export default function Footer({ lang }: { lang: string }) {
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
-        {/* Top Section: Brand & Call to Action */}
+        {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 items-start">
           
           {/* Brand Info */}
           <div>
-            <h2 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight uppercase mb-4">
-              Jain Wisdom
+            <h2 className={`text-2xl font-black text-gray-900 dark:text-white tracking-tight uppercase mb-4 ${isIndic ? 'leading-normal' : 'leading-none'}`}>
+              {t.brand}
             </h2>
-            <p className="max-w-md text-sm leading-relaxed mb-8">
-              Digitizing the ancient legacy of the Tirthankaras for the modern world. 
-              A visual journey through time, philosophy, and divinity.
+            <p className={`max-w-md text-sm mb-8 ${isIndic ? 'leading-loose' : 'leading-relaxed'}`}>
+              {t.desc}
             </p>
             
             {/* Social Pill */}
@@ -43,26 +110,22 @@ export default function Footer({ lang }: { lang: string }) {
                  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg">
                     <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                  </svg>
-                 Subscribe
+                 {t.subscribe}
                </a>
 
-               {/* 2. INSTAGRAM LINK (Changed button to 'a') */}
+               {/* INSTAGRAM */}
                 <a 
-                    href="https://www.instagram.com/aagamkivaani/" // <--- PASTE INSTA LINK HERE
+                    href="https://www.instagram.com/aagamkivaani" 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2.5 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-pink-500 hover:text-pink-500 transition-colors flex items-center justify-center"
                 >
-                    <svg viewBox="0 0 24 24" className="w-5 h-5 fill-none stroke-current stroke-2" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                    </svg>
+                    <Instagram size={20} />
                 </a>
 
-                {/* 3. FACEBOOK LINK (Changed button to 'a') */}
+                {/* FACEBOOK */}
                 <a 
-                    href="https://www.facebook.com/profile.php?id=61581831506049" // <--- PASTE FACEBOOK LINK HERE
+                    href="https://www.facebook.com/profile.php?id=61581831506049"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2.5 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-blue-600 hover:text-blue-600 transition-colors flex items-center justify-center"
@@ -72,9 +135,9 @@ export default function Footer({ lang }: { lang: string }) {
                     </svg>
                 </a>
 
-                {/* 4. EMAIL LINK (Optional) */}
+                {/* EMAIL */}
                 <a 
-                    href="mailto:aagamkivaani@gmail.com" // <--- PASTE EMAIL HERE
+                    href="mailto:aagamkivaani@gmail.com"
                     className="p-2.5 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-orange-500 hover:text-orange-500 transition-colors flex items-center justify-center"
                 >
                     <Mail size={18} />
@@ -82,23 +145,49 @@ export default function Footer({ lang }: { lang: string }) {
             </div>
           </div>
 
-          {/* Quick Links Grid */}
+          {/* Quick Links Grid - COLOR CODED */}
           <div className="grid grid-cols-2 gap-8 md:pl-20">
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-900 dark:text-white mb-6">Explore</h4>
-              <ul className="space-y-4 text-sm">
-                <li><Link href={`/${lang}/tirthankars`} className="hover:text-orange-500 transition-colors">Tirthankar Gallery</Link></li>
-                <li><Link href="#" className="hover:text-orange-500 transition-colors">Philosophy</Link></li>
-                <li><Link href="#" className="hover:text-orange-500 transition-colors">Timeline</Link></li>
-                <li><Link href="#" className="hover:text-orange-500 transition-colors">Map View</Link></li>
+              <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-900 dark:text-white mb-6">{t.explore}</h4>
+              <ul className={`space-y-4 text-sm ${isIndic ? 'leading-loose' : ''}`}>
+                
+                {/* Rose for Tirthankars */}
+                <li><Link href={`/${lang}/tirthankars`} className="hover:text-rose-500 transition-colors">{t.tirthankars}</Link></li>
+                
+                {/* Purple for Soul/Karma */}
+                <li><Link href={`/${lang}/learn/soul-karma`} className="hover:text-purple-500 transition-colors">{t.soul}</Link></li>
+                
+                {/* Green for Wheel of Time */}
+                <li><Link href={`/${lang}/learn/kalchakra`} className="hover:text-green-500 transition-colors">{t.time}</Link></li>
+                
+                {/* Orange for Namokar */}
+                <li><Link href={`/${lang}/learn/namokar-mantra`} className="hover:text-orange-500 transition-colors">{t.namokar}</Link></li>
               </ul>
             </div>
+            
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-900 dark:text-white mb-6">Project</h4>
-              <ul className="space-y-4 text-sm">
-                <li><Link href="#" className="hover:text-orange-500 transition-colors">About Us</Link></li>
-                <li><Link href="#" className="hover:text-orange-500 transition-colors">Contact</Link></li>
-                <li><Link href="#" className="hover:text-orange-500 transition-colors">Donate</Link></li>
+              <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-900 dark:text-white mb-6">{t.project}</h4>
+              <ul className={`space-y-4 text-sm ${isIndic ? 'leading-loose' : ''}`}>
+                <li><Link href={`/${lang}/about`} className="hover:text-orange-500 transition-colors">{t.about}</Link></li>
+                <li><Link href={`/${lang}/contact`} className="hover:text-orange-500 transition-colors">{t.contact}</Link></li>
+                <li>
+                    <a 
+                    href="https://buymeacoffee.com/aagamkivaani" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center gap-2 hover:text-yellow-500 transition-colors font-semibold"
+                    >
+                        <svg 
+                        viewBox="0 0 24 24" 
+                        className="w-4 h-4 text-gray-400 group-hover:text-yellow-500 transition-colors fill-current" 
+                        xmlns="http://www.w3.org/2000/svg"
+                        >
+                        <path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/>
+                        </svg>
+                        
+                        <span>{t.donate}</span>
+                    </a>
+                </li>
               </ul>
             </div>
           </div>
@@ -107,17 +196,17 @@ export default function Footer({ lang }: { lang: string }) {
         {/* Divider */}
         <div className="w-full h-px bg-gray-200 dark:bg-white/10 mb-8"></div>
 
-        {/* Bottom Section: Copyright & Scroll Top */}
+        {/* Bottom Section */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-xs font-medium opacity-60">
-            © {new Date().getFullYear()} Jain Wisdom. All rights reserved.
+            © {new Date().getFullYear()} {t.brand}. {t.rights}
           </div>
           
           <button 
             onClick={scrollToTop}
             className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:text-orange-500 transition-colors"
           >
-            Back to Top 
+            {t.backToTop}
             <span className="p-2 rounded-full bg-gray-100 dark:bg-white/10 group-hover:bg-orange-500 group-hover:text-white transition-colors">
                 <ArrowUp size={14} />
             </span>

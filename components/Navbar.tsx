@@ -1,6 +1,7 @@
 "use client";
 
-import { Moon, Sun, Languages, ChevronDown, Youtube } from "lucide-react";
+import Link from "next/link"; // <--- Added Link import
+import { Moon, Sun, Languages, ChevronDown } from "lucide-react";
 import { useTheme } from "next-themes";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -37,23 +38,24 @@ export default function Navbar({ lang }: { lang: string }) {
     <nav className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/80 backdrop-blur-md transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         
-        <div className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+        {/* --- LOGO (Now Clickable) --- */}
+        <Link 
+            href={`/${lang}`} 
+            className="text-xl font-bold tracking-tight text-gray-900 dark:text-white hover:text-orange-600 dark:hover:text-orange-500 transition-colors"
+        >
           Jain Wisdom
-        </div>
+        </Link>
 
         <div className="flex items-center gap-2 md:gap-4">
           
-          {/* --- YOUTUBE LINK (Updated for Red Color) --- */}
+          {/* --- YOUTUBE LINK --- */}
           <a
-            href="https://www.youtube.com/@AagamKiVani" // <--- DON'T FORGET TO REPLACE THIS!
+            href="https://www.youtube.com/@AagamKiVani" 
             target="_blank"
             rel="noopener noreferrer"
-            // Added hover:bg-red-50 for light mode background tint on hover
             className="group flex items-center gap-2 p-2 rounded-md hover:bg-red-50 dark:hover:bg-red-900/10 transition-all"
             aria-label="Subscribe on YouTube"
           >
-            {/* Icon is now Red by default in light mode */}
-            {/* <Youtube size={20} className="text-red-600 dark:text-red-600 group-hover:text-red-700 dark:group-hover:text-red-500 transition-colors" /> */}
             <svg 
               viewBox="0 0 24 24" 
               className="w-5 h-5 text-red-600 dark:text-red-600 group-hover:text-red-700 dark:group-hover:text-red-500 transition-colors fill-current"
@@ -61,7 +63,6 @@ export default function Navbar({ lang }: { lang: string }) {
             >
               <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
             </svg>
-            {/* Text is now Red by default in light mode */}
             <span className="hidden md:block text-sm font-bold text-red-600 dark:text-gray-300 group-hover:text-red-700 dark:group-hover:text-red-500 transition-colors">
               YouTube
             </span>

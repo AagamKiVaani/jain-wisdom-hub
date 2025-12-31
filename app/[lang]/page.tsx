@@ -1,146 +1,191 @@
-"use client"; // <--- 1. This makes useState work
+"use client";
+
 import Link from "next/link";
-import { Search, Sparkles, BookOpen, Users, ArrowRight, Ghost, Clock } from "lucide-react";
-import { useState, use } from "react"; // <--- 2. Import 'use' to handle the new params
+import { Search, Sparkles, Users, ArrowRight, Ghost, Clock } from "lucide-react";
+import { useState, use } from "react"; 
+
+// --- TRANSLATIONS CONFIGURATION ---
+const translations = {
+  en: {
+    badge: "Digital Aagam Alpha 1.0",
+    title: "The Path of Wisdom",
+    subtitle: "Explore the ancient Jain principles of non-violence, truth, and karma.",
+    searchPlaceholder: "Search concepts (e.g. Karma, Ahimsa)...",
+    
+    // Cards
+    c1_title: "24 Tirthankaras",
+    c1_sub: "The Sacred Gallery",
+    
+    c2_title: "Namokar Mantra",
+    c2_sub: "The Eternal Prayer",
+    
+    c3_title: "Wheel of Time",
+    c3_sub: "The Cosmic Cycle",
+    
+    c4_title: "Soul & Karma",
+    c4_sub: "The Physics of Soul",
+  },
+  hi: {
+    badge: "डिजिटल आगम अल्फा 1.0",
+    title: "ज्ञान का मार्ग",
+    subtitle: "अहिंसा, सत्य और कर्म के प्राचीन जैन सिद्धांतों का अन्वेषण करें।",
+    searchPlaceholder: "खोजें (जैसे कर्म, अहिंसा)...",
+    
+    c1_title: "24 तीर्थंकर",
+    c1_sub: "तीर्थंकर दर्शन",
+    
+    c2_title: "णमोकार मंत्र",
+    c2_sub: "अनादि मंत्र",
+    
+    c3_title: "कालचक्र",
+    c3_sub: "समय का चक्र",
+    
+    c4_title: "आत्मा और कर्म",
+    c4_sub: "कर्म सिद्धांत",
+  },
+  kn: {
+    badge: "ಡಿಜಿಟಲ್ ಆಗಮ ಆಲ್ಫಾ 1.0",
+    title: "ಜ್ಞಾನದ ಮಾರ್ಗ",
+    subtitle: "ಅಹಿಂಸೆ, ಸತ್ಯ ಮತ್ತು ಕರ್ಮದ ಪ್ರಾಚೀನ ಜೈನ ತತ್ವಗಳನ್ನು ಅನ್ವೇಷಿಸಿ.",
+    searchPlaceholder: "ಹುಡುಕಿ (ಉದಾ. ಕರ್ಮ, ಅಹಿಂಸೆ)...",
+    
+    c1_title: "24 ತೀರ್ಥಂಕರರು",
+    c1_sub: "ಪವಿತ್ರ ದರ್ಶನ",
+    
+    c2_title: "ನಮೋಕಾರ ಮಂತ್ರ",
+    c2_sub: "ಶಾಶ್ವತ ಪ್ರಾರ್ಥನೆ",
+    
+    c3_title: "ಕಾಲಚಕ್ರ",
+    c3_sub: "ವಿಶ್ವದ ಚಕ್ರ",
+    
+    c4_title: "ಆತ್ಮ ಮತ್ತು ಕರ್ಮ",
+    c4_sub: "ಆತ್ಮದ ವಿಜ್ಞಾನ",
+  }
+};
 
 export default function Home({ params }: { params: Promise<{ lang: string }> }) {
-  // 3. This 'use()' hook unwraps the params Promise safely
   const { lang } = use(params); 
   
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Content Logic
-  const title = lang === 'hi' ? "ज्ञान का मार्ग" : "The Path of Wisdom";
-  const subtitle = lang === 'hi' 
-    ? "अहिंसा, सत्य और कर्म के प्राचीन जैन सिद्धांतों का अन्वेषण करें।" 
-    : "Explore the ancient Jain principles of non-violence, truth, and karma.";
+  // 1. Get Translations
+  const t = translations[lang as keyof typeof translations] || translations.en;
+
+  // 2. Check for Indic scripts (Hindi/Kannada) to adjust spacing/fonts
+  const isIndic = lang === 'hi' || lang === 'kn';
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] px-4 py-20">
+    <div className="relative flex flex-col items-center justify-center min-h-screen px-4 py-20 overflow-hidden bg-white dark:bg-black selection:bg-orange-500 selection:text-white">
       
-      {/* Badge */}
-      <div className="mb-6 px-4 py-1.5 rounded-full bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 text-sm font-medium border border-orange-100 dark:border-orange-800/50">
-        Digital Aagam Alpha 1.0
-      </div>
+      {/* --- CINEMATIC BACKGROUND GLOW --- */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-orange-500/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
 
-      {/* Title */}
-      <h1 className="text-4xl md:text-7xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-br from-gray-900 to-gray-500 dark:from-white dark:to-gray-500 mb-6 uppercase tracking-tighter">
-        {title}
-      </h1>
-      
-      <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl text-center mb-10">
-        {subtitle}
-      </p>
-
-      {/* Search Bar */}
-      <div className="relative w-full max-w-xl">
-        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-          <Search className="h-5 w-5 text-gray-400" />
-        </div>
-        <input
-          type="text"
-          className="block w-full pl-11 pr-4 py-4 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-xl shadow-gray-200/50 dark:shadow-none focus:ring-2 focus:ring-orange-500 outline-none transition-all"
-          placeholder={lang === 'hi' ? "खोजें..." : "Search for a concept..."}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </div>
-
-      {/* Quick Links Grid - Expanded to 3 columns on desktop */}
-      <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl">
-        
-        {/* Card 1: Namokar Mantra */}
-        <Link 
-          href={`/${lang}/learn/namokar-mantra`}
-          className="group flex flex-col p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-3xl hover:border-orange-500 dark:hover:border-orange-500 transition-all shadow-sm hover:shadow-xl"
-        >
-          <div className="h-12 w-12 rounded-2xl bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <Sparkles size={24} />
-          </div>
-          <div className="text-left">
-            <h3 className="font-bold text-gray-900 dark:text-white uppercase tracking-tight">Namokar Mantra</h3>
-            <p className="text-sm text-gray-500">{lang === 'hi' ? "अनादि मंत्र" : "The Eternal Prayer"}</p>
-          </div>
-          <div className="mt-4 flex items-center text-[10px] font-bold text-orange-500 tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
-            EXPLORE <ArrowRight size={12} className="ml-1" />
-          </div>
-        </Link>
-
-        {/* Card 2: 24 Tirthankara Gallery */}
-        <Link 
-          href={`/${lang}/tirthankars`}
-          className="group flex flex-col p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-3xl hover:border-rose-500 dark:hover:border-rose-500 transition-all shadow-sm hover:shadow-xl"
-        >
-          {/* Icon Box - ROSE Color */}
-          <div className="h-12 w-12 rounded-2xl bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <Users size={24} />
-          </div>
+      <div className="relative z-10 flex flex-col items-center w-full">
           
-          {/* Text Content */}
-          <div className="text-left">
-            <h3 className="font-bold text-gray-900 dark:text-white uppercase tracking-tight">24 Tirthankaras</h3>
-            <p className="text-sm text-gray-500">{lang === 'hi' ? "तीर्थंकर दर्शन" : "Sacred Gallery"}</p>
+          {/* Badge */}
+          <div className="mb-8 px-4 py-1.5 rounded-full bg-orange-50 dark:bg-orange-900/10 text-orange-600 dark:text-orange-400 text-xs font-bold uppercase tracking-widest border border-orange-100 dark:border-orange-500/20 shadow-sm">
+            {t.badge}
           </div>
 
-          {/* Hover Text - ROSE Color */}
-          <div className="mt-4 flex items-center text-[10px] font-bold text-rose-500 tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
-            EXPLORE <ArrowRight size={12} className="ml-1" />
-          </div>
-        </Link>
+          {/* Title */}
+          <h1 className={`text-5xl md:text-8xl font-black text-center text-gray-900 dark:text-white mb-6 uppercase tracking-tighter ${isIndic ? 'leading-tight py-2' : 'leading-none'}`}>
+            {t.title}
+          </h1>
+          
+          <p className={`text-lg md:text-xl font-serif text-gray-600 dark:text-gray-400 max-w-2xl text-center mb-12 ${isIndic ? 'leading-loose' : 'leading-relaxed'}`}>
+            {t.subtitle}
+          </p>
 
-        {/* Card 3: Ahimsa
-        <Link 
-          href={`/${lang}/learn/ahimsa`}
-          className="group flex flex-col p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-3xl hover:border-orange-500 dark:hover:border-orange-500 transition-all shadow-sm hover:shadow-xl"
-        >
-          <div className="h-12 w-12 rounded-2xl bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            <BookOpen size={24} />
+          {/* Search Bar */}
+          <div className="relative w-full max-w-xl mb-20 group">
+            <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+              <Search className="h-5 w-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
+            </div>
+            <input
+              type="text"
+              className="block w-full pl-12 pr-4 py-5 rounded-full border border-gray-200 dark:border-white/10 bg-white dark:bg-zinc-900/50 backdrop-blur-md shadow-2xl shadow-gray-200/50 dark:shadow-black/50 focus:ring-2 focus:ring-orange-500 outline-none transition-all text-gray-900 dark:text-white placeholder:text-gray-400"
+              placeholder={t.searchPlaceholder}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
           </div>
-          <div className="text-left">
-            <h3 className="font-bold text-gray-900 dark:text-white uppercase tracking-tight">Ahimsa</h3>
-            <p className="text-sm text-gray-500">{lang === 'hi' ? "परमो धर्म:" : "Non-Violence"}</p>
-          </div>
-        </Link> */}
 
-        {/* Card 3: Kalchakra (Wheel of Time) */}
-        <Link 
-          href={`/${lang}/learn/kalchakra`}
-          className="group flex flex-col p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-3xl hover:border-green-500 dark:hover:border-green-500 transition-all shadow-sm hover:shadow-xl"
-        >
-          <div className="h-12 w-12 rounded-2xl bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            {/* Make sure you imported Clock from lucide-react */}
-            <Clock size={24} />
-          </div>
-          <div className="text-left">
-            <h3 className="font-bold text-gray-900 dark:text-white uppercase tracking-tight">The Wheel of Time</h3>
-            <p className="text-sm text-gray-500">
-              {lang === 'hi' ? "कालचक्र का रहस्य" : "The Cosmic Cycle"}
-            </p>
-          </div>
-          <div className="mt-4 flex items-center text-[10px] font-bold text-green-500 tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
-            EXPLORE <ArrowRight size={12} className="ml-1" />
-          </div>
-        </Link>
+          {/* Quick Links Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-4xl">
+            
+            {/* Card 1: 24 Tirthankara Gallery */}
+            <Link 
+              href={`/${lang}/tirthankars`}
+              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-white/10 rounded-3xl hover:border-rose-500 dark:hover:border-rose-500 transition-all hover:shadow-2xl hover:shadow-rose-500/10 backdrop-blur-sm"
+            >
+              <div className="flex items-start justify-between mb-6">
+                  <div className="h-14 w-14 rounded-2xl bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Users size={28} />
+                  </div>
+                  <ArrowRight size={20} className="text-gray-300 dark:text-gray-700 group-hover:text-rose-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
+              </div>
+              
+              <div>
+                <h3 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c1_title}</h3>
+                <p className="text-sm text-gray-500 font-medium">{t.c1_sub}</p>
+              </div>
+            </Link>
 
-        {/* Card 4: Soul & Karma */}
-        <Link 
-          href={`/${lang}/learn/soul-karma`}
-          className="group flex flex-col p-6 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-3xl hover:border-purple-500 dark:hover:border-purple-500 transition-all shadow-sm hover:shadow-xl"
-        >
-          <div className="h-12 w-12 rounded-2xl bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-            {/* Make sure you imported Ghost from lucide-react */}
-            <Ghost size={24} />
+            {/* Card 2: Namokar Mantra */}
+            <Link 
+              href={`/${lang}/learn/namokar-mantra`}
+              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-white/10 rounded-3xl hover:border-orange-500 dark:hover:border-orange-500 transition-all hover:shadow-2xl hover:shadow-orange-500/10 backdrop-blur-sm"
+            >
+              <div className="flex items-start justify-between mb-6">
+                  <div className="h-14 w-14 rounded-2xl bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Sparkles size={28} />
+                  </div>
+                  <ArrowRight size={20} className="text-gray-300 dark:text-gray-700 group-hover:text-orange-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
+              </div>
+              
+              <div>
+                <h3 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c2_title}</h3>
+                <p className="text-sm text-gray-500 font-medium">{t.c2_sub}</p>
+              </div>
+            </Link>
+
+            {/* Card 3: Wheel of Time */}
+            <Link 
+              href={`/${lang}/learn/kalchakra`}
+              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-white/10 rounded-3xl hover:border-green-500 dark:hover:border-green-500 transition-all hover:shadow-2xl hover:shadow-green-500/10 backdrop-blur-sm"
+            >
+              <div className="flex items-start justify-between mb-6">
+                  <div className="h-14 w-14 rounded-2xl bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Clock size={28} />
+                  </div>
+                  <ArrowRight size={20} className="text-gray-300 dark:text-gray-700 group-hover:text-green-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
+              </div>
+              
+              <div>
+                <h3 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c3_title}</h3>
+                <p className="text-sm text-gray-500 font-medium">{t.c3_sub}</p>
+              </div>
+            </Link>
+
+            {/* Card 4: Soul & Karma */}
+            <Link 
+              href={`/${lang}/learn/soul-karma`}
+              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-white/10 rounded-3xl hover:border-purple-500 dark:hover:border-purple-500 transition-all hover:shadow-2xl hover:shadow-purple-500/10 backdrop-blur-sm"
+            >
+              <div className="flex items-start justify-between mb-6">
+                  <div className="h-14 w-14 rounded-2xl bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Ghost size={28} />
+                  </div>
+                  <ArrowRight size={20} className="text-gray-300 dark:text-gray-700 group-hover:text-purple-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
+              </div>
+              
+              <div>
+                <h3 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c4_title}</h3>
+                <p className="text-sm text-gray-500 font-medium">{t.c4_sub}</p>
+              </div>
+            </Link>
+
           </div>
-          <div className="text-left">
-            <h3 className="font-bold text-gray-900 dark:text-white uppercase tracking-tight">Soul & Karma</h3>
-            <p className="text-sm text-gray-500">
-              {lang === 'hi' ? "आत्मा और कर्म का विज्ञान" : "The Physics of the Soul"}
-            </p>
-          </div>
-          <div className="mt-4 flex items-center text-[10px] font-bold text-purple-500 tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
-            EXPLORE <ArrowRight size={12} className="ml-1" />
-          </div>
-        </Link>
       </div>
     </div>
   );
