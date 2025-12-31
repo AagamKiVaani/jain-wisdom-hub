@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "../globals.css"; // Go up one level to find globals.css
 import { Providers } from "../provider"; // Import the provider we made
 import Navbar from "@/components/Navbar";
+import YouTubeToast from "@/components/YouTubeToast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default async function RootLayout({
           <main className="grow">
             {children}
           </main>
+          <YouTubeToast />
         </Providers>
       </body>
     </html>

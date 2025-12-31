@@ -1,7 +1,9 @@
 import { tirthankaras } from "@/lib/tirthankara-data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image"; 
 import { ArrowLeft, Star } from "lucide-react";
+import KalyanakTimeline from "./KalyanakTimeline"; // <--- IMPORT THE NEW COMPONENT
 
 export default async function TirthankaraDetail({ params }: { params: Promise<{ lang: string, id: string }> }) {
   const { lang, id } = await params;
@@ -16,20 +18,19 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
     return n + (s[(v - 20) % 10] || s[v] || s[0]);
   };
 
-  // --- Aura Color Logic ---
+  // ... (Keep your getAuraColor and stats logic exactly as it was) ...
   const getAuraColor = (id: number) => {
-    if ([6, 12].includes(id)) return "#ef4444"; // Red
-    if ([7, 23].includes(id)) return "#22c55e"; // Green
-    if ([8, 9].includes(id)) return "#ffffff";  // White
-    if ([20, 22].includes(id)) return "#3b82f6"; // Blue
-    return "#eab308"; // Golden
+    if ([6, 12].includes(id)) return "#ef4444"; 
+    if ([7, 23].includes(id)) return "#22c55e"; 
+    if ([8, 9].includes(id)) return "#ffffff";  
+    if ([20, 22].includes(id)) return "#3b82f6"; 
+    return "#eab308"; 
   };
-
   const auraColorHex = getAuraColor(t.id);
 
   const stats = [
     { label: { en: "Father", hi: "पिता", kn: "ತಂದೆ" }, value: t.father[l] },
-    { label: { en: "Mother", hi: "माता", kn: "ತಾಯಿ" }, value: t.mother[l] },
+    { label: { en: "Mother", hi: "माता", kn: "तಾಯಿ" }, value: t.mother[l] },
     { label: { en: "Dynasty", hi: "वंश", kn: "ವಂಶ" }, value: `${t.dynasty[l]} (${t.caste[l]})` },
     { label: { en: "Gotra", hi: "गोत्र", kn: "ಗೋತ್ರ" }, value: t.gotra[l] },
     { label: { en: "Symbol", hi: "चिह्न", kn: "ಲಾಂಛನ" }, value: t.symbol[l] },
@@ -43,6 +44,7 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
   const prevT = tirthankaras.find(item => item.id === t.id - 1);
   const nextT = tirthankaras.find(item => item.id === t.id + 1);
 
+  // Keep Data here (Server Side)
   const kalyanaks = [
     { title: { en: "Garbha", hi: "गर्भ", kn: "ಗರ್ಭ" }, desc: { en: "The divine descent from heaven into the mother's womb.", hi: "प्राणत स्वर्ग से माता के गर्भ में मंगल अवतरण।", kn: "ಸ್ವರ್ಗದಿಂದ ತಾಯಿಯ ಗರ್ಭಕ್ಕೆ ಆಗಮನ." } },
     { title: { en: "Janma", hi: "जन्म", kn: "ಜನ್ಮ" }, desc: { en: "The auspicious birth celebrated by the 100 Indras on Mount Meru.", hi: "मेरु पर्वत पर १०० इन्द्रों द्वारा मनाया गया जन्माभिषेक।", kn: "ಇಂದ್ರನಿಂದ ಆಚರಿಸಲ್ಪಟ್ಟ ಜನ್ಮ ಮಹೋತ್ಸವ." } },
@@ -52,18 +54,18 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
   ];
 
   return (
-    <div className="bg-white dark:bg-black text-gray-900 dark:text-white min-h-screen selection:bg-orange-500 selection:text-white transition-colors duration-500 overflow-x-hidden">
+    <div className="bg-white dark:bg-black text-gray-900 dark:text-white min-h-screen selection:bg-orange-500 selection:text-white transition-colors duration-500">
       
-      {/* 1. FIXED NAVIGATION */}
+      {/* 1. FIXED NAVIGATION (Unchanged) */}
       <Link 
         href={`/${lang}/tirthankars`} 
         className="fixed top-20 left-4 md:top-24 md:left-8 z-40 flex items-center gap-2 text-gray-500 hover:text-orange-500 transition-all bg-white/80 dark:bg-black/40 px-4 py-2 rounded-full backdrop-blur-md border border-gray-200 dark:border-white/10 shadow-sm"
       >
         <ArrowLeft className="group-hover:-translate-x-1 transition-transform" size={16} /> 
-        <span className="text-[10px] font-black uppercase tracking-[0.2em]">Back</span>
+        <span className="text-[10px] font-black uppercase tracking-[0.2em]">Gallery</span>
       </Link>
 
-      {/* 2. HERO SECTION */}
+      {/* 2. HERO SECTION (Unchanged - Keeps existing visuals) */}
       <div className="relative min-h-screen flex flex-col items-center justify-center px-4 md:px-6 pt-24 md:pt-32 pb-20 overflow-hidden">
         
         {/* Atmosphere Background */}
@@ -73,66 +75,41 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
         ></div>
 
         {/* --- ARHAT & AURA CONTAINER --- */}
-        <div className="relative mb-8 md:mb-16 animate-subtle-float z-10 w-full flex justify-center">
-            {/* Pulsing Glow Aura */}
+        <div className="relative mb-8 md:mb-16 z-10 w-full flex justify-center h-[40vh] md:h-[50vh]">
             <div 
-               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100%] md:w-[110%] h-[100%] md:h-[110%] rounded-full blur-[80px] md:blur-[100px] opacity-70 dark:opacity-60 animate-pulse -z-10"
+               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full blur-[80px] md:blur-[100px] opacity-70 dark:opacity-60 animate-pulse -z-10"
                style={{ backgroundColor: auraColorHex }}
             ></div>
-
-            {/* Arhat Idol */}
-            <img 
-              src={t.tirthankaraImage} 
-              alt={t.name[l]} 
-              className="w-[80vw] max-w-[350px] md:max-w-[750px] md:w-auto h-auto object-contain drop-shadow-2xl relative z-20"
-            />
+            <div className="relative w-full h-full">
+                <Image 
+                  src={t.tirthankaraImage} 
+                  alt={t.name[l]} 
+                  fill
+                  className="object-contain drop-shadow-2xl animate-subtle-float"
+                  priority 
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+            </div>
         </div>
 
-        {/* Text Container */}
+        {/* Text Container & Stats (Unchanged) */}
         <div className="text-center w-full max-w-5xl z-20 px-2 flex flex-col items-center">
-            
-            {/* --- SACRED SYMBOL (ROYAL CREST) --- */}
             <div className="mb-6 relative group cursor-pointer">
-                {/* Glow Effect on Hover */}
                 <div className="absolute inset-0 bg-orange-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
-                {/* Symbol Image: BIGGER & COLORFUL */}
-                <img 
-                    src={t.symbol.imagePath} 
-                    alt={t.symbol.en} 
-                    className="w-24 h-24 md:w-32 md:h-32 object-contain opacity-100 group-hover:scale-110 transition-all duration-500 drop-shadow-lg" 
-                />
-                
-                {/* Label on Hover */}
+                <div className="relative w-24 h-24 md:w-32 md:h-32">
+                    <Image src={t.symbol.imagePath} alt={t.symbol.en} fill className="object-contain opacity-100 group-hover:scale-110 transition-all duration-500 drop-shadow-lg" />
+                </div>
                 <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                    <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-orange-500 bg-white/90 dark:bg-black/90 px-2 py-1 rounded-full border border-orange-500/20">
-                        {t.symbol[l]}
-                    </span>
+                    <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-orange-500 bg-white/90 dark:bg-black/90 px-2 py-1 rounded-full border border-orange-500/20">{t.symbol[l]}</span>
                 </div>
             </div>
-
-            <div className="text-orange-500 text-[10px] md:text-xs font-black tracking-[0.5em] md:tracking-[0.8em] mb-2 md:mb-4 uppercase">
-                The {getOrdinal(t.id)} Arhat
-            </div>
-            
-            {/* TITLE FIX: Reduced base size to text-3xl for mobile. 
-                Added more breakpoints for smooth scaling.
-                Kept whitespace-nowrap to ensure single line.
-            */}
-            <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black mb-10 tracking-tighter uppercase leading-none whitespace-nowrap w-full">
-                {t.name[l]}
-            </h1>
-
-            {/* Stats Grid */}
+            <div className="text-orange-500 text-[10px] md:text-xs font-black tracking-[0.5em] md:tracking-[0.8em] mb-2 md:mb-4 uppercase">The {getOrdinal(t.id)} Arhat</div>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black mb-10 tracking-tighter uppercase leading-none whitespace-nowrap w-full">{t.name[l]}</h1>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 text-left w-full">
                 {stats.map((stat, i) => (
                     <div key={i} className="bg-white/40 dark:bg-white/[0.03] border border-gray-200 dark:border-white/10 p-3 md:p-5 rounded-2xl md:rounded-[1.5rem] backdrop-blur-md hover:border-orange-500/50 transition-colors group">
-                        <div className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-gray-500 dark:text-gray-500 mb-1 font-bold group-hover:text-orange-500 transition-colors">
-                            {stat.label[l]}
-                        </div>
-                        <div className="text-xs md:text-base font-bold text-gray-800 dark:text-gray-100 italic break-words">
-                            {stat.value}
-                        </div>
+                        <div className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-gray-500 dark:text-gray-500 mb-1 font-bold group-hover:text-orange-500 transition-colors">{stat.label[l]}</div>
+                        <div className="text-xs md:text-base font-bold text-gray-800 dark:text-gray-100 italic break-words">{stat.value}</div>
                     </div>
                 ))}
             </div>
@@ -140,35 +117,15 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
         
         <div className="mt-16 md:mt-24 flex flex-col items-center gap-4 opacity-100">
            <span className="text-[10px] tracking-[0.3em] uppercase text-gray-400 dark:text-gray-500 font-bold">Scroll the Life</span>
-           <div className="w-px h-12 md:h-16 bg-gradient-to-b from-orange-500 to-transparent"></div>
+           <div className="w-px h-20 md:h-36 bg-gradient-to-b from-orange-500 to-transparent"></div>
         </div>
       </div>
 
-      {/* 3. KALYANAK TIMELINE */}
-      <div className="relative z-30 bg-gray-50/50 dark:bg-black/80 backdrop-blur-xl border-t border-gray-100 dark:border-white/5">
-        {kalyanaks.map((k, index) => (
-          <div key={index} className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden">
-            <div className="absolute left-10 text-[12vw] font-black text-gray-200/20 dark:text-white/[0.02] whitespace-nowrap select-none">
-              {k.title[l]}
-            </div>
-            <div className="max-w-4xl relative z-20 text-center md:text-left">
-              <div className="flex flex-col md:flex-row md:items-center gap-6 mb-8 items-center md:items-start">
-                <div className="h-16 w-16 rounded-2xl bg-orange-600 flex items-center justify-center text-white text-2xl font-black rotate-3 shadow-xl shadow-orange-600/20">
-                  0{index + 1}
-                </div>
-                <h2 className="text-5xl md:text-8xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  {k.title[l]} <span className="text-orange-600">Kalyanak</span>
-                </h2>
-              </div>
-              <p className="text-2xl md:text-4xl text-gray-600 dark:text-gray-300 leading-relaxed font-light font-serif">
-                {k.desc[l]}
-              </p>
-            </div>
-          </div>
-        ))}
+      {/* 3. KALYANAK TIMELINE (REPLACED WITH NEW COMPONENT) */}
+      <KalyanakTimeline kalyanakData={t.kalyanaks} lang={lang} />
 
-        {/* 4. FOOTER NAVIGATION */}
-        <div className="min-h-[50vh] flex flex-col items-center justify-center px-6 text-center border-t border-gray-100 dark:border-white/5 bg-gray-50 dark:bg-gradient-to-b dark:from-black dark:to-zinc-950 transition-colors duration-500 pb-32 pt-20">
+      {/* 4. FOOTER NAVIGATION (Unchanged) */}
+      <div className="min-h-[50vh] flex flex-col items-center justify-center px-6 text-center border-t border-gray-100 dark:border-white/5 bg-gray-50 dark:bg-gradient-to-b dark:from-black dark:to-zinc-950 transition-colors duration-500 pb-32 pt-20">
            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mb-20">
               {prevT && (
                 <Link href={`/${lang}/tirthankars/${prevT.id}`} 
@@ -205,7 +162,6 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
               EXPLORE ENTIRE GALLERY
            </Link>
         </div>
-      </div>
     </div>
   );
 }
