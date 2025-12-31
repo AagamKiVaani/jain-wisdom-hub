@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "../globals.css"; // Go up one level to find globals.css
 import { Providers } from "../provider"; // Import the provider we made
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer"
 import YouTubeToast from "@/components/YouTubeToast";
 
 import { Analytics } from "@vercel/analytics/react";
@@ -34,9 +35,11 @@ export default async function RootLayout({
             {children}
           </main>
 
+          <Footer lang={lang} />
+
           <Analytics />
           <SpeedInsights />
-          
+
           <YouTubeToast />
         </Providers>
       </body>
