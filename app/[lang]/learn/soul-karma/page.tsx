@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     // This looks for public/images/soul-karma-preview.png (Make sure to add this image later!)
     images: [
       {
-        url: '/images/soul-karma-preview.png',
+        url: '/images/metadata/soul-karma-preview.png',
         width: 1200,
         height: 630,
         alt: 'Soul and Karma 3D Simulation',

@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Search, Sparkles, Users, ArrowRight, Ghost, Clock } from "lucide-react";
-import { useState, use } from "react"; 
+// Removed 'Search' from imports to keep it clean, or keep it if you plan to uncomment later
+import { Sparkles, Users, ArrowRight, Ghost, Clock } from "lucide-react";
+import { use } from "react"; 
+// import { useState } from "react"; <--- Commented out
 
 // --- TRANSLATIONS CONFIGURATION ---
 const translations = {
@@ -10,7 +12,7 @@ const translations = {
     badge: "Digital Aagam Alpha 1.0",
     title: "The Path of Wisdom",
     subtitle: "Explore the ancient Jain principles of non-violence, truth, and karma.",
-    searchPlaceholder: "Search concepts (e.g. Karma, Ahimsa)...",
+    // searchPlaceholder: "Search concepts (e.g. Karma, Ahimsa)...", <--- Not needed for now
     
     // Cards
     c1_title: "24 Tirthankaras",
@@ -29,7 +31,7 @@ const translations = {
     badge: "डिजिटल आगम अल्फा 1.0",
     title: "ज्ञान का मार्ग",
     subtitle: "अहिंसा, सत्य और कर्म के प्राचीन जैन सिद्धांतों का अन्वेषण करें।",
-    searchPlaceholder: "खोजें (जैसे कर्म, अहिंसा)...",
+    // searchPlaceholder: "खोजें (जैसे कर्म, अहिंसा)...",
     
     c1_title: "24 तीर्थंकर",
     c1_sub: "तीर्थंकर दर्शन",
@@ -47,7 +49,7 @@ const translations = {
     badge: "ಡಿಜಿಟಲ್ ಆಗಮ ಆಲ್ಫಾ 1.0",
     title: "ಜ್ಞಾನದ ಮಾರ್ಗ",
     subtitle: "ಅಹಿಂಸೆ, ಸತ್ಯ ಮತ್ತು ಕರ್ಮದ ಪ್ರಾಚೀನ ಜೈನ ತತ್ವಗಳನ್ನು ಅನ್ವೇಷಿಸಿ.",
-    searchPlaceholder: "ಹುಡುಕಿ (ಉದಾ. ಕರ್ಮ, ಅಹಿಂಸೆ)...",
+    // searchPlaceholder: "ಹುಡುಕಿ (ಉದಾ. ಕರ್ಮ, ಅಹಿಂಸೆ)...",
     
     c1_title: "24 ತೀರ್ಥಂಕರರು",
     c1_sub: "ಪವಿತ್ರ ದರ್ಶನ",
@@ -66,7 +68,7 @@ const translations = {
 export default function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = use(params); 
   
-  const [searchQuery, setSearchQuery] = useState("");
+  // const [searchQuery, setSearchQuery] = useState(""); <--- Commented out
 
   // 1. Get Translations
   const t = translations[lang as keyof typeof translations] || translations.en;
@@ -96,8 +98,8 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
             {t.subtitle}
           </p>
 
-          {/* Search Bar */}
-          <div className="relative w-full max-w-xl mb-20 group">
+          {/* --- SEARCH BAR COMMENTED OUT --- */}
+          {/* <div className="relative w-full max-w-xl mb-20 group">
             <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-gray-400 group-focus-within:text-orange-500 transition-colors" />
             </div>
@@ -108,7 +110,9 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-          </div>
+          </div> 
+          */}
+          {/* -------------------------------- */}
 
           {/* Quick Links Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-4xl">

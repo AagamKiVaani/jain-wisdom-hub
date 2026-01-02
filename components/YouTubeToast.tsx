@@ -3,9 +3,36 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ExternalLink } from "lucide-react"; 
+import { useParams } from "next/navigation"; // <--- 1. Import this to get the language
 
 export default function YouTubeToast() {
   const [isVisible, setIsVisible] = useState(false);
+
+  // 2. Get Language
+  const params = useParams();
+  // Safe check: default to 'en' if params is undefined
+  const lang = (params?.lang as string) || "en";
+
+  // 3. Translation Data
+  const translations = {
+    en: {
+      title: "Watch the Stories",
+      desc: "Deep dive into Jain wisdom on our official channel.",
+      button: "SUBSCRIBE"
+    },
+    hi: {
+      title: "कहानियां देखें",
+      desc: "हमारे चैनल पर जैन ज्ञान की गहराई में उतरें।",
+      button: "सब्सक्राइब"
+    },
+    kn: {
+      title: "ಕಥೆಗಳನ್ನು ವೀಕ್ಷಿಸಿ", // Kathegaḷannu Vīkṣisi
+      desc: "ನಮ್ಮ ಅಧಿಕೃತ ಚಾನೆಲ್‌ನಲ್ಲಿ ಜೈನ ಜ್ಞಾನವನ್ನು ತಿಳಿಯಿರಿ.", // Namma adhikṛta cānelnalli...
+      button: "ಸಬ್ಸ್ ಕ್ರೈಬ್" // Chandadārarāgi
+    }
+  };
+
+  const t = translations[lang as keyof typeof translations] || translations.en;
 
   useEffect(() => {
     const hasSeenToast = sessionStorage.getItem("has-seen-youtube-toast");
@@ -15,16 +42,10 @@ export default function YouTubeToast() {
         setIsVisible(true);
         
         // --- SOUND EFFECT LOGIC ---
-        // 1. Create audio object
         const audio = new Audio("/sounds/notification/ding.mp3"); 
-        
-        // 2. Lower volume so it's not startling (0.4 = 40%)
         audio.volume = 0.9; 
         
-        // 3. Play safely (catch errors if browser blocks autoplay)
         audio.play().catch((error) => {
-           // This usually happens if the user hasn't clicked anywhere on the page yet.
-           // We silently ignore it so the console stays clean.
            console.log("Toast sound blocked by browser policy (no interaction yet).");
         });
 
@@ -65,10 +86,10 @@ export default function YouTubeToast() {
             {/* Text Content */}
             <div className="flex-1">
               <h4 className="text-sm font-bold text-gray-900 dark:text-white mb-0.5">
-                Watch the Stories
+                {t.title}
               </h4>
               <p className="text-xs text-gray-500 dark:text-gray-400 leading-tight mb-2">
-                Deep dive into Jain wisdom on our official channel.
+                {t.desc}
               </p>
               
               <a 
@@ -78,7 +99,7 @@ export default function YouTubeToast() {
                 onClick={handleClose}
                 className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-full transition-colors shadow-md"
               >
-                Subscribe <ExternalLink size={10} />
+                {t.button} <ExternalLink size={10} />
               </a>
             </div>
 

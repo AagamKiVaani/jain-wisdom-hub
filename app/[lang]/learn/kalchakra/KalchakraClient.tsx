@@ -198,6 +198,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
   const hoverAudioRef = useRef<HTMLAudioElement | null>(null);
   const bgMusicRef = useRef<HTMLAudioElement | null>(null);
   const sciFiClickRef = useRef<HTMLAudioElement | null>(null);
+  const enterClickRef = useRef<HTMLAudioElement | null>(null);
   const wheelSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -205,9 +206,10 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
     bgMusicRef.current.loop = true;
     bgMusicRef.current.volume = 0; 
     
-    clickAudioRef.current = new Audio("/sounds/click.mp3");
-    hoverAudioRef.current = new Audio("/sounds/click2.mp3");
-    sciFiClickRef.current = new Audio("/sounds/scificlick.mp3");
+    clickAudioRef.current = new Audio("/sounds/kalchakra/click.mp3");
+    hoverAudioRef.current = new Audio("/sounds/kalchakra/click2.mp3");
+    sciFiClickRef.current = new Audio("/sounds/kalchakra/scificlick.mp3");
+    enterClickRef.current = new Audio("/sounds/kalchakra/enter.mp3");
 
     return () => {
         if (bgMusicRef.current) {
@@ -227,9 +229,9 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
   }, [showModal]);
 
   const handleEnterExperience = () => {
-    if (clickAudioRef.current) {
-        clickAudioRef.current.volume = 0.5;
-        clickAudioRef.current.play().catch(() => {});
+    if (enterClickRef.current) {
+        enterClickRef.current.volume = 0.5;
+        enterClickRef.current.play().catch(() => {});
     }
     if (bgMusicRef.current) {
         bgMusicRef.current.play().then(() => {
@@ -271,7 +273,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
     
     const shouldPlay = isWheelInView && !isMuted && hasEntered;
     const targetVolume = shouldPlay ? 0.7 : 0;
-    const targetSrc = `/sounds/ara${normalizedId}.mp3`;
+    const targetSrc = `/sounds/kalchakra/ara${normalizedId}.mp3`;
 
     const currentSrcPath = player.getAttribute('src') || "";
     if (!currentSrcPath.includes(targetSrc)) {
@@ -301,13 +303,14 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
 
 
   // --- UI SOUNDS ---
-  const playSound = (type: 'click' | 'hover' | 'scifi') => {
+  const playSound = (type: 'click' | 'hover' | 'scifi' | 'enter') => {
       if (isMuted || !isMounted) return;
 
       let audio = null;
       if (type === 'click') audio = clickAudioRef.current;
       else if (type === 'hover') audio = hoverAudioRef.current;
       else if (type === 'scifi') audio = sciFiClickRef.current;
+      else if (type === 'enter') audio = enterClickRef.current;
 
       if (audio) {
           audio.currentTime = 0;
@@ -391,7 +394,8 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                         {t('enterDesc')}
                     </p>
                     <div className="pt-8">
-                        <button 
+                        <button
+                             
                             onClick={handleEnterExperience}
                             className="group relative inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold uppercase tracking-widest hover:scale-105 transition-transform duration-300"
                         >
@@ -508,7 +512,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                                     {Array.from({ length: 11 }).map((_, i) => (
                                         <img 
                                             key={i} 
-                                            src={`/images/ara${normalizedId}-${i + 1}.webp`} 
+                                            src={`/images/kalchakra/ara${normalizedId}-${i + 1}.webp`} 
                                             className="h-full w-auto object-cover min-w-[50vw] md:min-w-[33vw] mix-blend-overlay" 
                                             alt="Atmosphere"
                                             onError={(e) => (e.currentTarget.style.display = 'none')} 
@@ -616,7 +620,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                             </div>
                         </div>
                         <div className="flex justify-center">
-                          <button onClick={() => { setShowModal(true); playSound('click'); }} className="flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-black font-bold text-sm hover:scale-105 transition-transform shadow-lg">
+                          <button onClick={() => { setShowModal(true); playSound('hover'); }} className="flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-black font-bold text-sm hover:scale-105 transition-transform shadow-lg">
                             <BookOpen size={16} /> {t('readMore')}
                           </button>
                         </div>

@@ -4,26 +4,56 @@ import { ArrowLeft } from "lucide-react";
 
 export default async function TirthankarGallery({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
+  
+  // 1. Language Logic
   const l = (lang === "hi" || lang === "kn") ? lang : "en";
+  const isIndic = lang === "hi" || lang === "kn";
+
+  // 2. Translations for Static Text
+  const translations = {
+    en: {
+      library: "Library",
+      lineage: "THE LINEAGE",
+      title: "24 Tirthankaras"
+    },
+    hi: {
+      library: "लाइब्रेरी",      // 'Collection' or 'Library'
+      lineage: "पवित्र वंश",  // 'Holy Lineage'
+      title: "24 तीर्थंकर"
+    },
+    kn: {
+      library: "ಲೈಬ್ರರಿ",      // 'Collection' or 'Library'
+      lineage: "ಪವಿತ್ರ ವಂಶ",  // 'Holy Lineage'
+      title: "24 ತೀರ್ಥಂಕರರು"
+    }
+  };
+
+  const t = translations[lang as keyof typeof translations] || translations.en;
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white selection:bg-orange-500 selection:text-white p-6 md:p-12 transition-colors duration-500">
+    <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white selection:bg-rose-500 selection:text-white p-6 md:p-12 transition-colors duration-500">
       
-      {/* 1. FIXED NAVIGATION (Consistent Position) */}
+      {/* 1. FIXED NAVIGATION */}
       <Link 
         href={`/${lang}`} 
-        className="fixed top-20 left-4 md:top-24 md:left-8 z-50 flex items-center gap-2 text-gray-500 hover:text-orange-500 transition-all bg-white/80 dark:bg-black/50 px-4 py-2 rounded-full backdrop-blur-md border border-gray-200 dark:border-white/10 shadow-sm"
+        className="fixed top-20 left-4 md:top-24 md:left-8 z-50 flex items-center gap-2 text-gray-500 hover:text-rose-500 transition-all bg-white/80 dark:bg-black/50 px-4 py-2 rounded-full backdrop-blur-md border border-gray-200 dark:border-white/10 shadow-sm"
       >
         <ArrowLeft size={16} /> 
-        <span className="text-[10px] font-bold uppercase tracking-widest">Library</span>
+        {/* TRANSLATED LABEL */}
+        <span className={`text-[10px] font-bold uppercase tracking-widest ${isIndic ? 'text-xs' : ''}`}>
+          {t.library}
+        </span>
       </Link>
 
       <div className="max-w-[1800px] mx-auto pt-24 md:pt-20">
         <div className="mb-12 md:mb-20">
-          <h2 className="text-orange-600 dark:text-orange-500 font-bold tracking-[0.5em] mb-4 text-xs md:text-base">THE LINEAGE</h2>
-          {/* Fluid Text Size */}
-          <h1 className="text-[12vw] md:text-9xl font-black uppercase tracking-tighter leading-none text-gray-900 dark:text-white/90">
-            24 Tirthankaras
+          {/* TRANSLATED SUBTITLE */}
+          <h2 className="text-rose-600 dark:text-rose-500 font-bold tracking-[0.5em] mb-4 text-xs md:text-base uppercase">
+            {t.lineage}
+          </h2>
+          {/* TRANSLATED MAIN TITLE with Line-Height Fix */}
+          <h1 className={`text-[12vw] md:text-9xl font-black uppercase tracking-tighter text-gray-900 dark:text-white/90 ${isIndic ? 'leading-tight' : 'leading-none'}`}>
+            {t.title}
           </h1>
         </div>
 
@@ -32,8 +62,8 @@ export default async function TirthankarGallery({ params }: { params: Promise<{ 
             <Link 
               href={`/${lang}/tirthankars/${t.id}`} 
               key={t.id}
-              // Card: Light mode (gray-50) vs Dark mode (zinc-900)
-              className="group relative h-[400px] md:h-[500px] rounded-[2rem] bg-gray-50 dark:bg-zinc-900/50 border border-gray-200 dark:border-white/5 overflow-hidden transition-all hover:border-orange-500/50 hover:shadow-2xl hover:shadow-orange-500/10 dark:hover:shadow-orange-900/20"
+              // Card: ROSE Colors
+              className="group relative h-[400px] md:h-[500px] rounded-[2rem] bg-gray-50 dark:bg-zinc-900/50 border border-gray-200 dark:border-white/5 overflow-hidden transition-all hover:border-rose-500/50 hover:shadow-2xl hover:shadow-rose-500/10 dark:hover:shadow-rose-900/20"
             >
               {/* Background Glow */}
               <div 
@@ -50,7 +80,7 @@ export default async function TirthankarGallery({ params }: { params: Promise<{ 
               {/* Card Content */}
               <div className="absolute inset-0 flex flex-col items-center justify-center z-20 p-6">
                 
-                {/* Image: Slides up on desktop hover */}
+                {/* Image */}
                 <div className="relative w-full h-full flex items-center justify-center transition-all duration-500 md:group-hover:-translate-y-12">
                    <img 
                     src={t.tirthankaraImage} 
@@ -59,14 +89,18 @@ export default async function TirthankarGallery({ params }: { params: Promise<{ 
                    />
                 </div>
 
-                {/* Text Info: Visible mobile, Hover desktop */}
+                {/* Text Info */}
                 <div className="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-white via-white/90 to-transparent dark:from-black dark:via-black/80 dark:to-transparent flex flex-col items-start 
                                 opacity-100 md:opacity-0 md:group-hover:opacity-100 md:translate-y-4 md:group-hover:translate-y-0 transition-all duration-500">
                    
-                   <div className="text-orange-600 dark:text-orange-500 text-xs font-bold tracking-widest mb-1 uppercase">
+                   <div className="text-rose-600 dark:text-rose-500 text-xs font-bold tracking-widest mb-1 uppercase">
                      {t.symbol[l]}
                    </div>
-                   <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{t.name[l]}</h2>
+                   
+                   {/* Name with Line-Height Fix */}
+                   <h2 className={`text-3xl font-bold text-gray-900 dark:text-white mb-2 ${isIndic ? 'leading-normal' : ''}`}>
+                     {t.name[l]}
+                   </h2>
                    
                    {/* Visual cue */}
                    <div className="h-1 w-12 bg-gray-300 dark:bg-white/20 rounded-full mt-2"></div>

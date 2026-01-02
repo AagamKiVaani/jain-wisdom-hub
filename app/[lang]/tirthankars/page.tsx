@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     // This looks for public/images/tirthankar-preview.png (Make sure to create this image!)
     images: [
       {
-        url: '/images/tirthankar-preview.png',
+        url: '/images/metadata/tirthankar-preview.png',
         width: 1200,
         height: 630,
         alt: '24 Tirthankaras Gallery Preview',

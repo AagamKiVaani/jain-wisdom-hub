@@ -169,9 +169,9 @@ function TargetBody({ id, label, isActive, isHovered, position, children }: any)
     <div className={`absolute ${position} flex flex-col items-center gap-1 transition-all z-10 pointer-events-none select-none`}>
         <div id={`target-${id}`} className="relative flex items-center justify-center w-28 h-28 md:w-48 md:h-48 pointer-events-auto">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`/images/${id}-black.png`} alt={`${label} Dark`} className={`absolute object-contain transition-all duration-500`} style={{ width: id === 'elephant' ? '100%' : id === 'ant' ? '40%' : '60%', height: id === 'elephant' ? '100%' : id === 'ant' ? '40%' : '60%', opacity: isActive ? 0 : (isHovered ? 0.4 : 0.6), filter: "invert(0.3)" }} />
+            <img src={`/images/soul-karma/${id}-black.png`} alt={`${label} Dark`} className={`absolute object-contain transition-all duration-500`} style={{ width: id === 'elephant' ? '100%' : id === 'ant' ? '40%' : '60%', height: id === 'elephant' ? '100%' : id === 'ant' ? '40%' : '60%', opacity: isActive ? 0 : (isHovered ? 0.4 : 0.6), filter: "invert(0.3)" }} />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`/images/${id}-white.png`} alt={`${label} Light`} className={`absolute object-contain transition-all duration-500`} style={{ width: id === 'elephant' ? '100%' : id === 'ant' ? '40%' : '60%', height: id === 'elephant' ? '100%' : id === 'ant' ? '40%' : '60%', opacity: isActive || isHovered ? 1 : 0, transform: isActive ? 'scale(1.1)' : (isHovered ? 'scale(1.05)' : 'scale(0.95)'), filter: isActive || isHovered ? "drop-shadow(0 0 20px rgba(255,255,255,0.8))" : "none", }} />
+            <img src={`/images/soul-karma/${id}-white.png`} alt={`${label} Light`} className={`absolute object-contain transition-all duration-500`} style={{ width: id === 'elephant' ? '100%' : id === 'ant' ? '40%' : '60%', height: id === 'elephant' ? '100%' : id === 'ant' ? '40%' : '60%', opacity: isActive || isHovered ? 1 : 0, transform: isActive ? 'scale(1.1)' : (isHovered ? 'scale(1.05)' : 'scale(0.95)'), filter: isActive || isHovered ? "drop-shadow(0 0 20px rgba(255,255,255,0.8))" : "none", }} />
             <AnimatePresence>{isActive && children}</AnimatePresence>
         </div>
         <span className={`-mt-6 md:-mt-8 text-[10px] md:text-xs font-bold uppercase tracking-widest transition-colors duration-500 ${isActive || isHovered ? "text-blue-400" : "text-zinc-500"}`}>{label}</span>
@@ -277,7 +277,7 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
   // Audio Setup
   useEffect(() => {
     const loadAudio = (name: string, loop = false, vol = 0.5) => {
-        const audio = new Audio(`/sounds/${name}.mp3`);
+        const audio = new Audio(`/sounds/soul-karma/${name}.mp3`);
         audio.loop = loop;
         audio.volume = vol;
         audioRefs.current[name] = audio;
