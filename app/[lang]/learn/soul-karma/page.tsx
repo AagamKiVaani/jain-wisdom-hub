@@ -1,30 +1,59 @@
 import type { Metadata } from 'next';
 import SoulKarmaClient from './SoulKarmaClient';
 
-// 1. FIX: Set the Base URL so images work
+// 1. FIX: Set the Base URL dynamically or hardcode safe fallback
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL 
+  ? `https://${process.env.NEXT_PUBLIC_BASE_URL}` 
+  : 'https://jain-wisdom-hub.vercel.app';
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://jain-wisdom-hub.vercel.app'), 
+  metadataBase: new URL(baseUrl), 
 
-  // 2. FIX: Longer, optimized Title (50-60 chars)
-  title: 'Soul & Karma: The Jiva\'s Journey | Jain Philosophy 3D',
+  // 2. FIX: Optimized Title with keywords
+  title: 'Soul & Karma: The Jiva\'s Journey | Jain Philosophy & Simulation',
 
-  // 3. FIX: Longer, descriptive Description (110-160 chars)
-  description: 'Learn Jainism and Visualise. Interactive 3D simulation of Jiva, Karma particles, and Leshya colors. Discover how Karma sticks to the Soul based on your actions (Yoga & Kashaya).',
+  // 3. FIX: Richer Description
+  description: 'Explore the nature of the Soul (Jiva) and how Karma attaches to it. An interactive 3D simulation of Leshya colors, Yoga (Vibration), and Kashaya (Passions).',
+
+  // 4. NEW: Keywords help Google understand the topic
+  keywords: ['Jainism', 'Soul', 'Jiva', 'Karma', 'Leshya', 'Yoga', 'Kashaya', 'Pudgal', 'Jain Philosophy', 'Metaphysics', 'Rebirth'],
+
+  // 5. NEW: Authorship
+  authors: [{ name: 'AagamKiVaani' }],
 
   openGraph: {
-    title: 'Soul & Karma: The Jiva\'s Journey | Jain Philosophy',
+    title: 'Soul & Karma: The Jiva\'s Journey',
     description: 'Interactive 3D simulation of Jiva, Karma particles, and Leshya colors.',
-    // This looks for public/images/soul-karma-preview.png (Make sure to add this image later!)
+    url: '/learn/soul-karma',
+    siteName: 'Jain Wisdom Hub',
     images: [
       {
-        url: '/images/metadata/soul-karma-preview.png',
+        url: '/images/metadata/soul-karma-preview.png', // Ensure this image exists!
         width: 1200,
         height: 630,
         alt: 'Soul and Karma 3D Simulation',
       },
     ],
     locale: 'en_US',
-    type: 'website',
+    type: 'article', // 'article' fits educational content better
+  },
+
+  // 6. NEW: Twitter Card (Critical for sharing on X/Twitter)
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Soul & Karma: The Jiva\'s Journey',
+    description: 'Experience how Karma sticks to the Soul in 3D.',
+    images: ['/images/metadata/soul-karma-preview.png'],
+  },
+
+  // 7. CRITICAL: Language Alternates (SEO for Multilingual sites)
+  alternates: {
+    canonical: '/en/learn/soul-karma',
+    languages: {
+      'en': '/en/learn/soul-karma',
+      'hi': '/hi/learn/soul-karma',
+      'kn': '/kn/learn/soul-karma',
+    },
   },
 };
 

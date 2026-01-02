@@ -440,7 +440,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                             <Clock className="w-8 h-8 text-green-500" />
                         </div>
                     </div>
-                    <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter bg-gradient-to-b from-white to-zinc-600 bg-clip-text text-transparent">
+                    <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter bg-gradient-to-b from-white to-zinc-600 bg-clip-text text-transparent py-2">
                         {t('enterTitle')}
                     </h1>
                     <p className="text-zinc-400 max-w-md mx-auto text-sm md:text-base leading-relaxed">
@@ -470,14 +470,16 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
       </div>
 
       <div className="relative z-10">
-        <nav className="fixed top-24 left-6 z-40 flex items-center gap-4">
-            <Link href={`/${lang}`} className="flex items-center gap-2 text-zinc-500 hover:text-green-600 transition-all bg-white/80 dark:bg-zinc-900/80 px-4 py-2 rounded-full backdrop-blur-md border border-zinc-200/50 shadow-sm">
-                <ArrowLeft size={16} /> <span className="text-[10px] font-bold uppercase tracking-widest">{t('backBtn')}</span>
+      <nav className="fixed top-24 left-6 right-6 z-50 flex justify-between pointer-events-none">
+        <div className="pointer-events-auto">
+            <Link href={`/${lang}`} className="flex items-center gap-2 text-zinc-500 hover:text-green-600 bg-white/80 dark:bg-zinc-900/80 px-4 py-2 rounded-full backdrop-blur-md border border-zinc-200/50 dark:border-zinc-800 shadow-sm">
+                <ArrowLeft size={16} /> <span className="text-[10px] font-bold uppercase">{t('backBtn')}</span>
             </Link>
-            <button onClick={() => setIsMuted(!isMuted)} className="p-2 rounded-full bg-white/80 text-zinc-400 hover:text-zinc-800 transition-all backdrop-blur-md">
-                {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-            </button>
-        </nav>
+        </div>
+        <button onClick={() => setIsMuted(!isMuted)} className="pointer-events-auto p-3 rounded-full bg-white/80 dark:bg-zinc-900/80 text-zinc-400 hover:text-green-600 border border-zinc-200/50 dark:border-zinc-800 shadow-sm">
+            {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+        </button>
+      </nav>
 
         <div className="max-w-5xl mx-auto px-6 py-24">
           
