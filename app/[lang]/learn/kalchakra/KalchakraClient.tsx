@@ -25,8 +25,8 @@ const translations: Record<string, { en: string; hi: string; kn: string }> = {
   sustenance: { en: "Sustenance", hi: "आहार", kn: "ಆಹಾರ" },
   keyFigures: { en: "Key Figures", hi: "प्रमुख व्यक्तित्व", kn: "ಪ್ರಮುಖ ವ್ಯಕ್ತಿಗಳು" },
   history: { en: "History & Evolution", hi: "इतिहास और विकास", kn: "ಇತಿಹಾಸ ಮತ್ತು ವಿಕಾಸ" },
-  chartTitle: { en: "The Collapse of Stature", hi: "शारीरिक कद का पतन", kn: "ದೇಹದ ಎತ್ತರದ ಕುಸಿತ" },
-  chartNote: { en: "*Visual approximation.", hi: "*दृश्य अनुमान।", kn: "*ದೃಶ್ಯ ಅಂದಾಜು." },
+  chartTitle: { en: "Height of Humans", hi: "मनुष्यों की ऊँचाई", kn: "ಮಾನವರ ಎತ್ತರ" },
+  chartNote: { en: "*Non-linear scale. On a true scale, eras 5 & 6 would be microscopic (invisible).", hi: "*अरेखीय पैमाना। वास्तविक पैमाने पर, युग 5 और 6 अदृश्य (सूक्ष्म) होंगे।", kn: "*ನೇರವಲ್ಲದ ಮಾಪಕ. ನಿಜವಾದ ಅಳತೆಯಲ್ಲಿ, ಯುಗ 5 ಮತ್ತು 6 ಅದೃಶ್ಯವಾಗಿರುತ್ತವೆ (ಸೂಕ್ಷ್ಮ)." },
   backBtn: { en: "Library", hi: "लाइब्रेरी", kn: "ಲೈಬ್ರರಿ" }
 };
 
@@ -179,16 +179,19 @@ const extendedAraDetails: Record<number, {
 };
 
 export default function KalchakraPage({ params }: { params: Promise<{ lang: string }> }) {
-  const [lang, setLang] = useState<"en" | "hi" | "kn">("en");
-  useEffect(() => { params.then(p => setLang(p.lang as any)); }, [params]);
-  
+  // Safe handling for Client Component Promise
+  const { lang: resolvedLang } = require("react").use(params);
+  const lang = (resolvedLang as "en" | "hi" | "kn") || "en";
   const l = (lang === "hi" || lang === "kn") ? lang : "en";
 
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => { setIsMounted(true); }, []);
 
   const [selectedAra, setSelectedAra] = useState<number | null>(null);
+  
+  // NOTE: Index 4 corresponds to Ara 5 (Dukhma) - Current Era
   const [activeWheelIndex, setActiveWheelIndex] = useState(4); 
+  
   const [isMuted, setIsMuted] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [isWheelInView, setIsWheelInView] = useState(false);
@@ -201,6 +204,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
   const enterClickRef = useRef<HTMLAudioElement | null>(null);
   const wheelSectionRef = useRef<HTMLDivElement>(null);
 
+  // --- AUDIO INIT ---
   useEffect(() => {
     bgMusicRef.current = new Audio();
     bgMusicRef.current.loop = true;
@@ -219,29 +223,67 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
     };
   }, []);
 
+  // --- 🌟 NEW: THE SILENT PRELOADER ENGINE ---
+  // This downloads Ara 5 first, then neighbors, then rest in background
   useEffect(() => {
-    if (showModal) {
-      document.body.style.overflow = "hidden"; 
-    } else {
-      document.body.style.overflow = "auto";   
-    }
+    const loadSequence = async () => {
+      // Priority: Ara 5 -> Ara 4, 6 -> Ara 1, 2, 3
+      const sequence = [5, 4, 6, 1, 2, 3];
+
+      for (const id of sequence) {
+        // 1. Preload Audio (Fetch metadata)
+        const audio = new Audio(`/sounds/kalchakra/ara${id}.mp3`);
+        audio.load(); // Forces browser to buffer
+
+        // 2. Preload Images (1 to 11)
+        const imagePromises = Array.from({ length: 11 }).map((_, i) => {
+           return new Promise((resolve) => {
+              const img = new Image();
+              img.src = `/images/kalchakra/ara${id}-${i + 1}.webp`;
+              img.onload = resolve;
+              img.onerror = resolve; // Continue even if missing
+           });
+        });
+        
+        // Wait for this Ara's images to finish before starting next Ara
+        // This ensures Ara 5 finishes FASTest, then others trickle in.
+        await Promise.all(imagePromises);
+      }
+    };
+
+    // Run after a small delay to let main thread render first
+    const timer = setTimeout(() => {
+        loadSequence();
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // --- MODAL LOCK ---
+  useEffect(() => {
+    if (showModal) document.body.style.overflow = "hidden"; 
+    else document.body.style.overflow = "auto"; 
     return () => { document.body.style.overflow = "auto"; };
   }, [showModal]);
 
+  // --- ENTER LOGIC ---
   const handleEnterExperience = () => {
     if (enterClickRef.current) {
         enterClickRef.current.volume = 0.5;
         enterClickRef.current.play().catch(() => {});
     }
     if (bgMusicRef.current) {
+        // Prepare music for Ara 5 immediately
+        bgMusicRef.current.src = "/sounds/kalchakra/ara5.mp3"; 
         bgMusicRef.current.play().then(() => {
-            bgMusicRef.current!.pause(); 
-            bgMusicRef.current!.currentTime = 0;
+            // Keep playing if not muted, or pause if needed
+             // We just wanted to unlock the audio context
         }).catch((e) => console.log("Audio unlock failed", e));
     }
     setHasEntered(true);
   };
 
+  // --- INTERSECTION OBSERVER ---
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -249,11 +291,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
       },
       { threshold: 0.25 }
     );
-
-    if (wheelSectionRef.current) {
-      observer.observe(wheelSectionRef.current);
-    }
-
+    if (wheelSectionRef.current) observer.observe(wheelSectionRef.current);
     return () => observer.disconnect();
   }, []);
 
@@ -266,7 +304,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
   const getNormalizedId = (id: number) => (id > 6 ? 13 - id : id);
   const normalizedId = getNormalizedId(activeWheelAra.id);
 
-  // --- BACKGROUND MUSIC ENGINE ---
+  // --- MUSIC SWITCHER ---
   useEffect(() => {
     if (!bgMusicRef.current) return;
     const player = bgMusicRef.current;
@@ -276,16 +314,19 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
     const targetSrc = `/sounds/kalchakra/ara${normalizedId}.mp3`;
 
     const currentSrcPath = player.getAttribute('src') || "";
+    
+    // Only change source if different
     if (!currentSrcPath.includes(targetSrc)) {
         player.src = targetSrc;
+        // If we switched source, we need to play again if supposed to be playing
+        if(shouldPlay) player.play().catch(() => {});
     }
 
-    if (shouldPlay) {
-        if (player.paused) {
-            player.play().catch(() => {});
-        }
+    if (shouldPlay && player.paused) {
+         player.play().catch(() => {});
     }
 
+    // Smooth Volume Fade
     const fadeInterval = setInterval(() => {
         if (shouldPlay && player.volume < targetVolume) {
             player.volume = Math.min(player.volume + 0.02, targetVolume);
@@ -302,7 +343,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
   }, [activeWheelIndex, isWheelInView, isMuted, normalizedId, hasEntered]);
 
 
-  // --- UI SOUNDS ---
+  // --- SFX HELPER ---
   const playSound = (type: 'click' | 'hover' | 'scifi' | 'enter') => {
       if (isMuted || !isMounted) return;
 
@@ -319,7 +360,8 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
       }
   };
 
-  const visualHeights = ["h-full", "h-[66%]", "h-[33%]", "h-[8%]", "h-[2%]", "h-[0.5%]"];
+  // const visualHeights = ["h-full", "h-[66%]", "h-[33%]", "h-[8%]", "h-[2%]", "h-[0.5%]"];
+  const visualHeights = ["h-full", "h-[70%]", "h-[40%]", "h-[12%]", "h-[1.5%]", "h-[0.5%]"];
   const startHeights = { 1: "6000 Dhanush", 2: "4000 Dhanush", 3: "2000 Dhanush", 4: "500 Dhanush", 5: "7 Hath", 6: "3 Hath" };
 
   const getAraTheme = (id: number) => {
@@ -366,7 +408,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
   const t = (key: string) => translations[key]?.[lang] || translations[key]?.['en'] || key;
 
   return (
-    <div className={`min-h-screen text-zinc-900 dark:text-white overflow-hidden font-sans selection:bg-orange-500 selection:text-white relative ${!hasEntered ? 'h-screen overflow-hidden' : ''}`}>
+    <div className={`min-h-screen text-zinc-900 dark:text-white overflow-hidden font-sans selection:bg-green-500 selection:text-white relative ${!hasEntered ? 'h-screen overflow-hidden' : ''}`}>
       
       {/* --- ENTRANCE GATE --- */}
       <AnimatePresence>
@@ -384,7 +426,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                 >
                     <div className="flex justify-center mb-6">
                         <div className="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center animate-spin-slow">
-                            <Clock className="w-8 h-8 text-orange-500" />
+                            <Clock className="w-8 h-8 text-green-500" />
                         </div>
                     </div>
                     <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter bg-gradient-to-b from-white to-zinc-600 bg-clip-text text-transparent">
@@ -395,7 +437,6 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                     </p>
                     <div className="pt-8">
                         <button
-                             
                             onClick={handleEnterExperience}
                             className="group relative inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold uppercase tracking-widest hover:scale-105 transition-transform duration-300"
                         >
@@ -403,7 +444,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                             <ArrowLeft className="rotate-180 transition-transform group-hover:translate-x-1" size={18} />
                         </button>
                     </div>
-                    <div className="flex justify-center items-center gap-2 text-zinc-600 text-xs font-medium pt-8 animate-pulse">
+                    <div className="flex justify-center items-center gap-2 text-rose-600 text-xs font-medium pt-8 animate-pulse">
                         <Headphones size={14} />
                         <span>{t('audioHint')}</span>
                     </div>
@@ -412,14 +453,14 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
         )}
       </AnimatePresence>
 
-      {/* --- GLOBAL BACKGROUND (Static - Not Theme Based) --- */}
+      {/* --- GLOBAL BACKGROUND --- */}
       <div className="fixed inset-0 z-0 bg-zinc-50 dark:bg-zinc-950 transition-colors duration-500">
          <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
       </div>
 
       <div className="relative z-10">
         <nav className="fixed top-24 left-6 z-40 flex items-center gap-4">
-            <Link href={`/${lang}`} className="flex items-center gap-2 text-zinc-500 hover:text-orange-600 transition-all bg-white/80 dark:bg-zinc-900/80 px-4 py-2 rounded-full backdrop-blur-md border border-zinc-200/50 shadow-sm">
+            <Link href={`/${lang}`} className="flex items-center gap-2 text-zinc-500 hover:text-green-600 transition-all bg-white/80 dark:bg-zinc-900/80 px-4 py-2 rounded-full backdrop-blur-md border border-zinc-200/50 shadow-sm">
                 <ArrowLeft size={16} /> <span className="text-[10px] font-bold uppercase tracking-widest">{t('backBtn')}</span>
             </Link>
             <button onClick={() => setIsMuted(!isMuted)} className="p-2 rounded-full bg-white/80 text-zinc-400 hover:text-zinc-800 transition-all backdrop-blur-md">
@@ -430,7 +471,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
         <div className="max-w-5xl mx-auto px-6 py-24">
           
           <header className="mb-20 mt-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/60 dark:bg-black/20 border border-white/20 text-orange-700 dark:text-orange-400 text-xs font-bold mb-6 tracking-widest uppercase backdrop-blur-md shadow-sm">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/60 dark:bg-black/20 border border-white/20 text-green-700 dark:text-green-400 text-xs font-bold mb-6 tracking-widest uppercase backdrop-blur-md shadow-sm">
                <Clock size={14} /> {t('wheelSubtitle')}
             </div>
             <h1 className="text-5xl md:text-8xl font-black mb-6 tracking-tighter uppercase drop-shadow-sm">{t('wheelTitle')}</h1>
@@ -476,30 +517,28 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
             ))}
           </div>
 
-          {/* --- WHEEL SECTION (Dynamic Background Scope) --- */}
+          {/* --- WHEEL SECTION --- */}
           <div ref={wheelSectionRef} className="relative w-screen left-1/2 -translate-x-1/2 py-24 border-t border-black/10 dark:border-white/10 overflow-hidden">
-             
-             {/* 1. DYNAMIC THEME GRADIENT (Scoped Here) */}
-             <AnimatePresence mode="popLayout">
-                <motion.div 
-                   key={activeWheelIndex} 
-                   initial={{ opacity: 0 }}
-                   animate={{ opacity: 1 }}
-                   exit={{ opacity: 0 }}
-                   transition={{ duration: 0.8, ease: "easeInOut" }} 
-                   className={`absolute inset-0 ${currentTheme}`}
-                />
-             </AnimatePresence>
+              
+              <AnimatePresence mode="popLayout">
+                 <motion.div 
+                    key={activeWheelIndex} 
+                    initial={{ opacity: 0 }} 
+                    animate={{ opacity: 1 }} 
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8, ease: "easeInOut" }} 
+                    className={`absolute inset-0 ${currentTheme}`}
+                 />
+              </AnimatePresence>
 
-             {/* 2. CAROUSEL BACKGROUND (Scoped, Scaled) */}
-             <div className="absolute top-0 left-0 right-0 bottom-0 h-[50%] z-0 opacity-70 pointer-events-none overflow-hidden" style={{ maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)" }}>
-                <AnimatePresence mode="wait">
+              <div className="absolute top-0 left-0 right-0 bottom-0 h-[50%] z-0 opacity-70 pointer-events-none overflow-hidden" style={{ maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)" }}>
+                 <AnimatePresence mode="wait">
                     <motion.div 
-                        key={normalizedId}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 1 }}
+                        key={normalizedId} 
+                        initial={{ opacity: 0 }} 
+                        animate={{ opacity: 1 }} 
+                        exit={{ opacity: 0 }} 
+                        transition={{ duration: 1 }} 
                         className="flex h-full w-max"
                     >
                         <motion.div 
@@ -523,123 +562,166 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                         </motion.div>
                     </motion.div>
                 </AnimatePresence>
-             </div>
+              </div>
 
-             <div className="relative z-10">
-                 <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-5xl font-black uppercase mb-4 drop-shadow-sm">{t('enterTitle')}</h2>
-                    <p className="text-zinc-600 dark:text-zinc-400 max-w-lg mx-auto font-medium">{t('enterDesc')}</p>
-                 </div>
+              <div className="relative z-10">
+                  <div className="text-center mb-12">
+                     <h2 className="text-3xl md:text-5xl font-black uppercase mb-4 drop-shadow-sm">{t('enterTitle')}</h2>
+                     <p className="text-zinc-600 dark:text-zinc-400 max-w-lg mx-auto font-medium">{t('enterDesc')}</p>
+                  </div>
 
-                 <div className="flex justify-center mb-8">
-                    <div className="flex items-center gap-2 px-4 py-2 bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-full border border-black/5 dark:border-white/10 shadow-sm animate-pulse">
-                        <MousePointer2 size={14} className="text-orange-600 dark:text-orange-400" />
-                        <span className="text-[10px] font-bold uppercase tracking-widest opacity-80 text-zinc-800 dark:text-zinc-200">{t('interactionHint')}</span>
-                    </div>
-                 </div>
+                  <div className="flex justify-center mb-8">
+                     <div className="flex items-center gap-2 px-4 py-2 bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-full border border-black/5 dark:border-white/10 shadow-sm animate-pulse">
+                         <MousePointer2 size={14} className="text-orange-600 dark:text-orange-400" />
+                         <span className="text-[10px] font-bold uppercase tracking-widest opacity-80 text-zinc-800 dark:text-zinc-200">{t('interactionHint')}</span>
+                     </div>
+                  </div>
 
-                 <div className="relative w-[340px] h-[340px] md:w-[600px] md:h-[600px] mx-auto mb-16">
-                     {isMounted ? (
-                       <svg viewBox="-1.8 -1.8 3.6 3.6" className="w-full h-full -rotate-90 drop-shadow-2xl">
-                         <defs>
-                           <marker id="arrowhead-down" markerWidth="4" markerHeight="4" refX="0" refY="2" orient="auto"><polygon points="0 0, 4 2, 0 4" fill="#f97316" /></marker>
-                           <marker id="arrowhead-up" markerWidth="4" markerHeight="4" refX="0" refY="2" orient="auto"><polygon points="0 0, 4 2, 0 4" fill="#10b981" /></marker>
-                         </defs>
-                         <line x1="-1.75" y1="0" x2="1.75" y2="0" className="stroke-zinc-400 dark:stroke-zinc-600" strokeWidth="0.025" strokeDasharray="0.05 0.05" strokeLinecap="round" />
-                         {/* --- 2. Avasarpini (Down) Arc & Text --- */}
-                         {/* Removed opacity, Added drop-shadow-md, Increased strokeWidth to 0.04 */}
-                         <path id="avasarpiniArc" d={rightPath} fill="none" stroke="#f97316" strokeWidth="0.04" strokeDasharray="0.1 0.05" markerEnd="url(#arrowhead-down)" className="drop-shadow-md" />
-                         <text fontSize="0.11" fontWeight="900" fill="#f97316" dy="-0.06" letterSpacing="0.02" className="drop-shadow-md"><textPath href="#avasarpiniArc" startOffset="50%" textAnchor="middle">AVASARPINI (DECLINE)</textPath></text>
-                         <text fontSize="0.07" fontWeight="bold" fill="#f97316" dy="0.12" letterSpacing="0.05" className="drop-shadow-md"><textPath href="#avasarpiniArc" startOffset="50%" textAnchor="middle">10 KODAKODI SAGAROPAM</textPath></text>
-                         
-                         {/* --- 3. Utsarpini (Up) Arc & Text --- */}
-                         {/* Removed opacity, Added drop-shadow-md, Increased strokeWidth to 0.04 */}
-                         <path id="utsarpiniArc" d={leftPath} fill="none" stroke="#10b981" strokeWidth="0.04" strokeDasharray="0.1 0.05" markerEnd="url(#arrowhead-up)" className="drop-shadow-md" />
-                         <text fontSize="0.11" fontWeight="900" fill="#10b981" dy="-0.06" letterSpacing="0.02" className="drop-shadow-md"><textPath href="#utsarpiniArc" startOffset="50%" textAnchor="middle">UTSARPINI (RISE)</textPath></text>
-                         <text fontSize="0.07" fontWeight="bold" fill="#10b981" dy="0.12" letterSpacing="0.05" className="drop-shadow-md"><textPath href="#utsarpiniArc" startOffset="50%" textAnchor="middle">10 KODAKODI SAGAROPAM</textPath></text>
-                         {totalSlices.map((slicePercent, index) => {
-                             const startPercent = cumulativePercent;
-                             cumulativePercent += slicePercent / 100;
-                             const endPercent = cumulativePercent;
-                             const midPercent = startPercent + (slicePercent / 100) / 2;
-                             const [startX, startY] = getCoordinatesForPercent(startPercent);
-                             const [endX, endY] = getCoordinatesForPercent(endPercent);
-                             const labelX = (Math.cos(2 * Math.PI * midPercent) * 0.75);
-                             const labelY = (Math.sin(2 * Math.PI * midPercent) * 0.75);
-                             const pathData = `M 0 0 L ${startX.toFixed(5)} ${startY.toFixed(5)} A 1 1 0 0 1 ${endX.toFixed(5)} ${endY.toFixed(5)} Z`;
-                             const isActive = index === activeWheelIndex;
-                             return (
-                               <g key={index} onClick={() => { setActiveWheelIndex(index); playSound('scifi'); }} className="cursor-pointer group">
-                                    <path d={pathData} fill="currentColor" stroke="#09090b" strokeWidth="0.015" className={`transition-all duration-300 ${isActive ? 'scale-105 z-10 brightness-110 drop-shadow-md' : 'hover:brightness-110'} ${wheelData[index].wheelColor}`} style={{ transformOrigin: "0 0" }} />
-                                    <text x={labelX} y={labelY} fontSize="0.12" fontWeight="900" fill="currentColor" textAnchor="middle" dominantBaseline="central" className="pointer-events-none text-black/40 dark:text-black/60 select-none" transform={`rotate(90, ${labelX}, ${labelY})`}>{wheelData[index].id > 6 ? wheelData[index].id - 6 : wheelData[index].id}</text>
-                               </g>
-                             );
-                         })}
-                         <circle cx="0" cy="0" r="0.45" className="fill-white/80 dark:fill-black/80 stroke-zinc-200 dark:stroke-zinc-800 stroke-[0.01]" />
-                       </svg>
-                     ) : (
-                       <div className="w-full h-full rounded-full bg-zinc-100 dark:bg-zinc-800 animate-pulse"></div>
-                     )}
-                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none"><RefreshCw className="w-8 h-8 text-zinc-300 dark:text-zinc-700 animate-spin-slow" /></div>
-                 </div>
+                  <div className="relative w-[340px] h-[340px] md:w-[600px] md:h-[600px] mx-auto mb-16">
+                      {isMounted ? (
+                        <svg viewBox="-1.8 -1.8 3.6 3.6" className="w-full h-full -rotate-90 drop-shadow-2xl">
+                          <defs>
+                            <marker id="arrowhead-down" markerWidth="4" markerHeight="4" refX="0" refY="2" orient="auto"><polygon points="0 0, 4 2, 0 4" fill="#f97316" /></marker>
+                            <marker id="arrowhead-up" markerWidth="4" markerHeight="4" refX="0" refY="2" orient="auto"><polygon points="0 0, 4 2, 0 4" fill="#10b981" /></marker>
+                          </defs>
+                          <line x1="-1.75" y1="0" x2="1.75" y2="0" className="stroke-zinc-400 dark:stroke-zinc-600" strokeWidth="0.025" strokeDasharray="0.05 0.05" strokeLinecap="round" />
+                          
+                          <path id="avasarpiniArc" d={rightPath} fill="none" stroke="#f97316" strokeWidth="0.04" strokeDasharray="0.1 0.05" markerEnd="url(#arrowhead-down)" className="drop-shadow-md" />
+                          <text fontSize="0.11" fontWeight="900" fill="#f97316" dy="-0.06" letterSpacing="0.02" className="drop-shadow-md"><textPath href="#avasarpiniArc" startOffset="50%" textAnchor="middle">AVASARPINI (DECLINE)</textPath></text>
+                          <text fontSize="0.07" fontWeight="bold" fill="#f97316" dy="0.12" letterSpacing="0.05" className="drop-shadow-md"><textPath href="#avasarpiniArc" startOffset="50%" textAnchor="middle">10 KODAKODI SAGAROPAM</textPath></text>
+                          
+                          <path id="utsarpiniArc" d={leftPath} fill="none" stroke="#10b981" strokeWidth="0.04" strokeDasharray="0.1 0.05" markerEnd="url(#arrowhead-up)" className="drop-shadow-md" />
+                          <text fontSize="0.11" fontWeight="900" fill="#10b981" dy="-0.06" letterSpacing="0.02" className="drop-shadow-md"><textPath href="#utsarpiniArc" startOffset="50%" textAnchor="middle">UTSARPINI (RISE)</textPath></text>
+                          <text fontSize="0.07" fontWeight="bold" fill="#10b981" dy="0.12" letterSpacing="0.05" className="drop-shadow-md"><textPath href="#utsarpiniArc" startOffset="50%" textAnchor="middle">10 KODAKODI SAGAROPAM</textPath></text>
+                          
+                          {totalSlices.map((slicePercent, index) => {
+                              const startPercent = cumulativePercent;
+                              cumulativePercent += slicePercent / 100;
+                              const endPercent = cumulativePercent;
+                              const midPercent = startPercent + (slicePercent / 100) / 2;
+                              const [startX, startY] = getCoordinatesForPercent(startPercent);
+                              const [endX, endY] = getCoordinatesForPercent(endPercent);
+                              const labelX = (Math.cos(2 * Math.PI * midPercent) * 0.75);
+                              const labelY = (Math.sin(2 * Math.PI * midPercent) * 0.75);
+                              const pathData = `M 0 0 L ${startX.toFixed(5)} ${startY.toFixed(5)} A 1 1 0 0 1 ${endX.toFixed(5)} ${endY.toFixed(5)} Z`;
+                              const isActive = index === activeWheelIndex;
+                              return (
+                                <g key={index} onClick={() => { setActiveWheelIndex(index); playSound('scifi'); }} className="cursor-pointer group">
+                                     <path d={pathData} fill="currentColor" stroke="#09090b" strokeWidth="0.015" className={`transition-all duration-300 ${isActive ? 'scale-105 z-10 brightness-110 drop-shadow-md' : 'hover:brightness-110'} ${wheelData[index].wheelColor}`} style={{ transformOrigin: "0 0" }} />
+                                     <text x={labelX} y={labelY} fontSize="0.12" fontWeight="900" fill="currentColor" textAnchor="middle" dominantBaseline="central" className="pointer-events-none text-black/40 dark:text-black/60 select-none" transform={`rotate(90, ${labelX}, ${labelY})`}>{wheelData[index].id > 6 ? wheelData[index].id - 6 : wheelData[index].id}</text>
+                                </g>
+                              );
+                          })}
+                          <circle cx="0" cy="0" r="0.45" className="fill-white/80 dark:fill-black/80 stroke-zinc-200 dark:stroke-zinc-800 stroke-[0.01]" />
+                        </svg>
+                      ) : (
+                        <div className="w-full h-full rounded-full bg-zinc-100 dark:bg-zinc-800 animate-pulse"></div>
+                      )}
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none"><RefreshCw className="w-8 h-8 text-zinc-300 dark:text-zinc-700 animate-spin-slow" /></div>
+                  </div>
 
-                 <AnimatePresence mode="wait">
-                    <motion.div 
-                      key={activeWheelIndex} 
-                      initial={{ opacity: 0, y: 20 }} 
-                      animate={{ opacity: 1, y: 0 }} 
-                      exit={{ opacity: 0, y: -20 }} 
-                      className="bg-white/80 dark:bg-black/60 border border-white/20 dark:border-white/10 rounded-3xl p-6 md:p-8 max-w-3xl mx-auto shadow-2xl backdrop-blur-xl w-[75%]"
-                    >
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                            <div className="flex items-center gap-4">
-                                <div className={`w-4 h-4 rounded-full ${activeWheelAra.barColor} border border-black/10 shrink-0`}></div>
-                                <div>
-                                  <div className="text-[10px] uppercase font-bold text-zinc-500 dark:text-zinc-400 tracking-widest">{activeWheelAra.cycle}</div>
-                                  <h3 className="text-2xl md:text-3xl font-black uppercase">{activeWheelAra.name[l]}</h3>
-                                </div>
-                            </div>
-                            <div className="flex items-center md:block gap-2 md:gap-0 text-left md:text-right">
-                              <div className="text-[10px] uppercase font-bold text-zinc-500 dark:text-zinc-400 tracking-widest">{t('duration')}</div>
-                              <div className="font-bold text-sm md:text-base ml-auto md:ml-0">{activeWheelAra.duration[l]}</div>
-                            </div>
-                        </div>
-                        {/* <p className="text-zinc-700 dark:text-zinc-200 mb-8 font-serif leading-relaxed text-base md:text-lg">{activeWheelAra.description[l]}</p> */}
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 mb-8">
-                            <div className="p-4 bg-white/50 dark:bg-black/40 rounded-xl text-center flex flex-row sm:flex-col items-center sm:justify-center justify-between gap-2 border border-black/5">
-                               <div className="text-[10px] uppercase font-bold text-zinc-400 sm:mb-1">{t('height')}</div>
-                               <div className="font-bold text-sm">{activeWheelAra.height[l]}</div>
-                            </div>
-                            <div className="p-4 bg-white/50 dark:bg-black/40 rounded-xl text-center flex flex-row sm:flex-col items-center sm:justify-center justify-between gap-2 border border-black/5">
-                               <div className="text-[10px] uppercase font-bold text-zinc-400 sm:mb-1">{t('lifespan')}</div>
-                               <div className="font-bold text-sm">{activeWheelAra.lifespan[l]}</div>
-                            </div>
-                            <div className="p-4 bg-white/50 dark:bg-black/40 rounded-xl text-center flex flex-row sm:flex-col items-center sm:justify-center justify-between gap-2 border border-black/5">
-                               <div className="text-[10px] uppercase font-bold text-zinc-400 sm:mb-1">{t('state')}</div>
-                               <div className="font-bold text-sm">{activeWheelAra.meaning[l]}</div>
-                            </div>
-                        </div>
-                        <div className="flex justify-center">
-                          <button onClick={() => { setShowModal(true); playSound('hover'); }} className="flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-black font-bold text-sm hover:scale-105 transition-transform shadow-lg">
-                            <BookOpen size={16} /> {t('readMore')}
-                          </button>
-                        </div>
-                    </motion.div>
-                 </AnimatePresence>
-             </div>
+                  <AnimatePresence mode="wait">
+                     <motion.div 
+                       key={activeWheelIndex} 
+                       initial={{ opacity: 0, y: 20 }} 
+                       animate={{ opacity: 1, y: 0 }} 
+                       exit={{ opacity: 0, y: -20 }} 
+                       className="bg-white/80 dark:bg-black/60 border border-white/20 dark:border-white/10 rounded-3xl p-6 md:p-8 max-w-3xl mx-auto shadow-2xl backdrop-blur-xl w-[75%]"
+                     >
+                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                             <div className="flex items-center gap-4">
+                                 <div className={`w-4 h-4 rounded-full ${activeWheelAra.barColor} border border-black/10 shrink-0`}></div>
+                                 <div>
+                                   <div className="text-[10px] uppercase font-bold text-zinc-500 dark:text-zinc-400 tracking-widest">{activeWheelAra.cycle}</div>
+                                   <h3 className="text-2xl md:text-3xl font-black uppercase">{activeWheelAra.name[l]}</h3>
+                                 </div>
+                             </div>
+                             <div className="flex items-center md:block gap-2 md:gap-0 text-left md:text-right">
+                               <div className="text-[10px] uppercase font-bold text-zinc-500 dark:text-zinc-400 tracking-widest">{t('duration')}</div>
+                               <div className="font-bold text-sm md:text-base ml-auto md:ml-0">{activeWheelAra.duration[l]}</div>
+                             </div>
+                         </div>
+                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 mb-8">
+                             <div className="p-4 bg-white/50 dark:bg-black/40 rounded-xl text-center flex flex-row sm:flex-col items-center sm:justify-center justify-between gap-2 border border-black/5">
+                                <div className="text-[10px] uppercase font-bold text-zinc-400 sm:mb-1">{t('height')}</div>
+                                <div className="font-bold text-sm">{activeWheelAra.height[l]}</div>
+                             </div>
+                             <div className="p-4 bg-white/50 dark:bg-black/40 rounded-xl text-center flex flex-row sm:flex-col items-center sm:justify-center justify-between gap-2 border border-black/5">
+                                <div className="text-[10px] uppercase font-bold text-zinc-400 sm:mb-1">{t('lifespan')}</div>
+                                <div className="font-bold text-sm">{activeWheelAra.lifespan[l]}</div>
+                             </div>
+                             <div className="p-4 bg-white/50 dark:bg-black/40 rounded-xl text-center flex flex-row sm:flex-col items-center sm:justify-center justify-between gap-2 border border-black/5">
+                                <div className="text-[10px] uppercase font-bold text-zinc-400 sm:mb-1">{t('state')}</div>
+                                <div className="font-bold text-sm">{activeWheelAra.meaning[l]}</div>
+                             </div>
+                         </div>
+                         <div className="flex justify-center">
+                           <button onClick={() => { setShowModal(true); playSound('hover'); }} className="flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-900 text-white dark:bg-white dark:text-black font-bold text-sm hover:scale-105 transition-transform shadow-lg">
+                             <BookOpen size={16} /> {t('readMore')}
+                           </button>
+                         </div>
+                     </motion.div>
+                  </AnimatePresence>
+              </div>
           </div>
 
-          <div className="mt-32 p-8 bg-white/60 dark:bg-black/60 rounded-3xl text-center mb-24 relative overflow-hidden border border-white/20 dark:border-white/5 backdrop-blur-md shadow-lg">
-              <h3 className="text-zinc-900 dark:text-white text-sm font-bold tracking-widest uppercase mb-12">{t('chartTitle')}</h3>
-              <div className="flex items-end justify-center gap-2 md:gap-4 lg:gap-8 h-80 border-b border-black/10 dark:border-white/10 pb-4">
-                 {aras.map((ara, i) => (
-                    <div key={i} className={`w-8 md:w-16 lg:w-24 ${ara.barColor} ${visualHeights[i]} rounded-t-lg relative group transition-all duration-500 hover:opacity-80 shadow-sm border border-black/5`}>
-                        <div className="absolute -top-12 left-1/2 -translate-x-1/2 text-white text-[10px] md:text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity bg-black/80 px-2 py-1 rounded z-20 pointer-events-none">{startHeights[ara.id as keyof typeof startHeights]}</div>
-                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-black/50 text-[10px] font-bold">{ara.id}</div>
-                    </div>
-                 ))}
+          {/* --- CHART SECTION (Guaranteed Fit) --- */}
+          <div className="mt-32 p-4 md:p-12 bg-white/60 dark:bg-black/60 rounded-3xl text-center mb-24 relative border border-white/20 dark:border-white/5 backdrop-blur-md shadow-lg flex flex-col">
+              
+              {/* Header */}
+              <div className="flex flex-col items-center mb-8 md:mb-12 shrink-0">
+                 <h3 className="text-zinc-900 dark:text-white text-sm font-bold tracking-[0.2em] uppercase mb-2">
+                    {t('chartTitle')}
+                 </h3>
+                 <div className="h-1 w-12 bg-green-500 rounded-full"></div>
               </div>
-              <p className="text-zinc-500 text-xs mt-6 max-w-lg mx-auto leading-relaxed">{t('chartNote')}</p>
+
+              {/* Graph Container */}
+              <div className="w-full relative h-64 md:h-96 mx-auto max-w-5xl">
+                 
+                 {/* Faint Background Grid Lines */}
+                 <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-10 z-0">
+                     <div className="w-full h-px bg-current border-t border-dashed"></div>
+                     <div className="w-full h-px bg-current border-t border-dashed"></div>
+                     <div className="w-full h-px bg-current border-t border-dashed"></div>
+                     <div className="w-full h-px bg-current border-t border-dashed"></div>
+                 </div>
+
+                 {/* Flex Container with min-w-0 to force fit */}
+                 <div className="flex items-end justify-between h-full w-full gap-1 md:gap-8 z-10 relative">
+                    {aras.map((ara, i) => (
+                        <div key={i} className="flex flex-col items-center justify-end h-full flex-1 min-w-0 group relative">
+                            
+                            {/* Height Value Label */}
+                            {/* Uses absolute positioning on mobile to prevent layout shift, relative on desktop */}
+                            <div className="mb-1 md:mb-3">
+                                <div className="text-[7px] md:text-[11px] font-bold text-zinc-500 dark:text-zinc-400 whitespace-nowrap bg-white/80 dark:bg-black/80 px-1 py-0.5 md:px-2 md:py-1 rounded border border-black/5 dark:border-white/5 shadow-sm">
+                                   {startHeights[ara.id as keyof typeof startHeights]}
+                                </div>
+                            </div>
+
+                            {/* The Bar */}
+                            <div className={`w-full max-w-[20px] md:max-w-[80px] ${ara.barColor} ${visualHeights[i]} rounded-t-sm md:rounded-t-lg relative transition-all duration-500 hover:brightness-110 shadow-md border-x border-t border-white/20 dark:border-white/10`}>
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-50"></div>
+                            </div>
+
+                            {/* X-Axis Badge (Ara ID) */}
+                            <div className="mt-2 md:mt-4 flex flex-col items-center w-full">
+                                <div className={`w-5 h-5 md:w-8 md:h-8 flex items-center justify-center rounded-full text-[9px] md:text-xs font-black shadow-inner transition-colors ${activeWheelIndex === i ? 'bg-zinc-900 text-white dark:bg-white dark:text-black scale-110' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400'}`}>
+                                    {ara.id}
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                 </div>
+              </div>
+
+              {/* Footer Note */}
+              <div className="mt-6 md:mt-8 flex justify-center shrink-0">
+                 <p className="text-rose-400 dark:text-rose-600 text-[10px] md:text-xs uppercase tracking-widest border border-zinc-200 dark:border-zinc-800 px-4 py-2 rounded-full">
+                    {t('chartNote')}
+                 </p>
+              </div>
           </div>
 
         </div>

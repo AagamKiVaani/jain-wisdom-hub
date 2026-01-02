@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Mail, ArrowUp, Instagram } from "lucide-react"; 
+import { siteConfig } from "@/lib/constants";
 
 // --- TRANSLATIONS CONFIGURATION ---
 const translations = {
@@ -102,7 +103,7 @@ export default function Footer({ lang }: { lang: string }) {
             <div className="flex items-center gap-3 flex-wrap">
                {/* YOUTUBE */}
                <a 
-                 href="https://www.youtube.com/@AagamKiVani" 
+                 href= {siteConfig.socials.youtube} 
                  target="_blank"
                  rel="noopener noreferrer"
                  className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-full font-bold text-xs uppercase tracking-widest transition-all hover:scale-105 shadow-lg shadow-red-600/20"
@@ -115,7 +116,7 @@ export default function Footer({ lang }: { lang: string }) {
 
                {/* INSTAGRAM */}
                 <a 
-                    href="https://www.instagram.com/aagamkivaani" 
+                    href= {siteConfig.socials.instagram} 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2.5 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-pink-500 hover:text-pink-500 transition-colors flex items-center justify-center"
@@ -125,7 +126,7 @@ export default function Footer({ lang }: { lang: string }) {
 
                 {/* FACEBOOK */}
                 <a 
-                    href="https://www.facebook.com/profile.php?id=61581831506049"
+                    href= {siteConfig.socials.facebook}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2.5 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-blue-600 hover:text-blue-600 transition-colors flex items-center justify-center"
@@ -137,7 +138,7 @@ export default function Footer({ lang }: { lang: string }) {
 
                 {/* EMAIL */}
                 <a 
-                    href="mailto:aagamkivaani@gmail.com"
+                    href= {siteConfig.email}
                     className="p-2.5 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-orange-500 hover:text-orange-500 transition-colors flex items-center justify-center"
                 >
                     <Mail size={18} />
@@ -172,7 +173,7 @@ export default function Footer({ lang }: { lang: string }) {
                 <li><Link href={`/${lang}/contact`} className="hover:text-orange-500 transition-colors">{t.contact}</Link></li>
                 <li>
                     <a 
-                    href="https://buymeacoffee.com/aagamkivaani" 
+                    href= {siteConfig.support.buyMeCoffee}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group flex items-center gap-2 hover:text-yellow-500 transition-colors font-semibold"

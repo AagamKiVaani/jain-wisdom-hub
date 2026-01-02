@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ExternalLink } from "lucide-react"; 
 import { useParams } from "next/navigation"; // <--- 1. Import this to get the language
+import { siteConfig } from "@/lib/constants";
 
 export default function YouTubeToast() {
   const [isVisible, setIsVisible] = useState(false);
@@ -93,7 +94,7 @@ export default function YouTubeToast() {
               </p>
               
               <a 
-                href="https://www.youtube.com/@AagamKiVani"
+                href= {siteConfig.socials.youtube}
                 target="_blank" 
                 rel="noopener noreferrer"
                 onClick={handleClose}

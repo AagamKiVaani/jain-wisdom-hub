@@ -5,6 +5,7 @@ import { Moon, Sun, Languages, ChevronDown } from "lucide-react";
 import { useTheme } from "next-themes";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { siteConfig } from "@/lib/constants";
 
 export default function Navbar({ lang }: { lang: string }) {
   const { theme, setTheme } = useTheme();
@@ -50,7 +51,7 @@ export default function Navbar({ lang }: { lang: string }) {
           
           {/* --- YOUTUBE LINK --- */}
           <a
-            href="https://www.youtube.com/@AagamKiVani" 
+            href= {siteConfig.socials.youtube}
             target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center gap-2 p-2 rounded-md hover:bg-red-50 dark:hover:bg-red-900/10 transition-all"
