@@ -36,6 +36,6 @@ export const config = {
      * - .mp3, .wav (Audio)
      * - .glb, .gltf (3D Models)         <-- ADDED THIS
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|sounds|images|models|.*\\.(?:svg|png|jpg|jpeg|gif|webp|mp3|wav|glb|gltf)$).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|sounds|images|models|google.*\\.html|.*\\.(?:svg|png|jpg|jpeg|gif|webp|mp3|wav|glb|gltf)$).*)',
   ],
 };
