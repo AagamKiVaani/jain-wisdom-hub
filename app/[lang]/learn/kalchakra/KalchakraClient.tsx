@@ -74,9 +74,9 @@ const extendedAraDetails: Record<number, {
       kn: "ಪ್ರತಿ ಎರಡು ದಿನಗಳಿಗೊಮ್ಮೆ ಆಹಾರ ಅಗತ್ಯವಾಗುತ್ತದೆ. ಪ್ರಮಾಣ ಹಿಂದಿನ ಯುಗಕ್ಕಿಂತ ಸ್ವಲ್ಪ ಹೆಚ್ಚು."
     },
     keyFigures: { 
-      en: ["Yugalik Humans"], 
-      hi: ["युगलिक मनुष्य"], 
-      kn: ["ಯುಗಲಿಕ ಮನುಷ್ಯರು"]
+      en: ["Yugalik Humans (Twin Beings)"], 
+      hi: ["युगलिक मनुष्य (जुड़वाँ जीव)"], 
+      kn: ["ಯುಗಲಿಕ ಮನುಷ್ಯರು (ಅವಳಿ ಜೀವಿಗಳು)"]
     },
     events: { 
       en: "As natural radiance reduces, the sun and moon become faintly visible towards the end of this era for the first time.", 
@@ -97,7 +97,7 @@ const extendedAraDetails: Record<number, {
       kn: "ಜನರು ದಿನಕ್ಕೆ ಒಮ್ಮೆ ಆಹಾರ ಸೇವಿಸುತ್ತಾರೆ. ಪ್ರಕೃತಿ ಸಿದ್ಧ ಆಹಾರ ನೀಡದ ಕಾರಣ ಕೃಷಿ ಮತ್ತು ಅಡುಗೆ ಪ್ರಾರಂಭವಾಗುತ್ತದೆ."
     },
     keyFigures: { 
-      en: ["14 Kulakaras (Manus)", "Bhagwan Rishabhdev"], 
+      en: ["14 Kulakar (Manu)", "Bhagwan Rishabhdev"], 
       hi: ["14 कुलकर", "भगवान ऋषभदेव"], 
       kn: ["14 ಕುಲಕರರು", "ಭಗವಾನ್ ಋಷಭದೇವ"]
     },
@@ -143,9 +143,9 @@ const extendedAraDetails: Record<number, {
       kn: "ಆಹಾರ ಪೌಷ್ಟಿಕತೆಯನ್ನು ಕಳೆದುಕೊಳ್ಳುತ್ತದೆ. ರುಚಿಯ ಆಸೆ ಹೆಚ್ಚಾದರೂ ತೃಪ್ತಿ ಕಡಿಮೆಯಾಗುತ್ತದೆ."
     },
     keyFigures: { 
-      en: ["Great Acharyas", "No Tirthankaras"], 
-      hi: ["महान आचार्य", "कोई तीर्थंकर नहीं"], 
-      kn: ["ಮಹಾನ್ ಆಚಾರ್ಯರು", "ತೀರ್ಥಂಕರರಿಲ್ಲ"]
+      en: ["5 Shrut Kevali", "Acharya Kund Kund", "Acharya Samantabhadra", "Acharya Maantung", "Acharya Pushpadant & Bhutbali", "Acharya Shantisagar", "Acharya Vidyasagar"], 
+      hi: ["पाँच श्रुतकेवली","आचार्य कुंदकुंद","आचार्य समंतभद्र","आचार्य मानतुंग","आचार्य पुष्पदंत एवं भूतबली","आचार्य शांतिसागर","आचार्य विद्यासागर"], 
+      kn: ["ಐದು ಶ್ರುತಕೇವಲಿ","ಆಚಾರ್ಯ ಕುಂದಕುಂದ","ಆಚಾರ್ಯ ಸಮಂತಭದ್ರ","ಆಚಾರ್ಯ ಮಾನತುಂಗ","ಆಚಾರ್ಯ ಪುಷ್ಪದಂತ ಮತ್ತು ಭೂತಬಲಿ","ಆಚಾರ್ಯ ಶಾಂತಿಸಾಗರ","ಆಚಾರ್ಯ ವಿದ್ಯಾಸಾಗರ"]
     },
     events: { 
       en: "Direct Moksha is impossible from this body. Liberation can only be achieved in future births in Mahavideha or higher realms.", 
@@ -225,38 +225,49 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
 
   // --- 🌟 NEW: THE SILENT PRELOADER ENGINE ---
   // This downloads Ara 5 first, then neighbors, then rest in background
+  // --- 🌟 NEW: GENTLE DRI-FEED PRELOADER ---
+  // Fixes lag on slow networks by loading 1 image at a time
   useEffect(() => {
+    let isMounted = true;
+
     const loadSequence = async () => {
-      // Priority: Ara 5 -> Ara 4, 6 -> Ara 1, 2, 3
-      const sequence = [5, 4, 6, 1, 2, 3];
+      // Priority: Ara 5 (Current) -> Ara 4, 6 -> Others
+      const sequence = [5, 4, 6, 1, 3, 2];
 
       for (const id of sequence) {
-        // 1. Preload Audio (Fetch metadata)
-        const audio = new Audio(`/sounds/kalchakra/ara${id}.mp3`);
-        audio.load(); // Forces browser to buffer
+        if (!isMounted) break; // Stop if user left the page
 
-        // 2. Preload Images (1 to 11)
-        const imagePromises = Array.from({ length: 11 }).map((_, i) => {
-           return new Promise((resolve) => {
-              const img = new Image();
-              img.src = `/images/kalchakra/ara${id}-${i + 1}.webp`;
-              img.onload = resolve;
-              img.onerror = resolve; // Continue even if missing
-           });
-        });
+        // 1. Preload Audio (One at a time)
+        // We just create the object; we don't force .load() heavily to save bandwidth
+        const audio = new Audio(`/sounds/kalchakra/ara${id}.mp3`);
         
-        // Wait for this Ara's images to finish before starting next Ara
-        // This ensures Ara 5 finishes FASTest, then others trickle in.
-        await Promise.all(imagePromises);
+        // 2. Preload Images (One by One - Serial Loading)
+        // This prevents clogging the network queue
+        for (let i = 1; i <= 11; i++) {
+           if (!isMounted) break;
+           
+           await new Promise<void>((resolve) => {
+              const img = new Image();
+              img.src = `/images/kalchakra/ara${id}-${i}.webp`;
+              
+              // If it loads or fails, we move to the next one instantly
+              img.onload = () => resolve();
+              img.onerror = () => resolve();
+           });
+        }
       }
     };
 
-    // Run after a small delay to let main thread render first
+    // WAIT 4 SECONDS before starting heavy network activity.
+    // This allows the Toast, Sound, and UI to load perfectly first.
     const timer = setTimeout(() => {
         loadSequence();
-    }, 100);
+    }, 5000);
 
-    return () => clearTimeout(timer);
+    return () => {
+        isMounted = false; // Kill the loop if user leaves
+        clearTimeout(timer);
+    };
   }, []);
 
   // --- MODAL LOCK ---
