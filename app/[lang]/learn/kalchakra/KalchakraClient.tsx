@@ -238,7 +238,12 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
         if (!isMounted) break; // Stop if user left the page
 
         // 1. Preload Audio (One at a time)
-        const audio = new window.Audio(`/sounds/kalchakra/ara${id}.mp3`);
+        // const audio = new window.Audio(`/sounds/kalchakra/ara${id}.mp3`);
+        
+        // No Preload
+        const audio = new window.Audio();
+        audio.preload = "none";
+        audio.src = `/sounds/kalchakra/ara${id}.mp3`;
         
         // 2. Preload Images (One by One - Serial Loading)
         for (let i = 1; i <= 11; i++) {
@@ -439,7 +444,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                     <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter bg-gradient-to-b from-white to-zinc-600 bg-clip-text text-transparent py-2">
                         {t('enterTitle')}
                     </h1>
-                    <p className="text-zinc-400 max-w-md mx-auto text-sm md:text-base leading-relaxed">
+                    <p className="text-zinc-300 max-w-md mx-auto text-sm md:text-base leading-relaxed">
                         {t('enterDesc')}
                     </p>
                     <div className="pt-8">
@@ -451,7 +456,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                             <ArrowLeft className="rotate-180 transition-transform group-hover:translate-x-1" size={18} />
                         </button>
                     </div>
-                    <div className="flex justify-center items-center gap-2 text-rose-600 text-xs font-medium pt-8 animate-pulse">
+                    <div className="flex justify-center items-center gap-2 text-rose-500 text-xs font-medium pt-8 animate-pulse">
                         <Headphones size={14} />
                         <span>{t('audioHint')}</span>
                     </div>
@@ -732,7 +737,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
 
               {/* Footer Note */}
               <div className="mt-6 md:mt-8 flex justify-center shrink-0">
-                 <p className="text-rose-400 dark:text-rose-600 text-[10px] md:text-xs uppercase tracking-widest border border-zinc-200 dark:border-zinc-800 px-4 py-2 rounded-full">
+                 <p className="text-rose-600 dark:text-rose-600 text-[10px] md:text-xs uppercase tracking-widest border border-zinc-200 dark:border-zinc-800 px-4 py-2 rounded-full">
                     {t('chartNote')}
                  </p>
               </div>
