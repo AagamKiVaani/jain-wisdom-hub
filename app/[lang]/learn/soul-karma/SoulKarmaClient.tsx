@@ -3,11 +3,22 @@
 import { ArrowLeft, Volume2, VolumeX, Info, RefreshCw, Sparkles, Maximize2, Eye, Infinity as InfinityIcon, User, Flame, Layers, Wand2, Sunrise, Frown, Magnet, Zap, Droplets } from "lucide-react"; 
 import Link from "next/link";
 import Image from "next/image"; 
+import dynamic from "next/dynamic";
 import { useState, useEffect, useRef, useMemo, memo, useCallback, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Canvas } from "@react-three/fiber"; // ✅ Standard Import (More Stable)
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
+
+// ✅ LAZY LOAD 3D ENGINE (Solves 28s Lag)
+// This splits the heavy Three.js code into a separate chunk that only loads when needed.
+const Canvas = dynamic(() => import("@react-three/fiber").then((mod) => mod.Canvas), {
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 flex items-center justify-center text-zinc-500 text-xs tracking-widest uppercase animate-pulse">
+        Initializing 3D Engine...
+    </div>
+  )
+});
 
 // --- 1. LOCALIZATION DATA ---
 const translations = {
@@ -94,11 +105,10 @@ const translations = {
 
 // --- 3D SOUL COMPONENT (Memoized) ---
 const SoulModel = memo(({ color }: { color: string }) => {
-    // ✅ PRELOAD THE MODEL to avoid flickering
+    // ✅ PRELOAD THE MODEL to avoid flickering (Only happens when this component mounts)
     useGLTF.preload('/models/human.glb');
     const { scene } = useGLTF('/models/human.glb'); 
     
-    // Clone scene to avoid mutation issues across renders
     const clonedScene = useMemo(() => scene.clone(), [scene]);
 
     useEffect(() => {
@@ -169,7 +179,7 @@ function TargetBody({ id, label, isActive, isHovered, position, children }: any)
   return (
     <div className={`absolute ${position} flex flex-col items-center gap-1 transition-all z-10 pointer-events-none select-none`}>
         <div id={`target-${id}`} className="relative flex items-center justify-center w-28 h-28 md:w-48 md:h-48 pointer-events-auto will-change-transform">
-            {/* ✅ FIXED: Corrected Next/Image usage with style-based sizing */}
+            {/* ✅ FIXED: Removed 'fill' conflict. Using width={0} height={0} with CSS sizing. */}
             <Image 
                 src={`/images/soul-karma/${id}-black.webp`} 
                 alt={`${label} Dark`} 
@@ -180,9 +190,8 @@ function TargetBody({ id, label, isActive, isHovered, position, children }: any)
                 style={{ 
                     opacity: isActive ? 0 : (isHovered ? 0.4 : 0.6), 
                     filter: "invert(0.3)",
-                    // Custom sizing logic:
                     width: id === 'elephant' ? '100%' : id === 'ant' ? '40%' : '60%', 
-                    height: 'auto',
+                    height: 'auto', 
                     aspectRatio: '1/1',
                     left: '50%', top: '50%', transform: 'translate(-50%, -50%)' 
                 }} 
@@ -197,7 +206,6 @@ function TargetBody({ id, label, isActive, isHovered, position, children }: any)
                 style={{ 
                     opacity: isActive || isHovered ? 1 : 0, 
                     filter: isActive || isHovered ? "drop-shadow(0 0 20px rgba(255,255,255,0.8))" : "none",
-                    // Custom sizing logic:
                     width: id === 'elephant' ? '100%' : id === 'ant' ? '40%' : '60%', 
                     height: 'auto',
                     aspectRatio: '1/1',
@@ -222,6 +230,7 @@ const KarmaSlider = ({ label, value, onChange, colorClass, icon: Icon }: any) =>
                 </div>
                 <span className={`text-xs font-mono ${colorClass}`}>{value}%</span>
             </div>
+            {/* ✅ FIXED: Added aria-label for accessibility */}
             <input aria-label={label} type="range" min="0" max="100" value={value} onChange={(e) => onChange(parseInt(e.target.value))} className={`w-full h-2 rounded-lg appearance-none cursor-pointer bg-zinc-800 ${colorClass.includes('red') ? 'accent-red-500' : 'accent-amber-400'}`} />
         </div>
     );
@@ -231,7 +240,6 @@ const KarmaSlider = ({ label, value, onChange, colorClass, icon: Icon }: any) =>
 
 const LocaleSync = ({ lang }: { lang: string }) => {
   useEffect(() => {
-    // Saves the language preference for 1 year
     document.cookie = `NEXT_LOCALE=${lang}; path=/; max-age=31536000; SameSite=Lax`;
   }, [lang]);
   return null;
@@ -239,12 +247,8 @@ const LocaleSync = ({ lang }: { lang: string }) => {
 
 // --- 4. MAIN PAGE ---
 export default function SoulKarmaPage({ params }: { params: Promise<{ lang: string }> }) {
-  // Safe Param Handling
   const { lang: resolvedLang } = require("react").use(params);
   const lang = (resolvedLang as "en" | "hi" | "kn") || "en";
-
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => { setIsMounted(true); }, []);
 
   const [isMuted, setIsMuted] = useState(false);
   const [activeBody, setActiveBody] = useState<null | 'human' | 'elephant' | 'ant' | 'tree'>(null);
@@ -254,18 +258,37 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
   // KARMA STATE
   const [paapValue, setPaapValue] = useState(0);
   const [punyaValue, setPunyaValue] = useState(0);
-  
-  // SOUL COLOR STATE (Managed by parent to pass to 3D model)
   const [soulStatus, setSoulStatus] = useState({ color: '#ffffff', name: "" });
 
   const audioRefs = useRef<{ [key: string]: HTMLAudioElement }>({});
   const lastSoundTime = useRef(0);
+  
+  // ✅ 3D VISIBILITY TRIGGER (SCROLL TO LOAD)
+  const simulationRef = useRef<HTMLDivElement>(null);
+  const [isSimulationReady, setIsSimulationReady] = useState(false);
+
+  // ✅ LOAD 3D ONLY WHEN SCROLLED INTO VIEW (Performance Savior)
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+        ([entry]) => {
+            if (entry.isIntersecting) {
+                setIsSimulationReady(true);
+                observer.disconnect(); // Once loaded, keep it loaded
+            }
+        },
+        { rootMargin: "200px" } // Start loading 200px before it hits viewport
+    );
+    
+    if (simulationRef.current) {
+        observer.observe(simulationRef.current);
+    }
+    
+    return () => observer.disconnect();
+  }, []);
 
   // --- AUDIO SETUP ---
   useEffect(() => {
-    // Only load audio on client
     if (typeof window === 'undefined') return;
-
     const loadAudio = (name: string, loop = false, vol = 0.5) => {
         const audio = new Audio(`/sounds/soul-karma/${name}.mp3`);
         audio.loop = loop;
@@ -282,19 +305,14 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
     return () => { Object.values(audioRefs.current).forEach(audio => audio.pause()); };
   }, []);
 
-  // THROTTLED SOUND PLAYER
   const playSound = useCallback((name: string) => {
       if (isMuted || !audioRefs.current[name]) return;
       const now = Date.now();
-      
-      // Throttle rapid sounds like 'sparkle' or 'thud'
       if ((name === 'sparkle' || name === 'thud') && now - lastSoundTime.current < 80) return; 
-      
       const audio = audioRefs.current[name];
       if (name === 'ambient') {
           audio.play().catch(() => {});
       } else {
-          // Reset time instead of cloning for performance
           audio.currentTime = 0;
           audio.play().catch(() => {});
           if (name === 'sparkle' || name === 'thud') lastSoundTime.current = now;
@@ -308,19 +326,16 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
     }
   }, [isMuted]);
 
-  // DRAG LOGIC (Optimized)
   const checkProximity = (event: any) => {
     const clientX = event.touches ? event.touches[0].clientX : event.clientX;
     const clientY = event.touches ? event.touches[0].clientY : event.clientY;
-    
     const targets = ['human', 'elephant', 'ant', 'tree'];
-    // Simple radius check
     for (const id of targets) {
         const el = document.getElementById(`target-${id}`);
         if (!el) continue;
         const rect = el.getBoundingClientRect();
         const dist = Math.hypot(clientX - (rect.left + rect.width / 2), clientY - (rect.top + rect.height / 2));
-        if (dist < 100) return id; // 100px radius
+        if (dist < 100) return id; 
     }
     return null;
   };
@@ -334,38 +349,16 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
 
   const handleReset = () => { playSound('void'); setActiveBody(null); setHoveredBody(null); setResetKey(p => p + 1); };
   
-  // RESET BUTTON HANDLER FOR CANVAS
   const canvasResetRef = useRef<(() => void) | null>(null);
   const handleKarmaReset = () => {
       setPaapValue(0); setPunyaValue(0); playSound('void');
       if (canvasResetRef.current) canvasResetRef.current();
   };
 
-  // ERROR-FREE TRANSLATION HELPER
   const t = (key: string) => {
-    // We cast to 'any' because our translation object has mixed depth (strings vs objects)
     const entry = (translations as any)[key];
     return entry?.[lang] || entry?.['en'] || key;
   };
-
-  // ✅ MEMOIZED CANVAS WITH SUSPENSE (Fixes "Not Visible" Error)
-  const MemoizedCanvas = useMemo(() => {
-    if (!isMounted) return null; // Wait for client mount
-    return (
-        <Canvas camera={{ position: [0, 0, 5], fov: 45 }} gl={{ alpha: true }}>
-            <ambientLight intensity={0.5} />
-            <spotLight position={[0, 10, -5]} intensity={6} color="white" />
-            <pointLight position={[0, 0, 2]} color={soulStatus.color} intensity={1} distance={5} />
-            
-            {/* ✅ SUSPENSE WRAPPER (Fixes loading issues) */}
-            <Suspense fallback={null}>
-                <SoulModel color={soulStatus.color} />
-            </Suspense>
-            
-            <OrbitControls enableZoom={false} enablePan={false} maxPolarAngle={Math.PI / 2} minPolarAngle={Math.PI / 2} />
-        </Canvas>
-    );
-  }, [soulStatus.color, isMounted]);
 
   return (
     <div className="min-h-screen selection:bg-purple-500 bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans overflow-x-hidden">
@@ -384,8 +377,6 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
       </nav>
 
       <main className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-24 select-none">
-        
-        {/* HEADER */}
         <header className="text-center max-w-2xl mx-auto mb-8 md:mb-16 relative">
              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100/50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 text-purple-700 dark:text-purple-300 text-[10px] font-bold mb-6 tracking-widest uppercase backdrop-blur-md shadow-sm">
                <Info size={12} /> {t('subtitle')}
@@ -398,7 +389,6 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
             <p className="text-lg text-zinc-600 dark:text-zinc-400 font-medium">{t('desc')}</p>
         </header>
 
-        {/* DRAG & DROP SIMULATION */}
         <div className="relative w-full max-w-5xl h-[65vh] md:h-[70vh] border border-dashed rounded-3xl flex items-center justify-center overflow-hidden bg-zinc-950 border-zinc-800 shadow-2xl mb-12">
             <TargetBody id="human" label={translations.targets.human[lang]} isActive={activeBody === 'human'} isHovered={hoveredBody === 'human'} position="top-4 left-8 md:top-6 md:left-12">
                 <DraggableSoul onDrop={handleDrop} onPickup={() => playSound('pickup')} onDrag={(e: any) => { const hit = checkProximity(e); if (hit && hit !== hoveredBody) setHoveredBody(hit as any); }} isInBody={true} />
@@ -426,9 +416,10 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
             </div>
         </div>
         
-        <div className="mb-24 text-xs text-purple-600 dark:text-purple-400 font-medium animate-pulse text-center px-4">( {t('disclaimer')} )</div>
+        {/* ✅ FIXED: Darker text for contrast */}
+        <div className="mb-24 text-xs text-purple-700 dark:text-purple-400 font-medium animate-pulse text-center px-4">( {t('disclaimer')} )</div>
 
-        {/* WISDOM CARDS (Static Content) */}
+        {/* WISDOM CARDS */}
         <section className="w-full max-w-5xl mx-auto px-4 md:px-0 mb-32">
             <h2 className="text-3xl font-bold text-center mb-12 text-zinc-800 dark:text-zinc-200">
                 {/* @ts-ignore */}
@@ -476,14 +467,14 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
         </section>
 
         {/* --- KARMA SIMULATOR (CANVAS BASED - NO LAG) --- */}
-        <section className="w-full max-w-6xl mx-auto px-4 md:px-0 mb-32">
+        <section ref={simulationRef} className="w-full max-w-6xl mx-auto px-4 md:px-0 mb-32">
              <h2 className="text-3xl font-bold text-center mb-12 text-zinc-800 dark:text-zinc-200">
                 {/* @ts-ignore */}
                 {translations.karma.title[lang] || "Karma Simulation"}
             </h2>
             <div className="flex flex-col md:flex-row gap-8">
 
-                <div className="mb-24 text-s text-green-600 dark:text-green-400 font-medium animate-pulse text-center px-4 md:hidden">
+                <div className="mb-24 text-s text-green-700 dark:text-green-400 font-medium animate-pulse text-center px-4 md:hidden">
                     {/* @ts-ignore */}
                     ( {translations.karma.scroll_disclaimer[lang]} )
                 </div>
@@ -515,9 +506,19 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
                         resetRef={canvasResetRef}
                     />
 
-                    {/* 3D SOUL (Behind Particles) */}
+                    {/* 3D SOUL - ONLY RENDER IF IN VIEW TO SAVE 900KB & 28s LAG */}
                     <div className="absolute inset-0 z-0 pointer-events-none">
-                        {MemoizedCanvas}
+                        {isSimulationReady && (
+                            <Canvas camera={{ position: [0, 0, 5], fov: 45 }} gl={{ alpha: true }}>
+                                <ambientLight intensity={0.5} />
+                                <spotLight position={[0, 10, -5]} intensity={6} color="white" />
+                                <pointLight position={[0, 0, 2]} color={soulStatus.color} intensity={1} distance={5} />
+                                <Suspense fallback={null}>
+                                    <SoulModel color={soulStatus.color} />
+                                </Suspense>
+                                <OrbitControls enableZoom={false} enablePan={false} maxPolarAngle={Math.PI / 2} minPolarAngle={Math.PI / 2} />
+                            </Canvas>
+                        )}
                     </div>
 
                     <div className="absolute top-10 left-0 right-0 text-center z-[60] pointer-events-none">
@@ -579,7 +580,6 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
 // --- 5. OPTIMIZED CANVAS COMPONENT (NO REACT STATE UPDATES) ---
 // This component handles all particles in a single Canvas layer.
 // It uses requestAnimationFrame for 60fps smooth animation.
-// --- 5. OPTIMIZED CANVAS COMPONENT (Fixed Cleanup Logic) ---
 type Particle = { id: number; type: 'paap'|'punya'|'ambient'; x: number; y: number; vx?: number; vy?: number; stuck: boolean; targetX?: number; targetY?: number };
 
 const KarmaCanvas = ({ paap, punya, playSound, onColorChange, resetRef }: any) => {
@@ -717,13 +717,10 @@ const KarmaCanvas = ({ paap, punya, playSound, onColorChange, resetRef }: any) =
             }
 
             // 4. SMART CLEANUP (FIFO)
-            // Fix: We separate ambient from active. We only remove ACTIVE particles if limit hit.
-            // We slice from the BEGINNING (oldest stuck particles) to make room for new ones.
             if(particlesRef.current.length > 500) {
                 const ambients = particlesRef.current.filter(p => p.type === 'ambient');
                 const others = particlesRef.current.filter(p => p.type !== 'ambient');
                 
-                // Keep the newest 400 'other' particles
                 if (others.length > 400) {
                       const newestOthers = others.slice(others.length - 400); 
                       particlesRef.current = [...ambients, ...newestOthers];
