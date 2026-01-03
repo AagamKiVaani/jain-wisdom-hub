@@ -137,7 +137,7 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
                   alt={t.name[l]} 
                   fill
                   className="object-contain drop-shadow-2xl animate-subtle-float"
-                  priority 
+                  priority={true} 
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
             </div>
@@ -148,7 +148,7 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
             <div className="mb-6 relative group cursor-pointer">
                 <div className="absolute inset-0 bg-rose-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative w-24 h-24 md:w-32 md:h-32">
-                    <Image src={t.symbol.imagePath} alt={t.symbol.en} fill className="object-contain opacity-100 group-hover:scale-110 transition-all duration-500 drop-shadow-lg" />
+                    <Image src={t.symbol.imagePath} alt={t.symbol.en} fill sizes="(max-width: 768px) 100px, 200px" className="object-contain opacity-100 group-hover:scale-110 transition-all duration-500 drop-shadow-lg" />
                 </div>
                 <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                     <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-rose-500 bg-white/90 dark:bg-black/90 px-2 py-1 rounded-full border border-rose-500/20">{t.symbol[l]}</span>

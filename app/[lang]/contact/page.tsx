@@ -88,6 +88,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
         <div className="mb-12">
             <a 
                 href="mailto:aagamkivaani@gmail.com" 
+                aria-label="Mail me"
                 className="inline-flex items-center gap-3 bg-gray-900 dark:bg-white text-white dark:text-black px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl"
             >
                 <Mail className="w-5 h-5" />
@@ -101,6 +102,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
             <a 
                 href="https://www.youtube.com/@AagamKiVani" 
                 target="_blank"
+                aria-label="Subscribe on YouTube"
                 className="flex flex-col items-center justify-center p-6 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-red-500 hover:shadow-[0_0_20px_rgba(239,68,68,0.2)] transition-all group"
             >
                 <div className="w-10 h-10 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
@@ -113,6 +115,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
             <a 
                 href="https://www.instagram.com/aagamkivaani/" 
                 target="_blank"
+                aria-label="Follow us on Instagram"
                 className="flex flex-col items-center justify-center p-6 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-pink-500 hover:shadow-[0_0_20px_rgba(236,72,153,0.2)] transition-all group"
             >
                 <div className="w-10 h-10 rounded-full bg-pink-50 dark:bg-pink-900/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
@@ -129,6 +132,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
             <a 
                 href="https://buymeacoffee.com/aagamkivaani" 
                 target="_blank"
+                aria-label="Donate Money"
                 className="flex flex-col items-center justify-center p-6 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-yellow-500 hover:shadow-[0_0_20px_rgba(234,179,8,0.2)] transition-all group"
             >
                 <div className="w-10 h-10 rounded-full bg-yellow-50 dark:bg-yellow-900/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">

@@ -106,6 +106,7 @@ export default function Footer({ lang }: { lang: string }) {
                  href= {siteConfig.socials.youtube} 
                  target="_blank"
                  rel="noopener noreferrer"
+                 aria-label="Subscribe on YouTube"
                  className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-full font-bold text-xs uppercase tracking-widest transition-all hover:scale-105 shadow-lg shadow-red-600/20"
                >
                  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg">
@@ -119,6 +120,7 @@ export default function Footer({ lang }: { lang: string }) {
                     href= {siteConfig.socials.instagram} 
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Follow us on Instagram"
                     className="p-2.5 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-pink-500 hover:text-pink-500 transition-colors flex items-center justify-center"
                 >
                     <Instagram size={20} />
@@ -129,6 +131,7 @@ export default function Footer({ lang }: { lang: string }) {
                     href= {siteConfig.socials.facebook}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Follow us on Facebook"
                     className="p-2.5 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-blue-600 hover:text-blue-600 transition-colors flex items-center justify-center"
                 >
                     <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg">
@@ -139,6 +142,7 @@ export default function Footer({ lang }: { lang: string }) {
                 {/* EMAIL */}
                 <a 
                     href= {siteConfig.email}
+                    aria-label="Email Me"
                     className="p-2.5 rounded-full bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-orange-500 hover:text-orange-500 transition-colors flex items-center justify-center"
                 >
                     <Mail size={18} />
@@ -176,6 +180,7 @@ export default function Footer({ lang }: { lang: string }) {
                     href= {siteConfig.support.buyMeCoffee}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Donate Money"
                     className="group flex items-center gap-2 hover:text-yellow-500 transition-colors font-semibold"
                     >
                         <svg 

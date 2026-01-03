@@ -98,6 +98,7 @@ export default function YouTubeToast() {
                 target="_blank" 
                 rel="noopener noreferrer"
                 onClick={handleClose}
+                aria-label="Subscribe on YouTube"
                 className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-full transition-colors shadow-md"
               >
                 {t.button} <ExternalLink size={10} />

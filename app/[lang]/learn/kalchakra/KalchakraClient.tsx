@@ -3,6 +3,7 @@
 import { aras } from "@/lib/kalchakra-data";
 import { ArrowLeft, Clock, Ruler, Heart, Bone, RefreshCw, BookOpen, Volume2, VolumeX, X, Crown, Scroll, Mountain, MousePointer2, Headphones } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image"; 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -206,14 +207,15 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
 
   // --- AUDIO INIT ---
   useEffect(() => {
-    bgMusicRef.current = new Audio();
+    bgMusicRef.current = new window.Audio();
     bgMusicRef.current.loop = true;
     bgMusicRef.current.volume = 0; 
     
-    clickAudioRef.current = new Audio("/sounds/kalchakra/click.mp3");
-    hoverAudioRef.current = new Audio("/sounds/kalchakra/click2.mp3");
-    sciFiClickRef.current = new Audio("/sounds/kalchakra/scificlick.mp3");
-    enterClickRef.current = new Audio("/sounds/kalchakra/enter.mp3");
+    // ✅ OPTIMIZATION: Only init small UI sounds, don't heavy load everything
+    clickAudioRef.current = new window.Audio("/sounds/kalchakra/click.mp3");
+    hoverAudioRef.current = new window.Audio("/sounds/kalchakra/click2.mp3");
+    sciFiClickRef.current = new window.Audio("/sounds/kalchakra/scificlick.mp3");
+    enterClickRef.current = new window.Audio("/sounds/kalchakra/enter.mp3");
 
     return () => {
         if (bgMusicRef.current) {
@@ -223,9 +225,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
     };
   }, []);
 
-  // --- 🌟 NEW: THE SILENT PRELOADER ENGINE ---
-  // This downloads Ara 5 first, then neighbors, then rest in background
-  // --- 🌟 NEW: GENTLE DRI-FEED PRELOADER ---
+  // --- 🌟 GENTLE DRI-FEED PRELOADER ---
   // Fixes lag on slow networks by loading 1 image at a time
   useEffect(() => {
     let isMounted = true;
@@ -238,18 +238,16 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
         if (!isMounted) break; // Stop if user left the page
 
         // 1. Preload Audio (One at a time)
-        // We just create the object; we don't force .load() heavily to save bandwidth
-        const audio = new Audio(`/sounds/kalchakra/ara${id}.mp3`);
+        const audio = new window.Audio(`/sounds/kalchakra/ara${id}.mp3`);
         
         // 2. Preload Images (One by One - Serial Loading)
-        // This prevents clogging the network queue
         for (let i = 1; i <= 11; i++) {
            if (!isMounted) break;
            
            await new Promise<void>((resolve) => {
-              const img = new Image();
+              // ✅ FIX: Use window.Image to avoid conflict with imported Image component
+              const img = new window.Image();
               img.src = `/images/kalchakra/ara${id}-${i}.avif`;
-              
               // If it loads or fails, we move to the next one instantly
               img.onload = () => resolve();
               img.onerror = () => resolve();
@@ -287,8 +285,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
         // Prepare music for Ara 5 immediately
         bgMusicRef.current.src = "/sounds/kalchakra/ara5.mp3"; 
         bgMusicRef.current.play().then(() => {
-            // Keep playing if not muted, or pause if needed
-             // We just wanted to unlock the audio context
+            // Audio unlocked
         }).catch((e) => console.log("Audio unlock failed", e));
     }
     setHasEntered(true);
@@ -371,7 +368,6 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
       }
   };
 
-  // const visualHeights = ["h-full", "h-[66%]", "h-[33%]", "h-[8%]", "h-[2%]", "h-[0.5%]"];
   const visualHeights = ["h-full", "h-[70%]", "h-[40%]", "h-[12%]", "h-[1.5%]", "h-[0.5%]"];
   const startHeights = { 1: "6000 Dhanush", 2: "4000 Dhanush", 3: "2000 Dhanush", 4: "500 Dhanush", 5: "7 Hath", 6: "3 Hath" };
 
@@ -472,11 +468,11 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
       <div className="relative z-10">
       <nav className="fixed top-24 left-6 right-6 z-50 flex justify-between pointer-events-none">
         <div className="pointer-events-auto">
-            <Link href={`/${lang}`} className="flex items-center gap-2 text-zinc-500 hover:text-green-600 bg-white/80 dark:bg-zinc-900/80 px-4 py-2 rounded-full backdrop-blur-md border border-zinc-200/50 dark:border-zinc-800 shadow-sm">
+            <Link aria-label="Go to Library" href={`/${lang}`} className="flex items-center gap-2 text-zinc-500 hover:text-green-600 bg-white/80 dark:bg-zinc-900/80 px-4 py-2 rounded-full backdrop-blur-md border border-zinc-200/50 dark:border-zinc-800 shadow-sm">
                 <ArrowLeft size={16} /> <span className="text-[10px] font-bold uppercase">{t('backBtn')}</span>
             </Link>
         </div>
-        <button onClick={() => setIsMuted(!isMuted)} className="pointer-events-auto p-3 rounded-full bg-white/80 dark:bg-zinc-900/80 text-zinc-400 hover:text-green-600 border border-zinc-200/50 dark:border-zinc-800 shadow-sm">
+        <button aria-label="Toggle Mute" onClick={() => setIsMuted(!isMuted)} className="pointer-events-auto p-3 rounded-full bg-white/80 dark:bg-zinc-900/80 text-zinc-400 hover:text-green-600 border border-zinc-200/50 dark:border-zinc-800 shadow-sm">
             {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
         </button>
       </nav>
@@ -535,12 +531,12 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
               
               <AnimatePresence mode="popLayout">
                  <motion.div 
-                    key={activeWheelIndex} 
-                    initial={{ opacity: 0 }} 
-                    animate={{ opacity: 1 }} 
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.8, ease: "easeInOut" }} 
-                    className={`absolute inset-0 ${currentTheme}`}
+                   key={activeWheelIndex} 
+                   initial={{ opacity: 0 }} 
+                   animate={{ opacity: 1 }} 
+                   exit={{ opacity: 0 }}
+                   transition={{ duration: 0.8, ease: "easeInOut" }} 
+                   className={`absolute inset-0 ${currentTheme}`}
                  />
               </AnimatePresence>
 
@@ -562,12 +558,17 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                             {[0, 1].map((loopIndex) => (
                                 <div key={loopIndex} className="flex h-full">
                                     {Array.from({ length: 11 }).map((_, i) => (
-                                        <img 
-                                            key={i} 
-                                            src={`/images/kalchakra/ara${normalizedId}-${i + 1}.avif`} 
-                                            className="h-full w-auto object-cover min-w-[50vw] md:min-w-[33vw] mix-blend-overlay" 
-                                            alt="Atmosphere"
-                                            onError={(e) => (e.currentTarget.style.display = 'none')} 
+                                        // ✅ FIXED: Using Next/Image but with unoptimized logic + style hack for aspect ratio
+                                        <Image
+                                            key={i}
+                                            src={`/images/kalchakra/ara${normalizedId}-${i + 1}.avif`}
+                                            alt={`Atmosphere`}
+                                            width={0}
+                                            height={0}
+                                            sizes="100vw"
+                                            className="h-full w-auto object-cover min-w-[50vw] md:min-w-[33vw] mix-blend-overlay"
+                                            style={{ width: 'auto', height: '100%' }} // Forces w-auto behavior in Next Image
+                                            unoptimized // Respects your existing compression
                                         />
                                     ))}
                                 </div>
@@ -620,8 +621,8 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                               const isActive = index === activeWheelIndex;
                               return (
                                 <g key={index} onClick={() => { setActiveWheelIndex(index); playSound('scifi'); }} className="cursor-pointer group">
-                                     <path d={pathData} fill="currentColor" stroke="#09090b" strokeWidth="0.015" className={`transition-all duration-300 ${isActive ? 'scale-105 z-10 brightness-110 drop-shadow-md' : 'hover:brightness-110'} ${wheelData[index].wheelColor}`} style={{ transformOrigin: "0 0" }} />
-                                     <text x={labelX} y={labelY} fontSize="0.12" fontWeight="900" fill="currentColor" textAnchor="middle" dominantBaseline="central" className="pointer-events-none text-black/40 dark:text-black/60 select-none" transform={`rotate(90, ${labelX}, ${labelY})`}>{wheelData[index].id > 6 ? wheelData[index].id - 6 : wheelData[index].id}</text>
+                                      <path d={pathData} fill="currentColor" stroke="#09090b" strokeWidth="0.015" className={`transition-all duration-300 ${isActive ? 'scale-105 z-10 brightness-110 drop-shadow-md' : 'hover:brightness-110'} ${wheelData[index].wheelColor}`} style={{ transformOrigin: "0 0" }} />
+                                      <text x={labelX} y={labelY} fontSize="0.12" fontWeight="900" fill="currentColor" textAnchor="middle" dominantBaseline="central" className="pointer-events-none text-black/40 dark:text-black/60 select-none" transform={`rotate(90, ${labelX}, ${labelY})`}>{wheelData[index].id > 6 ? wheelData[index].id - 6 : wheelData[index].id}</text>
                                 </g>
                               );
                           })}
@@ -757,7 +758,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
             >
               <div className={`h-32 w-full ${currentTheme} relative`}>
                 <div className="absolute top-4 right-4 z-50">
-                  <button onClick={() => setShowModal(false)} className="p-2 bg-black/20 hover:bg-black/40 text-white rounded-full backdrop-blur-md transition-colors">
+                  <button aria-label="Close Modal" onClick={() => setShowModal(false)} className="p-2 bg-black/20 hover:bg-black/40 text-white rounded-full backdrop-blur-md transition-colors">
                     <X size={20} />
                   </button>
                 </div>
