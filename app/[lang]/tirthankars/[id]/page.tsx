@@ -3,21 +3,20 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image"; 
 import { ArrowLeft, Star } from "lucide-react";
-import KalyanakTimeline from "./KalyanakTimeline"; // <--- IMPORT THE NEW COMPONENT
-
+import KalyanakTimeline from "./KalyanakTimeline"; 
 import { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: Promise<{ tirthankarId: string; lang: string }> }): Promise<Metadata> {
-  // 1. AWAIT the params (Crucial Fix for Next.js 15+)
+// ✅ FIX 1: Correct Parameter Name in Metadata
+export async function generateMetadata({ params }: { params: Promise<{ id: string; lang: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
   
-  const id = Number(resolvedParams.tirthankarId);
+  // 🔴 WAS: resolvedParams.tirthankarId (Undefined)
+  // 🟢 NOW: resolvedParams.id (Correct)
+  const id = Number(resolvedParams.id);
   const lang = resolvedParams.lang === "hi" || resolvedParams.lang === "kn" ? resolvedParams.lang : "en";
 
-  // 2. Find the Tirthankar
   const tirthankar = tirthankaras.find((t) => t.id === id);
 
-  // 3. Fallback if not found
   if (!tirthankar) {
     return {
       title: "Tirthankar Not Found",
@@ -25,7 +24,6 @@ export async function generateMetadata({ params }: { params: Promise<{ tirthanka
     };
   }
 
-  // 4. Create Dynamic Text
   const name = tirthankar.name[lang];
   const symbol = tirthankar.symbol[lang];
   
@@ -43,7 +41,6 @@ export async function generateMetadata({ params }: { params: Promise<{ tirthanka
     description = `Explore the life, kalyanaks, and teachings of Bhagwan ${name} (Symbol: ${symbol}). Nirvana Place: ${tirthankar.placeOfNirvana.en}.`;
   }
 
-  // 5. Return Metadata
   return {
     title: title,
     description: description,
@@ -69,7 +66,6 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
     return n + (s[(v - 20) % 10] || s[v] || s[0]);
   };
 
-  // ... (Keep your getAuraColor and stats logic exactly as it was) ...
   const getAuraColor = (id: number) => {
     if ([6, 12].includes(id)) return "#ef4444"; 
     if ([7, 23].includes(id)) return "#22c55e"; 
@@ -95,19 +91,10 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
   const prevT = tirthankaras.find(item => item.id === t.id - 1);
   const nextT = tirthankaras.find(item => item.id === t.id + 1);
 
-  // Keep Data here (Server Side)
-  const kalyanaks = [
-    { title: { en: "Garbha", hi: "गर्भ", kn: "ಗರ್ಭ" }, desc: { en: "The divine descent from heaven into the mother's womb.", hi: "प्राणत स्वर्ग से माता के गर्भ में मंगल अवतरण।", kn: "ಸ್ವರ್ಗದಿಂದ ತಾಯಿಯ ಗರ್ಭಕ್ಕೆ ಆಗಮನ." } },
-    { title: { en: "Janma", hi: "जन्म", kn: "ಜನ್ಮ" }, desc: { en: "The auspicious birth celebrated by the 100 Indras on Mount Meru.", hi: "मेरु पर्वत पर १०० इन्द्रों द्वारा मनाया गया जन्माभिषेक।", kn: "ಇಂದ್ರನಿಂದ ಆಚರಿಸಲ್ಪಟ್ಟ ಜನ್ಮ ಮಹೋತ್ಸವ." } },
-    { title: { en: "Diksha", hi: "दीक्षा", kn: "ದೀಕ್ಷೆ" }, desc: { en: "Renouncing worldly pleasures to seek the eternal truth.", hi: "लौकांतिक देवों की स्तुति के साथ वैराग्य और दीक्षा ग्रहण।", kn: "ಸಂಸಾರ ತ್ಯಜಿಸಿ ದೀಕ್ಷೆ ಸ್ವೀಕಾರ." } },
-    { title: { en: "Kevala Jnana", hi: "केवल ज्ञान", kn: "ಕೇವಲ ಜ್ಞಾನ" }, desc: { en: "Destruction of Ghati Karmas and attainment of Omniscience.", hi: "चार घातिया कर्मों का क्षय और अनंत ज्ञान का प्रकाश।", kn: "ಅನಂತ ಜ್ಞಾನದ ಪ್ರಾಪ್ತಿ." } },
-    { title: { en: "Moksha", hi: "मोक्ष", kn: "ಮೋಕ್ಷ" }, desc: { en: "Final liberation and the soul's ascent to Siddhashila.", hi: "अघाती कर्मों का नाश और निर्वाण की प्राप्ति।", kn: "ಸಂಸಾರ ಚಕ್ರದಿಂದ ಮುಕ್ತಿ." } },
-  ];
-
   return (
     <div className="bg-white dark:bg-black text-gray-900 dark:text-white min-h-screen selection:bg-rose-500 selection:text-white transition-colors duration-500">
       
-      {/* 1. FIXED NAVIGATION (Unchanged) */}
+      {/* 1. FIXED NAVIGATION */}
       <Link 
         href={`/${lang}/tirthankars`} 
         className="fixed top-20 left-4 md:top-24 md:left-8 z-40 flex items-center gap-2 text-gray-500 hover:text-rose-500 transition-all bg-white/80 dark:bg-black/40 px-4 py-2 rounded-full backdrop-blur-md border border-gray-200 dark:border-white/10 shadow-sm"
@@ -116,7 +103,7 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
         <span className="text-[10px] font-black uppercase tracking-[0.2em]">Gallery</span>
       </Link>
 
-      {/* 2. HERO SECTION (Unchanged - Keeps existing visuals) */}
+      {/* 2. HERO SECTION */}
       <div className="relative min-h-screen flex flex-col items-center justify-center px-4 md:px-6 pt-24 md:pt-32 pb-20 overflow-hidden">
         
         {/* Atmosphere Background */}
@@ -132,6 +119,7 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
                style={{ backgroundColor: auraColorHex }}
             ></div>
             <div className="relative w-full h-full">
+                {/* ✅ PERFORMANCE: Added 'priority' to load main image instantly */}
                 <Image 
                   src={t.tirthankaraImage} 
                   alt={t.name[l]} 
@@ -143,12 +131,19 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
             </div>
         </div>
 
-        {/* Text Container & Stats (Unchanged) */}
+        {/* Text Container & Stats */}
         <div className="text-center w-full max-w-5xl z-20 px-2 flex flex-col items-center">
             <div className="mb-6 relative group cursor-pointer">
                 <div className="absolute inset-0 bg-rose-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative w-24 h-24 md:w-32 md:h-32">
-                    <Image src={t.symbol.imagePath} alt={t.symbol.en} fill sizes="(max-width: 768px) 100px, 200px" className="object-contain opacity-100 group-hover:scale-110 transition-all duration-500 drop-shadow-lg" />
+                    {/* ✅ PERFORMANCE: Added sizes to symbol */}
+                    <Image 
+                        src={t.symbol.imagePath} 
+                        alt={t.symbol.en} 
+                        fill 
+                        sizes="(max-width: 768px) 100px, 200px" 
+                        className="object-contain opacity-100 group-hover:scale-110 transition-all duration-500 drop-shadow-lg" 
+                    />
                 </div>
                 <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                     <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-rose-500 bg-white/90 dark:bg-black/90 px-2 py-1 rounded-full border border-rose-500/20">{t.symbol[l]}</span>
@@ -172,10 +167,10 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
         </div>
       </div>
 
-      {/* 3. KALYANAK TIMELINE (REPLACED WITH NEW COMPONENT) */}
+      {/* 3. KALYANAK TIMELINE */}
       <KalyanakTimeline kalyanakData={t.kalyanaks} lang={lang} />
 
-      {/* 4. FOOTER NAVIGATION (Unchanged) */}
+      {/* 4. FOOTER NAVIGATION */}
       <div className="min-h-[50vh] flex flex-col items-center justify-center px-6 text-center border-t border-gray-100 dark:border-white/5 bg-gray-50 dark:bg-gradient-to-b dark:from-black dark:to-zinc-950 transition-colors duration-500 pb-32 pt-20">
            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mb-20">
               {prevT && (

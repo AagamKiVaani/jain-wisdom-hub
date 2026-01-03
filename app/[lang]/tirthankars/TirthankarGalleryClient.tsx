@@ -1,5 +1,6 @@
 import { tirthankaras } from "@/lib/tirthankara-data";
 import Link from "next/link";
+import Image from "next/image"; // ✅ Import Next Image
 import { ArrowLeft } from "lucide-react";
 
 export default async function TirthankarGallery({ params }: { params: Promise<{ lang: string }> }) {
@@ -58,7 +59,7 @@ export default async function TirthankarGallery({ params }: { params: Promise<{ 
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 pb-20">
-          {tirthankaras.map((t) => (
+          {tirthankaras.map((t, index) => (
             <Link 
               href={`/${lang}/tirthankars/${t.id}`} 
               key={t.id}
@@ -72,21 +73,25 @@ export default async function TirthankarGallery({ params }: { params: Promise<{ 
               ></div>
 
               <div className="absolute top-6 left-8 z-10">
-                 <span className="text-6xl font-black text-gray-200 dark:text-white/5 group-hover:text-gray-300 dark:group-hover:text-white/20 transition-colors">
-                   {t.id}
-                 </span>
+                  <span className="text-6xl font-black text-gray-200 dark:text-white/5 group-hover:text-gray-300 dark:group-hover:text-white/20 transition-colors">
+                    {t.id}
+                  </span>
               </div>
 
               {/* Card Content */}
               <div className="absolute inset-0 flex flex-col items-center justify-center z-20 p-6">
                 
-                {/* Image */}
-                <div className="relative w-full h-full flex items-center justify-center transition-all duration-500 md:group-hover:-translate-y-12">
-                   <img 
-                    src={t.tirthankaraImage} 
-                    alt={t.name[l]} 
-                    className="h-[55%] md:h-[60%] w-auto object-contain drop-shadow-2xl"
-                   />
+                {/* Image Container - Needs relative for 'fill' to work */}
+                <div className="relative w-full h-[60%] flex items-center justify-center transition-all duration-500 md:group-hover:-translate-y-12">
+                    {/* ✅ OPTIMIZED IMAGE: Uses 'fill' to cover parent, 'sizes' to reduce download size */}
+                    <Image
+                        src={t.tirthankaraImage}
+                        alt={t.name[l]}
+                        fill // Fills the relative parent container
+                        priority={index < 4} // ✅ Loads the first 4 images instantly (Critical for LCP)
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                        className="object-contain drop-shadow-2xl p-4"
+                    />
                 </div>
 
                 {/* Text Info */}
