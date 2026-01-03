@@ -200,11 +200,11 @@ export default function Footer({ lang }: { lang: string }) {
         </div>
 
         {/* Divider */}
-        <div className="w-full h-px bg-gray-200 dark:bg-white/10 mb-8"></div>
+        <div className="w-full h-px bg-gray-500 dark:bg-white/10 mb-8"></div>
 
         {/* Bottom Section */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="text-xs font-medium opacity-60">
+          <div className="text-xs font-medium opacity-80 text-black dark:text-white">
             © {new Date().getFullYear()} {t.brand}. {t.rights}
           </div>
           

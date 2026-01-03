@@ -2,9 +2,10 @@
 
 import { ArrowLeft, Volume2, VolumeX, Info, RefreshCw, Sparkles, Maximize2, Eye, Infinity as InfinityIcon, User, Flame, Layers, Wand2, Sunrise, Frown, Magnet, Zap, Droplets } from "lucide-react"; 
 import Link from "next/link";
-import { useState, useEffect, useRef, useMemo, memo, useCallback } from "react";
+import Image from "next/image"; 
+import { useState, useEffect, useRef, useMemo, memo, useCallback, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Canvas } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber"; // ✅ Standard Import (More Stable)
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 
@@ -93,7 +94,11 @@ const translations = {
 
 // --- 3D SOUL COMPONENT (Memoized) ---
 const SoulModel = memo(({ color }: { color: string }) => {
+    // ✅ PRELOAD THE MODEL to avoid flickering
+    useGLTF.preload('/models/human.glb');
     const { scene } = useGLTF('/models/human.glb'); 
+    
+    // Clone scene to avoid mutation issues across renders
     const clonedScene = useMemo(() => scene.clone(), [scene]);
 
     useEffect(() => {
@@ -164,10 +169,42 @@ function TargetBody({ id, label, isActive, isHovered, position, children }: any)
   return (
     <div className={`absolute ${position} flex flex-col items-center gap-1 transition-all z-10 pointer-events-none select-none`}>
         <div id={`target-${id}`} className="relative flex items-center justify-center w-28 h-28 md:w-48 md:h-48 pointer-events-auto will-change-transform">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`/images/soul-karma/${id}-black.webp`} alt={`${label} Dark`} className={`absolute object-contain transition-all duration-500`} style={{ width: id === 'elephant' ? '100%' : id === 'ant' ? '40%' : '60%', height: id === 'elephant' ? '100%' : id === 'ant' ? '40%' : '60%', opacity: isActive ? 0 : (isHovered ? 0.4 : 0.6), filter: "invert(0.3)" }} />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`/images/soul-karma/${id}-white.webp`} alt={`${label} Light`} className={`absolute object-contain transition-all duration-500`} style={{ width: id === 'elephant' ? '100%' : id === 'ant' ? '40%' : '60%', height: id === 'elephant' ? '100%' : id === 'ant' ? '40%' : '60%', opacity: isActive || isHovered ? 1 : 0, transform: isActive ? 'scale(1.1)' : (isHovered ? 'scale(1.05)' : 'scale(0.95)'), filter: isActive || isHovered ? "drop-shadow(0 0 20px rgba(255,255,255,0.8))" : "none", }} />
+            {/* ✅ FIXED: Corrected Next/Image usage with style-based sizing */}
+            <Image 
+                src={`/images/soul-karma/${id}-black.webp`} 
+                alt={`${label} Dark`} 
+                width={0}
+                height={0}
+                sizes="(max-width: 768px) 150px, 250px"
+                className={`absolute object-contain transition-all duration-500`} 
+                style={{ 
+                    opacity: isActive ? 0 : (isHovered ? 0.4 : 0.6), 
+                    filter: "invert(0.3)",
+                    // Custom sizing logic:
+                    width: id === 'elephant' ? '100%' : id === 'ant' ? '40%' : '60%', 
+                    height: 'auto',
+                    aspectRatio: '1/1',
+                    left: '50%', top: '50%', transform: 'translate(-50%, -50%)' 
+                }} 
+            />
+            <Image 
+                src={`/images/soul-karma/${id}-white.webp`} 
+                alt={`${label} Light`} 
+                width={0}
+                height={0}
+                sizes="(max-width: 768px) 150px, 250px"
+                className={`absolute object-contain transition-all duration-500`} 
+                style={{ 
+                    opacity: isActive || isHovered ? 1 : 0, 
+                    filter: isActive || isHovered ? "drop-shadow(0 0 20px rgba(255,255,255,0.8))" : "none",
+                    // Custom sizing logic:
+                    width: id === 'elephant' ? '100%' : id === 'ant' ? '40%' : '60%', 
+                    height: 'auto',
+                    aspectRatio: '1/1',
+                    left: '50%', top: '50%',
+                    transform: `translate(-50%, -50%) ${isActive ? 'scale(1.1)' : (isHovered ? 'scale(1.05)' : 'scale(0.95)')}`
+                }} 
+            />
             <AnimatePresence>{isActive && children}</AnimatePresence>
         </div>
         <span className={`-mt-6 md:-mt-8 text-[10px] md:text-xs font-bold uppercase tracking-widest transition-colors duration-500 ${isActive || isHovered ? "text-purple-400" : "text-zinc-500"}`}>{label}</span>
@@ -185,7 +222,7 @@ const KarmaSlider = ({ label, value, onChange, colorClass, icon: Icon }: any) =>
                 </div>
                 <span className={`text-xs font-mono ${colorClass}`}>{value}%</span>
             </div>
-            <input type="range" min="0" max="100" value={value} onChange={(e) => onChange(parseInt(e.target.value))} className={`w-full h-2 rounded-lg appearance-none cursor-pointer bg-zinc-800 ${colorClass.includes('red') ? 'accent-red-500' : 'accent-amber-400'}`} />
+            <input aria-label={label} type="range" min="0" max="100" value={value} onChange={(e) => onChange(parseInt(e.target.value))} className={`w-full h-2 rounded-lg appearance-none cursor-pointer bg-zinc-800 ${colorClass.includes('red') ? 'accent-red-500' : 'accent-amber-400'}`} />
         </div>
     );
 };
@@ -206,6 +243,9 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
   const { lang: resolvedLang } = require("react").use(params);
   const lang = (resolvedLang as "en" | "hi" | "kn") || "en";
 
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => { setIsMounted(true); }, []);
+
   const [isMuted, setIsMuted] = useState(false);
   const [activeBody, setActiveBody] = useState<null | 'human' | 'elephant' | 'ant' | 'tree'>(null);
   const [hoveredBody, setHoveredBody] = useState<null | 'human' | 'elephant' | 'ant' | 'tree'>(null);
@@ -223,6 +263,9 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
 
   // --- AUDIO SETUP ---
   useEffect(() => {
+    // Only load audio on client
+    if (typeof window === 'undefined') return;
+
     const loadAudio = (name: string, loop = false, vol = 0.5) => {
         const audio = new Audio(`/sounds/soul-karma/${name}.mp3`);
         audio.loop = loop;
@@ -305,16 +348,24 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
     return entry?.[lang] || entry?.['en'] || key;
   };
 
-  // MEMOIZE THE 3D CANVAS TO PREVENT LAG
-  const MemoizedCanvas = useMemo(() => (
-    <Canvas camera={{ position: [0, 0, 5], fov: 45 }} gl={{ alpha: true }}>
-        <ambientLight intensity={0.5} />
-        <spotLight position={[0, 10, -5]} intensity={6} color="white" />
-        <pointLight position={[0, 0, 2]} color={soulStatus.color} intensity={1} distance={5} />
-        <SoulModel color={soulStatus.color} />
-        <OrbitControls enableZoom={false} enablePan={false} maxPolarAngle={Math.PI / 2} minPolarAngle={Math.PI / 2} />
-    </Canvas>
-  ), [soulStatus.color]);
+  // ✅ MEMOIZED CANVAS WITH SUSPENSE (Fixes "Not Visible" Error)
+  const MemoizedCanvas = useMemo(() => {
+    if (!isMounted) return null; // Wait for client mount
+    return (
+        <Canvas camera={{ position: [0, 0, 5], fov: 45 }} gl={{ alpha: true }}>
+            <ambientLight intensity={0.5} />
+            <spotLight position={[0, 10, -5]} intensity={6} color="white" />
+            <pointLight position={[0, 0, 2]} color={soulStatus.color} intensity={1} distance={5} />
+            
+            {/* ✅ SUSPENSE WRAPPER (Fixes loading issues) */}
+            <Suspense fallback={null}>
+                <SoulModel color={soulStatus.color} />
+            </Suspense>
+            
+            <OrbitControls enableZoom={false} enablePan={false} maxPolarAngle={Math.PI / 2} minPolarAngle={Math.PI / 2} />
+        </Canvas>
+    );
+  }, [soulStatus.color, isMounted]);
 
   return (
     <div className="min-h-screen selection:bg-purple-500 bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans overflow-x-hidden">
@@ -323,11 +374,11 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
 
       <nav className="fixed top-24 left-6 right-6 z-50 flex justify-between pointer-events-none">
         <div className="pointer-events-auto">
-            <Link href={`/${lang}`} className="flex items-center gap-2 text-zinc-500 hover:text-purple-600 bg-white/80 dark:bg-zinc-900/80 px-4 py-2 rounded-full backdrop-blur-md border border-zinc-200/50 dark:border-zinc-800 shadow-sm">
+            <Link aria-label="Library" href={`/${lang}`} className="flex items-center gap-2 text-zinc-500 hover:text-purple-600 bg-white/80 dark:bg-zinc-900/80 px-4 py-2 rounded-full backdrop-blur-md border border-zinc-200/50 dark:border-zinc-800 shadow-sm">
                 <ArrowLeft size={16} /> <span className="text-[10px] font-bold uppercase">{t('backBtn')}</span>
             </Link>
         </div>
-        <button onClick={() => setIsMuted(!isMuted)} className="pointer-events-auto p-3 rounded-full bg-white/80 dark:bg-zinc-900/80 text-zinc-400 hover:text-purple-600 border border-zinc-200/50 dark:border-zinc-800 shadow-sm">
+        <button aria-label="Toggle Sound" onClick={() => setIsMuted(!isMuted)} className="pointer-events-auto p-3 rounded-full bg-white/80 dark:bg-zinc-900/80 text-zinc-400 hover:text-purple-600 border border-zinc-200/50 dark:border-zinc-800 shadow-sm">
             {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
         </button>
       </nav>
@@ -375,7 +426,7 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
             </div>
         </div>
         
-        <div className="mb-24 text-xs text-purple-400 font-medium animate-pulse text-center px-4">( {t('disclaimer')} )</div>
+        <div className="mb-24 text-xs text-purple-600 dark:text-purple-400 font-medium animate-pulse text-center px-4">( {t('disclaimer')} )</div>
 
         {/* WISDOM CARDS (Static Content) */}
         <section className="w-full max-w-5xl mx-auto px-4 md:px-0 mb-32">
@@ -432,7 +483,7 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
             </h2>
             <div className="flex flex-col md:flex-row gap-8">
 
-                <div className="mb-24 text-s text-green-400 font-medium animate-pulse text-center px-4 md:hidden">
+                <div className="mb-24 text-s text-green-600 dark:text-green-400 font-medium animate-pulse text-center px-4 md:hidden">
                     {/* @ts-ignore */}
                     ( {translations.karma.scroll_disclaimer[lang]} )
                 </div>
@@ -674,8 +725,8 @@ const KarmaCanvas = ({ paap, punya, playSound, onColorChange, resetRef }: any) =
                 
                 // Keep the newest 400 'other' particles
                 if (others.length > 400) {
-                     const newestOthers = others.slice(others.length - 400); 
-                     particlesRef.current = [...ambients, ...newestOthers];
+                      const newestOthers = others.slice(others.length - 400); 
+                      particlesRef.current = [...ambients, ...newestOthers];
                 }
             }
 

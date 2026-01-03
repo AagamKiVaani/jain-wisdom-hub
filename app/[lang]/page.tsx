@@ -77,7 +77,7 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
   const isIndic = lang === 'hi' || lang === 'kn';
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-screen px-4 py-20 overflow-hidden bg-white dark:bg-black selection:bg-orange-500 selection:text-white">
+    <div className="relative flex flex-col items-center justify-center min-h-screen px-4 py-20 overflow-hidden bg-white dark:bg-black selection:bg-rose-500 selection:text-white">
       
       {/* --- CINEMATIC BACKGROUND GLOW --- */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-orange-500/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
