@@ -7,7 +7,8 @@ export type KalyanakEvent = {
   location?: LocalizedText; // Not needed for Garbha usually
   nakshatra?: LocalizedText;       // Specific for Garbha/Janma
   description: LocalizedText;
-  images: string[];         // Array of paths e.g. ["/kalyanaks/1/garbha1.jpg"]
+  imageMobile: string[];
+  imageDesktop: string[];
   extraInfo?: LocalizedText; // For "16 dreams", "Vairagya reason", "Penance duration"
 };
 
@@ -47,34 +48,39 @@ const defaultKalyanaks = {
     tithi: { en: "Data to be added", hi: "विवरण जोड़ा जाएगा", kn: "ವಿವರಗಳನ್ನು ಸೇರಿಸಲಾಗುವುದು" },
     nakshatra: { en: "Data to be added", hi: "विवरण जोड़ा जाएगा", kn: "ವಿವರಗಳನ್ನು ಸೇರಿಸಲಾಗುವುದು" },
     description: { en: "Descent from heaven.", hi: "स्वर्ग से अवतरण।", kn: "ಸ್ವರ್ಗದಿಂದ ಅವತರಣ." },
-    images: [],
+    imageMobile: [],
+    imageDesktop: [],
     extraInfo: { en: "16 Auspicious Dreams", hi: "16 शुभ स्वप्न", kn: "16 ಶುಭ ಕನಸುಗಳು" }
   },
   janma: {
     tithi: { en: "Data to be added", hi: "विवरण जोड़ा जाएगा", kn: "ವಿವರಗಳನ್ನು ಸೇರಿಸಲಾಗುವುದು" },
     location: { en: "Birthplace", hi: "जन्मस्थान", kn: "ಜನ್ಮಸ್ಥಳ" },
     description: { en: "Birth and Indra's celebration.", hi: "जन्म और इंद्र का उत्सव।", kn: "ಜನ್ಮ ಮತ್ತು ಇಂದ್ರನ ಆಚರಣೆ." },
-    images: []
+    imageMobile: [],
+    imageDesktop: [],
   },
   diksha: {
     tithi: { en: "Data to be added", hi: "विवरण जोड़ा जाएगा", kn: "ವಿವರಗಳನ್ನು ಸೇರಿಸಲಾಗುವುದು" },
     location: { en: "City Garden", hi: "उद्यान", kn: "ಉದ್ಯಾನ" },
     description: { en: "Renunciation of the world.", hi: "संसार का त्याग।", kn: "ಸಂಸಾರ ತ್ಯಾಗ." },
-    images: [],
+    imageMobile: [],
+    imageDesktop: [],
     extraInfo: { en: "Reason for Vairagya", hi: "वैराग्य का कारण", kn: "ವೈರಾಗ್ಯದ ಕಾರಣ" }
   },
   kevalgyan: {
     tithi: { en: "Data to be added", hi: "विवरण जोड़ा जाएगा", kn: "ವಿವರಗಳನ್ನು ಸೇರಿಸಲಾಗುವುದು" },
     location: { en: "Under Tree", hi: "वृक्ष के नीचे", kn: "ಮರದ ಕೆಳಗೆ" },
     description: { en: "Attainment of Omniscience.", hi: "केवलज्ञान की प्राप्ति।", kn: "ಕೇವಲಜ್ಞಾನ ಪ್ರಾಪ್ತಿ." },
-    images: [],
+    imageMobile: [],
+    imageDesktop: [],
     extraInfo: { en: "Duration of Penance", hi: "तपस्या की अवधि", kn: "ತಪಸ್ಸಿನ ಅವಧಿ" }
   },
   moksha: {
     tithi: { en: "Data to be added", hi: "विवरण जोड़ा जाएगा", kn: "ವಿವರಗಳನ್ನು ಸೇರಿಸಲಾಗುವುದು" },
     location: { en: "Nirvana Place", hi: "निर्वाण क्षेत्र", kn: "ನಿರ್ವಾಣ ಕ್ಷೇತ್ರ" },
     description: { en: "Final Liberation.", hi: "मोक्ष प्राप्ति।", kn: "ಮೋಕ್ಷ ಪ್ರಾಪ್ತಿ." },
-    images: []
+    imageMobile: [],
+    imageDesktop: [],
   }
 };
 
@@ -82,7 +88,7 @@ export const tirthankaras: Tirthankara[] = [
   {
     id: 1,
     name: { en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ" },
-    symbol: { en: "Bull", hi: "बैल", kn: "ವೃಷಭ", imagePath: "/images/symbols/bull.png" },
+    symbol: { en: "Bull", hi: "बैल", kn: "ವೃಷಭ", imagePath: "/images/tirthankar/symbols/bull.avif" },
     color: "Golden",
     colorHex: "#EAB308",
     placeOfNirvana: { en: "Mount Kailash (Ashtapad)", hi: "कैलाश पर्वत (अष्टापद)", kn: "ಕೈಲಾಸ ಪರ್ವತ (ಅಷ್ಟಾಪದ)" },
@@ -95,7 +101,7 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Nabhiraay", hi: "नाभिराय", kn: "ನಾಭಿರಾಯ" },
     lifespan: { en: "84 Lakh Purva", hi: "84 लाख पूर्व", kn: "84 ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "500 Dhanush", hi: "500 धनुष", kn: "500 ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/adinath.png",
+    tirthankaraImage: "/images/tirthankar/arhats/adinath.avif",
     
     // --- ADINATH SPECIFIC DATA ---
     kalyanaks: {
@@ -112,7 +118,8 @@ export const tirthankaras: Tirthankara[] = [
           hi: "स्वप्न: हाथी, बैल, शेर, लक्ष्मी, माला, चंद्रमा, सूर्य, ध्वजा, कलश, पद्म सरोवर, सागर, विमान, रत्नों का ढेर, निर्धूम अग्नि।", 
           kn: "ಕನಸುಗಳು: ಆನೆ, ಗೂಳಿ, ಸಿಂಹ, ಲಕ್ಷ್ಮಿ, ಹಾರ, ಚಂದ್ರ, ಸೂರ್ಯ, ಧ್ವಜ, ಕಲಶ, ಪದ್ಮ ಸರೋವರ, ಸಮುದ್ರ, ವಿಮಾನ, ರತ್ನ ರಾಶಿ, ನಿರ್ಧೂಮ ಅಗ್ನಿ." 
         },
-        images: ["/images/kalyanak/Adinath/garbha/1.jpeg", "/images/kalyanak/Adinath/garbha/2.jpeg", "/images/kalyanak/Adinath/garbha/3.jpeg", "/images/kalyanak/Adinath/garbha/4.png", "/images/kalyanak/Adinath/garbha/5.jpeg"] 
+        imageMobile: ["/images/tirthankar/kalyanak/Adinath/mobile/garbha/1.avif", "/images/tirthankar/kalyanak/Adinath/mobile/garbha/2.avif", "/images/tirthankar/kalyanak/Adinath/mobile/garbha/3.avif", "/images/tirthankar/kalyanak/Adinath/mobile/garbha/4.avif", "/images/tirthankar/kalyanak/Adinath/mobile/garbha/5.avif"],
+        imageDesktop: ["/images/tirthankar/kalyanak/Adinath/desktop/garbha/1.avif", "/images/tirthankar/kalyanak/Adinath/desktop/garbha/2.avif", "/images/tirthankar/kalyanak/Adinath/desktop/garbha/3.avif", "/images/tirthankar/kalyanak/Adinath/desktop/garbha/4.avif", "/images/tirthankar/kalyanak/Adinath/desktop/garbha/5.avif"]
       },
       janma: {
         tithi: { en: "Chaitra Krishna Navami", hi: "चैत्र कृष्ण नवमी", kn: "ಚೈತ್ರ ಕೃಷ್ಣ ನವಮಿ" },
@@ -122,7 +129,8 @@ export const tirthankaras: Tirthankara[] = [
           hi: "चैत्र कृष्ण नवमी के दिन, अयोध्या नगरी में माता मरुदेवी ने भगवान ऋषभदेव को जन्म दिया। उनके जन्म के उसी क्षण तीनों लोकों में दिव्य प्रभाव प्रकट हुआ। क्षणभर के लिए अधोलोकों का दुःख उपशांत हो गया और सम्पूर्ण ब्रह्मांड में शांति, प्रकाश और मंगल का वातावरण छा गया।\n\nजन्म के तुरंत बाद चारों निकायों के देवगण अयोध्या पहुँचे। भवनवासी देवों ने शंखनाद किया, व्यंतर देवों ने भेरी बजाई, ज्योतिष्क देवों ने सिंहनाद किया और कल्पवासी देवों ने दिव्य घंटानाद किया। इन स्वयंस्फूर्त नादों ने प्रथम तीर्थंकर के जन्म की घोषणा की।\n\nसौधर्म स्वर्ग में सौधर्म इन्द्र का सिंहासन कंपित हो उठा। अवधिज्ञान से उन्होंने जान लिया कि प्रथम तीर्थंकर का जन्म हो चुका है। भक्तिभाव से परिपूर्ण होकर वे इन्द्राणी शची सहित अपने देवपरिवार के साथ ऐरावत हाथी पर सवार होकर अयोध्या के लिए प्रस्थान कर गए।\n\nइन्द्र ने इन्द्राणी को प्रसूति गृह में भेजा। उन्होंने माता मरुदेवी को अवस्वप्नि निद्रा में सुलाया। एक माया शिशु की रचना कर उसे माता के पास रखा और वास्तविक तीर्थंकर शिशु को आदरपूर्वक बाहर इन्द्र के पास ले आईं।\n\nदिव्य बालक को देखकर सौधर्म इन्द्र भावविभोर हो गए और उन्होंने सहस्र नेत्र धारण किए। बालक को अपनी गोद में बैठाकर, ऐरावत पर आरूढ़ होकर वे देवसमूह के साथ मेरु पर्वत की ओर प्रस्थान कर गए।\n\nमेरु पर्वत की चोटी पर पाण्डुक वन स्थित पाण्डुक शिला पर भगवान को विराजमान किया गया। क्षीर सागर के जल से भरे 1008 स्वर्ण कलशों द्वारा देवों ने जन्माभिषेक किया, जिसमें इन्द्र ने प्रमुख भूमिका निभाई।\n\nअभिषेक के पश्चात भगवान को दिव्य वस्त्र और आभूषण धारण कराए गए। माता के स्वप्न और दिव्य लक्षणों को देखकर इन्द्र ने बालक का नाम ऋषभदेव रखा और उन्हें प्रथम तीर्थंकर मानते हुए आदिनाथ के रूप में स्तुति की।\n\nशोभायात्रा अयोध्या लौटी। इन्द्राणी ने माया शिशु हटाकर वास्तविक बालक को माता के पास रख दिया। माता अज्ञान अवस्था में जागीं। अपार आनंद में सौधर्म इन्द्र ने राजदरबार में आनंद तांडव किया। इस प्रकार जन्म कल्याणक का भव्य समापन हुआ।", 
           kn: "ಚೈತ್ರ ಕೃಷ್ಣ ನವಮಿ ದಿನ, ಅಯೋಧ್ಯಾ ನಗರದಲ್ಲಿ ಮಾತಾ ಮರುದೇವಿ ಭಗವಾನ್ ಋಷಭದೇವರಿಗೆ ಜನ್ಮ ನೀಡಿದರು. ಅವರ ಜನನ ಕ್ಷಣದಲ್ಲಿ ತ್ರಿಲೋಕಗಳಲ್ಲೂ ದಿವ್ಯ ಪ್ರಭಾವ ವಿಸ್ತರಿಸಿತು. ಕ್ಷಣಕಾಲ ಅಧೋಲೋಕಗಳ ದುಃಖ ಶಮನಗೊಂಡು, ಸಮಸ್ತ ಬ್ರಹ್ಮಾಂಡದಲ್ಲಿ ಶಾಂತಿ, ಪ್ರಕಾಶ ಮತ್ತು ಮಂಗಳತೆ ವ್ಯಾಪಿಸಿತು.\n\nಜನನದ ತಕ್ಷಣವೇ ನಾಲ್ಕು ನಿಕಾಯದ ದೇವತೆಗಳು ಆಗಮಿಸಿದರು. ಭವನವಾಸಿ ದೇವರುಗಳು ಶಂಖನಾದ ಮಾಡಿದರು, ವ್ಯಂತರ ದೇವರುಗಳು ಭೇರಿ ನಾದವನ್ನು ಮೂಡಿಸಿದರು, ಜ್ಯೋತಿಷ್ಕ ದೇವರುಗಳು ಸಿಂಹನಾದ ನಡೆಸಿದರು ಮತ್ತು ಕಲ್ಪವಾಸಿ ದೇವರುಗಳು ದಿವ್ಯ ಘಂಟಾನಾದ ಮಾಡಿದರು. ಈ ನಾದಗಳು ಪ್ರಥಮ ತೀರ್ಥಂಕರರ ಜನನವನ್ನು ಪ್ರಕಟಿಸಿತು.\n\nಸೌಧರ್ಮ ಸ್ವರ್ಗದಲ್ಲಿ ಸೌಧರ್ಮ ಇಂದ್ರನ ಸಿಂಹಾಸನ ಕಂಪಿತವಾಯಿತು. ತನ್ನ ಅವಧಿಜ್ಞಾನದಿಂದ ಪ್ರಥಮ ತೀರ್ಥಂಕರರ ಜನನವನ್ನು ಅವರು ಅರಿತುಕೊಂಡರು. ಭಕ್ತಿಭಾವದಿಂದ ತುಂಬಿದ ಇಂದ್ರನು ಇಂದ್ರಾಣಿ ಶಚಿ ಹಾಗೂ ದೇವಪರಿವಾರದೊಂದಿಗೆ ಐರಾವತ ಗಜದ ಮೇಲೆ ಆರೂಢನಾಗಿ ಅಯೋಧ್ಯೆಗೆ ಹೊರಟರು.\n\nಇಂದ್ರನು ಇಂದ್ರಾಣಿಯನ್ನು ಪ್ರಸೂತಿ ಗೃಹಕ್ಕೆ ಕಳುಹಿಸಿದರು. ಅವರು ಮಾತಾ ಮರುದೇವಿಯನ್ನು ಅವಸ್ವಪ್ನಿ ನಿದ್ರೆಗೆ ಒಳಪಡಿಸಿದರು. ಒಂದು ಮಾಯಾ ಶಿಶುವನ್ನು ನಿರ್ಮಿಸಿ ತಾಯಿಯ ಬಳಿಯಲ್ಲಿ ಇಟ್ಟು, ನಿಜವಾದ ತೀರ್ಥಂಕರ ಶಿಶುವನ್ನು ಗೌರವದಿಂದ ಇಂದ್ರನ ಬಳಿ ತಂದರು.\n\nದಿವ್ಯ ಶಿಶುವನ್ನು ಕಂಡ ಸೌಧರ್ಮ ಇಂದ್ರನು ಭಕ್ತಿಭಾವದಿಂದ ಮಂತ್ರಮುಗ್ಧನಾಗಿ ಸಹಸ್ರ ನೇತ್ರಗಳನ್ನು ಧರಿಸಿದರು. ಶಿಶುವನ್ನು ಮಡಿಲಲ್ಲಿ ಇಟ್ಟುಕೊಂಡು, ಐರಾವತದ ಮೇಲೆ ಆರೂಢನಾಗಿ ದೇವಗಣಗಳೊಂದಿಗೆ ಮೇರು ಪರ್ವತದತ್ತ ಹೊರಟರು.\n\nಮೇರು ಪರ್ವತದ ಶಿಖರದಲ್ಲಿರುವ ಪಾಂಡುಕ ವನದ ಪಾಂಡುಕ ಶಿಲೆಯ ಮೇಲೆ ಭಗವಂತರನ್ನು ವಿರಾಜಮಾನಗೊಳಿಸಲಾಯಿತು. ಕ್ಷೀರ ಸಾಗರದ ಜಲದಿಂದ ತುಂಬಿದ 1008 ಸ್ವರ್ಣ ಕಲಶಗಳಿಂದ ದೇವರುಗಳು ಜನ್ಮಾಭಿಷೇಕ ನೆರವೇರಿಸಿದರು; ಇಂದ್ರನು ಭಕ್ತಿಯಿಂದ ಮುನ್ನಡೆಸಿದರು.\n\nಅಭಿಷೇಕದ ನಂತರ ಭಗವಂತರಿಗೆ ದಿವ್ಯ ವಸ್ತ್ರಗಳು ಮತ್ತು ಆಭರಣಗಳು ಅಲಂಕರಿಸಲಾಯಿತು. ಮಾತೆಯ ಸ್ವಪ್ನ ಹಾಗೂ ದಿವ್ಯ ಲಕ್ಷಣಗಳನ್ನು ನೋಡಿ ಇಂದ್ರನು ಶಿಶುವಿಗೆ ಋಷಭದೇವ ಎಂಬ ನಾಮಕರಣ ಮಾಡಿದರು ಮತ್ತು ಅವರನ್ನು ಪ್ರಥಮ ತೀರ್ಥಂಕರವಾಗಿ ಆದಿನಾಥ ಎಂದು ಗೌರವಿಸಿದರು.\n\nಶೋಭಾಯಾತ್ರೆ ಅಯೋಧ್ಯೆಗೆ ಮರಳಿತು. ಇಂದ್ರಾಣಿ ಮಾಯಾ ಶಿಶುವನ್ನು ತೆಗೆದು ನಿಜವಾದ ಶಿಶುವನ್ನು ಮಾತೆಯ ಬಳಿಯಲ್ಲಿ ಇಟ್ಟರು. ಮಾತಾ ಮರುದೇವಿ ಅಜ್ಞಾತವಾಗಿ ಎದ್ದರು. ಅಪಾರ ಆನಂದದಲ್ಲಿ ಸೌಧರ್ಮ ಇಂದ್ರನು ರಾಜಸಭೆಯಲ್ಲಿ ಆನಂದ ತಾಂಡವ ನೆರವೇರಿಸಿದರು. ಈ ಮೂಲಕ ಜನ್ಮ ಕಲ್ಯಾಣಕ ಸಂಪೂರ್ಣವಾಯಿತು." 
         },
-        images: ["/images/kalyanak/Adinath/janma/1.jpeg", "/images/kalyanak/Adinath/janma/2.jpeg", "/images/kalyanak/Adinath/janma/3.jpeg", "/images/kalyanak/Adinath/janma/4.jpeg", "/images/kalyanak/Adinath/janma/5.jpeg", "/images/kalyanak/Adinath/janma/6.jpeg", "/images/kalyanak/Adinath/janma/7.jpeg", "/images/kalyanak/Adinath/janma/8.jpeg"]
+        imageMobile: ["/images/tirthankar/kalyanak/Adinath/mobile/janma/1.avif", "/images/tirthankar/kalyanak/Adinath/mobile/janma/2.avif", "/images/tirthankar/kalyanak/Adinath/mobile/janma/3.avif", "/images/tirthankar/kalyanak/Adinath/mobile/janma/4.avif", "/images/tirthankar/kalyanak/Adinath/mobile/janma/5.avif", "/images/tirthankar/kalyanak/Adinath/mobile/janma/6.avif", "/images/tirthankar/kalyanak/Adinath/mobile/janma/7.avif", "/images/tirthankar/kalyanak/Adinath/mobile/janma/8.avif"],
+        imageDesktop: ["/images/tirthankar/kalyanak/Adinath/desktop/janma/1.avif", "/images/tirthankar/kalyanak/Adinath/desktop/janma/2.avif", "/images/tirthankar/kalyanak/Adinath/desktop/janma/3.avif", "/images/tirthankar/kalyanak/Adinath/desktop/janma/4.avif", "/images/tirthankar/kalyanak/Adinath/desktop/janma/5.avif", "/images/tirthankar/kalyanak/Adinath/desktop/janma/6.avif", "/images/tirthankar/kalyanak/Adinath/desktop/janma/7.avif", "/images/tirthankar/kalyanak/Adinath/desktop/janma/8.avif"]
       },
       diksha: {
         tithi: { en: "Chaitra Krishna Navami", hi: "चैत्र कृष्ण नवमी", kn: "ಚೈತ್ರ ಕೃಷ್ಣ ನವಮಿ" },
@@ -133,7 +141,8 @@ export const tirthankaras: Tirthankara[] = [
           kn: "ಭಗವಾನ್ ಆದಿನಾಥನು ಅಯೋಧ್ಯೆಯನ್ನು ಅಪಾರ ಕಾಲವರೆಗೆ ಆಳಿದರು. ಅವರು ನಾಗರಿಕತೆ, ಸಾಮಾಜಿಕ ವ್ಯವಸ್ಥೆ ಮತ್ತು ಧರ್ಮಾಧಾರಿತ ಆಡಳಿತವನ್ನು ಸ್ಥಾಪಿಸಿದರು. ಸಂನ್ಯಾಸದ ಕಾಲ ಸಮೀಪಿಸಿದಾಗ, ಭಗವಂತನೊಳಗಿನ ವೈರಾಗ್ಯವು ಪ್ರಕಟಗೊಳ್ಳಬೇಕಾದ ಕ್ಷಣ ಬಂದಿದೆ ಎಂಬುದನ್ನು ಸೌಧರ್ಮ ಇಂದ್ರನು ಅರಿತುಕೊಂಡನು.\n\nಲೋಕಹಿತಾರ್ಥವಾಗಿ ಆ ಅಂತರ್ನಿಹಿತ ವೈರಾಗ್ಯವನ್ನು ಪ್ರಕಟಗೊಳಿಸಲು, ಇಂದ್ರನು ರಾಜಸಭೆಯಲ್ಲಿ ಭವ್ಯ ದಿವ್ಯ ಸಭೆಯನ್ನು ಏರ್ಪಡಿಸಿದನು. ದೇವಲೋಕದ ಅತಿ ಸುಂದರ ಅಪ್ಸರೆ ನೀಲಾಂಜನೆಯನ್ನು ದಿವ್ಯ ನೃತ್ಯಕ್ಕಾಗಿ ಆಹ್ವಾನಿಸಲಾಯಿತು. ನೃತ್ಯ ಮಾಡುವಾಗಲೇ ನೀಲಾಂಜನೆಯ ಆಯುಷ್ಯ ಕರ್ಮ ಕ್ಷೀಣಗೊಂಡು, ಕ್ಷಣಮಾತ್ರದಲ್ಲಿ ಅವಳು ನಿರ್ಜೀವಳಾಗಿ ಕುಸಿದಳು. ಸಭೆಯಲ್ಲಿ ವ್ಯತ್ಯಯ ಉಂಟಾಗಬಾರದೆಂದು, ಇಂದ್ರನು ತಕ್ಷಣವೇ ಅವಳಂತೆ ಕಾಣುವ ಮತ್ತೊಂದು ಅಪ್ಸರೆಯನ್ನು ಸ್ಥಾಪಿಸಿ ನೃತ್ಯವನ್ನು ನಿರಂತರವಾಗಿ ಮುಂದುವರಿಸಿದನು.\n\nಸಭೆಯಲ್ಲಿದ್ದ ಎಲ್ಲರೂ ಇದನ್ನು ಗಮನಿಸಲಿಲ್ಲ — ಆದರೆ ಭಗವಾನ್ ಆದಿನಾಥನು ಮಾತ್ರ ನೋಡಿದರು. ತಮ್ಮ ಅಸಾಮಾನ್ಯ ದೃಷ್ಟಿಯಿಂದ ನೀಲಾಂಜನೆಯ ಪತನವನ್ನು ಸ್ಪಷ್ಟವಾಗಿ ಕಂಡು, ಅವರು ಆಳವಾದ ಚಿಂತನೆ ಮಾಡಿದರು — “ದೇವಿಯ ಜೀವವೂ ನೀರಿನ ಬುಗುರಿಯಂತೆ ಕ್ಷಣಿಕವಾಗಿದ್ದರೆ, ಈ ಲೋಕದಲ್ಲಿ ಶಾಶ್ವತತೆ ಎಲ್ಲಿದೆ?”\n\nಭಗವಾನ್ ಆದಿನಾಥನು ಸಂಸಾರ ತ್ಯಾಗದ ನಿರ್ಣಯ ಮಾಡಿದ ಕ್ಷಣದಲ್ಲೇ, ಬ್ರಹ್ಮಲೋಕದ ಅಂಚಿನಲ್ಲಿ ವಾಸಿಸುವ ಲೌಕಾಂತಿಕ ದೇವತೆಗಳು ಪ್ರತ್ಯಕ್ಷರಾದರು. ಅವರು ಭಕ್ತಿಯಿಂದ ವಂದಿಸಿ ಪ್ರಾರ್ಥಿಸಿದರು — “ಹೇ ಪ್ರಭು! ದೀಕ್ಷೆಯನ್ನು ಸ್ವೀಕರಿಸಿ ತೀರ್ಥವನ್ನು ಸ್ಥಾಪಿಸಿ, ಅನಂತ ಜೀವಿಗಳ ಉದ್ಧಾರಕ್ಕೆ ಕಾರಣರಾಗಿರಿ.”\n\nಭಗವಾನ್ ಆದಿನಾಥನು ತಮ್ಮ ಪುತ್ರರನ್ನು ಕರೆಯಿಸಿ ಸಂಪೂರ್ಣ ರಾಜಾಧಿಕಾರವನ್ನು ತ್ಯಜಿಸಿದರು. ಹಿರಿಯ ಪುತ್ರ ಭರತನನ್ನು ಅಯೋಧ್ಯೆಯ ರಾಜನಾಗಿ ನೇಮಿಸಲಾಯಿತು; ಅವನು ಮುಂದೆ ಪ್ರಥಮ ಚಕ್ರವರ್ತಿಯಾಗುವನು. ದ್ವಿತೀಯ ಪುತ್ರ ಬಾಹುಬಲಿಗೆ ಪೊದನಪುರದ ರಾಜ್ಯವನ್ನು ನೀಡಲಾಯಿತು. ಉಳಿದ ಪುತ್ರರಿಗೆ ಉಳಿದ ರಾಜ್ಯಗಳನ್ನು ಹಂಚಿಕೆಯಾಗಿತ್ತು.\n\nಸೌಧರ್ಮ ಇಂದ್ರನು ‘ಸುದರ್ಶನ’ ಎಂಬ ದಿವ್ಯ ಪಲ್ಲಕ್ಕಿಯನ್ನು ನಿರ್ಮಿಸಿದನು. ಭಗವಾನ್ ಆದಿನಾಥನು ಅದರಲ್ಲಿ ಆಸೀನರಾದರು. ಮೊದಲು ರಾಜರು, ನಂತರ ವಿದ್ಯಾಧರರು, ಅಂತಿಮವಾಗಿ ದೇವತೆಗಳು ಪಲ್ಲಕ್ಕಿಯನ್ನು ಹೊತ್ತು ಸಾಗಿಸಿದರು. ಈ ಭವ್ಯ ಯಾತ್ರೆ ಅಯೋಧ್ಯೆಯಿಂದ ಪ್ರಯಾಗದ ಸಮೀಪದಲ್ಲಿರುವ ಸಿದ್ಧಾರ್ಥ ವನದತ್ತ ಸಾಗಿತು.\n\nಚೈತ್ರ ಕೃಷ್ಣ ನವಮಿಯಂದು — ಅದು ಅವರ ಜನ್ಮದ ತಿಥಿಯೇ ಆಗಿತ್ತು — ವಟವೃಕ್ಷದ ಕೆಳಗೆ ಭಗವಾನ್ ಆದಿನಾಥನು ಪಲ್ಲಕ್ಕಿಯಿಂದ ಇಳಿದರು. ಪೂರ್ವದತ್ತ ಮುಖಮಾಡಿ, ಎಲ್ಲಾ ಆಭರಣಗಳು, ಮಾಲೆಗಳು ಮತ್ತು ವಸ್ತ್ರಗಳನ್ನು ತ್ಯಜಿಸಿ ದಿಗಂಬರ ದೀಕ್ಷೆಯನ್ನು ಸ್ವೀಕರಿಸಿದರು. ಅವರು ಭಕ್ತಿಯಿಂದ ಉಚ್ಚರಿಸಿದರು — “ಓಂ ನಮಃ ಸಿದ್ಧೇಭ್ಯಃ” — ಇದು ಈ ಅವಸರ್ಪಿಣಿ ಕಾಲದ ಮೊದಲ ಸಿದ್ಧ ವಂದನೆ ಆಗಿತ್ತು.\n\nಭಗವಾನ್ ಆದಿನಾಥನು ತಮ್ಮ ಕೈಗಳಿಂದಲೇ ಐದು ಮುಷ್ಟಿಗಳಲ್ಲಿ ಕೇಶ ಲೋಂಚನೆಯನ್ನು ನೆರವೇರಿಸಿದರು. ಸೌಧರ್ಮ ಇಂದ್ರನು ಆ ಕೇಶಗಳನ್ನು ರತ್ನಭೂಷಿತ ಪಾತ್ರೆಯಲ್ಲಿ ಸ್ವೀಕರಿಸಿ ಕ್ಷೀರಸಾಗರದಲ್ಲಿ ವಿಸರ್ಜಿಸಿದನು. ಅದೇ ಕ್ಷಣದಲ್ಲಿ ಭಗವಂತನ ಆತ್ಮದಲ್ಲಿ ಮನಃಪರ್ಯಾಯ ಜ್ಞಾನವು ಪ್ರಕಟವಾಯಿತು.\n\nತಮ್ಮ ರಾಜನ ವೈರಾಗ್ಯದಿಂದ ಪ್ರೇರಿತರಾಗಿ 4000 ಉಪರಾಜರು ಭಗವಾನ್ ಆದಿನಾಥನೊಂದಿಗೆ ದೀಕ್ಷೆಯನ್ನು ಸ್ವೀಕರಿಸಿದರು. ಆದರೆ ಅವರು ಆಂತರಿಕ ವಿಕಾರಗಳನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ಜಯಿಸಲಿಲ್ಲ. ಮುಂದೆ ಭಗವಂತನು ದೀರ್ಘ ಮೌನ ತಪಸ್ಸಿನಲ್ಲಿ ಲೀನರಾಗಿದ್ದಾಗ, ಅವರು ಆ ಕಠಿಣ ತಪಸ್ಸನ್ನು ಸಹಿಸಲಾರದೆ ದೀಕ್ಷೆಯಿಂದ ವಿಚಲಿತರಾಗಿ ವಿವಿಧ ಮಿಥ್ಯಾ ಪಂಥಗಳ ಆಧಾರರಾದರು. ದೀಕ್ಷಾ ಕಲ್ಯಾಣಕದ ಮಹೋತ್ಸವವನ್ನು ನೆರವೇರಿಸಿ ದೇವತೆಗಳು ತಮ್ಮ ತಮ್ಮ ಲೋಕಗಳಿಗೆ ಮರಳಿದರು.\n\nಪ್ರಥಮ ಪಾರಣೆ:\nದೀಕ್ಷೆಯನ್ನು ಸ್ವೀಕರಿಸಿದ ನಂತರ ಭಗವಾನ್ ಆದಿನಾಥನು ಗಾಢ ಧ್ಯಾನದಲ್ಲಿ ಲೀನನಾಗಿ ದೀರ್ಘ ತಪಸ್ಸನ್ನು ಕೈಗೊಂಡರು. ಆರು ತಿಂಗಳುಗಳ ಕಾಲ ಅವರು ಸಂಪೂರ್ಣ ಮೌನ, ಅಚಲತೆ ಮತ್ತು ಸಮಭಾವದಲ್ಲಿ ಸ್ಥಿತರಾಗಿ, ಆಹಾರವನ್ನು ಅರಸದೆ ಆತ್ಮನಿಷ್ಠೆಯಲ್ಲಿ ತಲ್ಲೀನರಾಗಿದ್ದರು.\n\nಧ್ಯಾನದಿಂದ ಹೊರಬಂದು ಭಗವಾನ್ ಆದಿನಾಥನು ಆಹಾರಕ್ಕಾಗಿ ನಗರಕ್ಕೆ ವಿಹಾರ ಮಾಡಿದಾಗ, ಲೋಕವು ಸಿದ್ಧವಾಗಿರಲಿಲ್ಲ. ಅವರು ಈ ಅವಸರ್ಪಿಣಿಯ ಮೊದಲ ತೀರ್ಥಂಕರರಾಗಿದ್ದರಿಂದ, ಯಾರಿಗೂ ಆಹಾರ ವಿಧಿಯ ಜ್ಞಾನ ಇರಲಿಲ್ಲ. ಭಕ್ತಿಯಿಂದ ಮತ್ತು ಅಜ್ಞಾನದಿಂದ ಜನರು ವಸ್ತ್ರಗಳು, ಆಭರಣಗಳು ಮತ್ತು ಅಮೂಲ್ಯ ವಸ್ತುಗಳನ್ನು ಅರ್ಪಿಸಿದರು. ಅವು ಯೋಗ್ಯವಲ್ಲವೆಂದು ತಿಳಿದು, ಭಗವಂತನು ಮೌನವಾಗಿ ಹಿಂದಿರುಗಿದರು.\n\nಇದರಿಂದ ಮತ್ತಷ್ಟು ಆರು ತಿಂಗಳುಗಳು ಕಳೆದವು, ಮತ್ತು ಭಗವಾನ್ ಆದಿನಾಥನ ಸಂಪೂರ್ಣ ಒಂದು ವರ್ಷದ ನಿರಾಹಾರ ಉಪವಾಸ ಪೂರ್ಣವಾಯಿತು. ಈ ಅವಧಿಯಲ್ಲಿ ಅವರು ನಿರಂತರ ವಿಹಾರ ಮಾಡುತ್ತಾ, ಸಂಪೂರ್ಣ ಆಸಕ್ತಿರಹಿತರಾಗಿ ತಪಸ್ಸಿನಲ್ಲಿ ಸ್ಥಿತರಾಗಿದ್ದರು.\n\nಒಂದು ದಿನ ಭಗವಾನ್ ಆದಿನಾಥನು ಹಸ್ತಿನಾಪುರಕ್ಕೆ ಆಗಮಿಸಿದರು. ಅವರನ್ನು ಕಂಡ ತಕ್ಷಣ ರಾಜ ಶ್ರೇಯಾಂಸರಿಗೆ ಜಾತಿಸ್ಮರಣ ಜ್ಞಾನ ಪ್ರಾಪ್ತವಾಯಿತು. ಹಿಂದಿನ ಜನ್ಮದಲ್ಲಿ ಅವರು ಭಗವಾನ್ ಆದಿನಾಥನ ಜೀವದೊಂದಿಗೆ ಮುನಿಗಳಿಗೆ ಆಹಾರ ನೀಡಿದ್ದನ್ನು ಸ್ಮರಿಸಿದರು. ತಕ್ಷಣ ಆಹಾರ ವಿಧಿಯನ್ನು ಅರಿತು, ಭಕ್ತಿಯಿಂದ ಇಕ್ಷು ರಸವನ್ನು ಅರ್ಪಿಸಿದರು.\n\nಭಗವಾನ್ ಆದಿನಾಥನು ಆಹಾರವನ್ನು ಸ್ವೀಕರಿಸಿದರು. ಇದರಿಂದ ಈ ಅವಸರ್ಪಿಣಿ ಯುಗದ ಮೊದಲ ವಿಧಿಪೂರ್ವಕ ಆಹಾರ ದಾನ ನೆರವೇರಿತು. ಅದೇ ಕ್ಷಣದಲ್ಲಿ ರತ್ನವೃಷ್ಟಿ, ಪುಷ್ಪವೃಷ್ಟಿ, ದಿವ್ಯ ದುಂದುಭಿ ನಾದ ಮತ್ತು ಆಕಾಶವಾಣಿ ಸಂಭವಿಸಿತು. ಈ ಪವಿತ್ರ ಘಟನೆಯನ್ನು ಅಕ್ಷಯ ತೃತೀಯೆಯಾಗಿ ಆಚರಿಸಲಾಗುತ್ತದೆ." 
         },
         extraInfo: { en: "Reason: Witnessing the death of Nilanjana.", hi: "कारण: नीलांजना की मृत्यु।", kn: "ಕಾರಣ: ನೀಲಾಂಜನೆಯ ಸಾವು." },
-        images: ["/images/kalyanak/Adinath/diksha/1.jpeg", "/images/kalyanak/Adinath/diksha/2.jpeg", "/images/kalyanak/Adinath/diksha/3.jpeg", "/images/kalyanak/Adinath/diksha/4.jpeg", "/images/kalyanak/Adinath/diksha/5.jpeg", "/images/kalyanak/Adinath/diksha/6.jpeg", "/images/kalyanak/Adinath/diksha/7.jpeg", "/images/kalyanak/Adinath/diksha/8.jpeg", "/images/kalyanak/Adinath/diksha/9.jpeg", "/images/kalyanak/Adinath/diksha/10.jpeg", "/images/kalyanak/Adinath/diksha/11.jpeg", "/images/kalyanak/Adinath/diksha/12.jpeg", "/images/kalyanak/Adinath/diksha/13.jpeg", "/images/kalyanak/Adinath/diksha/14.jpeg"]
+        imageMobile: ["/images/tirthankar/kalyanak/Adinath/mobile/diksha/1.avif", "/images/tirthankar/kalyanak/Adinath/mobile/diksha/2.avif", "/images/tirthankar/kalyanak/Adinath/mobile/diksha/3.avif", "/images/tirthankar/kalyanak/Adinath/mobile/diksha/4.avif", "/images/tirthankar/kalyanak/Adinath/mobile/diksha/5.avif", "/images/tirthankar/kalyanak/Adinath/mobile/diksha/6.avif", "/images/tirthankar/kalyanak/Adinath/mobile/diksha/7.avif", "/images/tirthankar/kalyanak/Adinath/mobile/diksha/8.avif", "/images/tirthankar/kalyanak/Adinath/mobile/diksha/9.avif", "/images/tirthankar/kalyanak/Adinath/mobile/diksha/10.avif", "/images/tirthankar/kalyanak/Adinath/mobile/diksha/11.avif", "/images/tirthankar/kalyanak/Adinath/mobile/diksha/12.avif", "/images/tirthankar/kalyanak/Adinath/mobile/diksha/13.avif", "/images/tirthankar/kalyanak/Adinath/mobile/diksha/14.avif"],
+        imageDesktop: ["/images/tirthankar/kalyanak/Adinath/desktop/diksha/1.avif", "/images/tirthankar/kalyanak/Adinath/desktop/diksha/2.avif", "/images/tirthankar/kalyanak/Adinath/desktop/diksha/3.avif", "/images/tirthankar/kalyanak/Adinath/desktop/diksha/4.avif", "/images/tirthankar/kalyanak/Adinath/desktop/diksha/5.avif", "/images/tirthankar/kalyanak/Adinath/desktop/diksha/6.avif", "/images/tirthankar/kalyanak/Adinath/desktop/diksha/7.avif", "/images/tirthankar/kalyanak/Adinath/desktop/diksha/8.avif", "/images/tirthankar/kalyanak/Adinath/desktop/diksha/9.avif", "/images/tirthankar/kalyanak/Adinath/desktop/diksha/10.avif", "/images/tirthankar/kalyanak/Adinath/desktop/diksha/11.avif", "/images/tirthankar/kalyanak/Adinath/desktop/diksha/12.avif", "/images/tirthankar/kalyanak/Adinath/desktop/diksha/13.avif", "/images/tirthankar/kalyanak/Adinath/desktop/diksha/14.avif"]
       },
       kevalgyan: {
         tithi: { en: "Falgun Krishna Ekadashi", hi: "फाल्गुन कृष्ण एकादशी", kn: "ಫಾಲ್ಗುಣ ಕೃಷ್ಣ ಏಕಾದಶಿ" },
@@ -144,7 +153,8 @@ export const tirthankaras: Tirthankara[] = [
           kn: "ದೀಕ್ಷೆಯನ್ನು ಸ್ವೀಕರಿಸಿದ ನಂತರ, ಭಗವಾನ್ ಆದಿನಾಥರು ಒಂದು ಸಾವಿರ ವರ್ಷಗಳ ಕಾಲ ಸಂಪೂರ್ಣ ಮೌನದಲ್ಲಿ ವಿಹರಿಸಿದರು ಮತ್ತು ಅತ್ಯಂತ ಕಠೋರ ತಪಸ್ಸನ್ನು ಆಚರಿಸಿದರು. ಅವರು ಹಸಿವು, ಬಾಯಾರಿಕೆ, ಬಿಸಿಲು, ಚಳಿ ಮತ್ತು ನೋವನ್ನು ಎಳ್ಳಷ್ಟೂ ಆಸಕ್ತಿಯಿಲ್ಲದೆ ಸಹಿಸಿಕೊಂಡರು ಮತ್ತು ತಮ್ಮ ಅವಿರತ ತಪಸ್ಸಿನ ಮೂಲಕ ಕರ್ಮ ಬಂಧನಗಳನ್ನು ಸುಡುತ್ತಾ ಸಾಗಿದರು. ತಮ್ಮ ಆಧ್ಯಾತ್ಮಿಕ ಯಾತ್ರೆಯ ಅಂತಿಮ ಹಂತದಲ್ಲಿ, ಭಗವಾನ್ ಆದಿನಾಥರು ಇಂದಿನ ಪ್ರಯಾಗ ಎಂದು ಕರೆಯಲ್ಪಡುವ ಪುರಿಮತಾಲ್ ನಗರವನ್ನು ತಲುಪಿದರು. ಪವಿತ್ರವಾದ ಶಕಟಮುಖ ಉದ್ಯಾನವನ್ನು ಪ್ರವೇಶಿಸಿ, ಅವರು ನ್ಯಗ್ರೋಧ ಅಥವಾ ಅಕ್ಷಯವಟ ಎಂದು ಕರೆಯಲ್ಪಡುವ ಬೃಹತ್ ಆಲದ ಮರದ ಕೆಳಗೆ ನಿಂತರು.\n\nಕಾಯೋತ್ಸರ್ಗ ಭಂಗಿಯಲ್ಲಿ ನಿಶ್ಚಲವಾಗಿ ನಿಂತು, ಭಗವಾನ್ ಆದಿನಾಥರು ನಾಲ್ಕು ದಿನಗಳ ಅಂತಿಮ ಉಪವಾಸವನ್ನು ಕೈಗೊಂಡರು. ಅವರ ದೇಹವು ಸಂಪೂರ್ಣವಾಗಿ ಸ್ಥಿರವಾಗಿತ್ತು ಮತ್ತು ಮಮಕಾರರಹಿತವಾಗಿತ್ತು, ಅದೇ ಸಮಯದಲ್ಲಿ ಅವರ ಪ್ರಜ್ಞೆಯು ಸಂಪೂರ್ಣವಾಗಿ ಅಂತರ್ಮುಖಿಯಾಗಿ ಆತ್ಮದ ಶುದ್ಧ ಸ್ವರೂಪದ ಕಡೆಗೆ ತಿರುಗಿತ್ತು.\n\nಈ ಅಗಾಧ ಧ್ಯಾನದ ಸಮಯದಲ್ಲಿ, ಭಗವಾನ್ ಆದಿನಾಥರು ಉನ್ನತ ಆಧ್ಯಾತ್ಮಿಕ ಶ್ರೇಣಿಗಳನ್ನು ಏರಿದರು ಮತ್ತು ಧ್ಯಾನದ ಅತ್ಯಂತ ಶುದ್ಧ ರೂಪವಾದ ಶುಕ್ಲ ಧ್ಯಾನವನ್ನು ಪ್ರವೇಶಿಸಿದರು. ಅದರ ಪ್ರಜ್ವಲಿಸುವ ಆಂತರಿಕ ಅಗ್ನಿಯ ಮೂಲಕ, ಅವರು ನಾಲ್ಕು ಘಾತಿಯಾ ಕರ್ಮಗಳನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ನಾಶಪಡಿಸಿದರು: ಮೋಹನೀಯ, ಜ್ಞಾನಾವರಣೀಯ, ದರ್ಶನಾವರಣೀಯ ಮತ್ತು ಅಂತರಾಯ. ಈ ಕರ್ಮಗಳ ಸಂಪೂರ್ಣ ವಿನಾಶದೊಂದಿಗೆ, ಭಗವಾನ್ ಆದಿನಾಥರ ಆತ್ಮವು ತನ್ನ ನೈಜ, ಅನಂತ ಸ್ವರೂಪವನ್ನು ವ್ಯಕ್ತಪಡಿಸಿತು. ಫಾಲ್ಗುಣ ಕೃಷ್ಣ ಏಕಾದಶಿಯಂದು, ಉತ್ತರಾಷಾಢ ನಕ್ಷತ್ರದ ಅಡಿಯಲ್ಲಿ, ಅವರು ಕೇವಲಜ್ಞಾನವನ್ನು — ಅಂದರೆ ಸಂಪೂರ್ಣ, ಅನಂತ ಜ್ಞಾನವನ್ನು — ಪಡೆದರು, ಈ ಮೂಲಕ ಅವರು ಭೂತ, ಭವಿಷ್ಯ ಮತ್ತು ವರ್ತಮಾನದ ಎಲ್ಲಾ ದ್ರವ್ಯಗಳನ್ನು ಮತ್ತು ಅವುಗಳ ಎಲ್ಲಾ ಪರ್ಯಾಯಗಳನ್ನು ಏಕಕಾಲದಲ್ಲಿ ನೋಡುವ ಮತ್ತು ತಿಳಿಯುವ ಶಕ್ತಿಯನ್ನು ಪಡೆದರು.\n\nಕೇವಲಜ್ಞಾನವು ಉಂಟಾದ ಆ ಕ್ಷಣದಲ್ಲಿಯೇ, ಇಡೀ ಬ್ರಹ್ಮಾಂಡವು ದೈವಿಕ ಆನಂದದಿಂದ ಮೊಳಗಿತು. ಇಂದ್ರರ ಆಸನಗಳು ಕಂಪಿಸಿದವು, ಮತ್ತು ಭವನಪತಿ, ವ್ಯಂತರ, ಜ್ಯೋತಿಷ್ಕ ಮತ್ತು ಕಲ್ಪವಾಸಿ ಎಂಬ ನಾಲ್ಕು ವರ್ಗದ ದೇವತೆಗಳು ಈ ಪರಮೋಚ್ಚ ಘಟನೆಯನ್ನು ವೀಕ್ಷಿಸಲು ಪುರಿಮತಾಲ್ ನಗರಕ್ಕೆ ಇಳಿದುಬಂದರು. ಮೊದಲ ಸ್ವರ್ಗದ ಒಡೆಯನಾದ ಸೌಧರ್ಮ ಇಂದ್ರನು ತನ್ನ ದೈವಿಕ ಪರಿವಾರದೊಂದಿಗೆ ಆಗಮಿಸಿದನು. ಅವನು ಭಗವಾನ್ ಆದಿನಾಥರನ್ನು ಭಕ್ತಿಯಿಂದ ಪ್ರದಕ್ಷಿಣೆ ಮಾಡಿದನು ಮತ್ತು ಪರಮೋಚ್ಚ ಕೇವಲಿಯನ್ನು ಗುರುತಿಸಿ ಅವರಿಗೆ ಸಾಷ್ಟಾಂಗ ನಮಸ್ಕಾರ ಮಾಡಿದನು.\n\nಇಂದ್ರನ ಆಜ್ಞೆಯ ಮೇರೆಗೆ, ದೇವತೆಗಳ ಕೋಶಾಧಿಕಾರಿಯಾದ ಕುಬೇರನು ಭವ್ಯವಾದ ಸಮವಸರಣವನ್ನು ನಿರ್ಮಿಸಿದನು — ಇದು ತೀರ್ಥಂಕರರಿಗೆ ಮಾತ್ರ ಮೀಸಲಾದ ದೈವಿಕ ಧರ್ಮಸಭೆಯಾಗಿದೆ. ಈ ವೃತ್ತಾಕಾರದ ರಚನೆಯು ಹನ್ನೆರಡು ಯೋಜನಗಳಷ್ಟು ವಿಸ್ತಾರವಾಗಿತ್ತು ಮತ್ತು ಆಕಾಶದ ವೈಭವದಿಂದ ಕಂಗೊಳಿಸುತ್ತಿತ್ತು. ಅದರ ನಾಲ್ಕು ದಿಕ್ಕುಗಳಲ್ಲಿ ಎತ್ತರವಾದ ಮಾನಸ್ತಂಭಗಳು ನಿಂತಿದ್ದವು, ಇವುಗಳ ದರ್ಶನ ಮಾತ್ರದಿಂದಲೇ ಅಹಂಕಾರ ಮತ್ತು ಗರ್ವ ಕರಗುತ್ತಿತ್ತು. ಸಮವಸರಣವು ಬೆಳ್ಳಿ, ಚಿನ್ನ ಮತ್ತು ರತ್ನಗಳಿಂದ ಕೂಡಿದ ಅನೇಕ ಪ್ರಾಕಾರಗಳನ್ನು ಹೊಂದಿತ್ತು, ಮತ್ತು ಅಲ್ಲಿ ಮನುಷ್ಯರು, ಪ್ರಾಣಿಗಳು ಮತ್ತು ದೇವತೆಗಳು ಯಾವುದೇ ಭಯ ಅಥವಾ ದ್ವೇಷವಿಲ್ಲದೆ ಒಟ್ಟಿಗೆ ಕುಳಿತುಕೊಳ್ಳುವಂತಹ ಸಾಮರಸ್ಯದ ವ್ಯವಸ್ಥೆಯಿತ್ತು. ಅದರ ಕೇಂದ್ರಭಾಗದಲ್ಲಿ ಗಂಧಕುಟಿ ಎಂಬ ದೈವಿಕ ಪೀಠವಿತ್ತು. ಭಗವಾನ್ ಆದಿನಾಥರು ಅಲ್ಲಿ ಕಮಲದ ಸಿಂಹಾಸನಕ್ಕಿಂತ ನಾಲ್ಕು ಬೆರಳುಗಳಷ್ಟು ಎತ್ತರದಲ್ಲಿ ಕುಳಿತಿದ್ದರು, ಅವರ ಮುಖವು ಪೂರ್ವಕ್ಕೆ ಮುಖ ಮಾಡಿತ್ತಾದರೂ, ಅವರು ನಾಲ್ಕು ದಿಕ್ಕುಗಳಲ್ಲೂ ಸಮಾನವಾಗಿ ಕಾಣಿಸುತ್ತಿದ್ದರು.\n\nಭಗವಾನ್ ಆದಿನಾಥರ ಶರೀರದಿಂದ ಸಾವಿರ ಸೂರ್ಯರಿಗೆ ಸಮಾನವಾದ ತೇಜಸ್ಸು ಹೊರಹೊಮ್ಮುತ್ತಿತ್ತು. ಹಸಿವು, ಬಾಯಾರಿಕೆ, ಬೆವರು, ನೆರಳು ಮತ್ತು ಎಲ್ಲಾ ದೈಹಿಕ ದೋಷಗಳಿಂದ ಮುಕ್ತವಾಗಿದ್ದ ಅವರ ದಿವ್ಯ ವಾಣಿಯು 'ದಿವ್ಯ ಧ್ವನಿ'ಯಾಗಿ ಪ್ರಕಟವಾಯಿತು — ಇದು ಪ್ರತಿಯೊಂದು ಜೀವಿಗೂ ಅವರವರ ಭಾಷೆಯಲ್ಲಿ ಅರ್ಥವಾಗುವಂತಹ ಏಕರೂಪದ ಅಖಂಡ ನಾದವಾಗಿತ್ತು. ಈ ದಿವ್ಯ ಧ್ವನಿಯ ಮೂಲಕ, ಭಗವಾನ್ ಆದಿನಾಥರು ಶಾಶ್ವತ ಸತ್ಯಗಳನ್ನು ಬೋಧಿಸಿದರು: ದ್ರವ್ಯ, ಗುಣ ಮತ್ತು ಪರ್ಯಾಯಗಳಾಗಿ ವಾಸ್ತವದ ಸ್ವರೂಪ; ರತ್ನತ್ರಯದ ಮೂಲಕ ಮೋಕ್ಷದ ಮಾರ್ಗ; ಮತ್ತು ಅನೇಕಾಂತವಾದದ ತತ್ವ.\n\nಕೇಳುಗರ ಗುಂಪಿನಲ್ಲಿ ಭಗವಾನ್ ಆದಿನಾಥರ ಸ್ವಂತ ಪುತ್ರನಾದ ರಾಜಕುಮಾರ ವೃಷಭಸೇನನೂ ಇದ್ದನು. ಪ್ರವಚನದಿಂದ ಆಳವಾಗಿ ಪ್ರಭಾವಿತನಾದ ಅವನು ಪ್ರಪಂಚವನ್ನು ತ್ಯಜಿಸಿ, ದೀಕ್ಷೆಯನ್ನು ಸ್ವೀಕರಿಸಿ, ಪ್ರಥಮ ಗಣಧರನಾದನು. ಅವನು ಭಗವಂತನ ದಿವ್ಯ ಬೋಧನೆಗಳನ್ನು ದ್ವಾದಶಾಂಗಿಯಲ್ಲಿ ವ್ಯವಸ್ಥಿತವಾಗಿ ಸಂಯೋಜಿಸಿದನು. ಹೀಗೆ, ಚತುರ್ವಿದ ಸಂಘವು ಸ್ಥಾಪನೆಯಾಯಿತು: ಗಣಧರ ವೃಷಭಸೇನನ ನೇತೃತ್ವದಲ್ಲಿ ಮುನಿಗಳು, ಬ್ರಾಹ್ಮೀ ದೇವಿಯ ನೇತೃತ್ವದಲ್ಲಿ ಆರ್ಯಿಕೆಯರು, ಶ್ರಾವಕರು ಮತ್ತು ಶ್ರಾವಿಕೆಯರು. ಇದರೊಂದಿಗೆ, ಭಗವಾನ್ ಆದಿನಾಥರು ಔಪಚಾರಿಕವಾಗಿ 'ತೀರ್ಥ'ವನ್ನು ಸ್ಥಾಪಿಸಿದರು ಮತ್ತು ಅಸಖ್ಯಾತ ಆತ್ಮಗಳಿಗೆ ಮೋಕ್ಷದ ಶಾಶ್ವತ ಮಾರ್ಗವನ್ನು ತೆರೆದರು." 
         },
         extraInfo: { en: "Penance: 1000 Years", hi: "तपस्या: 1000 वर्ष", kn: "ತಪಸ್ಸು: 1000 ವರ್ಷಗಳು" },
-        images: ["/images/kalyanak/Adinath/kevalgyan/1.jpeg", "/images/kalyanak/Adinath/kevalgyan/2.jpeg", "/images/kalyanak/Adinath/kevalgyan/3.jpeg", "/images/kalyanak/Adinath/kevalgyan/4.jpeg", "/images/kalyanak/Adinath/kevalgyan/5_alt.jpeg", "/images/kalyanak/Adinath/kevalgyan/6.jpeg", "/images/kalyanak/Adinath/kevalgyan/7_alt.jpeg"]
+        imageMobile: ["/images/tirthankar/kalyanak/Adinath/mobile/kevalgyan/1.avif", "/images/tirthankar/kalyanak/Adinath/mobile/kevalgyan/2.avif", "/images/tirthankar/kalyanak/Adinath/mobile/kevalgyan/3.avif", "/images/tirthankar/kalyanak/Adinath/mobile/kevalgyan/4.avif", "/images/tirthankar/kalyanak/Adinath/mobile/kevalgyan/5.avif", "/images/tirthankar/kalyanak/Adinath/mobile/kevalgyan/6.avif", "/images/tirthankar/kalyanak/Adinath/mobile/kevalgyan/7.avif"],
+        imageDesktop: ["/images/tirthankar/kalyanak/Adinath/desktop/kevalgyan/1.avif", "/images/tirthankar/kalyanak/Adinath/desktop/kevalgyan/2.avif", "/images/tirthankar/kalyanak/Adinath/desktop/kevalgyan/3.avif", "/images/tirthankar/kalyanak/Adinath/desktop/kevalgyan/4.avif", "/images/tirthankar/kalyanak/Adinath/desktop/kevalgyan/5.avif", "/images/tirthankar/kalyanak/Adinath/desktop/kevalgyan/6.avif", "/images/tirthankar/kalyanak/Adinath/desktop/kevalgyan/7.avif"]
       },
       moksha: {
         tithi: { en: "Magha Krishna Chaturdashi", hi: "माघ कृष्ण चतुर्दशी (शिवरात्रि)", kn: "ಮಾಘ ಕೃಷ್ಣ ಚತುರ್ದಶಿ" },
@@ -154,7 +164,8 @@ export const tirthankaras: Tirthankara[] = [
           hi: "कई वर्षों तक धर्म का उपदेश देने और तीर्थ की दृढ़ स्थापना करने के बाद, भगवान आदिनाथ ने जाना कि उनका शेष 'आयु कर्म' — जीवन काल निर्धारित करने वाला कर्म — अपनी पूर्णता के निकट था। सांसारिक क्षेत्र को पूरी तरह से त्यागने का निर्धारित क्षण आ गया था।\n\nभगवान आदिनाथ ने दस हजार मुनियों के साथ पवित्र अष्टापद पर्वत पर आरोहण किया, जो समान रूप से मोक्ष के लिए अभिप्रेत थे। यह पर्वत उनकी लौकिक आध्यात्मिक यात्रा की पूर्णता के लिए अंतिम पवित्र चरण के रूप में खड़ा था। शिखर पर, भगवान आदिनाथ ने गहन ध्यान की मुद्रा — पद्मासन (कमल की तरह बैठने की मुद्रा) — ग्रहण की। समवसरण से नीचे उतरकर, उन्होंने दुनिया से शेष सभी संबंधों का पूरी तरह से त्याग कर दिया।\n\n'योग निरोध' की सर्वोच्च अवस्था में प्रवेश करते हुए, भगवान आदिनाथ ने मन, वचन और काया की सभी गतिविधियों को पूर्ण स्थिरता में ला दिया। इस पूर्ण विराम के साथ, नए कर्मों का आगमन पूरी तरह से रुक गया, और पूर्ण 'आस्रव निरोध' सिद्ध हुआ। 'शुक्ल ध्यान' के अंतिम चरणों में लीन होकर, भगवान आदिनाथ ने शेष चार अघातिया कर्मों — वेदनीय, आयु, नाम और गोत्र — के विनाश पर ध्यान केंद्रित किया, जो अकेले अभी भी आत्मा को भौतिक शरीर से बांधे हुए थे।\n\nपरम शुभ क्षण माघ कृष्ण चतुर्दशी (माघ मास के कृष्ण पक्ष का चौदहवां दिन) को आया। यह क्षण सूर्योदय से ठीक पहले, पवित्र ब्रह्ममुहूर्त के दौरान घटित हुआ। अंतिम कर्मों के नाश के साथ, भगवान आदिनाथ की आत्मा जन्म और मृत्यु के चक्र से पूरी तरह मुक्त हो गई। उन्होंने मोक्ष प्राप्त किया और एक सिद्ध बन गए — जो शरीर रहित, निराकार, नित्य शुद्ध और अनंत ज्ञान, अनंत दर्शन एवं अनंत सुख से संपन्न हैं।\n\nतत्काल, उनकी मुक्त आत्मा ऊपर की ओर 'सिद्धशिला' तक आरोहण कर गई — जो मुक्त आत्माओं का शाश्वत निवास है और सभी भौतिक लोकों से परे ब्रह्मांड के शिखर पर स्थित है। भगवान आदिनाथ के साथ, उनके साथ ध्यान कर रहे दस हजार मुनियों ने भी मोक्ष प्राप्त किया, जो सांसारिक अस्तित्व से हमेशा के लिए मुक्त हो गए और अपनी पूर्ण अवस्था में अनंत हो गए।", 
           kn: "ಅನೇಕ ವರ್ಷಗಳ ಕಾಲ ಧರ್ಮವನ್ನು ಬೋಧಿಸಿದ ನಂತರ ಮತ್ತು ತೀರ್ಥವನ್ನು ದೃಢವಾಗಿ ಸ್ಥಾಪಿಸಿದ ನಂತರ, ಭಗವಾನ್ ಆದಿನಾಥರು ತಮ್ಮ ಉಳಿದಿರುವ 'ಆಯು ಕರ್ಮ' — ಜೀವಿತಾವಧಿಯನ್ನು ನಿರ್ಧರಿಸುವ ಕರ್ಮ — ಪೂರ್ಣಗೊಳ್ಳುವ ಹಂತದಲ್ಲಿದೆ ಎಂದು ಅರಿತುಕೊಂಡರು. ಲೌಕಿಕ ಕ್ಷೇತ್ರವನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ತ್ಯಜಿಸುವ ನಿಗದಿತ ಕ್ಷಣ ಆಗಮಿಸಿತ್ತು.\n\nಭಗವಾನ್ ಆದಿನಾಥರು ಮೋಕ್ಷಕ್ಕೆ ಹೋಗಲು ನಿರ್ಧರಿಸಲ್ಪಟ್ಟ ಹತ್ತು ಸಾವಿರ ಮುನಿಗಳೊಂದಿಗೆ ಪವಿತ್ರ ಅಷ್ಟಾಪದ ಪರ್ವತವನ್ನು ಏರಿದರು. ಪರ್ವತವು ಅವರ ಐಹಿಕ ಆಧ್ಯಾತ್ಮಿಕ ಪ್ರಯಾಣದ ಪೂರ್ಣಗೊಳಿಸುವಿಕೆಯ ಅಂತಿಮ ಪವಿತ್ರ ಹಂತವಾಗಿ ನಿಂತಿತ್ತು. ಶಿಖರದ ಮೇಲೆ, ಭಗವಾನ್ ಆದಿನಾಥರು ಗಹನವಾದ ಧ್ಯಾನದ ಭಂಗಿಯನ್ನು — ಪದ್ಮಾಸನವನ್ನು (ಕಮಲದಂತೆ ಕುಳಿತುಕೊಳ್ಳುವ ಭಂಗಿ) — ಸ್ವೀಕರಿಸಿದರು. ಸಮವಸರಣದಿಂದ ಕೆಳಗಿಳಿದ ಅವರು, ಪ್ರಪಂಚದೊಂದಿಗಿನ ಉಳಿದ ಎಲ್ಲಾ ಸಂಬಂಧಗಳನ್ನು ಸಂಪೂರ್ಣವಾಗಿ ತ್ಯಜಿಸಿದರು.\n\n'ಯೋಗ ನಿರೋಧ'ದ ಪರಮ ಸ್ಥಿತಿಯನ್ನು ಪ್ರವೇಶಿಸಿ, ಭಗವಾನ್ ಆದಿನಾಥರು ಮನಸ್ಸು, ವಚನ ಮತ್ತು ಕಾಯದ ಎಲ್ಲಾ ಚಟುವಟಿಕೆಗಳನ್ನು ಸಂಪೂರ್ಣ ನಿಶ್ಚಲತೆಗೆ ತಂದರು. ಈ ಸಂಪೂರ್ಣ ನಿಲುಗಡೆಯೊಂದಿಗೆ, ಹೊಸ ಕರ್ಮಗಳ ಒಳಹರಿವು ಸಂಪೂರ್ಣವಾಗಿ ನಿಂತುಹೋಯಿತು, ಆ ಮೂಲಕ ಸಂಪೂರ್ಣ 'ಆಸ್ರವ ನಿರೋಧ'ವನ್ನು ಸಾಧಿಸಲಾಯಿತು. 'ಶುಕ್ಲ ಧ್ಯಾನ'ದ ಅಂತಿಮ ಹಂತಗಳಲ್ಲಿ ಲೀನರಾದ ಭಗವಾನ್ ಆದಿನಾಥರು, ಆತ್ಮವನ್ನು ಭೌತಿಕ ಶರೀರಕ್ಕೆ ಕಟ್ಟಿಹಾಕಿದ್ದ ಉಳಿದ ನಾಲ್ಕು ಅಘಾತಿಯ ಕರ್ಮಗಳಾದ — ವೇದನೀಯ, ಆಯು, ನಾಮ ಮತ್ತು ಗೋತ್ರಗಳ — ವಿನಾಶದತ್ತ ಗಮನಹರಿಸಿದರು.\n\nಮಾಘ ಮಾಸದ ಕೃಷ್ಣ ಪಕ್ಷದ ಹದಿನಾಲ್ಕನೆಯ ದಿನವಾದ 'ಮಾಘ ಕೃಷ್ಣ ಚತುರ್ದಶಿ'ಯಂದು ಆ ಪರಮ ಮಂಗಳಕರ ಕ್ಷಣ ಆಗಮಿಸಿತು. ಈ ಕ್ಷಣವು ಸೂರ್ಯೋದಯಕ್ಕೆ ಸ್ವಲ್ಪ ಮೊದಲು, ಪವಿತ್ರ ಬ್ರಹ್ಮಮುಹೂರ್ತದಲ್ಲಿ ಸಂಭವಿಸಿತು. ಅಂತಿಮ ಕರ್ಮಗಳ ವಿನಾಶದೊಂದಿಗೆ, ಭಗವಾನ್ ಆದಿನಾಥರ ಆತ್ಮವು ಜನನ ಮರಣಗಳ ಚಕ್ರದಿಂದ ಸಂಪೂರ್ಣವಾಗಿ ಮುಕ್ತವಾಯಿತು. ಅವರು ಮೋಕ್ಷವನ್ನು ಪಡೆದರು ಮತ್ತು ಸಿದ್ದರಾದರು — ಅಶರೀರಿ, ನಿರಾಕಾರಿ, ಶಾಶ್ವತ ಶುದ್ಧ ಮತ್ತು ಅನಂತ ಜ್ಞಾನ, ಅನಂತ ದರ್ಶನ ಹಾಗೂ ಅನಂತ ಸುಖವನ್ನು ಹೊಂದಿದವರಾದರು.\n\nತಕ್ಷಣವೇ, ಅವರ ಮುಕ್ತಾತ್ಮವು ಬ್ರಹ್ಮಾಂಡದ ಶಿಖರದಲ್ಲಿರುವ, ಎಲ್ಲಾ ಭೌತಿಕ ಕ್ಷೇತ್ರಗಳನ್ನು ಮೀರಿದ, ಮುಕ್ತಾತ್ಮರ ಶಾಶ್ವತ ತಾಣವಾದ 'ಸಿದ್ಧಶಿಲೆ'ಗೆ ಊರ್ಧ್ವಮುಖವಾಗಿ ಏರಿತು. ಭಗವಾನ್ ಆದಿನಾಥರೊಂದಿಗೆ, ಅವರ ಪಕ್ಕದಲ್ಲಿಯೇ ಧ್ಯಾನ ಮಾಡುತ್ತಿದ್ದ ಹತ್ತು ಸಾವಿರ ಮುನಿಗಳು ಕೂಡ ಮೋಕ್ಷವನ್ನು ಪಡೆದರು, ಐಹಿಕ ಅಸ್ತಿತ್ವದಿಂದ ಶಾಶ್ವತವಾಗಿ ಮುಕ್ತರಾಗಿ ತಮ್ಮ ಪರಿಪೂರ್ಣ ಸ್ಥಿತಿಯಲ್ಲಿ ಅನಂತರಾದರು." 
         },
-        images: ["/images/kalyanak/Adinath/moksha/1.jpeg", "/images/kalyanak/Adinath/moksha/2.jpeg", "/images/kalyanak/Adinath/moksha/3.jpeg", "/images/kalyanak/Adinath/moksha/4_alt.jpeg", "/images/kalyanak/Adinath/moksha/5.jpeg"]
+        imageMobile: ["/images/tirthankar/kalyanak/Adinath/mobile/moksha/1.avif", "/images/tirthankar/kalyanak/Adinath/mobile/moksha/2.avif", "/images/tirthankar/kalyanak/Adinath/mobile/moksha/3.avif", "/images/tirthankar/kalyanak/Adinath/mobile/moksha/4.avif", "/images/tirthankar/kalyanak/Adinath/mobile/moksha/5.avif"],
+        imageDesktop: ["/images/tirthankar/kalyanak/Adinath/desktop/moksha/1.avif", "/images/tirthankar/kalyanak/Adinath/desktop/moksha/2.avif", "/images/tirthankar/kalyanak/Adinath/desktop/moksha/3.avif", "/images/tirthankar/kalyanak/Adinath/desktop/moksha/4.avif", "/images/tirthankar/kalyanak/Adinath/desktop/moksha/5.avif"]
       }
     }
   },
@@ -162,7 +173,7 @@ export const tirthankaras: Tirthankara[] = [
   {
     id: 2,
     name: { en: "Ajitnath", hi: "अजितनाथ", kn: "ಅಜಿತನಾಥ" },
-    symbol: { en: "Elephant", hi: "हाथी", kn: "ಆನೆ", imagePath: "/images/symbols/elephant.png" },
+    symbol: { en: "Elephant", hi: "हाथी", kn: "ಆನೆ", imagePath: "/images/tirthankar/symbols/elephant.avif" },
     color: "Golden",
     colorHex: "#EAB308",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -175,14 +186,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Jitashatru Raja", hi: "जितशत्रु राजा", kn: "ಜಿತಶತ್ರು ರಾಜ" },
     lifespan: { en: "72 Lakh Purva", hi: "७२ लाख पूर्व", kn: "೭೨ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "450 Dhanush", hi: "४५० धनुष", kn: "೪೫೦ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/ajitnath.png",
+    tirthankaraImage: "/images/tirthankar/arhats/ajitnath.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 3,
     name: { en: "Sambhavnath", hi: "संभवनाथ", kn: "ಸಂಭವನಾಥ" },
-    symbol: { en: "Horse", hi: "घोड़ा", kn: "ಕುದುರೆ", imagePath: "/images/symbols/horse.png" },
+    symbol: { en: "Horse", hi: "घोड़ा", kn: "ಕುದುರೆ", imagePath: "/images/tirthankar/symbols/horse.avif" },
     color: "Golden",
     colorHex: "#EAB308",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -195,14 +206,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Jitashatru Raja", hi: "जितशत्रु राजा", kn: "ಜಿತಶತ್ರು ರಾಜ" },
     lifespan: { en: "60 Lakh Purva", hi: "६० लाख पूर्व", kn: "೬೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "400 Dhanush", hi: "४०० धनुष", kn: "೪೦೦ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/sambhavnath.png",
+    tirthankaraImage: "/images/tirthankar/arhats/sambhavnath.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 4,
     name: { en: "Abhinandannath", hi: "अभिनंदननाथ", kn: "ಅಭಿನಂದನನಾಥ" },
-    symbol: { en: "Monkey", hi: "बंदर", kn: "ಮಂಗ", imagePath: "/images/symbols/monkey.png" },
+    symbol: { en: "Monkey", hi: "बंदर", kn: "ಮಂಗ", imagePath: "/images/tirthankar/symbols/monkey.avif" },
     color: "Golden",
     colorHex: "#EAB308",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -215,14 +226,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Samvara Raja", hi: "संवर राजा", kn: "ಸಂವರ ರಾಜ" },
     lifespan: { en: "50 Lakh Purva", hi: "५० लाख पूर्व", kn: "೫೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "350 Dhanush", hi: "३५० धनुष", kn: "೩೫೦ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/abhinandannath.png",
+    tirthankaraImage: "/images/tirthankar/arhats/abhinandannath.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 5,
     name: { en: "Sumatinath", hi: "सुमतिनाथ", kn: "ಸುಮತಿನಾಥ" },
-    symbol: { en: "Chakravaka Bird", hi: "चकवा पक्षी", kn: "ಚಕ್ರವಾಕ ಪಕ್ಷಿ", imagePath: "/images/symbols/chakwa.png" },
+    symbol: { en: "Chakravaka Bird", hi: "चकवा पक्षी", kn: "ಚಕ್ರವಾಕ ಪಕ್ಷಿ", imagePath: "/images/tirthankar/symbols/chakwa.avif" },
     color: "Golden",
     colorHex: "#EAB308",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -235,14 +246,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Megharatha Raja", hi: "मेघरथ राजा", kn: "ಮೇಘರಥ ರಾಜ" },
     lifespan: { en: "40 Lakh Purva", hi: "४० लाख पूर्व", kn: "೪೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "300 Dhanush", hi: "३०० धनुष", kn: "೩೦೦ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/sumatinath.png",
+    tirthankaraImage: "/images/tirthankar/arhats/sumatinath.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 6,
     name: { en: "Padmaprabha", hi: "पद्मप्रभ", kn: "ಪದ್ಮಪ್ರಭ" },
-    symbol: { en: "Lotus", hi: "कमल", kn: "ಕಮಲ", imagePath: "/images/symbols/lotus.png" },
+    symbol: { en: "Lotus", hi: "कमल", kn: "ಕಮಲ", imagePath: "/images/tirthankar/symbols/lotus.avif" },
     color: "Red",
     colorHex: "#DC2626",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -255,14 +266,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Shridhara Raja", hi: "श्रीधर राजा", kn: "ಶ್ರೀಧರ ರಾಜ" },
     lifespan: { en: "30 Lakh Purva", hi: "३० लाख पूर्व", kn: "೩೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "250 Dhanush", hi: "२५० धनुष", kn: "೨೫೦ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/padmaprabha.png",
+    tirthankaraImage: "/images/tirthankar/arhats/padmaprabha.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 7,
     name: { en: "Suparshvanath", hi: "सुपार्श्वनाथ", kn: "ಸುಪಾರ್ಶ್ವನಾಥ" },
-    symbol: { en: "Swastika", hi: "स्वस्तिक", kn: "ಸ್ವಸ್ತಿಕ", imagePath: "/images/symbols/swasthik.png" },
+    symbol: { en: "Swastika", hi: "स्वस्तिक", kn: "ಸ್ವಸ್ತಿಕ", imagePath: "/images/tirthankar/symbols/swasthik.avif" },
     color: "Green",
     colorHex: "#16A34A",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -275,14 +286,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Pratishta Raja", hi: "प्रतिष्ठा राजा", kn: "ಪ್ರತಿಷ್ಠಾ ರಾಜ" },
     lifespan: { en: "20 Lakh Purva", hi: "२० लाख पूर्व", kn: "೨೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "200 Dhanush", hi: "२०० धनुष", kn: "೨೦೦ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/suparshvanath.png",
+    tirthankaraImage: "/images/tirthankar/arhats/suparshvanath.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 8,
     name: { en: "Chandraprabha", hi: "चन्द्रप्रभ", kn: "ಚಂದ್ರಪ್ರಭ" },
-    symbol: { en: "Moon", hi: "चंद्रमा", kn: "ಚಂದ್ರ", imagePath: "/images/symbols/moon.png" },
+    symbol: { en: "Moon", hi: "चंद्रमा", kn: "ಚಂದ್ರ", imagePath: "/images/tirthankar/symbols/moon.avif" },
     color: "White",
     colorHex: "#F8FAFC",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -295,14 +306,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Mahasena Raja", hi: "महासेन राजा", kn: "ಮಹಾಸೇನ ರಾಜ" },
     lifespan: { en: "10 Lakh Purva", hi: "१० लाख पूर्व", kn: "೧೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "150 Dhanush", hi: "१५० धनुष", kn: "೧೫೦ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/chandraprabha.png",
+    tirthankaraImage: "/images/tirthankar/arhats/chandraprabha.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 9,
     name: { en: "Pushpadanta", hi: "पुष्पदन्त", kn: "ಪುಷ್ಪದಂತ" },
-    symbol: { en: "Crocodile", hi: "मगरमच्छ", kn: "ಮೊಸಳೆ", imagePath: "/images/symbols/crocodile.png" },
+    symbol: { en: "Crocodile", hi: "मगरमच्छ", kn: "ಮೊಸಳೆ", imagePath: "/images/tirthankar/symbols/crocodile.avif" },
     color: "White",
     colorHex: "#F8FAFC",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -315,14 +326,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Sugriva Raja", hi: "सुग्रीव राजा", kn: "ಸುಗ್ರೀವ ರಾಜ" },
     lifespan: { en: "5 Lakh Purva", hi: "५ लाख पूर्व", kn: "೫ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "100 Dhanush", hi: "१०० धनुष", kn: "೧೦೦ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/pushpadanta.png",
+    tirthankaraImage: "/images/tirthankar/arhats/pushpadanta.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 10,
     name: { en: "Sheetalnath", hi: "शीतलनाथ", kn: "ಶೀತಲನಾಥ" },
-    symbol: { en: "Shrivriksha", hi: "श्रीवृक्ष", kn: "ಶ್ರೀವೃಕ್ಷ", imagePath: "/images/symbols/shrivriksha.png" },
+    symbol: { en: "Shrivriksha", hi: "श्रीवृक्ष", kn: "ಶ್ರೀವೃಕ್ಷ", imagePath: "/images/tirthankar/symbols/shrivriksha.avif" },
     color: "Golden",
     colorHex: "#EAB308",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -335,14 +346,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Dridhavrata Raja", hi: "दृढ़व्रत राजा", kn: "ದೃಢವ್ರತ ರಾಜ" },
     lifespan: { en: "1 Lakh Purva", hi: "१ लाख पूर्व", kn: "೧ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "90 Dhanush", hi: "९० धनुष", kn: "೯೦ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/sheetalnath.png",
+    tirthankaraImage: "/images/tirthankar/arhats/sheetalnath.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 11,
     name: { en: "Shreyansnath", hi: "श्रेयांसनाथ", kn: "ಶ್ರೇಯಾಂಸನಾಥ" },
-    symbol: { en: "Rhinoceros", hi: "गेंडा", kn: "ಖಡ್ಗಮೃಗ", imagePath: "/images/symbols/rhino.png" },
+    symbol: { en: "Rhinoceros", hi: "गेंडा", kn: "ಖಡ್ಗಮೃಗ", imagePath: "/images/tirthankar/symbols/rhino.avif" },
     color: "Golden",
     colorHex: "#EAB308",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -355,14 +366,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Vishnu Raja", hi: "विष्णु राजा", kn: "ವಿಷ್ಣು ರಾಜ" },
     lifespan: { en: "84 Thousand Purva", hi: "८४ हजार पूर्व", kn: "೮೪ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "80 Dhanush", hi: "८० धनुष", kn: "೮೦ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/shreyansnath.png",
+    tirthankaraImage: "/images/tirthankar/arhats/shreyansnath.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 12,
     name: { en: "Vasupujya", hi: "वासुपूज्य", kn: "ವಾಸುಪೂಜ್ಯ" },
-    symbol: { en: "Buffalo", hi: "भैंसा", kn: "ಎಮ್ಮೆ", imagePath: "/images/symbols/buffalo.png" },
+    symbol: { en: "Buffalo", hi: "भैंसा", kn: "ಎಮ್ಮೆ", imagePath: "/images/tirthankar/symbols/buffalo.avif" },
     color: "Red",
     colorHex: "#DC2626",
     placeOfNirvana: { en: "Champapuri", hi: "चंपापुरी", kn: "ಚಂಪಾಪುರಿ" },
@@ -375,14 +386,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Vasupujya Raja", hi: "वासुपूज्य राजा", kn: "ವಾಸುಪೂಜ್ಯ ರಾಜ" },
     lifespan: { en: "54 Lakh Purva", hi: "५४ लाख पूर्व", kn: "೫೪ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "70 Dhanush", hi: "७० धनुष", kn: "೭೦ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/vasupujya.png",
+    tirthankaraImage: "/images/tirthankar/arhats/vasupujya.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 13,
     name: { en: "Vimalnath", hi: "विमलनाथ", kn: "ವಿಮಲನಾಥ" },
-    symbol: { en: "Boar", hi: "सूअर", kn: "ಹಂದಿ", imagePath: "/images/symbols/boar.png" },
+    symbol: { en: "Boar", hi: "सूअर", kn: "ಹಂದಿ", imagePath: "/images/tirthankar/symbols/boar.avif" },
     color: "Golden",
     colorHex: "#EAB308",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -395,14 +406,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Kritavarma Raja", hi: "कृतवर्मा राजा", kn: "ಕೃತವರ್ಮಾ ರಾಜ" },
     lifespan: { en: "60 Lakh Purva", hi: "६० लाख पूर्व", kn: "೬೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "60 Dhanush", hi: "६० धनुष", kn: "೬೦ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/vimalnath.png",
+    tirthankaraImage: "/images/tirthankar/arhats/vimalnath.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 14,
     name: { en: "Anantnath", hi: "अनन्तनाथ", kn: "ಅನಂತನಾಥ" },
-    symbol: { en: "Porcupine", hi: "सेही (साही)", kn: "ಮುಳ್ಳುಹಂದಿ", imagePath: "/images/symbols/porcupine.png" },
+    symbol: { en: "Porcupine", hi: "सेही (साही)", kn: "ಮುಳ್ಳುಹಂದಿ", imagePath: "/images/tirthankar/symbols/porcupine.avif" },
     color: "Golden",
     colorHex: "#EAB308",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -415,14 +426,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Simhasena Raja", hi: "सिंहसेन राजा", kn: "ಸಿಂಹಸೇನ ರಾಜ" },
     lifespan: { en: "30 Lakh Purva", hi: "३० लाख पूर्व", kn: "೩೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "50 Dhanush", hi: "५० धनुष", kn: "೫೦ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/anantnath.png",
+    tirthankaraImage: "/images/tirthankar/arhats/anantnath.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 15,
     name: { en: "Dharmanath", hi: "धर्मनाथ", kn: "ಧರ್ಮನಾಥ" },
-    symbol: { en: "Vajra", hi: "वज्र", kn: "ವಜ್ರ", imagePath: "/images/symbols/vajra.png" },
+    symbol: { en: "Vajra", hi: "वज्र", kn: "ವಜ್ರ", imagePath: "/images/tirthankar/symbols/vajra.avif" },
     color: "Golden",
     colorHex: "#EAB308",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -435,14 +446,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Bhanu Raja", hi: "भानु राजा", kn: "ಭಾನು ರಾಜ" },
     lifespan: { en: "25 Lakh Purva", hi: "२५ लाख पूर्व", kn: "೨೫ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "45 Dhanush", hi: "४५ धनुष", kn: "೪೫ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/dharmanath.png",
+    tirthankaraImage: "/images/tirthankar/arhats/dharmanath.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 16,
     name: { en: "Shantinath", hi: "शान्तिनाथ", kn: "ಶಾಂತಿನಾಥ" },
-    symbol: { en: "Deer", hi: "हिरण", kn: "ಜಿಂಕೆ", imagePath: "/images/symbols/deer.png" },
+    symbol: { en: "Deer", hi: "हिरण", kn: "ಜಿಂಕೆ", imagePath: "/images/tirthankar/symbols/deer.avif" },
     color: "Golden",
     colorHex: "#EAB308",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -455,14 +466,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Vishvasena Raja", hi: "विश्वसेन राजा", kn: "ವಿಶ್ವಸೇನ ರಾಜ" },
     lifespan: { en: "10 Lakh Purva", hi: "१० लाख पूर्व", kn: "೧೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "40 Dhanush", hi: "४० धनुष", kn: "೪೦ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/shantinath.png",
+    tirthankaraImage: "/images/tirthankar/arhats/shantinath.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 17,
     name: { en: "Kunthunath", hi: "कुन्थुनाथ", kn: "ಕುಂತುನಾಥ" },
-    symbol: { en: "Goat", hi: "बकरा", kn: "ಮೇಕೆ", imagePath: "/images/symbols/goat.png" },
+    symbol: { en: "Goat", hi: "बकरा", kn: "ಮೇಕೆ", imagePath: "/images/tirthankar/symbols/goat.avif" },
     color: "Golden",
     colorHex: "#EAB308",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -475,14 +486,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Sura Raja", hi: "सूर राजा", kn: "ಸೂರ ರಾಜ" },
     lifespan: { en: "95 Thousand Purva", hi: "९५ हजार पूर्व", kn: "೯೫ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "35 Dhanush", hi: "३५ धनुष", kn: "೩೫ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/kunthunath.png",
+    tirthankaraImage: "/images/tirthankar/arhats/kunthunath.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 18,
     name: { en: "Aranath", hi: "अरनाथ", kn: "ಅರನಾಥ" },
-    symbol: { en: "Fish (Nandavarta)", hi: "मछली (नन्दावर्त)", kn: "ಮೀನು (ನಂದಾವರ್ತ)", imagePath: "/images/symbols/fish.png" },
+    symbol: { en: "Fish (Nandavarta)", hi: "मछली (नन्दावर्त)", kn: "ಮೀನು (ನಂದಾವರ್ತ)", imagePath: "/images/tirthankar/symbols/fish.avif" },
     color: "Golden",
     colorHex: "#EAB308",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -495,14 +506,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Sudharma Raja", hi: "सुधर्मा राजा", kn: "ಸುಧರ್ಮ ರಾಜ" },
     lifespan: { en: "84 Thousand Purva", hi: "८४ हजार पूर्व", kn: "೮೪ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "30 Dhanush", hi: "३० धनुष", kn: "೩೦ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/arnath.png",
+    tirthankaraImage: "/images/tirthankar/arhats/arnath.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 19,
     name: { en: "Mallinath", hi: "मल्लिनाथ", kn: "ಮಲ್ಲಿನಾಥ" },
-    symbol: { en: "Kalash (Water Pot)", hi: "कलश", kn: "ಕಲಶ", imagePath: "/images/symbols/kalash.png" },
+    symbol: { en: "Kalash (Water Pot)", hi: "कलश", kn: "ಕಲಶ", imagePath: "/images/tirthankar/symbols/kalash.avif" },
     color: "Golden",
     colorHex: "#EAB308",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -515,14 +526,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Kumbha Raja", hi: "कुम्भ राजा", kn: "ಕುಂಭ ರಾಜ" },
     lifespan: { en: "56 Thousand Purva", hi: "५६ हजार पूर्व", kn: "೫೬ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "25 Dhanush", hi: "२५ धनुष", kn: "೨೫ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/mallinath.png",
+    tirthankaraImage: "/images/tirthankar/arhats/mallinath.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 20,
     name: { en: "Munisuvratnath", hi: "मुनिसुव्रतनाथ", kn: "ಮುನಿಸುವ್ರತನಾಥ" },
-    symbol: { en: "Tortoise", hi: "कछुआ", kn: "ಆಮೆ", imagePath: "/images/symbols/tortoise.png" },
+    symbol: { en: "Tortoise", hi: "कछुआ", kn: "ಆಮೆ", imagePath: "/images/tirthankar/symbols/tortoise.avif" },
     color: "Blue",
     colorHex: "#1E40AF",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -535,14 +546,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Sumitra Raja", hi: "सुमित्र राजा", kn: "ಸುಮಿತ್ರ ರಾಜ" },
     lifespan: { en: "30 Thousand Purva", hi: "३० हजार पूर्व", kn: "೩೦ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "20 Dhanush", hi: "२० धनुष", kn: "೨೦ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/munisuvrat.png",
+    tirthankaraImage: "/images/tirthankar/arhats/munisuvrat.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 21,
     name: { en: "Naminath", hi: "नमिनाथ", kn: "ನಮಿನಾಥ" },
-    symbol: { en: "Blue Lotus", hi: "नील कमल", kn: "ನೀಲಿ ಕಮಲ", imagePath: "/images/symbols/blueLotus.png" },
+    symbol: { en: "Blue Lotus", hi: "नील कमल", kn: "ನೀಲಿ ಕಮಲ", imagePath: "/images/tirthankar/symbols/blueLotus.avif" },
     color: "Golden",
     colorHex: "#EAB308",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -555,14 +566,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Vijaya Raja", hi: "विजय राजा", kn: "ವಿಜಯ ರಾಜ" },
     lifespan: { en: "10 Thousand Purva", hi: "१० हजार पूर्व", kn: "೧೦ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "15 Dhanush", hi: "१५ धनुष", kn: "೧೫ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/naminath.png",
+    tirthankaraImage: "/images/tirthankar/arhats/naminath.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 22,
     name: { en: "Neminath", hi: "नेमिनाथ", kn: "ನೇಮಿನಾಥ" },
-    symbol: { en: "Conch", hi: "शंख", kn: "ಶಂಖ", imagePath: "/images/symbols/conch.png" },
+    symbol: { en: "Conch", hi: "शंख", kn: "ಶಂಖ", imagePath: "/images/tirthankar/symbols/conch.avif" },
     color: "Blue",
     colorHex: "#1E40AF",
     placeOfNirvana: { en: "Girnar Ji", hi: "गिरनार जी", kn: "ಗಿರಿನಾರ" },
@@ -575,14 +586,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Samudravijaya Raja", hi: "समुद्रविजय राजा", kn: "ಸಮುದ್ರವಿಜಯ ರಾಜ" },
     lifespan: { en: "1000 Years", hi: "१००० वर्ष", kn: "೧೦೦೦ ವರ್ಷ" },
     height: { en: "10 Dhanush", hi: "१० धनुष", kn: "೧೦ ಧನುಷ್" },
-    tirthankaraImage: "/images/arhats/neminath.png",
+    tirthankaraImage: "/images/tirthankar/arhats/neminath.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 23,
     name: { en: "Parshvanath", hi: "पार्श्वनाथ", kn: "ಪಾರ್ಶ್ವನಾಥ" },
-    symbol: { en: "Snake", hi: "सर्प", kn: "ಸರ್ಪ", imagePath: "/images/symbols/snake.png" },
+    symbol: { en: "Snake", hi: "सर्प", kn: "ಸರ್ಪ", imagePath: "/images/tirthankar/symbols/snake.avif" },
     color: "Green",
     colorHex: "#16A34A",
     placeOfNirvana: { en: "Sammed Shikhar Ji", hi: "सम्मेद शिखर जी जी", kn: "ಸಮ್ಮೇದ ಶಿಖರ" },
@@ -595,14 +606,14 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Ashvasena Raja", hi: "अश्वसेन राजा", kn: "ಅಶ್ವಸೇನ ರಾಜ" },
     lifespan: { en: "100 Years", hi: "१०० वर्ष", kn: "೧೦೦ ವರ್ಷ" },
     height: { en: "9 Hands", hi: "९ हाथ", kn: "೯ ಹಸ್ತ" },
-    tirthankaraImage: "/images/arhats/parshvanath.png",
+    tirthankaraImage: "/images/tirthankar/arhats/parshvanath.avif",
     kalyanaks: defaultKalyanaks
   },
 
   {
     id: 24,
     name: { en: "Mahavira", hi: "महावीर", kn: "ಮಹಾವೀರ" },
-    symbol: { en: "Lion", hi: "सिंह", kn: "ಸಿಂಹ", imagePath: "/images/symbols/lion.png" },
+    symbol: { en: "Lion", hi: "सिंह", kn: "ಸಿಂಹ", imagePath: "/images/tirthankar/symbols/lion.avif" },
     color: "Golden",
     colorHex: "#EAB308",
     placeOfNirvana: { en: "Pawapuri", hi: "पावापुरी", kn: "ಪಾವಾಪುರಿ" },
@@ -615,7 +626,7 @@ export const tirthankaras: Tirthankara[] = [
     father: { en: "Siddhartha Raja", hi: "सिद्धार्थ राजा", kn: "ಸಿದ್ಧಾರ್ಥ ರಾಜ" },
     lifespan: { en: "72 Years", hi: "७२ वर्ष", kn: "೭೨ ವರ್ಷ" },
     height: { en: "7 Hands", hi: "७ हाथ", kn: "೭ ಹಸ್ತ" },
-    tirthankaraImage: "/images/arhats/mahavira.png",
+    tirthankaraImage: "/images/tirthankar/arhats/mahavira.avif",
     kalyanaks: defaultKalyanaks
   }
 ];

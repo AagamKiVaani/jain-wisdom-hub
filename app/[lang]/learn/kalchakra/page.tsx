@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     siteName: 'Jain Wisdom Hub',
     images: [
       {
-        url: '/images/metadata/kalchakra-preview.png', // Ensure this image exists!
+        url: '/images/metadata/kalchakra-preview.avif', // Ensure this image exists!
         width: 1200,
         height: 630,
         alt: 'Kalchakra Time Wheel Preview',

@@ -248,7 +248,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
            
            await new Promise<void>((resolve) => {
               const img = new Image();
-              img.src = `/images/kalchakra/ara${id}-${i}.webp`;
+              img.src = `/images/kalchakra/ara${id}-${i}.avif`;
               
               // If it loads or fails, we move to the next one instantly
               img.onload = () => resolve();
@@ -564,7 +564,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                                     {Array.from({ length: 11 }).map((_, i) => (
                                         <img 
                                             key={i} 
-                                            src={`/images/kalchakra/ara${normalizedId}-${i + 1}.webp`} 
+                                            src={`/images/kalchakra/ara${normalizedId}-${i + 1}.avif`} 
                                             className="h-full w-auto object-cover min-w-[50vw] md:min-w-[33vw] mix-blend-overlay" 
                                             alt="Atmosphere"
                                             onError={(e) => (e.currentTarget.style.display = 'none')} 
@@ -580,7 +580,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
               <div className="relative z-10">
                   <div className="text-center mb-12">
                      <h2 className="text-3xl md:text-5xl font-black uppercase mb-4 drop-shadow-sm">{t('enterTitle')}</h2>
-                     <p className="text-zinc-600 dark:text-zinc-400 max-w-lg mx-auto font-medium">{t('enterDesc')}</p>
+                     <p className="text-zinc-900 dark:text-zinc-100 max-w-lg mx-auto font-medium">{t('enterDesc')}</p>
                   </div>
 
                   <div className="flex justify-center mb-8">

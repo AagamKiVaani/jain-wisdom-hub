@@ -5,6 +5,57 @@ import Image from "next/image";
 import { ArrowLeft, Star } from "lucide-react";
 import KalyanakTimeline from "./KalyanakTimeline"; // <--- IMPORT THE NEW COMPONENT
 
+import { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: Promise<{ tirthankarId: string; lang: string }> }): Promise<Metadata> {
+  // 1. AWAIT the params (Crucial Fix for Next.js 15+)
+  const resolvedParams = await params;
+  
+  const id = Number(resolvedParams.tirthankarId);
+  const lang = resolvedParams.lang === "hi" || resolvedParams.lang === "kn" ? resolvedParams.lang : "en";
+
+  // 2. Find the Tirthankar
+  const tirthankar = tirthankaras.find((t) => t.id === id);
+
+  // 3. Fallback if not found
+  if (!tirthankar) {
+    return {
+      title: "Tirthankar Not Found",
+      description: "The requested Tirthankar page could not be found.",
+    };
+  }
+
+  // 4. Create Dynamic Text
+  const name = tirthankar.name[lang];
+  const symbol = tirthankar.symbol[lang];
+  
+  let title = "";
+  let description = "";
+
+  if (lang === "hi") {
+    title = `भगवान ${name} - जैन तीर्थंकर | आगम की वाणी`;
+    description = `भगवान ${name} (चिन्ह: ${symbol}) के जीवन, पंच कल्याणक और शिक्षाओं के बारे में जानें। निर्वाण स्थल: ${tirthankar.placeOfNirvana.hi}।`;
+  } else if (lang === "kn") {
+    title = `ಭಗವಾನ್ ${name} - ಜೈನ ತೀರ್ಥಂಕರ | ಆಗಮ ಕೀ ವಾಣಿ`;
+    description = `ಭಗವಾನ್ ${name} (ಲಾಂಛನ: ${symbol}) ಅವರ ಜೀವನ, ಪಂಚ ಕಲ್ಯಾಣಕಗಳು ಮತ್ತು ಬೋಧನೆಗಳನ್ನು ಅನ್ವೇಷಿಸಿ. ನಿರ್ವಾಣ ಸ್ಥಳ: ${tirthankar.placeOfNirvana.kn}।`;
+  } else {
+    title = `Bhagwan ${name} - Jain Tirthankar | AagamKiVaani`;
+    description = `Explore the life, kalyanaks, and teachings of Bhagwan ${name} (Symbol: ${symbol}). Nirvana Place: ${tirthankar.placeOfNirvana.en}.`;
+  }
+
+  // 5. Return Metadata
+  return {
+    title: title,
+    description: description,
+    openGraph: {
+      title: title,
+      description: description,
+      images: [tirthankar.tirthankaraImage], 
+      type: "article",
+    },
+  };
+}
+
 export default async function TirthankaraDetail({ params }: { params: Promise<{ lang: string, id: string }> }) {
   const { lang, id } = await params;
   const t = tirthankaras.find(item => item.id === parseInt(id));
@@ -54,12 +105,12 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
   ];
 
   return (
-    <div className="bg-white dark:bg-black text-gray-900 dark:text-white min-h-screen selection:bg-orange-500 selection:text-white transition-colors duration-500">
+    <div className="bg-white dark:bg-black text-gray-900 dark:text-white min-h-screen selection:bg-rose-500 selection:text-white transition-colors duration-500">
       
       {/* 1. FIXED NAVIGATION (Unchanged) */}
       <Link 
         href={`/${lang}/tirthankars`} 
-        className="fixed top-20 left-4 md:top-24 md:left-8 z-40 flex items-center gap-2 text-gray-500 hover:text-orange-500 transition-all bg-white/80 dark:bg-black/40 px-4 py-2 rounded-full backdrop-blur-md border border-gray-200 dark:border-white/10 shadow-sm"
+        className="fixed top-20 left-4 md:top-24 md:left-8 z-40 flex items-center gap-2 text-gray-500 hover:text-rose-500 transition-all bg-white/80 dark:bg-black/40 px-4 py-2 rounded-full backdrop-blur-md border border-gray-200 dark:border-white/10 shadow-sm"
       >
         <ArrowLeft className="group-hover:-translate-x-1 transition-transform" size={16} /> 
         <span className="text-[10px] font-black uppercase tracking-[0.2em]">Gallery</span>
@@ -95,20 +146,20 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
         {/* Text Container & Stats (Unchanged) */}
         <div className="text-center w-full max-w-5xl z-20 px-2 flex flex-col items-center">
             <div className="mb-6 relative group cursor-pointer">
-                <div className="absolute inset-0 bg-orange-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-rose-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative w-24 h-24 md:w-32 md:h-32">
                     <Image src={t.symbol.imagePath} alt={t.symbol.en} fill className="object-contain opacity-100 group-hover:scale-110 transition-all duration-500 drop-shadow-lg" />
                 </div>
                 <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                    <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-orange-500 bg-white/90 dark:bg-black/90 px-2 py-1 rounded-full border border-orange-500/20">{t.symbol[l]}</span>
+                    <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-rose-500 bg-white/90 dark:bg-black/90 px-2 py-1 rounded-full border border-rose-500/20">{t.symbol[l]}</span>
                 </div>
             </div>
-            <div className="text-orange-500 text-[10px] md:text-xs font-black tracking-[0.5em] md:tracking-[0.8em] mb-2 md:mb-4 uppercase">The {getOrdinal(t.id)} Arhat</div>
+            <div className="text-rose-500 text-[10px] md:text-xs font-black tracking-[0.5em] md:tracking-[0.8em] mb-2 md:mb-4 uppercase">The {getOrdinal(t.id)} Arhat</div>
             <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black mb-10 tracking-tighter uppercase leading-none whitespace-nowrap w-full">{t.name[l]}</h1>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 text-left w-full">
                 {stats.map((stat, i) => (
-                    <div key={i} className="bg-white/40 dark:bg-white/[0.03] border border-gray-200 dark:border-white/10 p-3 md:p-5 rounded-2xl md:rounded-[1.5rem] backdrop-blur-md hover:border-orange-500/50 transition-colors group">
-                        <div className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-gray-500 dark:text-gray-500 mb-1 font-bold group-hover:text-orange-500 transition-colors">{stat.label[l]}</div>
+                    <div key={i} className="bg-white/40 dark:bg-white/[0.03] border border-gray-200 dark:border-white/10 p-3 md:p-5 rounded-2xl md:rounded-[1.5rem] backdrop-blur-md hover:border-rose-500/50 transition-colors group">
+                        <div className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-gray-500 dark:text-gray-500 mb-1 font-bold group-hover:text-rose-500 transition-colors">{stat.label[l]}</div>
                         <div className="text-xs md:text-base font-bold text-gray-800 dark:text-gray-100 italic break-words">{stat.value}</div>
                     </div>
                 ))}
@@ -117,7 +168,7 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
         
         <div className="mt-16 md:mt-24 flex flex-col items-center gap-4 opacity-100">
            <span className="text-[10px] tracking-[0.3em] uppercase text-gray-400 dark:text-gray-500 font-bold">Scroll the Life</span>
-           <div className="w-px h-20 md:h-36 bg-gradient-to-b from-orange-500 to-transparent"></div>
+           <div className="w-px h-20 md:h-36 bg-gradient-to-b from-rose-500 to-transparent"></div>
         </div>
       </div>
 
@@ -129,24 +180,24 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mb-20">
               {prevT && (
                 <Link href={`/${lang}/tirthankars/${prevT.id}`} 
-                  className="group p-8 rounded-[2.5rem] bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 hover:border-orange-500/30 transition-all text-left flex items-center gap-6 shadow-sm">
-                  <div className="h-12 w-12 rounded-full border border-gray-200 dark:border-white/10 flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-all text-gray-400">
+                  className="group p-8 rounded-[2.5rem] bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 hover:border-rose-500/30 transition-all text-left flex items-center gap-6 shadow-sm">
+                  <div className="h-12 w-12 rounded-full border border-gray-200 dark:border-white/10 flex items-center justify-center group-hover:bg-rose-500 group-hover:text-white transition-all text-gray-400">
                     <ArrowLeft size={20} />
                   </div>
                   <div>
                     <div className="text-[10px] uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 mb-1 font-bold">Previous</div>
-                    <div className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-orange-500 transition-colors">{prevT.name[l]}</div>
+                    <div className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-rose-500 transition-colors">{prevT.name[l]}</div>
                   </div>
                 </Link>
               )}
               {nextT && (
                 <Link href={`/${lang}/tirthankars/${nextT.id}`} 
-                  className="group p-8 rounded-[2.5rem] bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 hover:border-orange-500/30 transition-all text-right flex items-center justify-end gap-6 shadow-sm">
+                  className="group p-8 rounded-[2.5rem] bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 hover:border-rose-500/30 transition-all text-right flex items-center justify-end gap-6 shadow-sm">
                   <div>
                     <div className="text-[10px] uppercase tracking-[0.3em] text-gray-400 dark:text-gray-500 mb-1 font-bold">Next</div>
-                    <div className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-orange-500 transition-colors">{nextT.name[l]}</div>
+                    <div className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-rose-500 transition-colors">{nextT.name[l]}</div>
                   </div>
-                  <div className="h-12 w-12 rounded-full border border-gray-200 dark:border-white/10 flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-all text-gray-400">
+                  <div className="h-12 w-12 rounded-full border border-gray-200 dark:border-white/10 flex items-center justify-center group-hover:bg-rose-500 group-hover:text-white transition-all text-gray-400">
                     <ArrowLeft size={20} className="rotate-180" />
                   </div>
                 </Link>
@@ -155,7 +206,7 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
            
            <div className="relative mb-10">
               <div className="absolute inset-0 blur-[100px] opacity-20" style={{ backgroundColor: auraColorHex }}></div>
-              <Star className="relative mx-auto text-orange-500 w-16 h-16" fill="currentColor" />
+              <Star className="relative mx-auto text-rose-500 w-16 h-16" fill="currentColor" />
            </div>
            
            <Link href={`/${lang}/tirthankars`} className="group flex items-center gap-4 px-12 py-5 bg-gray-900 dark:bg-white text-white dark:text-black rounded-full font-bold text-xs tracking-[0.2em] hover:scale-105 transition-all shadow-lg active:scale-95">

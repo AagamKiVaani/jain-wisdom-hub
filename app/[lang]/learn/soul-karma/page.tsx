@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     siteName: 'Jain Wisdom Hub',
     images: [
       {
-        url: '/images/metadata/soul-karma-preview.png', // Ensure this image exists!
+        url: '/images/metadata/soul-karma-preview.avif', // Ensure this image exists!
         width: 1200,
         height: 630,
         alt: 'Soul and Karma 3D Simulation',

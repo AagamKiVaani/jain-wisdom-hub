@@ -26,11 +26,12 @@ export default function KalyanakTimeline({ kalyanakData, lang }: Props) {
       if (!data) return;
 
       const textParts = data.description[l]?.split("\n\n") || [""];
-      const imageCount = data.images?.length || 0;
+      const imageCount = Math.max(data.imageMobile?.length || 0, data.imageDesktop?.length || 0);
       const slideCount = Math.max(imageCount, textParts.length, 1);
 
       for (let i = 0; i < slideCount; i++) {
-        const specificImage = data.images && data.images[i] ? data.images[i] : null;
+        const mobileImage = data.imageMobile && data.imageMobile[i] ? data.imageMobile[i] : null;
+        const desktopImage = data.imageDesktop && data.imageDesktop[i] ? data.imageDesktop[i] : null;
         const placeholderImage = `/images/placeholders/${key}-placeholder.png`;
 
         let text = textParts[i] || "";
@@ -47,7 +48,8 @@ export default function KalyanakTimeline({ kalyanakData, lang }: Props) {
           location: i === 0 && data.location ? data.location[l] : null,
           extraInfo: i === 0 && (data.extraInfo || data.nakshatra) ? (data.extraInfo ? data.extraInfo[l] : data.nakshatra) : null,
           text: text,
-          primarySrc: specificImage,
+          primarySrcMobile: mobileImage,
+          primarySrcDesktop: desktopImage,
           placeholderSrc: placeholderImage
         });
       }
@@ -63,7 +65,7 @@ export default function KalyanakTimeline({ kalyanakData, lang }: Props) {
       {/* ======================= */}
       <div className="hidden md:flex items-start w-full max-w-[1600px] mx-auto relative">
         <div className="w-[45%] relative z-10 pl-12 pr-6 pb-40 pt-20">
-            <div className="absolute left-[39px] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-orange-300 dark:via-orange-800 to-transparent opacity-50"></div>
+            <div className="absolute left-[39px] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-rose-300 dark:via-rose-800 to-transparent opacity-50"></div>
             {slides.map((slide) => (
                 <motion.div 
                     key={slide.id}
@@ -71,21 +73,21 @@ export default function KalyanakTimeline({ kalyanakData, lang }: Props) {
                     viewport={{ amount: 0.5 }}
                     className="min-h-[60vh] flex flex-col justify-center py-12 pl-16 relative"
                 >
-                    <div className={`absolute left-[-5px] top-20 w-3 h-3 rounded-full border-2 transition-all duration-500 ${slide.subIndex === 0 ? (activeSlideId.startsWith(slide.kalyanakKey) ? 'bg-orange-500 border-orange-500 scale-150' : 'bg-white dark:bg-black border-gray-400') : 'bg-transparent border-transparent'}`}></div>
+                    <div className={`absolute left-[-5px] top-20 w-3 h-3 rounded-full border-2 transition-all duration-500 ${slide.subIndex === 0 ? (activeSlideId.startsWith(slide.kalyanakKey) ? 'bg-rose-500 border-rose-500 scale-150' : 'bg-white dark:bg-black border-gray-400') : 'bg-transparent border-transparent'}`}></div>
                     {slide.subIndex === 0 && (
                         <div className="mb-6">
-                            <span className="text-orange-500 font-bold tracking-[0.3em] text-xs uppercase opacity-70">Step 0{slide.stepIndex + 1}</span>
+                            <span className="text-rose-500 font-bold tracking-[0.3em] text-xs uppercase opacity-70">Step 0{slide.stepIndex + 1}</span>
                             <h2 className="text-5xl font-black text-gray-900 dark:text-white uppercase tracking-tight leading-none mt-2">{slide.title}</h2>
                         </div>
                     )}
                     {(slide.tithi || slide.location || slide.extraInfo) && (
                          <div className="grid grid-cols-1 gap-3 mb-6 bg-gray-50 dark:bg-white/5 p-6 rounded-2xl border border-gray-200 dark:border-white/5 shadow-sm">
-                            {slide.tithi && (<div className="flex items-start gap-3"><Calendar className="w-4 h-4 text-orange-500 mt-1" /><div><span className="text-[10px] uppercase font-bold opacity-50 block">Time</span><span className="text-gray-900 dark:text-gray-100 font-medium">{slide.tithi}</span></div></div>)}
-                            {slide.location && (<div className="flex items-start gap-3"><MapPin className="w-4 h-4 text-orange-500 mt-1" /><div><span className="text-[10px] uppercase font-bold opacity-50 block">Place</span><span className="text-gray-900 dark:text-gray-100 font-medium">{slide.location}</span></div></div>)}
-                            {slide.extraInfo && (<div className="flex items-start gap-3 text-orange-700 dark:text-orange-300 bg-orange-100/50 dark:bg-orange-900/20 p-2 rounded-lg -ml-2 w-fit"><Star className="w-4 h-4 mt-1" /><div><span className="text-[10px] uppercase font-bold opacity-50 block">Key Detail</span><span className="font-bold">{slide.extraInfo}</span></div></div>)}
+                            {slide.tithi && (<div className="flex items-start gap-3"><Calendar className="w-4 h-4 text-rose-500 mt-1" /><div><span className="text-[10px] uppercase font-bold opacity-50 block">Time</span><span className="text-gray-900 dark:text-gray-100 font-medium">{slide.tithi}</span></div></div>)}
+                            {slide.location && (<div className="flex items-start gap-3"><MapPin className="w-4 h-4 text-rose-500 mt-1" /><div><span className="text-[10px] uppercase font-bold opacity-50 block">Place</span><span className="text-gray-900 dark:text-gray-100 font-medium">{slide.location}</span></div></div>)}
+                            {slide.extraInfo && (<div className="flex items-start gap-3 text-rose-700 dark:text-rose-300 bg-rose-100/50 dark:bg-rose-900/20 p-2 rounded-lg -ml-2 w-fit"><Star className="w-4 h-4 mt-1" /><div><span className="text-[10px] uppercase font-bold opacity-50 block">Key Detail</span><span className="font-bold">{slide.extraInfo}</span></div></div>)}
                          </div>
                     )}
-                    <p className={`text-xl leading-relaxed font-serif text-gray-600 dark:text-gray-300 ${slide.subIndex > 0 ? 'border-l-4 border-orange-500/20 pl-6' : ''}`}>{slide.text}</p>
+                    <p className={`text-xl leading-relaxed font-serif text-gray-600 dark:text-gray-300 ${slide.subIndex > 0 ? 'border-l-4 border-rose-500/20 pl-6' : ''}`}>{slide.text}</p>
                 </motion.div>
             ))}
         </div>
@@ -103,7 +105,7 @@ export default function KalyanakTimeline({ kalyanakData, lang }: Props) {
                                 transition={{ duration: 0.5 }}
                                 className="absolute inset-0"
                             >
-                                <RobustImage primarySrc={slide.primarySrc} placeholderSrc={slide.placeholderSrc} alt={slide.title} />
+                                <RobustImage primarySrc={slide.primarySrcDesktop} placeholderSrc={slide.placeholderSrc} alt={slide.title} />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
                             </motion.div>
                         );
@@ -120,7 +122,7 @@ export default function KalyanakTimeline({ kalyanakData, lang }: Props) {
         
         {/* Intro Header for Mobile */}
         <div className="mb-8">
-            <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-orange-500 mb-2">The Journey</h3>
+            <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-rose-500 mb-2">The Journey</h3>
             <h2 className="text-4xl font-black text-gray-900 dark:text-white leading-none">Witness the <br/>Divine Path</h2>
         </div>
 
@@ -162,7 +164,7 @@ function MobileStackedCard({ slide, index }: { slide: any, index: number }) {
                 {/* We force 16:9 ratio so 1920x1080 images fit perfectly without weird cropping */}
                 <div className="relative w-full aspect-video bg-black flex-shrink-0">
                     <RobustImage 
-                        primarySrc={slide.primarySrc}
+                        primarySrc={slide.primarySrcMobile}
                         placeholderSrc={slide.placeholderSrc}
                         alt={slide.title}
                     />
@@ -173,7 +175,7 @@ function MobileStackedCard({ slide, index }: { slide: any, index: number }) {
                     {/* Floating Title on Image */}
                     <div className="absolute bottom-4 left-4 text-white">
                         <div className="flex items-center gap-2 mb-1">
-                            <span className="bg-orange-600/90 backdrop-blur-md px-2 py-1 rounded text-[9px] font-bold uppercase tracking-widest">
+                            <span className="bg-rose-600/90 backdrop-blur-md px-2 py-1 rounded text-[9px] font-bold uppercase tracking-widest">
                                 Step 0{slide.stepIndex + 1}
                             </span>
                             {slide.subIndex > 0 && <span className="text-[9px] font-bold opacity-80 uppercase tracking-widest bg-black/40 px-2 py-1 rounded">Part {slide.subIndex + 1}</span>}
