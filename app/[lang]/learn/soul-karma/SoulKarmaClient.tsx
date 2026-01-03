@@ -417,7 +417,7 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
         </div>
         
         {/* ✅ FIXED: Darker text for contrast */}
-        <div className="mb-24 text-xs text-purple-700 dark:text-purple-400 font-medium animate-pulse text-center px-4">( {t('disclaimer')} )</div>
+        <div className="mb-24 text-xs text-purple-800 dark:text-purple-300 font-medium animate-pulse text-center px-4">( {t('disclaimer')} )</div>
 
         {/* WISDOM CARDS */}
         <section className="w-full max-w-5xl mx-auto px-4 md:px-0 mb-32">
@@ -486,7 +486,7 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
                         {/* @ts-ignore */}
                         {translations.karma.paap_title[lang]}
                     </h3>
-                    <p className="text-[10px] text-zinc-500 mb-6 italic">
+                    <p className="text-[10px] text-zinc-500 dark:text-zinc-400 mb-6 italic">
                         {/* @ts-ignore */}
                         {translations.karma.paap_examples[lang]}
                     </p>
@@ -537,7 +537,7 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
                         {/* @ts-ignore */}
                         {translations.karma.punya_title[lang]}
                     </h3>
-                    <p className="text-[10px] text-zinc-500 mb-6 italic">
+                    <p className="text-[10px] text-zinc-500 dark:text-zinc-400 mb-6 italic">
                         {/* @ts-ignore */}
                         {translations.karma.punya_examples[lang]}
                     </p>
@@ -564,7 +564,7 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
                         <div key={i} className="bg-zinc-950 p-6 rounded-2xl border border-zinc-800 flex flex-col items-center text-center">
                             <div className={`p-3 bg-${m.c}-900/20 rounded-full text-${m.c}-400 mb-4`}><m.icon size={28} /></div>
                             {/* @ts-ignore */}
-                            <h4 className={`text-lg font-bold mb-3 text-${m.c}-300`}>{translations.karma.mechanism[`${m.t}_t`][lang]}</h4>
+                            <h4 className={`text-lg font-bold mb-3 text-${m.c}-200`}>{translations.karma.mechanism[`${m.t}_t`][lang]}</h4>
                             {/* @ts-ignore */}
                             <p className="text-sm text-zinc-400 leading-relaxed">{translations.karma.mechanism[`${m.t}_d`][lang]}</p>
                         </div>
