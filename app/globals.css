@@ -2,6 +2,11 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 @keyframes subtleFloat {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-24px); } /* Shorter distance */

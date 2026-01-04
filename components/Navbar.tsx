@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link"; // <--- Added Link import
+import Link from "next/link";
+import Image from "next/image"; // <--- Added Image import
 import { Moon, Sun, Languages, ChevronDown } from "lucide-react";
 import { useTheme } from "next-themes";
 import { usePathname, useRouter } from "next/navigation";
@@ -36,22 +37,37 @@ export default function Navbar({ lang }: { lang: string }) {
   }
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/80 backdrop-blur-md transition-colors duration-300">
+    <nav className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/80 backdrop-blur-md transition-colors duration-300 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         
-        {/* --- LOGO (Now Clickable) --- */}
+        {/* --- LOGO + TEXT --- */}
         <Link 
             href={`/${lang}`} 
-            className="text-xl font-bold tracking-tight text-gray-900 dark:text-white hover:text-orange-600 dark:hover:text-orange-500 transition-colors"
+            className="flex items-center gap-3 group" // Added flex container
         >
-          Jain Wisdom
+          {/* Logo Image */}
+          <div className="relative w-8 h-8 md:w-9 md:h-9">
+            <Image 
+              src="/icons/logo.png" 
+              alt="Jain Wisdom Logo" 
+              fill
+              className="object-contain"
+              priority // Loads instantly
+              quality={100}
+            />
+          </div>
+
+          {/* Text */}
+          <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-500 transition-colors">
+            Jain Wisdom
+          </span>
         </Link>
 
         <div className="flex items-center gap-2 md:gap-4">
           
           {/* --- YOUTUBE LINK --- */}
           <a
-            href= {siteConfig.socials.youtube}
+            href={siteConfig.socials.youtube}
             target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center gap-2 p-2 rounded-md hover:bg-red-50 dark:hover:bg-red-900/10 transition-all"
