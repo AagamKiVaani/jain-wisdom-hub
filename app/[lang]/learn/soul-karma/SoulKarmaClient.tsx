@@ -451,16 +451,71 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
             </h2>
             <div className="grid grid-cols-1 gap-4">
                 {[
-                    { icon: User, c: 'red', t: 'audarik' },
-                    { icon: Wand2, c: 'purple', t: 'vaikriya' },
-                    { icon: Sparkles, c: 'white', t: 'aaharak' },
-                    { icon: Flame, c: 'orange', t: 'tejas' },
-                    { icon: Layers, c: 'zinc', t: 'karman' }
+                    { 
+                        icon: User, 
+                        t: 'audarik',
+                        // Red: Red-500 border / Red-100 bg / Red-600 text (Light) -> Red-400 text (Dark)
+                        borderClass: 'border-red-500',
+                        iconBg: 'bg-red-100 dark:bg-red-900/20',
+                        iconColor: 'text-red-600 dark:text-red-400'
+                    },
+                    { 
+                        icon: Wand2, 
+                        t: 'vaikriya',
+                        // Purple
+                        borderClass: 'border-purple-500',
+                        iconBg: 'bg-purple-100 dark:bg-purple-900/20',
+                        iconColor: 'text-purple-600 dark:text-purple-400'
+                    },
+                    { 
+                        icon: Sparkles, 
+                        t: 'aaharak',
+                        // White/Zinc: Needs special handling so it's visible in Light Mode
+                        // Light: Zinc-400 border / Zinc-200 bg / Zinc-700 text
+                        // Dark:  White border / Zinc-800 bg / White text
+                        borderClass: 'border-zinc-400 dark:border-white',
+                        iconBg: 'bg-zinc-200 dark:bg-zinc-800',
+                        iconColor: 'text-zinc-700 dark:text-white'
+                    },
+                    { 
+                        icon: Flame, 
+                        t: 'tejas',
+                        // Orange
+                        borderClass: 'border-orange-500',
+                        iconBg: 'bg-orange-100 dark:bg-orange-900/20',
+                        iconColor: 'text-orange-600 dark:text-orange-400'
+                    },
+                    { 
+                        icon: Layers, 
+                        t: 'karman',
+                        // Zinc/Gray
+                        borderClass: 'border-zinc-500',
+                        iconBg: 'bg-zinc-200 dark:bg-zinc-700/30',
+                        iconColor: 'text-zinc-600 dark:text-zinc-400'
+                    }
                 ].map((item, i) => (
-                    <div key={i} className={`flex flex-col md:flex-row items-start md:items-center gap-6 p-6 rounded-2xl bg-zinc-100 dark:bg-zinc-900 border-l-4 border-${item.c === 'white' ? 'white' : item.c + '-500'}`}>
-                        <div className={`p-3 bg-${item.c === 'white' ? 'zinc-200' : item.c + '-100'} dark:bg-${item.c === 'white' ? 'zinc-800' : item.c + '-900/20'} rounded-full text-${item.c === 'white' ? 'zinc-600' : item.c + '-600'}`}><item.icon size={24} /></div>
-                        {/* @ts-ignore */}
-                        <div><h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">{translations.shareer[`${item.t}_t`][lang]}</h3><p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1">{translations.shareer[`${item.t}_d`][lang]}</p></div>
+                    <div 
+                        key={item.t} 
+                        className={`flex flex-col md:flex-row items-start md:items-center gap-6 p-6 rounded-2xl bg-zinc-100 dark:bg-zinc-900 border-l-4 ${item.borderClass}`}
+                    >
+                        {/* Icon Circle */}
+                        <div className={`p-3 rounded-full ${item.iconBg} ${item.iconColor}`}>
+                            <item.icon size={24} />
+                        </div>
+                        
+                        {/* Text Content */}
+                        <div>
+                            {/* @ts-ignore */}
+                            <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
+                                {/* @ts-ignore */}
+                                {translations.shareer[`${item.t}_t`][lang]}
+                            </h3>
+                            {/* @ts-ignore */}
+                            <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1">
+                                {/* @ts-ignore */}
+                                {translations.shareer[`${item.t}_d`][lang]}
+                            </p>
+                        </div>
                     </div>
                 ))}
             </div>
@@ -474,7 +529,7 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
             </h2>
             <div className="flex flex-col md:flex-row gap-8">
 
-                <div className="mb-24 text-s text-green-700 dark:text-green-400 font-medium animate-pulse text-center px-4 md:hidden">
+                <div className="mb-24 text-s text-purple-700 dark:text-purple-400 font-medium animate-pulse text-center px-4 md:hidden">
                     {/* @ts-ignore */}
                     ( {translations.karma.scroll_disclaimer[lang]} )
                 </div>
@@ -554,19 +609,67 @@ export default function SoulKarmaPage({ params }: { params: Promise<{ lang: stri
             </div>
             
             {/* MECHANISM CARDS */}
-            <div className="mt-16 bg-zinc-900/50 rounded-3xl p-8 border border-zinc-800">
-                <h3 className="text-2xl font-bold text-center mb-10 text-zinc-200">
+            <div className="mt-16 bg-white/50 dark:bg-zinc-900/50 rounded-3xl p-8 border border-zinc-200 dark:border-zinc-800 backdrop-blur-sm">
+                <h3 className="text-2xl font-bold text-center mb-10 text-zinc-800 dark:text-zinc-200">
                     {/* @ts-ignore */}
                     {translations.karma.mechanism.title[lang]}
                 </h3>
+
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {[ {icon:Magnet, c:'blue', t:'yoga'}, {icon:Droplets, c:'red', t:'kashaya'}, {icon:Zap, c:'amber', t:'nature'} ].map((m, i) => (
-                        <div key={i} className="bg-zinc-950 p-6 rounded-2xl border border-zinc-800 flex flex-col items-center text-center">
-                            <div className={`p-3 bg-${m.c}-900/20 rounded-full text-${m.c}-400 mb-4`}><m.icon size={28} /></div>
+                    {[
+                        { 
+                            icon: Magnet, 
+                            titleKey: 'yoga_t', 
+                            descKey: 'yoga_d',
+                            // Light: Blue-100 bg / Blue-600 icon
+                            // Dark:  Blue-900/20 bg / Blue-400 icon
+                            iconBg: 'bg-blue-100 dark:bg-blue-900/20', 
+                            iconColor: 'text-blue-600 dark:text-blue-400',
+                            titleColor: 'text-zinc-900 dark:text-blue-200'
+                        },
+                        { 
+                            icon: Droplets, 
+                            titleKey: 'kashaya_t', 
+                            descKey: 'kashaya_d', 
+                            // Light: Red-100 bg / Red-600 icon
+                            // Dark:  Red-900/20 bg / Red-400 icon
+                            iconBg: 'bg-red-100 dark:bg-red-900/20', 
+                            iconColor: 'text-red-600 dark:text-red-400',
+                            titleColor: 'text-zinc-900 dark:text-red-200'
+                        },
+                        { 
+                            icon: Zap, 
+                            titleKey: 'nature_t', 
+                            descKey: 'nature_d', 
+                            // Light: Amber-100 bg / Amber-600 icon
+                            // Dark:  Amber-900/20 bg / Amber-400 icon
+                            iconBg: 'bg-amber-100 dark:bg-amber-900/20', 
+                            iconColor: 'text-amber-600 dark:text-amber-400',
+                            titleColor: 'text-zinc-900 dark:text-amber-200'
+                        }
+                    ].map((m) => (
+                        <div 
+                            key={m.titleKey} 
+                            className="group bg-white dark:bg-zinc-950 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 flex flex-col items-center text-center transition-all duration-300 hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700 dark:hover:bg-zinc-900/80"
+                        >
+                            {/* Icon Circle */}
+                            <div className={`p-3 rounded-full mb-4 ${m.iconBg} ${m.iconColor}`}>
+                                <m.icon size={28} />
+                            </div>
+
+                            {/* Title */}
                             {/* @ts-ignore */}
-                            <h4 className={`text-lg font-bold mb-3 text-${m.c}-200`}>{translations.karma.mechanism[`${m.t}_t`][lang]}</h4>
+                            <h4 className={`text-lg font-bold mb-3 ${m.titleColor}`}>
+                                {/* @ts-ignore */}
+                                {translations.karma.mechanism[m.titleKey][lang]}
+                            </h4>
+
+                            {/* Description */}
                             {/* @ts-ignore */}
-                            <p className="text-sm text-zinc-400 leading-relaxed">{translations.karma.mechanism[`${m.t}_d`][lang]}</p>
+                            <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed group-hover:text-zinc-900 dark:group-hover:text-zinc-300 transition-colors">
+                                {/* @ts-ignore */}
+                                {translations.karma.mechanism[m.descKey][lang]}
+                            </p>
                         </div>
                     ))}
                 </div>

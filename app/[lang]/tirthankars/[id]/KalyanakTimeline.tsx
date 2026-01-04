@@ -121,100 +121,97 @@ export default function KalyanakTimeline({ kalyanakData, lang }: Props) {
       <div className="md:hidden bg-zinc-100 dark:bg-black pb-20 pt-10 px-4">
         
         {/* Intro Header for Mobile */}
-        <div className="mb-8">
+        <div className="mb-8 relative z-10">
             <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-rose-500 mb-2">The Journey</h3>
             <h2 className="text-4xl font-black text-gray-900 dark:text-white leading-none">Witness the <br/>Divine Path</h2>
         </div>
 
-        {slides.map((slide, index) => (
-           <MobileStackedCard key={slide.id} slide={slide} index={index} />
-        ))}
+        <div className="relative">
+            {slides.map((slide, index) => (
+               <MobileStackedCard key={slide.id} slide={slide} index={index} />
+            ))}
+        </div>
       </div>
 
     </div>
   );
 }
 
-// --- SUB-COMPONENT: MOBILE CARD (FIXED) ---
+// --- SUB-COMPONENT: MOBILE CARD (FIXED & STABLE) ---
 function MobileStackedCard({ slide, index }: { slide: any, index: number }) {
     
-    // FIX 1: Exact Stacking. 
-    // We remove the calculation (index * 10). Everyone sticks to 'top-24' (approx 96px).
-    // This makes card 2 cover card 1 completely.
-    const stickyTop = 100; 
+    // ✅ FIX: Use a safe top offset that respects the header.
+    // Assuming header is ~80px-100px.
+    const stickyTop = 110; 
 
     return (
         <div 
-            className="sticky mb-10"
-            // zIndex ensures the next card is always physically above the previous one
+            className="sticky mb-12"
             style={{ top: stickyTop, zIndex: index + 10 }}
         >
             <motion.div 
-                initial={{ y: 100, opacity: 0, scale: 0.9 }}
-                whileInView={{ y: 0, opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-10%" }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                // Card Container
-                className="relative w-full bg-white dark:bg-zinc-900 rounded-3xl overflow-hidden shadow-[0_-10px_30px_rgba(0,0,0,0.1)] dark:shadow-[0_-10px_30px_rgba(0,0,0,0.6)] border border-white/50 dark:border-white/10 flex flex-col"
-                // Ensure card is tall enough to feel like a full screen experience, but leaves space for the next one to scroll in
-                style={{ height: '75vh' }}
+                initial={{ y: 50, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true, margin: "-10%" }} // ✅ FIX: 'once: true' prevents flickering when scrolling back up
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                
+                // ✅ FIX: Removed 'overflow-y-auto'. The card now has a natural height.
+                // We use min-height to ensure it looks substantial, but allow it to grow if text is long.
+                className="relative w-full bg-white dark:bg-zinc-900 rounded-[2rem] overflow-hidden shadow-[0_5px_40px_rgba(0,0,0,0.1)] dark:shadow-[0_5px_40px_rgba(0,0,0,0.6)] border border-white/50 dark:border-white/10 flex flex-col"
             >
                 
-                {/* FIX 2: Mobile Landscape Image (Aspect Video) */}
-                {/* We force 16:9 ratio so 1920x1080 images fit perfectly without weird cropping */}
+                {/* Image Section */}
                 <div className="relative w-full aspect-video bg-black flex-shrink-0">
                     <RobustImage 
                         primarySrc={slide.primarySrcMobile}
                         placeholderSrc={slide.placeholderSrc}
                         alt={slide.title}
                     />
-                    
-                    {/* Dark gradient for text readability at bottom of image */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
 
-                    {/* Floating Title on Image */}
+                    {/* Floating Step Badge */}
                     <div className="absolute bottom-4 left-4 text-white">
                         <div className="flex items-center gap-2 mb-1">
-                            <span className="bg-rose-600/90 backdrop-blur-md px-2 py-1 rounded text-[9px] font-bold uppercase tracking-widest">
+                            <span className="bg-rose-600/90 backdrop-blur-md px-2 py-1 rounded text-[9px] font-bold uppercase tracking-widest border border-white/20">
                                 Step 0{slide.stepIndex + 1}
                             </span>
-                            {slide.subIndex > 0 && <span className="text-[9px] font-bold opacity-80 uppercase tracking-widest bg-black/40 px-2 py-1 rounded">Part {slide.subIndex + 1}</span>}
+                            {slide.subIndex > 0 && <span className="text-[9px] font-bold opacity-80 uppercase tracking-widest bg-black/40 px-2 py-1 rounded border border-white/10">Part {slide.subIndex + 1}</span>}
                         </div>
                     </div>
                 </div>
 
-                {/* Content Area (Fills the rest of the card) */}
-                <div className="flex-1 p-6 overflow-y-auto relative bg-white dark:bg-zinc-900">
+                {/* Content Section (No Scrollbar) */}
+                <div className="p-6 bg-white dark:bg-zinc-900">
                     
-                    {/* Handle bar */}
-                    <div className="w-10 h-1 bg-gray-200 dark:bg-white/10 rounded-full mx-auto mb-4"></div>
+                    {/* Handle visual */}
+                    <div className="w-12 h-1 bg-zinc-200 dark:bg-zinc-800 rounded-full mx-auto mb-5"></div>
 
-                    {/* Title */}
                     {slide.subIndex === 0 && (
-                        <h2 className="text-3xl font-black text-gray-900 dark:text-white uppercase leading-none mb-4">
+                        <h2 className="text-2xl font-black text-gray-900 dark:text-white uppercase leading-none mb-4">
                             {slide.title}
                         </h2>
                     )}
 
-                    {/* Metadata */}
+                    {/* Metadata Grid */}
                     {slide.subIndex === 0 && (slide.tithi || slide.location) && (
-                        <div className="flex flex-wrap gap-3 mb-6 pb-4 border-b border-gray-100 dark:border-white/5">
+                        <div className="grid grid-cols-2 gap-4 mb-6 pb-4 border-b border-gray-100 dark:border-white/5">
                             {slide.tithi && (
-                                <div className="flex flex-col">
-                                    <span className="text-[9px] font-bold uppercase text-gray-400">Time</span>
-                                    <span className="text-xs font-bold text-gray-800 dark:text-gray-200">{slide.tithi}</span>
+                                <div>
+                                    <span className="text-[9px] font-bold uppercase text-rose-500 block mb-1">Time</span>
+                                    <span className="text-xs font-bold text-gray-700 dark:text-gray-300 block leading-tight">{slide.tithi}</span>
                                 </div>
                             )}
                             {slide.location && (
-                                <div className="flex flex-col">
-                                    <span className="text-[9px] font-bold uppercase text-gray-400">Place</span>
-                                    <span className="text-xs font-bold text-gray-800 dark:text-gray-200">{slide.location}</span>
+                                <div>
+                                    <span className="text-[9px] font-bold uppercase text-rose-500 block mb-1">Place</span>
+                                    <span className="text-xs font-bold text-gray-700 dark:text-gray-300 block leading-tight">{slide.location}</span>
                                 </div>
                             )}
                         </div>
                     )}
 
-                    <p className="text-base text-gray-600 dark:text-gray-300 font-serif leading-relaxed pb-8">
+                    {/* Text - Clamped to prevent crazy long cards, or let it flow */}
+                    <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 font-serif leading-relaxed">
                         {slide.text}
                     </p>
                 </div>
