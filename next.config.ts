@@ -51,6 +51,9 @@ const withPWA = withPWAInit({
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  images: {
+    qualities: [75, 100], 
+  },
 };
 
 export default withPWA(nextConfig);

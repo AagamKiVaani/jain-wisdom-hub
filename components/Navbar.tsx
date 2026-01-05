@@ -37,7 +37,7 @@ export default function Navbar({ lang }: { lang: string }) {
   }
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/80 backdrop-blur-md transition-colors duration-300 overflow-hidden">
+    <nav className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/80 backdrop-blur-md transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         
         {/* --- LOGO + TEXT --- */}
@@ -54,6 +54,7 @@ export default function Navbar({ lang }: { lang: string }) {
               className="object-contain"
               priority // Loads instantly
               quality={100}
+              sizes="40px"
             />
           </div>
 

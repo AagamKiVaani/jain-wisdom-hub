@@ -82,7 +82,7 @@ export default function Footer({ lang }: { lang: string }) {
     <footer className="relative bg-zinc-50 dark:bg-black text-gray-600 dark:text-gray-400 border-t border-gray-200 dark:border-white/5 pt-20 pb-10 overflow-hidden">
       
       {/* Decorative Background Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-px bg-gradient-to-r from-transparent via-orange-500/50 to-transparent"></div>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-px bg-gradient-to-r from-transparent via-rose-500/50 to-transparent"></div>
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[200px] bg-orange-500/5 blur-[100px] rounded-full pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">

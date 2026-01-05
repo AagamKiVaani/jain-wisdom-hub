@@ -15,3 +15,12 @@ html, body {
 .animate-subtle-float {
   animation: subtleFloat 6s ease-in-out infinite;
 }
+
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.animate-shimmer {
+  animation: shimmer 4s linear infinite;
+}

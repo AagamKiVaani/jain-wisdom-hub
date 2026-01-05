@@ -14,6 +14,7 @@ import LocaleSync from "@/components/LocaleSync";
 
 import RegisterPWA from "../RegisterPWA";
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 
