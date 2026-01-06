@@ -44,7 +44,7 @@ export default function DailyWisdom({ lang, quote }: DailyWisdomProps) {
         <div className="relative bg-white/95 dark:bg-black/95 backdrop-blur-md rounded-2xl py-3 px-5 md:px-8 flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 text-center shadow-sm">
           
           {/* Label */}
-          <h2 className="flex items-center gap-2 shrink-0 mb-1 md:mb-0">
+          <div className="flex items-center gap-2 shrink-0 mb-1 md:mb-0">
              <Sparkles className="w-3 h-3 text-orange-500" />
              {/* CONDITIONAL STYLING FOR TITLE */}
              <span className={`
@@ -56,7 +56,7 @@ export default function DailyWisdom({ lang, quote }: DailyWisdomProps) {
              `}>
                {t.quoteTitle}
              </span>
-          </h2>
+          </div>
 
           <div className="hidden md:block w-[1px] h-4 bg-zinc-200 dark:bg-zinc-800 shrink-0"></div>
 

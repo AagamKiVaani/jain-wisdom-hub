@@ -3,6 +3,7 @@ import { Users, ArrowRight, Ghost, Clock, Sparkles } from "lucide-react";
 import DailyWisdom from "@/components/DailyWisdom";
 import { getTodaysQuote } from "@/lib/quoteService";
 
+// ... (Translations Object stays the same) ...
 const translations = {
   en: {
     badge: "Digital Aagam Alpha 1.0",
@@ -35,45 +36,37 @@ const translations = {
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-
-  // 1. Fetch Quote on Server
   const todaysQuote = getTodaysQuote();
-
   const t = translations[lang as keyof typeof translations] || translations.en;
   const isIndic = lang === 'hi' || lang === 'kn';
 
   return (
     <div className="relative flex flex-col items-center min-h-screen px-4 pt-0 pb-24 overflow-hidden bg-white dark:bg-black selection:bg-rose-500 selection:text-white">
 
-      {/* --- CINEMATIC BACKGROUND GLOW (Optimized for Mobile) --- */}
-      {/* Reduced blur from 120px to 60px on mobile to save GPU power */}
+      {/* Optimized Background for Mobile (Blur 60px) */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-rose-500/10 dark:bg-rose-900/15 blur-[60px] md:blur-[120px] rounded-full pointer-events-none z-0"></div>
 
       <div className="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto">
           
-          {/* 1. Daily Wisdom */}
           <DailyWisdom lang={lang} quote={todaysQuote} />
           
-          {/* 2. Badge (Accessibility Contrast Fix) */}
-          {/* Changed text-orange-600 to text-orange-800 for 100/100 Accessibility */}
+          {/* Badge */}
           <div className="mb-6 px-4 py-1.5 rounded-full bg-orange-50 dark:bg-orange-900/10 text-orange-800 dark:text-orange-300 text-[10px] md:text-xs font-bold uppercase tracking-widest border border-orange-100 dark:border-orange-500/20 shadow-sm">
             {t.badge}
           </div>
 
-          {/* 3. Title */}
+          {/* H1 Title */}
           <h1 className={`text-5xl md:text-8xl font-black text-center text-gray-900 dark:text-white mb-6 uppercase tracking-tighter ${isIndic ? 'leading-tight py-2' : 'leading-none'}`}>
             {t.title}
           </h1>
           
-          {/* 4. Subtitle */}
           <p className={`text-lg md:text-xl font-serif text-gray-600 dark:text-gray-400 max-w-2xl text-center mb-16 ${isIndic ? 'leading-loose' : 'leading-relaxed'}`}>
             {t.subtitle}
           </p>
 
-          {/* 5. Grid */}
+          {/* Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-4xl">
             
-            {/* Card 1 */}
             <Link 
               href={`/${lang}/tirthankars`}
               className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-white/10 rounded-3xl hover:border-rose-500 dark:hover:border-rose-500 transition-all hover:shadow-2xl hover:shadow-rose-500/10 backdrop-blur-sm"
@@ -85,12 +78,12 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                   <ArrowRight size={20} className="text-gray-300 dark:text-gray-700 group-hover:text-rose-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
               </div>
               <div>
-                <h3 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c1_title}</h3>
+                {/* CHANGED h3 -> h2 for Accessibility Hierarchy */}
+                <h2 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c1_title}</h2>
                 <p className="text-sm text-gray-500 font-medium">{t.c1_sub}</p>
               </div>
             </Link>
 
-            {/* Card 2 */}
             <Link 
               href={`/${lang}/learn/namokar-mantra`}
               className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-white/10 rounded-3xl hover:border-orange-500 dark:hover:border-orange-500 transition-all hover:shadow-2xl hover:shadow-orange-500/10 backdrop-blur-sm"
@@ -102,12 +95,12 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                   <ArrowRight size={20} className="text-gray-300 dark:text-gray-700 group-hover:text-orange-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
               </div>
               <div>
-                <h3 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c2_title}</h3>
+                {/* CHANGED h3 -> h2 */}
+                <h2 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c2_title}</h2>
                 <p className="text-sm text-gray-500 font-medium">{t.c2_sub}</p>
               </div>
             </Link>
 
-            {/* Card 3 */}
             <Link 
               href={`/${lang}/learn/kalchakra`}
               className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-white/10 rounded-3xl hover:border-green-500 dark:hover:border-green-500 transition-all hover:shadow-2xl hover:shadow-green-500/10 backdrop-blur-sm"
@@ -119,12 +112,12 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                   <ArrowRight size={20} className="text-gray-300 dark:text-gray-700 group-hover:text-green-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
               </div>
               <div>
-                <h3 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c3_title}</h3>
+                {/* CHANGED h3 -> h2 */}
+                <h2 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c3_title}</h2>
                 <p className="text-sm text-gray-500 font-medium">{t.c3_sub}</p>
               </div>
             </Link>
 
-            {/* Card 4 */}
             <Link 
               href={`/${lang}/learn/soul-karma`}
               className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-white/10 rounded-3xl hover:border-purple-500 dark:hover:border-purple-500 transition-all hover:shadow-2xl hover:shadow-purple-500/10 backdrop-blur-sm"
@@ -136,7 +129,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                   <ArrowRight size={20} className="text-gray-300 dark:text-gray-700 group-hover:text-purple-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
               </div>
               <div>
-                <h3 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c4_title}</h3>
+                {/* CHANGED h3 -> h2 */}
+                <h2 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c4_title}</h2>
                 <p className="text-sm text-gray-500 font-medium">{t.c4_sub}</p>
               </div>
             </Link>

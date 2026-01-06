@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-// 1. Import Poppins (The best match for Inter) instead of Noto Sans
 import { Inter, Poppins } from "next/font/google";
 import "../globals.css";
 import { Providers } from "../provider";
@@ -11,15 +10,16 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import LocaleSync from "@/components/LocaleSync";
 import RegisterPWA from "../RegisterPWA";
 
-// 2. Configure Inter (English/Kannada)
+// 1. Optimize Inter (Variable font, usually handles itself well, but subsets help)
 const inter = Inter({ subsets: ["latin"] });
 
-// 3. Configure Poppins (Specifically for Hindi)
+// 2. Optimize Poppins (THE BIG FIX)
+// Removed 300, 500, 600, 800. Kept only what we strictly use.
 const poppins = Poppins({
   subsets: ["devanagari", "latin"],
-  // We MUST load '900' to match the 'font-black' of the title
-  weight: ["300", "400", "500", "600", "700", "800", "900"], 
+  weight: ["400", "700", "900"], // Regular, Bold, Black (Title)
   variable: "--font-hindi",
+  display: "swap", // Ensures text shows up immediately (FCP improvement)
 });
 
 export const metadata: Metadata = {
@@ -46,11 +46,7 @@ export default async function RootLayout({
 }) {
   const { lang } = await params;
   
-  // 4. Identify Hindi
   const isHindi = lang === 'hi';
-
-  // 5. Select Font
-  // If Hindi -> Use Poppins. Else -> Use Inter.
   const fontClass = isHindi ? poppins.className : inter.className;
 
   return (
@@ -59,9 +55,7 @@ export default async function RootLayout({
         className={`
           ${fontClass} 
           bg-white dark:bg-black text-gray-900 dark:text-gray-100 min-h-screen flex flex-col
-          /* 6. THE MAGIC FIX: */
-          /* If Hindi, scale EVERYTHING up by 125% and relax the line height */
-          /* This makes the Hindi text match the English "Visual Weight" perfectly */
+          /* Optimized Line Height for Hindi */
           ${isHindi ? 'text-[125%] leading-relaxed' : ''}
         `}
       >

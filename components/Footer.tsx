@@ -79,7 +79,7 @@ export default function Footer({ lang }: { lang: string }) {
   const isIndic = lang === 'hi' || lang === 'kn';
 
   return (
-    <footer className="relative bg-zinc-50 dark:bg-black text-gray-600 dark:text-gray-400 border-t border-gray-200 dark:border-white/5 pt-20 pb-10 overflow-hidden">
+    <footer className="relative bg-zinc-50 dark:bg-black text-gray-600 dark:text-gray-400 border-t border-gray-200 dark:border-white/5 pt-20 pb-10 overflow-hidden selection:text-rose-500">
       
       {/* Decorative Background Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-px bg-gradient-to-r from-transparent via-rose-500/50 to-transparent"></div>
@@ -210,10 +210,10 @@ export default function Footer({ lang }: { lang: string }) {
           
           <button 
             onClick={scrollToTop}
-            className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:text-orange-500 transition-colors"
+            className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:text-rose-500 transition-colors"
           >
             {t.backToTop}
-            <span className="p-2 rounded-full bg-gray-100 dark:bg-white/10 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+            <span className="p-2 rounded-full bg-gray-100 dark:bg-white/10 group-hover:bg-rose-500 group-hover:text-white transition-colors">
                 <ArrowUp size={14} />
             </span>
           </button>
