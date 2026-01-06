@@ -36,26 +36,27 @@ const translations = {
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
 
-  // 1. Fetch Quote on Server (Instant Load, No Layout Shift)
+  // 1. Fetch Quote on Server
   const todaysQuote = getTodaysQuote();
 
   const t = translations[lang as keyof typeof translations] || translations.en;
   const isIndic = lang === 'hi' || lang === 'kn';
 
   return (
-    // CHANGED: pt-0
     <div className="relative flex flex-col items-center min-h-screen px-4 pt-0 pb-24 overflow-hidden bg-white dark:bg-black selection:bg-rose-500 selection:text-white">
 
-      {/* --- CINEMATIC BACKGROUND GLOW --- */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-rose-500/10 dark:bg-rose-900/15 blur-[120px] rounded-full pointer-events-none z-0"></div>
+      {/* --- CINEMATIC BACKGROUND GLOW (Optimized for Mobile) --- */}
+      {/* Reduced blur from 120px to 60px on mobile to save GPU power */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-rose-500/10 dark:bg-rose-900/15 blur-[60px] md:blur-[120px] rounded-full pointer-events-none z-0"></div>
 
       <div className="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto">
           
-          {/* 1. Daily Wisdom (Passed as Prop) */}
+          {/* 1. Daily Wisdom */}
           <DailyWisdom lang={lang} quote={todaysQuote} />
           
-          {/* 2. Badge */}
-          <div className="mb-6 px-4 py-1.5 rounded-full bg-orange-50 dark:bg-orange-900/10 text-orange-600 dark:text-orange-400 text-[10px] md:text-xs font-bold uppercase tracking-widest border border-orange-100 dark:border-orange-500/20 shadow-sm">
+          {/* 2. Badge (Accessibility Contrast Fix) */}
+          {/* Changed text-orange-600 to text-orange-800 for 100/100 Accessibility */}
+          <div className="mb-6 px-4 py-1.5 rounded-full bg-orange-50 dark:bg-orange-900/10 text-orange-800 dark:text-orange-300 text-[10px] md:text-xs font-bold uppercase tracking-widest border border-orange-100 dark:border-orange-500/20 shadow-sm">
             {t.badge}
           </div>
 
