@@ -1,3 +1,4 @@
+// KalyanakTimeline.tsx
 "use client";
 
 import { useState, useMemo } from "react";
@@ -32,7 +33,7 @@ export default function KalyanakTimeline({ kalyanakData, lang }: Props) {
       for (let i = 0; i < slideCount; i++) {
         const mobileImage = data.imageMobile && data.imageMobile[i] ? data.imageMobile[i] : null;
         const desktopImage = data.imageDesktop && data.imageDesktop[i] ? data.imageDesktop[i] : null;
-        const placeholderImage = `/images/placeholders/${key}-placeholder.png`;
+        const placeholderImage = `/images/tirthankar/kalyanak/placeholders/${key}-placeholder.avif`;
 
         let text = textParts[i] || "";
         if (slideCount === 1 && text === "") text = data.description[l];
@@ -116,19 +117,24 @@ export default function KalyanakTimeline({ kalyanakData, lang }: Props) {
       </div>
 
       {/* ================================== */}
-      {/* MOBILE LAYOUT: THE STACKED DECK    */}
+      {/* MOBILE LAYOUT: CONNECTED TIMELINE  */}
       {/* ================================== */}
-      <div className="md:hidden bg-zinc-100 dark:bg-black pb-20 pt-10 px-4">
+      <div className="md:hidden bg-zinc-100 dark:bg-black pb-20 pt-10 px-4 relative overflow-hidden">
         
-        {/* Intro Header for Mobile */}
-        <div className="mb-8 relative z-10">
+        {/* 1. THE CONNECTING LINE (Visible Center Thread) */}
+        {/* It runs down the center, behind the cards */}
+        <div className="absolute left-1/2 top-0 bottom-0 w-[2px] -translate-x-1/2 bg-gradient-to-b from-transparent via-rose-400 to-transparent opacity-50 z-0"></div>
+
+        {/* Intro Header */}
+        <div className="mb-12 relative z-10 text-center">
             <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-rose-500 mb-2">The Journey</h3>
             <h2 className="text-4xl font-black text-gray-900 dark:text-white leading-none">Witness the <br/>Divine Path</h2>
         </div>
 
-        <div className="relative">
+        {/* The Card List - With gaps to reveal the line */}
+        <div className="relative z-10 flex flex-col gap-16">
             {slides.map((slide, index) => (
-               <MobileStackedCard key={slide.id} slide={slide} index={index} />
+               <MobileTimelineCard key={slide.id} slide={slide} index={index} />
             ))}
         </div>
       </div>
@@ -137,28 +143,27 @@ export default function KalyanakTimeline({ kalyanakData, lang }: Props) {
   );
 }
 
-// --- SUB-COMPONENT: MOBILE CARD (FIXED & STABLE) ---
-function MobileStackedCard({ slide, index }: { slide: any, index: number }) {
-    
-    // ✅ FIX: Use a safe top offset that respects the header.
-    // Assuming header is ~80px-100px.
-    const stickyTop = 110; 
-
+// --- SUB-COMPONENT: MOBILE TIMELINE CARD (NON-STICKY) ---
+function MobileTimelineCard({ slide, index }: { slide: any, index: number }) {
     return (
-        <div 
-            className="sticky mb-12"
-            style={{ top: stickyTop, zIndex: index + 10 }}
+        <motion.div 
+            initial={{ y: 50, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true, margin: "-10%" }} // Smooth entry
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="relative w-full"
         >
-            <motion.div 
-                initial={{ y: 50, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                viewport={{ once: true, margin: "-10%" }} // ✅ FIX: 'once: true' prevents flickering when scrolling back up
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                
-                // ✅ FIX: Removed 'overflow-y-auto'. The card now has a natural height.
-                // We use min-height to ensure it looks substantial, but allow it to grow if text is long.
-                className="relative w-full bg-white dark:bg-zinc-900 rounded-[2rem] overflow-hidden shadow-[0_5px_40px_rgba(0,0,0,0.1)] dark:shadow-[0_5px_40px_rgba(0,0,0,0.6)] border border-white/50 dark:border-white/10 flex flex-col"
-            >
+            {/* 2. THE CONNECTOR KNOT */}
+            {/* A visual dot on the center line to connect this card */}
+            <div className="absolute -top-10 left-1/2 -translate-x-1/2 flex flex-col items-center justify-center">
+                {/* The Dot */}
+                <div className="w-4 h-4 rounded-full bg-rose-500 border-[3px] border-white dark:border-zinc-900 shadow-md z-10"></div>
+                {/* Small vertical link to the card */}
+                <div className="w-[2px] h-6 bg-rose-300/50"></div>
+            </div>
+
+            {/* CARD CONTENT */}
+            <div className="relative w-full bg-white dark:bg-zinc-900 rounded-[2rem] overflow-hidden shadow-xl border border-white/50 dark:border-white/10 flex flex-col">
                 
                 {/* Image Section */}
                 <div className="relative w-full aspect-video bg-black flex-shrink-0">
@@ -169,7 +174,7 @@ function MobileStackedCard({ slide, index }: { slide: any, index: number }) {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
 
-                    {/* Floating Step Badge */}
+                    {/* Step Badge */}
                     <div className="absolute bottom-4 left-4 text-white">
                         <div className="flex items-center gap-2 mb-1">
                             <span className="bg-rose-600/90 backdrop-blur-md px-2 py-1 rounded text-[9px] font-bold uppercase tracking-widest border border-white/20">
@@ -180,21 +185,18 @@ function MobileStackedCard({ slide, index }: { slide: any, index: number }) {
                     </div>
                 </div>
 
-                {/* Content Section (No Scrollbar) */}
+                {/* Text Content */}
                 <div className="p-6 bg-white dark:bg-zinc-900">
-                    
-                    {/* Handle visual */}
-                    <div className="w-12 h-1 bg-zinc-200 dark:bg-zinc-800 rounded-full mx-auto mb-5"></div>
-
+                    {/* Title */}
                     {slide.subIndex === 0 && (
-                        <h2 className="text-2xl font-black text-gray-900 dark:text-white uppercase leading-none mb-4">
+                        <h2 className="text-2xl font-black text-gray-900 dark:text-white uppercase leading-none mb-4 text-center">
                             {slide.title}
                         </h2>
                     )}
 
                     {/* Metadata Grid */}
                     {slide.subIndex === 0 && (slide.tithi || slide.location) && (
-                        <div className="grid grid-cols-2 gap-4 mb-6 pb-4 border-b border-gray-100 dark:border-white/5">
+                        <div className="grid grid-cols-2 gap-4 mb-6 pb-4 border-b border-gray-100 dark:border-white/5 text-center">
                             {slide.tithi && (
                                 <div>
                                     <span className="text-[9px] font-bold uppercase text-rose-500 block mb-1">Time</span>
@@ -210,14 +212,14 @@ function MobileStackedCard({ slide, index }: { slide: any, index: number }) {
                         </div>
                     )}
 
-                    {/* Text - Clamped to prevent crazy long cards, or let it flow */}
-                    <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 font-serif leading-relaxed">
+                    {/* Text */}
+                    <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 font-serif leading-relaxed text-center">
                         {slide.text}
                     </p>
                 </div>
 
-            </motion.div>
-        </div>
+            </div>
+        </motion.div>
     );
 }
 

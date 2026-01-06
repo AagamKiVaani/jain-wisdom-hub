@@ -64,11 +64,25 @@ export default async function TirthankarGallery({ params }: { params: Promise<{ 
               href={`/${lang}/tirthankars/${t.id}`} 
               key={t.id}
               // Card: ROSE Colors
-              className="group relative h-[400px] md:h-[500px] rounded-[2rem] bg-gray-50 dark:bg-zinc-900/50 border border-gray-200 dark:border-white/5 overflow-hidden transition-all hover:border-rose-500/50 hover:shadow-2xl hover:shadow-rose-500/10 dark:hover:shadow-rose-900/20"
+              className="group relative h-[400px] md:h-[500px] rounded-[2rem] bg-gray-50 dark:bg-zinc-900/50 overflow-hidden transition-all border
+              /* 1. MOBILE DEFAULT (Active/Glowing) */
+              border-rose-500/50 shadow-2xl shadow-rose-500/10 dark:shadow-rose-900/20 dark:border-zinc-600
+
+              /* 2. DESKTOP RESET (Neutral State) */
+              md:border-gray-200 md:dark:border-white/5 
+
+              /* 3. DESKTOP HOVER (Interaction) */
+              md:hover:border-rose-500/50 md:hover:shadow-2xl md:hover:shadow-rose-500/10 md:dark:hover:shadow-rose-900/20"
             >
               {/* Background Glow */}
               <div 
-                className="absolute inset-0 opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 transition-opacity duration-700"
+                className="absolute inset-0 transition-opacity duration-700
+                /* Mobile: Always visible */
+                opacity-10 dark:opacity-10 
+                /* Desktop: Hidden by default */
+                md:opacity-0 md:dark:opacity-0
+                /* Desktop Hover: Visible */
+                md:group-hover:opacity-10 md:dark:group-hover:opacity-10"
                 style={{ backgroundColor: t.colorHex }}
               ></div>
 
