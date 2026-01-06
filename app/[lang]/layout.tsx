@@ -1,36 +1,36 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "../globals.css"; // Go up one level to find globals.css
-import { Providers } from "../provider"; // Import the provider we made
+// 1. Import Poppins (The best match for Inter) instead of Noto Sans
+import { Inter, Poppins } from "next/font/google";
+import "../globals.css";
+import { Providers } from "../provider";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer"
 import YouTubeToast from "@/components/YouTubeToast";
-
 import { Analytics } from "@vercel/analytics/react";
-
 import { SpeedInsights } from "@vercel/speed-insights/next";
-
 import LocaleSync from "@/components/LocaleSync";
-
 import RegisterPWA from "../RegisterPWA";
 
-
+// 2. Configure Inter (English/Kannada)
 const inter = Inter({ subsets: ["latin"] });
 
+// 3. Configure Poppins (Specifically for Hindi)
+const poppins = Poppins({
+  subsets: ["devanagari", "latin"],
+  // We MUST load '900' to match the 'font-black' of the title
+  weight: ["300", "400", "500", "600", "700", "800", "900"], 
+  variable: "--font-hindi",
+});
 
 export const metadata: Metadata = {
   title: "Jain Wisdom Hub",
   description: "A digital encyclopedia of Jain Principles",
   manifest: "/manifest.json",
-
   icons: {
     icon: [
-      // Browser Tab (Standard)
-      { url: '/icons/logo.png', sizes: '32x32' }, 
-      // High Res Tab (Optional but good for Retina screens)
-      { url: '/icons/logo.png', sizes: '192x192' } 
+      { url: '/icons/logo.png', sizes: '32x32' },
+      { url: '/icons/logo.png', sizes: '192x192' }
     ],
-    // iOS Home Screen Icon (Apple devices are picky)
     apple: [
       { url: '/icons/logo.png', sizes: '180x180' },
     ],
@@ -42,13 +42,29 @@ export default async function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ lang: string }>; // <--- Changed this type
+  params: Promise<{ lang: string }>;
 }) {
-  const { lang } = await params; // <--- Added await here
+  const { lang } = await params;
+  
+  // 4. Identify Hindi
+  const isHindi = lang === 'hi';
+
+  // 5. Select Font
+  // If Hindi -> Use Poppins. Else -> Use Inter.
+  const fontClass = isHindi ? poppins.className : inter.className;
 
   return (
     <html lang={lang} suppressHydrationWarning>
-      <body className={`${inter.className} bg-white dark:bg-black text-gray-900 dark:text-gray-100 min-h-screen flex flex-col`}>
+      <body 
+        className={`
+          ${fontClass} 
+          bg-white dark:bg-black text-gray-900 dark:text-gray-100 min-h-screen flex flex-col
+          /* 6. THE MAGIC FIX: */
+          /* If Hindi, scale EVERYTHING up by 125% and relax the line height */
+          /* This makes the Hindi text match the English "Visual Weight" perfectly */
+          ${isHindi ? 'text-[125%] leading-relaxed' : ''}
+        `}
+      >
         <Providers>
           <RegisterPWA />
           <LocaleSync lang={lang} />
@@ -56,12 +72,9 @@ export default async function RootLayout({
           <main className="grow">
             {children}
           </main>
-
           <Footer lang={lang} />
-
           <Analytics />
           <SpeedInsights />
-
           <YouTubeToast />
         </Providers>
       </body>

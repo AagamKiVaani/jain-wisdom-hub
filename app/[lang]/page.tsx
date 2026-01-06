@@ -1,9 +1,7 @@
-"use client";
-
 import Link from "next/link";
-import { Sparkles, Users, ArrowRight, Ghost, Clock } from "lucide-react";
-import { use } from "react"; 
+import { Users, ArrowRight, Ghost, Clock, Sparkles } from "lucide-react";
 import DailyWisdom from "@/components/DailyWisdom";
+import { getTodaysQuote } from "@/lib/quoteService";
 
 const translations = {
   en: {
@@ -35,8 +33,12 @@ const translations = {
   }
 };
 
-export default function Home({ params }: { params: Promise<{ lang: string }> }) {
-  const { lang } = use(params); 
+export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+
+  // 1. Fetch Quote on Server (Instant Load, No Layout Shift)
+  const todaysQuote = getTodaysQuote();
+
   const t = translations[lang as keyof typeof translations] || translations.en;
   const isIndic = lang === 'hi' || lang === 'kn';
 
@@ -49,8 +51,8 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
 
       <div className="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto">
           
-          {/* 1. The Crystal Bar Quote */}
-          <DailyWisdom lang={lang} />
+          {/* 1. Daily Wisdom (Passed as Prop) */}
+          <DailyWisdom lang={lang} quote={todaysQuote} />
           
           {/* 2. Badge */}
           <div className="mb-6 px-4 py-1.5 rounded-full bg-orange-50 dark:bg-orange-900/10 text-orange-600 dark:text-orange-400 text-[10px] md:text-xs font-bold uppercase tracking-widest border border-orange-100 dark:border-orange-500/20 shadow-sm">

@@ -3585,7 +3585,7 @@ export const quotes = [
     },
     author: {
       en: "Anjanadevi",
-      hi: "अंजना",
+      hi: "अंजना देवी",
       kn: "ಅಂಜನಾ ದೇವಿ"
     }
   },
@@ -3717,7 +3717,7 @@ export const quotes = [
     },
     author: {
       en: "Anjanadevi",
-      hi: "अंजना",
+      hi: "अंजना देवी",
       kn: "ಅಂಜನಾ ದೇವಿ"
     }
   },
