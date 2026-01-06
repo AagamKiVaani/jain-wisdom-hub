@@ -10,6 +10,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import LocaleSync from "@/components/LocaleSync";
 import RegisterPWA from "../RegisterPWA";
 
+import NotificationFAB from "@/components/NotificationFab";
+
 // 1. Optimize Inter (Variable font, usually handles itself well, but subsets help)
 const inter = Inter({ subsets: ["latin"] });
 
@@ -66,6 +68,7 @@ export default async function RootLayout({
           <main className="grow">
             {children}
           </main>
+          <NotificationFAB />
           <Footer lang={lang} />
           <Analytics />
           <SpeedInsights />

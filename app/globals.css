@@ -24,3 +24,16 @@ html, body {
 .animate-shimmer {
   animation: shimmer 4s linear infinite;
 }
+
+/* 1. The Class we will toggle via JS */
+body.lock-scroll {
+  overflow: hidden !important;
+  height: 100vh !important; /* Forces height to viewport only */
+  /* padding-right: 15px; OPTIONAL: Prevents layout shift when scrollbar disappears */
+}
+
+/* 2. Ensure the Modal wrapper itself doesn't cause horizontal overflow */
+.modal-wrapper {
+  max-width: 100vw;
+  overflow-x: hidden;
+}

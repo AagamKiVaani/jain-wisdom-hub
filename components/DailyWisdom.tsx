@@ -75,7 +75,7 @@ export default function DailyWisdom({ lang, quote }: DailyWisdomProps) {
 
           {/* Author - CONDITIONAL STYLING */}
           <cite className={`
-            font-bold text-zinc-400 dark:text-zinc-500 uppercase not-italic shrink-0
+            font-bold text-zinc-800 dark:text-zinc-200 uppercase not-italic shrink-0
             ${isHindi 
                ? 'text-xs md:text-sm tracking-wide' // Hindi: Bigger
                : 'text-[10px] md:text-xs tracking-widest' // English: Small
