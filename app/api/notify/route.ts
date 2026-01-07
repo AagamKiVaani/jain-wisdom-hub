@@ -1,9 +1,14 @@
+// app/api/notify/route.ts
 import { NextResponse } from "next/server";
 import webpush from "web-push";
 import dbConnect from "@/lib/db";
 import User from "@/models/User";
 
-// 1. Configure Web Push with your Keys
+// 1. Safe Configuration
+if (!process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || !process.env.VAPID_PRIVATE_KEY) {
+  console.error("❌ CRITICAL: VAPID Keys are missing in Environment Variables!");
+}
+
 webpush.setVapidDetails(
   process.env.NEXT_PUBLIC_VAPID_SUBJECT || "mailto:aagamkivaani@gmail.com",
   process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
@@ -13,59 +18,70 @@ webpush.setVapidDetails(
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { title, message, image, category, language, password } = body;
+    const { title, message, image, category, language, password, url } = body;
 
-    // 🔒 SIMPLE SECURITY: Check a hardcoded password
+    console.log("📨 API Received Request:", { title, category, language });
+
+    // 🔒 Security Check
     if (password !== process.env.ADMIN_SECRET) {
+      console.warn("⛔ Unauthorized Access Attempt");
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // 🛡️ Data Safety Check
+    if (!title || !message) {
+      console.error("❌ Error: Title or Message is missing.");
+      return NextResponse.json({ error: "Title and Message are required" }, { status: 400 });
     }
 
     await dbConnect();
 
-    console.log(`🔍 Searching for: Category=${category}, Lang=${language}`);
-
-    // 2. Find Target Audience
-    // Example: "Find users where preferences.dailyQuote.enabled is true AND preferences.dailyQuote.lang is 'hi'"
+    // 2. Find Audience
     const query = {
       [`preferences.${category}.enabled`]: true,
       [`preferences.${category}.lang`]: language,
     };
 
     const users = await User.find(query);
-    console.log(`Found ${users.length} users for ${category} in ${language}`);
+    console.log(`👥 Found ${users.length} users for ${category} in ${language}`);
 
     if (users.length === 0) {
       return NextResponse.json({ message: "No users found for this category." });
     }
 
-    // 3. Send Notifications in Parallel
-    const notificationPayload = JSON.stringify({
-      title,
-      body: message,
-      image,
-      url: "/", // You can make this dynamic later
-    });
+    // 3. Send Notifications
+    const promises = users.map((user) => {
+      const userName = user.name || "Punya Atma";
 
-    const promises = users.map((user) =>
-      webpush
-        .sendNotification(user.subscription, notificationPayload)
+      // ⚠️ Personalization: Swap {{name}} with real name
+      const safeTitle = (title || "").replace(/{{name}}/g, userName);
+      const safeMessage = (message || "").replace(/{{name}}/g, userName);
+
+      const payload = JSON.stringify({
+        title: safeTitle,
+        body: safeMessage,
+        image,        // Passes the Big Image URL
+        url: url || "/" // Passes the Deep Link
+      });
+
+      return webpush
+        .sendNotification(user.subscription, payload)
         .catch((err) => {
-          // If 410 (Gone), the user uninstalled the PWA or blocked us.
           if (err.statusCode === 410) {
             console.log(`User ${user._id} is gone. Deleting...`);
-            User.findByIdAndDelete(user._id); // Cleanup dead users
+            User.findByIdAndDelete(user._id);
           } else {
-            console.error("❌ SEND FAILURE:", err.statusCode, err.body);
+            console.error("❌ SEND FAILURE:", err.statusCode);
           }
-        })
-    );
+        });
+    });
 
     await Promise.all(promises);
 
     return NextResponse.json({ success: true, count: users.length });
 
-  } catch (error) {
-    console.error("Notification Error:", error);
-    return NextResponse.json({ error: "Server Error" }, { status: 500 });
+  } catch (error: any) {
+    console.error("🔥 SERVER CRASH:", error.message, error.stack);
+    return NextResponse.json({ error: "Internal Server Error: " + error.message }, { status: 500 });
   }
 }

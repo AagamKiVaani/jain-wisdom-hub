@@ -15,7 +15,7 @@ export default function AdminPage() {
   const [url, setUrl] = useState("/");
 
   // Single Mode State
-  const [category, setCategory] = useState("dailyQuote");
+  const [category, setCategory] = useState("dailyQuote"); // 👈 This was being ignored before
   const [language, setLanguage] = useState("hi");
   const [message, setMessage] = useState("");
 
@@ -31,14 +31,16 @@ export default function AdminPage() {
 
     try {
       if (mode === "single") {
-        await sendNotification(language, message);
+        // ✅ FIXED: Now passing the selected 'category' variable
+        await sendNotification(language, message, category);
         setStatus(`✅ Sent single notification!`);
       } 
       else {
+        // Daily Mode: Always forces "dailyQuote" category
         const promises = [];
-        if (msgEn) promises.push(sendNotification("en", msgEn));
-        if (msgHi) promises.push(sendNotification("hi", msgHi));
-        if (msgKn) promises.push(sendNotification("kn", msgKn));
+        if (msgEn) promises.push(sendNotification("en", msgEn, "dailyQuote"));
+        if (msgHi) promises.push(sendNotification("hi", msgHi, "dailyQuote"));
+        if (msgKn) promises.push(sendNotification("kn", msgKn, "dailyQuote"));
 
         if (promises.length === 0) throw new Error("Please fill at least one message.");
         
@@ -52,7 +54,8 @@ export default function AdminPage() {
     }
   };
 
-  const sendNotification = async (lang: string, msgBody: string) => {
+  // ✅ FIXED: Added 'cat' parameter here
+  const sendNotification = async (lang: string, msgBody: string, cat: string) => {
     const res = await fetch("/api/notify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -61,7 +64,7 @@ export default function AdminPage() {
         title,
         message: msgBody,
         image,
-        category: "dailyQuote",
+        category: cat, // 👈 USING THE PARAMETER NOW
         language: lang,
         url
       }),
@@ -124,7 +127,7 @@ export default function AdminPage() {
             <input 
               type="text" required value={title} onChange={(e) => setTitle(e.target.value)}
               className="w-full px-4 py-3 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-700 rounded-xl outline-none focus:border-rose-500 transition-all font-medium text-gray-900 dark:text-white placeholder:text-gray-400 text-base"
-              placeholder="Notification Title"
+              placeholder="Notification Title (e.g. Jai Jinendra {{name}})"
             />
           </div>
 
@@ -133,6 +136,7 @@ export default function AdminPage() {
             <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
               <div className="flex gap-3">
                  <div className="flex-1">
+                   {/* This dropdown sets 'category' state, which is now correctly passed to the function */}
                    <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full px-3 py-3 bg-gray-50 dark:bg-zinc-800 border-none rounded-xl text-sm appearance-none outline-none">
                      <option value="dailyQuote">Daily Quote</option>
                      <option value="tithi">Tithi</option>
@@ -220,7 +224,7 @@ export default function AdminPage() {
           {/* Big Action Button */}
           <button 
             type="submit" disabled={loading}
-            className={`w-full py-4 rounded-xl font-bold text-white transition-all active:scale-[0.98] shadow-lg shadow-gray-200 dark:shadow-none flex items-center justify-center gap-2 ${mode === "daily" ? "bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600" : "bg-gray-900 dark:bg-white dark:text-black hover:bg-black"}`}
+            className={`w-full py-4 rounded-xl font-bold text-white transition-all active:scale-[0.98] shadow-lg shadow-gray-200 dark:shadow-none flex items-center justify-center gap-2 ${mode === "daily" ? "bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600" : "bg-gray-900 dark:bg-white dark:text-black hover:bg-black dark:hover:bg-white"}`}
           >
             {loading ? <Loader2 className="animate-spin w-5 h-5"/> : <><Send className="w-5 h-5" /> {mode === "daily" ? "Blast All" : "Send Now"}</>}
           </button>

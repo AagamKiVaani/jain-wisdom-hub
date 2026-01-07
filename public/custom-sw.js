@@ -1,50 +1,70 @@
-// public/sw.js
+// public/custom-sw.js
+
+self.addEventListener('install', (event) => {
+  console.log('👷 [Service Worker] Installing new version...');
+  self.skipWaiting(); // 👈 This kicks out the old 'Unsubscribe' worker instantly
+});
+
+// 2. Claim Control Immediately
+self.addEventListener('activate', (event) => {
+  console.log('👷 [Service Worker] Activating & Claiming control...');
+  event.waitUntil(clients.claim()); // 👈 Takes control of all open tabs right away
+});
 
 self.addEventListener('push', function (event) {
-  // 🔍 LOG 1: Did the browser even hear the knock?
-  //console.log('📣 [Service Worker] Push Received!', event);
-
   if (event.data) {
     const data = event.data.json();
     
-    // 🔍 LOG 2: What data did we get?
-    //console.log('📦 [Service Worker] Payload:', data);
-
     const options = {
       body: data.body,
-      icon: '/icon-192x192.png', // Make sure this file exists in /public
-      badge: '/badge-72x72.png', // Optional
-      image: data.image,
-      vibrate: [100, 50, 100],
+      icon: '/icons/icon-192x192.png', // Your App Logo (Small Square)
+      badge: '/icons/badge-72x72.png', // ⚠️ IMPORTANT: Must be a specific white-only transparent PNG!
+      image: data.image,          // 🖼️ The Big Hero Image (if provided)
+      
+      vibrate: [200, 100, 200],   // Heartbeat Vibration
+      tag: 'jain-wisdom-daily',   // Groups notifications so they don't stack up
+      renotify: true,             // Buzzes every time
+      
       data: {
-        url: data.url || '/'
-      }
+        url: data.url || '/'      // The link to open
+      },
+
+      // 👇 NEW: The "Read More" Button
+      actions: [
+        {
+          action: 'open_url',
+          title: '📖 Read More'
+        }
+      ]
     };
 
     event.waitUntil(
       self.registration.showNotification(data.title, options)
-        // .then(() => console.log('✅ [Service Worker] Notification Shown'))
-        .catch((err) => console.error('❌ [Service Worker] Show failed:', err))
     );
-  } else {
-    console.log('⚠️ [Service Worker] Push event but no data');
   }
 });
 
 self.addEventListener('notificationclick', function (event) {
-  console.log('👆 [Service Worker] Notification Clicked');
+  // Close the notification immediately when clicked
   event.notification.close();
 
+  // Get the URL (default to root if missing)
+  const targetUrl = event.notification.data.url || '/';
+
+  // Handle the click (works for both "Body Click" and "Read More" button)
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function (clientList) {
-      // Focus existing tab if open
+      // 1. If the user already has your site open, just focus that tab
       for (let i = 0; i < clientList.length; i++) {
         let client = clientList[i];
-        if (client.url === '/' && 'focus' in client) return client.focus();
+        // Check if the tab is your site
+        if (client.url.includes(self.registration.scope) && 'focus' in client) {
+          return client.focus().then(c => c.navigate(targetUrl));
+        }
       }
-      // Open new tab
-      if (clients.openWindow && event.notification.data.url) {
-        return clients.openWindow(event.notification.data.url);
+      // 2. If no tab is open, open a new one
+      if (clients.openWindow) {
+        return clients.openWindow(targetUrl);
       }
     })
   );
