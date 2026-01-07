@@ -66,10 +66,11 @@ export async function POST(req: Request) {
 
       return webpush
         .sendNotification(user.subscription, payload)
-        .catch((err) => {
+        .catch(async (err) => {
           if (err.statusCode === 410) {
             console.log(`User ${user._id} is gone. Deleting...`);
-            User.findByIdAndDelete(user._id);
+            await User.findByIdAndDelete(user._id);
+            console.log(`✅ Deleted User ${user._id}`);
           } else {
             console.error("❌ SEND FAILURE:", err.statusCode);
           }

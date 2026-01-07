@@ -5,7 +5,7 @@ export default function RegisterPWA() {
   useEffect(() => {
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker
-        .register("/sw.js?v=4")
+        .register("/sw.js?v=5")
         .then((registration) => {
           console.log("✅ Service Worker registered with scope:", registration.scope);
         })
