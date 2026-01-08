@@ -20,7 +20,7 @@ export async function GET(req: Request) {
   try {
     // 🔒 SECURITY CHECK
     const authHeader = req.headers.get('authorization');
-    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    if (authHeader !== `Bearer ${process.env.AAGAM_CRON_KEY}`) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
