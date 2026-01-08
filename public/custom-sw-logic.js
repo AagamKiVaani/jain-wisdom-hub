@@ -1,69 +1,81 @@
-// public/custom-sw.js
+// public/custom-sw.js (or custom-sw-logic.js)
 
 self.addEventListener('install', (event) => {
-  console.log('👷 [Service Worker] Installing new version...');
-  self.skipWaiting(); // 👈 This kicks out the old 'Unsubscribe' worker instantly
+  self.skipWaiting(); // ⚡ Force update immediately
 });
 
-// 2. Claim Control Immediately
 self.addEventListener('activate', (event) => {
-  console.log('👷 [Service Worker] Activating & Claiming control...');
-  event.waitUntil(clients.claim()); // 👈 Takes control of all open tabs right away
+  event.waitUntil(clients.claim()); // ⚡ Control open tabs immediately
 });
 
 self.addEventListener('push', function (event) {
+  let data = {};
+  
+  // 🛡️ SAFETY CHECK: Don't crash if data isn't JSON
   if (event.data) {
-    const data = event.data.json();
-    
-    const options = {
-      body: data.body,
-      icon: '/icons/icon-192x192.png', // Your App Logo (Small Square)
-      badge: '/icons/badge-72x72.png', // ⚠️ IMPORTANT: Must be a specific white-only transparent PNG!
-      image: data.image,          // 🖼️ The Big Hero Image (if provided)
-      
-      vibrate: [200, 100, 200],   // Heartbeat Vibration
-      requireInteraction: true, // Keeps it on screen until the user dismisses it
-      tag: 'jain-wisdom-daily',   // Groups notifications so they don't stack up
-      renotify: true,             // Buzzes every time
-      
-      data: {
-        url: data.url || '/'      // The link to open
-      },
-
-      // 👇 NEW: The "Read More" Button
-      actions: [
-        {
-          action: 'open_url',
-          title: '📖 Read More'
-        }
-      ]
-    };
-
-    event.waitUntil(
-      self.registration.showNotification(data.title, options)
-    );
+    try {
+      data = event.data.json();
+    } catch (e) {
+      console.log('Push data is not JSON, using plain text.');
+      data = {
+        title: 'Jain Wisdom',
+        body: event.data.text(),
+        url: '/'
+      };
+    }
   }
+
+  const options = {
+    body: data.body || 'New content available',
+    icon: '/icons/icon-192x192.png',
+    badge: '/icons/badge-72x72.png',
+    image: data.image,
+    
+    vibrate: [200, 100, 200],
+    requireInteraction: true,
+    tag: 'jain-wisdom-daily',
+    renotify: true,
+    
+    data: {
+      url: data.url || '/'
+    },
+
+    actions: [
+      {
+        action: 'open_url',
+        title: '📖 Read More'
+      },
+      // Optional: Add a close button if you want
+      { 
+        action: 'close', 
+        title: '❌ Dismiss'
+      }
+    ]
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(data.title || 'Jain Wisdom', options)
+  );
 });
 
 self.addEventListener('notificationclick', function (event) {
-  // Close the notification immediately when clicked
   event.notification.close();
 
-  // Get the URL (default to root if missing)
+  // If user clicked a "Dismiss" action (if you add one later)
+  if (event.action === 'close') return;
+
   const targetUrl = event.notification.data.url || '/';
 
-  // Handle the click (works for both "Body Click" and "Read More" button)
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function (clientList) {
-      // 1. If the user already has your site open, just focus that tab
+      // 1. Focus existing tab
       for (let i = 0; i < clientList.length; i++) {
         let client = clientList[i];
-        // Check if the tab is your site
-        if (client.url.includes(self.registration.scope) && 'focus' in client) {
-          return client.focus().then(c => c.navigate(targetUrl));
+        if (client.url && 'focus' in client) {
+          return client.focus().then(c => c.navigate ? c.navigate(targetUrl) : c);
         }
       }
-      // 2. If no tab is open, open a new one
+      // 2. Open new tab
       if (clients.openWindow) {
         return clients.openWindow(targetUrl);
       }
