@@ -14,5 +14,5 @@ jobs:
       - name: Wake up Vercel
         run: |
           curl -X GET \
-          -H "Authorization: Bearer ${{ secrets.AAGAM_CRON_KEYT }}" \
+          -H "Authorization: Bearer ${{ secrets.AAGAM_CRON_KEY }}" \
           https://jain-wisdom-hub.vercel.app/api/cron/daily-quote
