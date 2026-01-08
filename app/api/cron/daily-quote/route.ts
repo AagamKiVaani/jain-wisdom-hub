@@ -22,10 +22,10 @@ export async function GET(req: Request) {
     const authHeader = req.headers.get('authorization');
     const mySecret = process.env.AAGAM_CRON_KEY;
 
-    console.log("🔍 --- CRON DEBUGGER ---");
-    console.log(`1. Do I have a Secret Key? ${mySecret ? "YES" : "NO - FATAL ERROR"}`);
-    console.log(`2. Received Header: "${authHeader}"`);
-    console.log(`3. Expected Header: "Bearer ${mySecret?.substring(0, 3)}..."`); // Only shows first 3 chars for safety
+    // console.log("🔍 --- CRON DEBUGGER ---");
+    // console.log(`1. Do I have a Secret Key? ${mySecret ? "YES" : "NO - FATAL ERROR"}`);
+    // console.log(`2. Received Header: "${authHeader}"`);
+    // console.log(`3. Expected Header: "Bearer ${mySecret?.substring(0, 3)}..."`); // Only shows first 3 chars for safety
 
 
     if (authHeader !== `Bearer ${process.env.AAGAM_CRON_KEY}`) {

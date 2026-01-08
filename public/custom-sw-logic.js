@@ -22,6 +22,7 @@ self.addEventListener('push', function (event) {
       image: data.image,          // 🖼️ The Big Hero Image (if provided)
       
       vibrate: [200, 100, 200],   // Heartbeat Vibration
+      requireInteraction: true, // Keeps it on screen until the user dismisses it
       tag: 'jain-wisdom-daily',   // Groups notifications so they don't stack up
       renotify: true,             // Buzzes every time
       
