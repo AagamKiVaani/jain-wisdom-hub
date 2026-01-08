@@ -1,0 +1,17 @@
+name: Daily Wisdom Cron
+
+on:
+  schedule:
+    # Runs at 00:30 UTC (6:00 AM IST)
+    - cron: '30 4 * * *' 
+  workflow_dispatch: # Allows you to run it manually from GitHub too
+
+jobs:
+  ping-vercel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wake up Vercel
+        run: |
+          curl -X GET \
+          -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+          https://jain-wisdom-hub.vercel.app/api/cron/daily-quote
