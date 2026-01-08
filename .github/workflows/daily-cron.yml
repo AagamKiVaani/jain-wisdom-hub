@@ -1,20 +1,35 @@
-name: Daily Wisdom Cron
+name: Jain Wisdom Scheduler
 
 on:
   schedule:
-    # Runs at 00:30 UTC (6:00 AM IST)
+    # 🌅 MORNING QUOTE: 5:45 AM IST (00:15 UTC)
     - cron: '15 0 * * *'
     # - cron: '30 7 * * *'
     # - cron: '30 0 * * *'
     # - cron: '30 4 * * *'
-  workflow_dispatch: # Allows you to run it manually from GitHub too
+
+    # 🌙 EVENING TITHI CHECK: 7:00 PM IST (13:30 UTC)
+    - cron: '30 13 * * *'
+
+
+  workflow_dispatch: # Allows manual button click for testing
 
 jobs:
-  ping-vercel:
+  run-jobs:
     runs-on: ubuntu-latest
     steps:
-      - name: Wake up Vercel
+      # Step 1: Check Morning Job
+      - name: Trigger Morning Quote
+        if: github.event.schedule == '15 0 * * *' || github.event_name == 'workflow_dispatch'
         run: |
           curl -X GET \
           -H "Authorization: Bearer ${{ secrets.AAGAM_CRON_KEY }}" \
           https://jain-wisdom-hub.vercel.app/api/cron/daily-quote
+
+      # Step 2: Check Evening Job
+      - name: Trigger Evening Tithi
+        if: github.event.schedule == '30 13 * * *' || github.event_name == 'workflow_dispatch'
+        run: |
+          curl -X GET \
+          -H "Authorization: Bearer ${{ secrets.AAGAM_CRON_KEY }}" \
+          https://jain-wisdom-hub.vercel.app/api/cron/evening-notification
