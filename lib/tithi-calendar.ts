@@ -44,15 +44,6 @@ export const tithiCalendar: Record<string, TithiEntry> = {
     },
     type: "kalyanak"
   },
-  "2026-01-09": {
-    title: { en: "Mallinath Kevalgyan", hi: "मल्लीनाथ केवलज्ञान", kn: "ಮಲ್ಲಿನಾಥ ಕೇವಲಜ್ಞಾನ ಕಲ್ಯಾಣಕ" },
-    description: {
-      en: "Tomorrow is the Kevalgyan Kalyanak of Bhagwan Mallinath.",
-      hi: "कल भगवान मल्लीनाथ का केवलज्ञान कल्याणक है।",
-      kn: "ನಾಳೆ ಭಗವಾನ್ ಮಲ್ಲಿನಾಥರ ಕೇವಲಜ್ಞಾನ ಕಲ್ಯಾಣಕ."
-    },
-    type: "kalyanak"
-  },
   "2026-01-11": {
     title: { en: "Ashtami", hi: "अष्टमी", kn: "ಅಷ್ಟಮಿ" },
     description: {
