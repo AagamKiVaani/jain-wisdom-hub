@@ -18,7 +18,7 @@ self.addEventListener('push', function (event) {
     } catch (e) {
       console.log('Push data is not JSON, using plain text.');
       data = {
-        title: 'Jain Wisdom',
+        tag: data.tag || data.title || 'jain-notification-' + Date.now(),
         body: event.data.text(),
         url: '/'
       };
@@ -33,7 +33,7 @@ self.addEventListener('push', function (event) {
     
     vibrate: [200, 100, 200],
     requireInteraction: true,
-    tag: 'jain-wisdom-daily',
+    tag: data.tag || data.title || 'jain-notification-' + Date.now(),
     renotify: true,
     
     data: {
