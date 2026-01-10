@@ -1,11 +1,10 @@
+// path: app/api/cron/quote/route.ts
 import { NextResponse } from 'next/server';
 import { getTodaysQuote } from '@/lib/quoteService';
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
 import webpush from 'web-push';
 
-// ⚙️ CONFIGURATION
-// Leave empty "" for text-only. Add path "/images/pic.jpg" if you want an image later.
 const DAILY_IMAGE: string = "";
 
 webpush.setVapidDetails(
@@ -18,16 +17,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(req: Request) {
   try {
-    // 🔒 SECURITY CHECK
     const authHeader = req.headers.get('authorization');
-    const mySecret = process.env.AAGAM_CRON_KEY;
-
-    // console.log("🔍 --- CRON DEBUGGER ---");
-    // console.log(`1. Do I have a Secret Key? ${mySecret ? "YES" : "NO - FATAL ERROR"}`);
-    // console.log(`2. Received Header: "${authHeader}"`);
-    // console.log(`3. Expected Header: "Bearer ${mySecret?.substring(0, 3)}..."`); // Only shows first 3 chars for safety
-
-
     if (authHeader !== `Bearer ${process.env.AAGAM_CRON_KEY}`) {
       return new NextResponse('Unauthorized', { status: 401 });
     }
@@ -42,29 +32,32 @@ export async function GET(req: Request) {
 
     console.log(`🌅 Sending Quote to ${users.length} users...`);
 
+    const todayDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+
     const promises = users.map(async (user) => {
       try {
         const userName = user.name || "Punya Atma";
-        const lang = (user.preferences?.dailyQuote?.lang as 'en' | 'hi' | 'kn') || 'hi';
+        
+        // FIX: Check specific pref -> global pref -> default 'hi'
+        const lang = (user.preferences?.dailyQuote?.lang) || (user.language) || 'hi';
 
-        const quoteText = quote.text[lang];
-        const quoteAuthor = quote.author[lang];
+        // Safe access for quote text
+        const quoteText = quote.text[lang as keyof typeof quote.text] || quote.text['hi'];
+        const quoteAuthor = quote.author[lang as keyof typeof quote.author] || quote.author['hi'];
 
         let title = "";
-        if (lang === 'hi') title = `सुप्रभात ${userName} ☀️`;
-        else if (lang === 'kn') title = `ಶುಭೋದಯ ${userName} ☀️`;
+        if (lang === 'hi') title = `सुप्रभातम् ${userName} ☀️`;
+        else if (lang === 'kn') title = `ಸುಪ್ರಭಾತಮ್ ${userName} ☀️`;
         else title = `Suprabhatam ${userName} ☀️`;
 
-        // 📦 PAYLOAD CONSTRUCTION
-        // We build the object first, so we can conditionally add the image
         const payloadData: any = {
           title: title,
           body: `${quoteText}\n- ${quoteAuthor}`,
-          url: "/", // Opens the app
-          tag: "daily-wisdom" // Ensures multiple quotes don't stack up, just replace each other
+          url: "/", 
+          // FIX: Dynamic tag prevents overwriting Tithi notifications
+          tag: `daily-wisdom-${todayDate}` 
         };
 
-        // Only add image if you have actually provided one
         if (DAILY_IMAGE && DAILY_IMAGE.trim() !== "") {
             payloadData.image = DAILY_IMAGE;
         }
