@@ -1,5 +1,3 @@
-// app/api/cron/evening-notification/route.ts
-
 import { NextResponse } from 'next/server';
 import { getUpcomingTithi } from '@/lib/tithiService';
 import dbConnect from '@/lib/db';
@@ -7,7 +5,7 @@ import User from '@/models/User';
 import webpush from 'web-push';
 
 webpush.setVapidDetails(
-  process.env.NEXT_PUBLIC_VAPID_SUBJECT || "mailto:aagamkivaani@gmail.com",
+  process.env.NEXT_PUBLIC_VAPID_SUBJECT || "mailto:test@test.com",
   process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
   process.env.VAPID_PRIVATE_KEY!
 );
@@ -42,45 +40,49 @@ export async function GET(req: Request) {
     if (entry.type === 'ashtanhika') iconPrefix = "🌸";
 
     // 📨 3. SEND PERSONALIZED NOTIFICATIONS
-    // We fetch users with subscription AND their preferences
+    // Fetch users who have a subscription
     const users = await User.find({ 'subscription': { $exists: true } });
     
-    console.log(`📤 Preparing to send to ${users.length} users...`);
+    console.log(`📤 Processing ${users.length} users...`);
 
     const notifications = users.map(user => {
       if (!user.subscription) return;
 
-      // --- 🧠 SMART LANGUAGE LOGIC ---
-      // 1. Get User's Language (Default to 'en')
-      // Ensure your DB saves it as 'en', 'hi', or 'kn'. 
-      // If you save as 'english', you might need a small mapper here.
+      // 🧠 SMART LANGUAGE LOGIC (Database Check)
+      // We look for 'preferences.language' in the User Object.
+      // If it's missing, we default to 'en' (English).
+      // Make sure your DB stores it as 'en', 'hi', or 'kn'.
       const userLang = user.preferences?.language || 'en';
 
-      // 2. Select Text based on Language
-      // We use 'as any' to allow dynamic key access safely
+      // Access the translations dynamically
       const titles = entry.title as any;
       const descriptions = entry.description as any;
 
-      // Fallback to English if the specific language is missing in the data file
+      // Select the text based on the user's DB preference
+      // Fallback to English if that specific translation is empty
       const finalTitle = titles[userLang] || titles['en'];
       const finalBody = descriptions[userLang] || descriptions['en'];
 
-      // 3. Create Custom Payload for THIS User
+      // 🔗 SMART URL
+      // Open the app in their preferred language (e.g., /hi or /kn)
+      const targetUrl = userLang === 'en' ? '/' : `/${userLang}`;
+
+      // Create Payload just for THIS user
       const userPayload = {
         title: `${iconPrefix} ${finalTitle}`,
-        body: finalBody, // Only shows the single preferred language!
-        url: '/calendar',
+        body: finalBody,
+        url: targetUrl, 
         tag: `tithi-${date}`,
         image: entry.type === 'kalyanak' ? '/images/kalyanak-hero.jpg' : undefined
       };
 
-      // 4. Send
+      // Send
       return webpush.sendNotification(
         user.subscription,
         JSON.stringify(userPayload)
       ).catch(err => {
         if (err.statusCode === 410 || err.statusCode === 404) {
-             console.log(`User ${user._id} subscription expired.`);
+             console.log(`User ${user._id} subscription expired/invalid.`);
         }
       });
     });
