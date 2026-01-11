@@ -78,9 +78,14 @@ export async function GET(req: Request) {
         image: entry.type === 'kalyanak' ? '/images/kalyanak-hero.jpg' : undefined
       };
 
+      const options = {
+        TTL: 86400 // 86400 seconds = 24 Hours
+      };
+
       return webpush.sendNotification(
         user.subscription,
-        JSON.stringify(userPayload)
+        JSON.stringify(userPayload),
+        options
       ).catch(err => {
         if (err.statusCode === 410 || err.statusCode === 404) {
              console.log(`User ${user._id} subscription expired/invalid.`);

@@ -58,11 +58,15 @@ export async function GET(req: Request) {
           tag: `daily-wisdom-${todayDate}` 
         };
 
+        const options = {
+          TTL: 86400 // 86400 seconds = 24 Hours
+        };
+
         if (DAILY_IMAGE && DAILY_IMAGE.trim() !== "") {
             payloadData.image = DAILY_IMAGE;
         }
 
-        await webpush.sendNotification(user.subscription, JSON.stringify(payloadData));
+        await webpush.sendNotification(user.subscription, JSON.stringify(payloadData), options);
 
       } catch (err: any) {
         if (err.statusCode === 410) {

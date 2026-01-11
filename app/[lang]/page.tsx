@@ -69,7 +69,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             
             <Link 
               href={`/${lang}/tirthankars`}
-              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-white/10 rounded-3xl hover:border-rose-500 dark:hover:border-rose-500 transition-all hover:shadow-2xl hover:shadow-rose-500/10 backdrop-blur-sm"
+              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 rounded-3xl hover:border-rose-500 dark:hover:border-rose-500 transition-all hover:shadow-2xl hover:shadow-rose-500/10 backdrop-blur-sm"
             >
               <div className="flex items-start justify-between mb-6">
                   <div className="h-14 w-14 rounded-2xl bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -86,7 +86,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
             <Link 
               href={`/${lang}/learn/namokar-mantra`}
-              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-white/10 rounded-3xl hover:border-orange-500 dark:hover:border-orange-500 transition-all hover:shadow-2xl hover:shadow-orange-500/10 backdrop-blur-sm"
+              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 rounded-3xl hover:border-orange-500 dark:hover:border-orange-500 transition-all hover:shadow-2xl hover:shadow-orange-500/10 backdrop-blur-sm"
             >
               <div className="flex items-start justify-between mb-6">
                   <div className="h-14 w-14 rounded-2xl bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -103,7 +103,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
             <Link 
               href={`/${lang}/learn/kalchakra`}
-              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-white/10 rounded-3xl hover:border-green-500 dark:hover:border-green-500 transition-all hover:shadow-2xl hover:shadow-green-500/10 backdrop-blur-sm"
+              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 rounded-3xl hover:border-green-500 dark:hover:border-green-500 transition-all hover:shadow-2xl hover:shadow-green-500/10 backdrop-blur-sm"
             >
               <div className="flex items-start justify-between mb-6">
                   <div className="h-14 w-14 rounded-2xl bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -120,7 +120,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
             <Link 
               href={`/${lang}/learn/soul-karma`}
-              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-white/10 rounded-3xl hover:border-purple-500 dark:hover:border-purple-500 transition-all hover:shadow-2xl hover:shadow-purple-500/10 backdrop-blur-sm"
+              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 rounded-3xl hover:border-purple-500 dark:hover:border-purple-500 transition-all hover:shadow-2xl hover:shadow-purple-500/10 backdrop-blur-sm"
             >
               <div className="flex items-start justify-between mb-6">
                   <div className="h-14 w-14 rounded-2xl bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:scale-110 transition-transform">

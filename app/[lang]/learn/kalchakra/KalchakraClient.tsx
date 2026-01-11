@@ -500,7 +500,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                 <div className={`absolute left-[-9px] top-0 w-5 h-5 rounded-full border-4 border-white/50 dark:border-black/50 ${ara.barColor} transition-all duration-300 group-hover:scale-150 shadow-sm`}></div>
                 <div 
                   onClick={() => { setSelectedAra(selectedAra === ara.id ? null : ara.id); playSound('click'); }} 
-                  className={`cursor-pointer rounded-3xl p-8 border transition-all duration-500 backdrop-blur-md ${selectedAra === ara.id ? "bg-black/80 text-white dark:bg-white/90 dark:text-black scale-105 shadow-2xl z-10" : "bg-white/40 dark:bg-black/40 border-white/40 dark:border-white/5 hover:bg-white/60 hover:shadow-lg"}`}
+                  className={`cursor-pointer rounded-3xl p-8 border transition-all duration-500 backdrop-blur-md ${selectedAra === ara.id ? "bg-black/80 text-white dark:bg-white/90 dark:text-black scale-105 shadow-2xl z-10" : "bg-white/60 dark:bg-black/40 border-zinc-200 dark:border-white/5 hover:bg-white/80 hover:shadow-lg"}`}
                 >
                   <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-4 mb-2">
                     <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-tight">{ara.name[l]}</h2>
@@ -645,7 +645,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                        initial={{ opacity: 0, y: 20 }} 
                        animate={{ opacity: 1, y: 0 }} 
                        exit={{ opacity: 0, y: -20 }} 
-                       className="bg-white/80 dark:bg-black/60 border border-white/20 dark:border-white/10 rounded-3xl p-6 md:p-8 max-w-3xl mx-auto shadow-2xl backdrop-blur-xl w-[75%]"
+                       className="bg-white/90 dark:bg-black/60 border border-zinc-200 dark:border-white/10 rounded-3xl p-6 md:p-8 max-w-3xl mx-auto shadow-2xl backdrop-blur-xl w-[75%]"
                      >
                          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                              <div className="flex items-center gap-4">
@@ -685,7 +685,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
           </div>
 
           {/* --- CHART SECTION (Guaranteed Fit) --- */}
-          <div className="mt-32 p-4 md:p-12 bg-white/60 dark:bg-black/60 rounded-3xl text-center mb-24 relative border border-white/20 dark:border-white/5 backdrop-blur-md shadow-lg flex flex-col">
+          <div className="mt-32 p-4 md:p-12 bg-white/60 dark:bg-black/80 rounded-3xl text-center mb-24 relative border border-zinc-200 dark:border-white/5 backdrop-blur-md shadow-lg flex flex-col">
               
               {/* Header */}
               <div className="flex flex-col items-center mb-8 md:mb-12 shrink-0">

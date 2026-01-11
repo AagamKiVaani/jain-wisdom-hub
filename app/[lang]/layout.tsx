@@ -12,6 +12,8 @@ import RegisterPWA from "../RegisterPWA";
 
 import NotificationFAB from "@/components/NotificationFab";
 
+import InstallPrompt from "@/components/InstallPrompt";
+
 // 1. Optimize Inter (Variable font, usually handles itself well, but subsets help)
 const inter = Inter({ subsets: ["latin"] });
 
@@ -68,6 +70,7 @@ export default async function RootLayout({
           <main className="grow">
             {children}
           </main>
+          <InstallPrompt />
           <NotificationFAB />
           <Footer lang={lang} />
           <Analytics />
