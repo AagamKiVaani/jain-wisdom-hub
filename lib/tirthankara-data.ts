@@ -12,6 +12,11 @@ export type KalyanakEvent = {
   extraInfo?: LocalizedText; // For "16 dreams", "Vairagya reason", "Penance duration"
 };
 
+export type YouTube = {
+  videoId: string;
+  thumbnailUrl: string;
+};
+
 export type Tirthankara = {
   id: number;
   name: LocalizedText;
@@ -31,6 +36,8 @@ export type Tirthankara = {
   lifespan: LocalizedText;
   height: LocalizedText;
   tirthankaraImage: string;
+  yaksha: LocalizedText;
+  yakshini: LocalizedText;
 
   // --- NEW: KALYANAKS DATA ---
   kalyanaks: {
@@ -40,6 +47,8 @@ export type Tirthankara = {
     kevalgyan: KalyanakEvent;
     moksha: KalyanakEvent;
   };
+
+  youtube: YouTube;
 };
 
 // Helper for default placeholder data to keep code clean for 2-24
@@ -102,6 +111,9 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "84 Lakh Purva", hi: "84 लाख पूर्व", kn: "84 ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "500 Dhanush", hi: "500 धनुष", kn: "500 ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/adinath.avif",
+
+    yaksha: {en: "Gomukha", hi: "गोमुख", kn: "ಗೋಮುಖ "},
+    yakshini: {en: "Chakreshwari Devi", hi: "चक्रेश्वरी देवी", kn: "ಚಕ್ರೇಶ್ವರಿ ದೇವಿ "},
     
     // --- ADINATH SPECIFIC DATA ---
     kalyanaks: {
@@ -167,6 +179,10 @@ export const tirthankaras: Tirthankara[] = [
         imageMobile: ["/images/tirthankar/kalyanak/Adinath/mobile/moksha/1.avif", "/images/tirthankar/kalyanak/Adinath/mobile/moksha/2.avif", "/images/tirthankar/kalyanak/Adinath/mobile/moksha/3.avif", "/images/tirthankar/kalyanak/Adinath/mobile/moksha/4.avif", "/images/tirthankar/kalyanak/Adinath/mobile/moksha/5.avif"],
         imageDesktop: ["/images/tirthankar/kalyanak/Adinath/desktop/moksha/1.avif", "/images/tirthankar/kalyanak/Adinath/desktop/moksha/2.avif", "/images/tirthankar/kalyanak/Adinath/desktop/moksha/3.avif", "/images/tirthankar/kalyanak/Adinath/desktop/moksha/4.avif", "/images/tirthankar/kalyanak/Adinath/desktop/moksha/5.avif"]
       }
+    },
+    youtube : {
+      videoId: "xsngvgeNc_Q",
+      thumbnailUrl: "/images/tirthankar/arhats/adinath.avif"
     }
   },
 
@@ -187,7 +203,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "72 Lakh Purva", hi: "७२ लाख पूर्व", kn: "೭೨ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "450 Dhanush", hi: "४५० धनुष", kn: "೪೫೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/ajitnath.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -207,7 +229,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "60 Lakh Purva", hi: "६० लाख पूर्व", kn: "೬೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "400 Dhanush", hi: "४०० धनुष", kn: "೪೦೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/sambhavnath.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -227,7 +255,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "50 Lakh Purva", hi: "५० लाख पूर्व", kn: "೫೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "350 Dhanush", hi: "३५० धनुष", kn: "೩೫೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/abhinandannath.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -247,7 +281,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "40 Lakh Purva", hi: "४० लाख पूर्व", kn: "೪೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "300 Dhanush", hi: "३०० धनुष", kn: "೩೦೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/sumatinath.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -267,7 +307,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "30 Lakh Purva", hi: "३० लाख पूर्व", kn: "೩೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "250 Dhanush", hi: "२५० धनुष", kn: "೨೫೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/padmaprabha.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -287,7 +333,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "20 Lakh Purva", hi: "२० लाख पूर्व", kn: "೨೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "200 Dhanush", hi: "२०० धनुष", kn: "೨೦೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/suparshvanath.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -307,7 +359,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "10 Lakh Purva", hi: "१० लाख पूर्व", kn: "೧೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "150 Dhanush", hi: "१५० धनुष", kn: "೧೫೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/chandraprabha.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -327,7 +385,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "5 Lakh Purva", hi: "५ लाख पूर्व", kn: "೫ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "100 Dhanush", hi: "१०० धनुष", kn: "೧೦೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/pushpadanta.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -347,7 +411,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "1 Lakh Purva", hi: "१ लाख पूर्व", kn: "೧ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "90 Dhanush", hi: "९० धनुष", kn: "೯೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/sheetalnath.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -367,7 +437,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "84 Thousand Purva", hi: "८४ हजार पूर्व", kn: "೮೪ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "80 Dhanush", hi: "८० धनुष", kn: "೮೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/shreyansnath.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -387,7 +463,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "54 Lakh Purva", hi: "५४ लाख पूर्व", kn: "೫೪ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "70 Dhanush", hi: "७० धनुष", kn: "೭೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/vasupujya.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -407,7 +489,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "60 Lakh Purva", hi: "६० लाख पूर्व", kn: "೬೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "60 Dhanush", hi: "६० धनुष", kn: "೬೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/vimalnath.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -427,7 +515,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "30 Lakh Purva", hi: "३० लाख पूर्व", kn: "೩೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "50 Dhanush", hi: "५० धनुष", kn: "೫೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/anantnath.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -447,7 +541,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "25 Lakh Purva", hi: "२५ लाख पूर्व", kn: "೨೫ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "45 Dhanush", hi: "४५ धनुष", kn: "೪೫ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/dharmanath.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -467,7 +567,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "10 Lakh Purva", hi: "१० लाख पूर्व", kn: "೧೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "40 Dhanush", hi: "४० धनुष", kn: "೪೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/shantinath.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -487,7 +593,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "95 Thousand Purva", hi: "९५ हजार पूर्व", kn: "೯೫ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "35 Dhanush", hi: "३५ धनुष", kn: "೩೫ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/kunthunath.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -507,7 +619,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "84 Thousand Purva", hi: "८४ हजार पूर्व", kn: "೮೪ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "30 Dhanush", hi: "३० धनुष", kn: "೩೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/arnath.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -527,7 +645,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "56 Thousand Purva", hi: "५६ हजार पूर्व", kn: "೫೬ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "25 Dhanush", hi: "२५ धनुष", kn: "೨೫ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/mallinath.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -547,7 +671,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "30 Thousand Purva", hi: "३० हजार पूर्व", kn: "೩೦ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "20 Dhanush", hi: "२० धनुष", kn: "೨೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/munisuvrat.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -567,7 +697,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "10 Thousand Purva", hi: "१० हजार पूर्व", kn: "೧೦ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "15 Dhanush", hi: "१५ धनुष", kn: "೧೫ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/naminath.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -587,7 +723,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "1000 Years", hi: "१००० वर्ष", kn: "೧೦೦೦ ವರ್ಷ" },
     height: { en: "10 Dhanush", hi: "१० धनुष", kn: "೧೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/neminath.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -607,7 +749,13 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "100 Years", hi: "१०० वर्ष", kn: "೧೦೦ ವರ್ಷ" },
     height: { en: "9 Hands", hi: "९ हाथ", kn: "೯ ಹಸ್ತ" },
     tirthankaraImage: "/images/tirthankar/arhats/parshvanath.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   },
 
   {
@@ -627,6 +775,12 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "72 Years", hi: "७२ वर्ष", kn: "೭೨ ವರ್ಷ" },
     height: { en: "7 Hands", hi: "७ हाथ", kn: "೭ ಹಸ್ತ" },
     tirthankaraImage: "/images/tirthankar/arhats/mahavira.avif",
-    kalyanaks: defaultKalyanaks
+    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    kalyanaks: defaultKalyanaks,
+    youtube : {
+      videoId: "",
+      thumbnailUrl: ""
+    }
   }
 ];

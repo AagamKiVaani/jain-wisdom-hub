@@ -2,9 +2,11 @@ import { tirthankaras } from "@/lib/tirthankara-data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image"; 
-import { ArrowLeft, Star } from "lucide-react";
+import { ArrowLeft, Star, Play } from "lucide-react";
 import KalyanakTimeline from "./KalyanakTimeline"; 
 import { Metadata } from "next";
+
+import CinematicVideo from "@/components/CinematicVideo";
 
 // ✅ FIX 1: Correct Parameter Name in Metadata
 export async function generateMetadata({ params }: { params: Promise<{ id: string; lang: string }> }): Promise<Metadata> {
@@ -86,14 +88,16 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
     { label: { en: "Lifespan", hi: "आयु", kn: "ಆಯಸ್ಸು" }, value: t.lifespan[l] },
     { label: { en: "Height", hi: "ऊंचाई", kn: "ಎತ್ತರ" }, value: t.height[l] },
     { label: { en: "Nirvana", hi: "निर्वाण क्षेत्र", kn: "ನಿರ್ವಾಣ ಕ್ಷೇತ್ರ" }, value: t.placeOfNirvana[l] },
+    { label: { en: "Yaksha", hi: "यक्ष", kn: "ಯಕ್ಷ" }, value: t.yaksha[l] },
+    { label: { en: "Yakshini", hi: "यक्षिणी", kn: "ಯಕ್ಷಿಣಿ" }, value: t.yakshini[l] },
   ];
 
   const prevT = tirthankaras.find(item => item.id === t.id - 1);
   const nextT = tirthankaras.find(item => item.id === t.id + 1);
 
   return (
-    <div className="bg-white dark:bg-black text-gray-900 dark:text-white min-h-screen selection:bg-rose-500 selection:text-white transition-colors duration-500">
-      
+    <div key={t.id} className="bg-white dark:bg-black text-gray-900 dark:text-white min-h-screen selection:bg-rose-500 selection:text-white transition-colors duration-500">
+      {/* <ForceReload /> */}
       {/* 1. FIXED NAVIGATION */}
       <Link 
         href={`/${lang}/tirthankars`} 
@@ -170,7 +174,35 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
       {/* 3. KALYANAK TIMELINE */}
       <KalyanakTimeline kalyanakData={t.kalyanaks} lang={lang} />
 
-      {/* 4. FOOTER NAVIGATION */}
+      
+      {/* ================================================================================== */}
+      {/* 🎥 4. CINEMATIC VIDEO SECTION (Placed here for high impact) */}
+      {/* ================================================================================== */}
+      <section className="relative w-full max-w-7xl mx-auto mb-24 md:mb-32 px-4 md:px-8">
+         
+         {/* Section Header */}
+         <div className="text-center mb-8 md:mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-50 dark:bg-rose-950/30 border border-rose-100 dark:border-rose-500/20 text-rose-600 dark:text-rose-400 text-[9px] md:text-[10px] font-bold tracking-widest uppercase mb-4">
+                <Play size={10} fill="currentColor" /> Digital Aagam Presentation
+            </div>
+            <h2 className="text-2xl md:text-4xl font-black text-gray-900 dark:text-white mb-2">
+               Witness The Legend
+            </h2>
+            <p className="text-sm md:text-base text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
+               Experience the divine journey of Bhagwan {t.name[l]} through a cinematic short film.
+            </p>
+         </div>
+
+         {/* The Component */}
+         <CinematicVideo 
+            videoId={t.youtube?.videoId || 'dQw4w9WgXcQ'}
+            thumbnailUrl={t.youtube?.thumbnailUrl || "/images/tirthankar/arhats/adinath.avif"}
+            title={`Life of ${t.name[l]}`}
+            subtitle="A journey of non-violence and truth"
+         />
+      </section>
+
+      {/* 5. FOOTER NAVIGATION */}
       <div className="min-h-[50vh] flex flex-col items-center justify-center px-6 text-center border-t border-gray-100 dark:border-white/5 bg-gray-50 dark:bg-gradient-to-b dark:from-black dark:to-zinc-950 transition-colors duration-500 pb-32 pt-20">
            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mb-20">
               {prevT && (

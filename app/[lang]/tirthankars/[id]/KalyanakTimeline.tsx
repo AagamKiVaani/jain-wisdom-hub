@@ -1,7 +1,7 @@
 // KalyanakTimeline.tsx
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Tirthankara } from "@/lib/tirthankara-data"; 
@@ -15,7 +15,6 @@ type Props = {
 const STEPS = ["garbha", "janma", "diksha", "kevalgyan", "moksha"] as const;
 
 export default function KalyanakTimeline({ kalyanakData, lang }: Props) {
-  const [activeSlideId, setActiveSlideId] = useState<string>("garbha-0");
   const l = (lang === "hi" || lang === "kn") ? lang : "en";
 
   // --- FLATTENER LOGIC ---
@@ -58,14 +57,23 @@ export default function KalyanakTimeline({ kalyanakData, lang }: Props) {
     return allSlides;
   }, [kalyanakData, l]);
 
+  const [activeSlideId, setActiveSlideId] = useState<string>(slides[0]?.id || "");
+
+  useEffect(() => {
+    if (slides.length > 0) setActiveSlideId(slides[0].id);
+  }, [slides]);
+
   return (
     <div className="relative bg-white dark:bg-black transition-colors duration-500">
       
       {/* ======================= */}
-      {/* DESKTOP LAYOUT (Split)  */}
+      {/* DESKTOP LAYOUT (Grid)   */}
       {/* ======================= */}
-      <div className="hidden md:flex items-start w-full max-w-[1600px] mx-auto relative">
-        <div className="w-[45%] relative z-10 pl-12 pr-6 pb-40 pt-20">
+      {/* 🔴 REMOVED 'items-start'. Defaults to 'stretch', which makes Right Col as tall as Left Col. */}
+      <div className="hidden md:grid grid-cols-[45%_55%] w-full max-w-[1600px] mx-auto relative">
+        
+        {/* LEFT COLUMN (Text - Drives the height) */}
+        <div className="relative z-10 pl-12 pr-6 pb-40 pt-20">
             <div className="absolute left-[39px] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-rose-300 dark:via-rose-800 to-transparent opacity-50"></div>
             {slides.map((slide) => (
                 <motion.div 
@@ -92,46 +100,47 @@ export default function KalyanakTimeline({ kalyanakData, lang }: Props) {
                 </motion.div>
             ))}
         </div>
-        <div className="w-[55%] h-screen sticky top-0 flex items-center justify-center p-8 overflow-hidden">
-             <div className="relative w-full h-[70vh] max-h-[600px] rounded-[2rem] overflow-hidden shadow-2xl z-10 bg-zinc-800 border-4 border-white dark:border-zinc-800 ring-1 ring-black/10">
-                <AnimatePresence mode="popLayout">
-                    {slides.map((slide) => {
-                        if (slide.id !== activeSlideId) return null;
-                        return (
-                            <motion.div
-                                key={slide.id}
-                                initial={{ opacity: 0, scale: 1.05 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.5 }}
-                                className="absolute inset-0"
-                            >
-                                <RobustImage primarySrc={slide.primarySrcDesktop} placeholderSrc={slide.placeholderSrc} alt={slide.title} />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
-                            </motion.div>
-                        );
-                    })}
-                </AnimatePresence>
+
+        {/* RIGHT COLUMN (Sticky Track) */}
+        {/* The column itself is purely a container that stretches full height */}
+        <div className="relative">
+             {/* 🟢 CHANGED: top-24 (avoids header overlap) and h-screen (for full stickiness) */}
+             <div className="sticky top-24 h-[calc(100vh-6rem)] flex items-center justify-center p-8 overflow-hidden">
+                  <div className="relative w-full h-[70vh] max-h-[600px] rounded-[2rem] overflow-hidden shadow-2xl z-10 bg-zinc-800 border-4 border-white dark:border-zinc-800 ring-1 ring-black/10">
+                     <AnimatePresence mode="popLayout">
+                         {slides.map((slide) => {
+                             if (slide.id !== activeSlideId) return null;
+                             return (
+                                 <motion.div
+                                     key={slide.id}
+                                     initial={{ opacity: 0, scale: 1.05 }}
+                                     animate={{ opacity: 1, scale: 1 }}
+                                     exit={{ opacity: 0 }}
+                                     transition={{ duration: 0.5 }}
+                                     className="absolute inset-0"
+                                 >
+                                     <RobustImage primarySrc={slide.primarySrcDesktop} placeholderSrc={slide.placeholderSrc} alt={slide.title} />
+                                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+                                 </motion.div>
+                             );
+                         })}
+                     </AnimatePresence>
+                  </div>
              </div>
         </div>
       </div>
 
       {/* ================================== */}
-      {/* MOBILE LAYOUT: CONNECTED TIMELINE  */}
+      {/* MOBILE LAYOUT (Unchanged)        */}
       {/* ================================== */}
       <div className="md:hidden bg-zinc-100 dark:bg-black pb-20 pt-10 px-4 relative overflow-hidden">
-        
-        {/* 1. THE CONNECTING LINE (Visible Center Thread) */}
-        {/* It runs down the center, behind the cards */}
         <div className="absolute left-1/2 top-0 bottom-0 w-[2px] -translate-x-1/2 bg-gradient-to-b from-transparent via-rose-400 to-transparent opacity-50 z-0"></div>
 
-        {/* Intro Header */}
         <div className="mb-12 relative z-10 text-center">
             <h3 className="text-xs font-bold uppercase tracking-[0.3em] text-rose-500 mb-2">The Journey</h3>
             <h2 className="text-4xl font-black text-gray-900 dark:text-white leading-none">Witness the <br/>Divine Path</h2>
         </div>
 
-        {/* The Card List - With gaps to reveal the line */}
         <div className="relative z-10 flex flex-col gap-16">
             {slides.map((slide, index) => (
                <MobileTimelineCard key={slide.id} slide={slide} index={index} />
@@ -143,7 +152,7 @@ export default function KalyanakTimeline({ kalyanakData, lang }: Props) {
   );
 }
 
-// --- SUB-COMPONENT: MOBILE TIMELINE CARD (NON-STICKY) ---
+// ... (Sub-components: MobileTimelineCard, RobustImage, getTitle remain exactly the same)
 function MobileTimelineCard({ slide, index }: { slide: any, index: number }) {
     return (
         <motion.div 
@@ -154,18 +163,13 @@ function MobileTimelineCard({ slide, index }: { slide: any, index: number }) {
             className="relative w-full"
         >
             {/* 2. THE CONNECTOR KNOT */}
-            {/* A visual dot on the center line to connect this card */}
             <div className="absolute -top-10 left-1/2 -translate-x-1/2 flex flex-col items-center justify-center">
-                {/* The Dot */}
                 <div className="w-4 h-4 rounded-full bg-rose-500 border-[3px] border-white dark:border-zinc-900 shadow-md z-10"></div>
-                {/* Small vertical link to the card */}
                 <div className="w-[2px] h-6 bg-rose-300/50"></div>
             </div>
 
             {/* CARD CONTENT */}
             <div className="relative w-full bg-white dark:bg-zinc-900 rounded-[2rem] overflow-hidden shadow-xl border border-white/50 dark:border-white/10 flex flex-col">
-                
-                {/* Image Section */}
                 <div className="relative w-full aspect-video bg-black flex-shrink-0">
                     <RobustImage 
                         primarySrc={slide.primarySrcMobile}
@@ -173,8 +177,6 @@ function MobileTimelineCard({ slide, index }: { slide: any, index: number }) {
                         alt={slide.title}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-
-                    {/* Step Badge */}
                     <div className="absolute bottom-4 left-4 text-white">
                         <div className="flex items-center gap-2 mb-1">
                             <span className="bg-rose-600/90 backdrop-blur-md px-2 py-1 rounded text-[9px] font-bold uppercase tracking-widest border border-white/20">
@@ -185,16 +187,12 @@ function MobileTimelineCard({ slide, index }: { slide: any, index: number }) {
                     </div>
                 </div>
 
-                {/* Text Content */}
                 <div className="p-6 bg-white dark:bg-zinc-900">
-                    {/* Title */}
                     {slide.subIndex === 0 && (
                         <h2 className="text-2xl font-black text-gray-900 dark:text-white uppercase leading-none mb-4 text-center">
                             {slide.title}
                         </h2>
                     )}
-
-                    {/* Metadata Grid */}
                     {slide.subIndex === 0 && (slide.tithi || slide.location) && (
                         <div className="grid grid-cols-2 gap-4 mb-6 pb-4 border-b border-gray-100 dark:border-white/5 text-center">
                             {slide.tithi && (
@@ -211,13 +209,10 @@ function MobileTimelineCard({ slide, index }: { slide: any, index: number }) {
                             )}
                         </div>
                     )}
-
-                    {/* Text */}
                     <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 font-serif leading-relaxed text-center">
                         {slide.text}
                     </p>
                 </div>
-
             </div>
         </motion.div>
     );

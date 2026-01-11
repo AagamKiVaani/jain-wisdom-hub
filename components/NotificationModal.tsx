@@ -185,7 +185,7 @@ export default function NotificationModal({ isOpen, onClose }: { isOpen: boolean
                    <label className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2 block">Your Name (Optional)</label>
                    <input 
                       type="text" 
-                      placeholder="e.g. Pratham" 
+                      placeholder="e.g. Veer" 
                       value={userName}
                       onChange={(e) => setUserName(e.target.value)}
                       className="w-full bg-gray-50 dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 rounded-xl px-4 py-3 outline-none focus:border-rose-500 transition-colors"
