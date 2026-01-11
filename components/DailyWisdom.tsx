@@ -57,7 +57,7 @@ export default function DailyWisdom({ lang, quote }: DailyWisdomProps) {
         await navigator.share({
           files: [file],
           title: 'Jain Wisdom Daily',
-          text: `Today's Wisdom 🌿\n\nRead more at Jain Wisdom App`,
+          text: `✨ *Today's Jain Wisdom* ✨\n\n"${text}"\n\n📲 *Download the App:*\nhttps://jain-wisdom-hub.vercel.app \n\n🎥 *Watch on YouTube:*\nhttps://youtube.com/@AagamKiVani`,
         });
       } else {
         download(dataUrl, 'jain-wisdom-quote.png');
