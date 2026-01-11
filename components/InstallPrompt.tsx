@@ -33,10 +33,10 @@ export default function InstallPrompt() {
     const isIosDevice = /iphone|ipad|ipod/.test(userAgent);
 
     if (isIosDevice) {
-      // iOS Logic: Wait 20 seconds, then show
+      // iOS Logic: Wait 24 seconds, then show
       timerRef.current = setTimeout(() => {
         setIsIOS(true);
-      }, 20000);
+      }, 24000);
     } else {
       // Android/Desktop Logic: Listen for browser event
       const handleBeforeInstallPrompt = (e: any) => {

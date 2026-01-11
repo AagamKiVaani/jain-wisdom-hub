@@ -53,12 +53,23 @@ export default function DailyWisdom({ lang, quote }: DailyWisdomProps) {
       const blob = await (await fetch(dataUrl)).blob();
       const file = new File([blob], 'jain-wisdom-quote.png', { type: 'image/png' });
 
+      const shareText = `✨ *Today's Jain Wisdom* ✨\n\n"${text}"\n\n📲 *Download the App:*\nhttps://jain-wisdom-hub.vercel.app \n\n🎥 *Watch on YouTube:*\nhttps://youtube.com/@AagamKiVani`;
+
+      const shareData = {
+        files: [file],
+        title: 'Jain Wisdom Daily',
+        text: shareText,
+      };
+
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({
-          files: [file],
-          title: 'Jain Wisdom Daily',
-          text: `✨ *Today's Jain Wisdom* ✨\n\n"${text}"\n\n📲 *Download the App:*\nhttps://jain-wisdom-hub.vercel.app \n\n🎥 *Watch on YouTube:*\nhttps://youtube.com/@AagamKiVani`,
-        });
+        try {
+            await navigator.clipboard.writeText(shareText);
+            // Optional: If you have a Toast component, show "Caption copied!" here
+        } catch (clipboardErr) {
+            console.log("Clipboard failed", clipboardErr);
+        }
+
+        await navigator.share(shareData);
       } else {
         download(dataUrl, 'jain-wisdom-quote.png');
       }
