@@ -79,7 +79,8 @@ export async function GET(req: Request) {
       };
 
       const options = {
-        TTL: 86400 // 86400 seconds = 24 Hours
+        TTL: 86400, // 86400 seconds = 24 Hours
+        Urgency: 'high'
       };
 
       return webpush.sendNotification(
