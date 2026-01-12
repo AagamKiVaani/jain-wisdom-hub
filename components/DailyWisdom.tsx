@@ -5,6 +5,7 @@ import { useState, useRef } from "react";
 import { Sparkles, Share2 } from "lucide-react";
 import { toPng } from 'html-to-image';
 import download from 'downloadjs';
+import { span } from "framer-motion/client";
 
 interface QuoteText {
   en: string;
@@ -111,10 +112,20 @@ export default function DailyWisdom({ lang, quote }: DailyWisdomProps) {
             <button 
               onClick={handleShare}
               disabled={isSharing}
-              className="p-2 -ml-2 md:ml-0 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-400 hover:text-orange-500 transition-colors"
+              className="group flex items-center gap-2 px-4 py-1.5 rounded-full 
+                         bg-zinc-50 dark:bg-white/5 border border-zinc-200 dark:border-white/10
+                         hover:bg-orange-50 dark:hover:bg-orange-500/10 hover:border-orange-200 dark:hover:border-orange-500/30
+                         transition-all duration-300"
               title="Share Quote"
-            >
-              {isSharing ? <Sparkles className="w-4 h-4 animate-spin" /> : <Share2 className="w-4 h-4" />}
+            > 
+              <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
+                {isSharing ? "Sharing..." : "Share"}
+              </span>
+              {isSharing ? (
+                <Sparkles className="w-3 h-3 text-orange-500 animate-spin" /> 
+              ) : (
+                <Share2 className="w-3 h-3 text-zinc-400 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors" />
+              )}
             </button>
 
           </div>
