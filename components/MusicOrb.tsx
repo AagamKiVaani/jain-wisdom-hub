@@ -218,13 +218,13 @@ export default function MusicOrb() {
     <>
       {/* 1. FLOATING ORB (Unchanged) */}
       {!isImmersive && (
-        <div className="fixed bottom-6 left-6 z-[90] group">
+        <div className="fixed bottom-6 left-6 z-[40] group">
             <div className={`absolute -inset-4 rounded-full blur-2xl transition-all duration-1000 opacity-0 pointer-events-none
-                ${isPlaying ? "bg-rose-500/40 opacity-100 animate-pulse-slower" : "bg-indigo-500/0"}`}></div>
+                ${isPlaying ? "bg-rose-500/40 opacity-100 animate-[spin_3s_linear_infinite]" : "bg-indigo-500/0"}`}></div>
 
             <motion.button
             onClick={() => setIsOpen(true)}
-            whileHover={{ scale: 1.05, rotate: 9 }}
+            whileHover={{ scale: 1.05, rotate: 5 }}
             whileTap={{ scale: 0.95 }}
             className={`relative w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.25)] border-2 backdrop-blur-xl transition-all duration-500 ease-out
                 ${isPlaying 
@@ -297,13 +297,15 @@ export default function MusicOrb() {
                     <div className="flex items-center gap-2">
                         <button 
                             onClick={(e) => { e.stopPropagation(); cycleSleepTimer(); }}
-                            className={`p-2 rounded-full transition-all duration-300 flex items-center gap-2
+                            // 🛠️ FIX 1: Fixed Height h-12 and conditional width (Pill shape when active)
+                            className={`h-12 flex items-center justify-center rounded-full transition-all duration-300
+                                ${sleepTimer ? "px-4 gap-2" : "w-12"} 
                                 ${isImmersive 
                                     ? "text-white/60 hover:text-white bg-white/10" 
                                     : "text-zinc-400 hover:text-zinc-800 dark:hover:text-white bg-zinc-100 dark:bg-white/5"}`}
                             title="Sleep Timer"
                         >
-                            <Moon size={16} className={sleepTimer ? "fill-current" : ""} />
+                            <Moon size={24} className={sleepTimer ? "fill-current" : ""} />
                             {sleepTimer && <span className="text-xs font-bold">{sleepTimer}m</span>}
                         </button>
                     </div>
@@ -314,12 +316,13 @@ export default function MusicOrb() {
                     <div className="flex gap-3 ml-auto">
                         <button 
                             onClick={(e) => { e.stopPropagation(); setIsImmersive(!isImmersive); }}
-                            className={`p-2 rounded-full transition-all duration-300 ${isImmersive ? "bg-white/10 text-white hover:bg-white/20" : "bg-zinc-100 dark:bg-white/5 text-zinc-500 dark:text-zinc-400 hover:text-rose-500"}`}
+                            // 🛠️ FIX 2: Explicit w-12 h-12 size
+                            className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-300 ${isImmersive ? "bg-white/10 text-white hover:bg-white/20" : "bg-zinc-100 dark:bg-white/5 text-zinc-500 dark:text-zinc-400 hover:text-rose-500"}`}
                         >
                             {isImmersive ? <Minimize2 size={isImmersive ? 24 : 18} /> : <Maximize2 size={18} />}
                         </button>
                         {!isImmersive && (
-                            <button onClick={() => setIsOpen(false)} className="p-2 bg-zinc-100 dark:bg-white/5 rounded-full text-zinc-500 dark:text-zinc-400 hover:bg-rose-500 hover:text-white transition-colors">
+                            <button onClick={() => setIsOpen(false)} className="w-12 h-12 flex items-center justify-center bg-zinc-100 dark:bg-white/5 rounded-full text-zinc-500 dark:text-zinc-400 hover:bg-rose-500 hover:text-white transition-colors">
                                 <X size={18} />
                             </button>
                         )}
@@ -332,9 +335,10 @@ export default function MusicOrb() {
                     {/* 🔊 VERTICAL VOLUME (Right) */}
                     <div className={`absolute right-4 md:right-0 top-[60%] md:top-1/2 -translate-y-1/2 h-32 w-8 flex flex-col items-center justify-center gap-2 z-30 transition-opacity duration-300
                          ${isImmersive ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
+                         {/* 🛠️ FIX 3: Explicit w-12 h-12 size */}
                          <button onClick={() => { setIsMuted(!isMuted); if(audioRef.current) audioRef.current.muted = !isMuted; }} 
-                            className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-rose-500 mb-2 transition-colors">
-                             {isMuted || volume === 0 ? <VolumeX size={14} /> : <Volume2 size={14} />}
+                            className="w-12 h-12 flex items-center justify-center rounded-full text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-rose-500 mb-2 transition-colors">
+                             {isMuted || volume === 0 ? <VolumeX size={24} /> : <Volume2 size={24} />}
                          </button>
                          <div className="h-20 w-1 bg-zinc-200 dark:bg-white/5 rounded-full relative group cursor-pointer">
                              <input 
@@ -352,14 +356,14 @@ export default function MusicOrb() {
                     <div className={`absolute left-4 md:left-0 top-[60%] md:top-1/2 -translate-y-1/2 flex flex-col items-center gap-3 z-30 transition-opacity duration-300`}>
                         <button 
                             onClick={() => { setIsMalaMode(!isMalaMode); }}
-                            className={`p-3 rounded-full border transition-all duration-300 relative
+                            // 🛠️ FIX 4: Explicit w-12 h-12 size
+                            className={`w-12 h-12 flex items-center justify-center rounded-full border transition-all duration-300 relative
                             ${isMalaMode 
                                 ? "border-rose-500 bg-rose-500/10 text-rose-500 shadow-[0_0_20px_rgba(244,63,94,0.3)]" 
                                 : "border-transparent text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-white/5"}`}
                             title="Jap Mala Mode (Repeat & Count)"
                         >
-                             {/* 🛠️ FIX: Increased size to 28 for both mobile & desktop */}
-                             <Infinity size={28} />
+                             <Infinity size={24} />
                              {isMalaMode && <span className="absolute -top-1 -right-1 flex h-3 w-3">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
