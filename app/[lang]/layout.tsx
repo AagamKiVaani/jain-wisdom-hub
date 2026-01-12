@@ -14,6 +14,8 @@ import NotificationFAB from "@/components/NotificationFab";
 
 import InstallPrompt from "@/components/InstallPrompt";
 
+import MusicOrb from "@/components/MusicOrb";
+
 // 1. Optimize Inter (Variable font, usually handles itself well, but subsets help)
 const inter = Inter({ subsets: ["latin"] });
 
@@ -67,6 +69,7 @@ export default async function RootLayout({
           <RegisterPWA />
           <LocaleSync lang={lang} />
           <Navbar lang={lang} />
+          <MusicOrb />
           <main className="grow">
             {children}
           </main>

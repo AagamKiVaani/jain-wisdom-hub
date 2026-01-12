@@ -13,7 +13,7 @@ export default function NotificationFAB() {
       <div className="fixed bottom-6 right-6 z-[90]">
         <button
           onClick={() => setShowNotify(true)}
-          className="relative group bg-rose-600 hover:bg-rose-700 text-white p-4 rounded-full shadow-[0_4px_14px_0_rgba(225,29,72,0.39)] transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center"
+          className="relative group bg-rose-600 hover:bg-rose-700 text-white p-3 rounded-full shadow-[0_4px_14px_0_rgba(225,29,72,0.39)] transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center"
           aria-label="Notification Settings"
         >
           <Bell className="w-6 h-6" />
