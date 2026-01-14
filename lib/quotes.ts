@@ -12,7 +12,8 @@ export const quotes = [
       en: "Bhagwan Mahavira (Acharanga Sutra)",
       hi: "भगवान महावीर (आचारांग सूत्र)",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ (ಆಚಾರಾಂಗ ಸೂತ್ರ)"
-    }
+    },
+    image: "mahaveer.jpg"
   },
   // 2
   {
@@ -25,7 +26,8 @@ export const quotes = [
       en: "Acharya Kundakunda",
       hi: "आचार्य कुंदकुंद",
       kn: "ಆಚಾರ್ಯ ಕುಂದಕುಂದ"
-    }
+    },
+    image: "kundakunda.jpeg"
   },
   // 3
   {
@@ -38,7 +40,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer.jpg"
   },
   // 4
   {
@@ -51,7 +54,8 @@ export const quotes = [
       en: "Acharya Umaswamy (Tattvartha Sutra)",
       hi: "आचार्य उमास्वामी (तत्त्वार्थ सूत्र)",
       kn: "ಆಚಾರ್ಯ ಉಮಾಸ್ವಾಮಿ (ತತ್ತ್ವಾರ್ಥ ಸೂತ್ರ)"
-    }
+    },
+    image: "umaswamy.jpeg"
   },
   // 5
   {
@@ -64,7 +68,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer.jpg"
   },
   // 6
   {
@@ -77,7 +82,8 @@ export const quotes = [
       en: "Acharya Umaswamy (Tattvartha Sutra)",
       hi: "आचार्य उमास्वामी (तत्त्वार्थ सूत्र)",
       kn: "ಆಚಾರ್ಯ ಉಮಾಸ್ವಾಮಿ (ತತ್ತ್ವಾರ್ಥ ಸೂತ್ರ)"
-    }
+    },
+    image: "umaswamy.jpeg"
   },
   // 7
   {
@@ -90,7 +96,8 @@ export const quotes = [
       en: "Uttaradhyayana Sutra",
       hi: "उत्तराध्ययन सूत्र",
       kn: "ಉತ್ತರಾಧ್ಯಯನ ಸೂತ್ರ"
-    }
+    },
+    image: "uttaradhyayana.jpeg"
   },
   // 8
   {
@@ -103,7 +110,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer.jpg"
   },
   // 9
   {
@@ -116,7 +124,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer.jpg"
   },
   // 10
   {
@@ -129,7 +138,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer.jpg"
   },
   // 11
   {
@@ -142,7 +152,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_meditation.jpeg"
   },
   // 12
   {
@@ -155,7 +166,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_compassion.jpeg"
   },
   // 13
   {
@@ -168,7 +180,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_meditation.jpeg"
   },
   // 14
   {
@@ -181,7 +194,8 @@ export const quotes = [
       en: "Acharya Mahapragya",
       hi: "आचार्य महाप्रज्ञ",
       kn: "ಆಚಾರ್ಯ ಮಹಾಪಜ್ಞ"
-    }
+    },
+    image: "mahapragya.jpeg"
   },
   // 15
   {
@@ -194,7 +208,8 @@ export const quotes = [
       en: "Acharya Umaswamy (Tattvartha Sutra)",
       hi: "आचार्य उमास्वामी (तत्त्वार्थ सूत्र)",
       kn: "ಆಚಾರ್ಯ ಉಮಾಸ್ವಾಮಿ (ತತ್ತ್ವಾರ್ಥ ಸೂತ್ರ)"
-    }
+    },
+    image: "umaswamy.jpeg"
   },
   // 16
   {
@@ -207,7 +222,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_meditation.jpeg"
   },
   // 17
   {
@@ -220,7 +236,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_meditation.jpeg"
   },
   // 18
   {
@@ -233,7 +250,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_compassion.jpeg"
   },
   // 19
   {
@@ -246,7 +264,8 @@ export const quotes = [
       en: "Jain Wisdom",
       hi: "जैन विज़्डम",
       kn: "ಜೈನ ವಿಸ್ಡಮ್"
-    }
+    },
+    image: "jain_wisdom.jpeg"
   },
   // 20
   {
@@ -259,7 +278,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_compassion.jpeg"
   },
   // 21
   {
@@ -272,7 +292,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_compassion.jpeg"
   },
   // 22
   {
@@ -285,7 +306,8 @@ export const quotes = [
       en: "Acharya Kundakunda (Samayasara)",
       hi: "आचार्य कुंदकुंद (समयसार)",
       kn: "ಆಚಾರ್ಯ ಕುಂದಕುಂದ (ಸಮಯಸಾರ)"
-    }
+    },
+    image: "kundakunda.jpeg"
   },
   // 23
   {
@@ -298,7 +320,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_meditation.jpeg"
   },
   // 24
   {
@@ -311,7 +334,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_compassion.jpeg"
   },
   // 25
   {
@@ -324,7 +348,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_nature.jpeg"
   },
   // 26
   {
@@ -337,7 +362,8 @@ export const quotes = [
       en: "Sutrakritanga Sutra",
       hi: "सूत्रकृतांग सूत्र",
       kn: "ಸೂತ್ರಕೃತಾಂಗ ಸೂತ್ರ"
-    }
+    },
+    image: "sutrakritanga.jpeg"
   },
   // 27
   {
@@ -350,7 +376,8 @@ export const quotes = [
       en: "Micchami Dukkadam (Pratikramana)",
       hi: "मिच्छामी दुक्कड़म (प्रतिक्रमण)",
       kn: "ಮಿಚ್ಛಾಮಿ ದುಕ್ಕಡಂ (ಪ್ರತಿಕ್ರಮಣ)"
-    }
+    },
+    image: "micchami_dukkadam.jpeg"
   },
   // 28
   {
@@ -363,7 +390,8 @@ export const quotes = [
       en: "Uttaradhyayana Sutra",
       hi: "उत्तराध्ययन सूत्र",
       kn: "ಉತ್ತರಾಧ್ಯಯನ ಸೂತ್ರ"
-    }
+    },
+    image: "uttaradhyayana_lotus.jpeg"
   },
   // 29
   {
@@ -376,7 +404,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_compassion.jpeg"
   },
   // 30
   {
@@ -389,7 +418,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_meditation.jpeg"
   },
   // 31
   {
@@ -402,7 +432,8 @@ export const quotes = [
       en: "Acharanga Sutra",
       hi: "आचारांग सूत्र",
       kn: "ಆಚಾರಾಂಗ ಸೂತ್ರ"
-    }
+    },
+    image: "acharanga.jpeg"
   },
   // 32
   {
@@ -415,7 +446,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_devas_bowing.jpeg"
   },
   // 33
   {
@@ -428,7 +460,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_meditation.jpeg"
   },
   // 34
   {
@@ -441,7 +474,8 @@ export const quotes = [
       en: "Acharanga Sutra",
       hi: "आचारांग सूत्र",
       kn: "ಆಚಾರಾಂಗ ಸೂತ್ರ"
-    }
+    },
+    image: "acharanga.jpeg"
   },
   // 35
   {
@@ -454,7 +488,8 @@ export const quotes = [
       en: "Acharya Kundakunda",
       hi: "आचार्य कुंदकुंद",
       kn: "ಆಚಾರ್ಯ ಕುಂದಕುಂದ"
-    }
+    },
+    image: "kundakunda.jpeg"
   },
   // 36
   {
@@ -467,7 +502,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_meditation.jpeg"
   },
   // 37
   {
@@ -480,7 +516,8 @@ export const quotes = [
       en: "Jain Wisdom",
       hi: "जैन विज़्डम",
       kn: "ಜೈನ ವಿಸ್ಡಮ್"
-    }
+    },
+    image: "jain_wisdom_lamp.jpeg"
   },
   // 38
   {
@@ -493,7 +530,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_meditation.jpeg"
   },
   // 39
   {
@@ -506,7 +544,8 @@ export const quotes = [
       en: "Acharanga Sutra",
       hi: "आचारांग सूत्र",
       kn: "ಆಚಾರಾಂಗ ಸೂತ್ರ"
-    }
+    },
+    image: "acharanga.jpeg"
   },
   // 40
   {
@@ -519,7 +558,8 @@ export const quotes = [
       en: "Acharya Kundakunda",
       hi: "आचार्य कुंदकुंद",
       kn: "ಆಚಾರ್ಯ ಕುಂದಕುಂದ"
-    }
+    },
+    image: "kundakunda.jpeg"
   },
   // 41
   {
@@ -532,7 +572,8 @@ export const quotes = [
       en: "Dashavaikalika Sutra",
       hi: "दशवैकालिक सूत्र",
       kn: "ದಶವೈಕಾಲಿಕ ಸೂತ್ರ"
-    }
+    },
+    image: "dashavaikalika.jpeg"
   },
   // 42
   {
@@ -545,7 +586,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_meditation.jpeg"
   },
   // 43
   {
@@ -558,7 +600,8 @@ export const quotes = [
       en: "Jain Wisdom",
       hi: "जैन विज़्डम",
       kn: "ಜೈನ ವಿಸ್ಡಮ್"
-    }
+    },
+    image: "jain_wisdom_lamp.jpeg"
   },
   // 44
   {
@@ -571,7 +614,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_bird_soul.jpg"
   },
   // 45
   {
@@ -584,7 +628,8 @@ export const quotes = [
       en: "Acharya Kundakunda",
       hi: "आचार्य कुंदकुंद",
       kn: "ಆಚಾರ್ಯ ಕುಂದಕುಂದ"
-    }
+    },
+    image: "kundakunda.jpeg"
   },
   // 46
   {
@@ -597,7 +642,8 @@ export const quotes = [
       en: "Dashavaikalika Sutra",
       hi: "दशवैकालिक सूत्र",
       kn: "ದಶವೈಕಾಲಿಕ ಸೂತ್ರ"
-    }
+    },
+    image: "dashavaikalika.jpeg"
   },
   // 47
   {
@@ -610,7 +656,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_meditation.jpeg"
   },
   // 48
   {
@@ -623,7 +670,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_meditation.jpeg"
   },
   // 49
   {
@@ -636,7 +684,8 @@ export const quotes = [
       en: "Dashavaikalika Sutra",
       hi: "दशवैकालिक सूत्र",
       kn: "ದಶವೈಕಾಲಿಕ ಸೂತ್ರ"
-    }
+    },
+    image: "dashavaikalika.jpeg"
   },
   // 50
   {
@@ -649,7 +698,8 @@ export const quotes = [
       en: "Anupreksha (Twelve Contemplations)",
       hi: "अनुप्रेक्षा (बारह भावना)",
       kn: "ಅನುಪ್ರೇಕ್ಷಾ (ಹನ್ನೆರಡು ಭಾವನೆಗಳು)"
-    }
+    },
+    image: "anupreksha_solitary.jpeg"
   },
   // 51
   {
@@ -662,7 +712,8 @@ export const quotes = [
       en: "Acharya Samantabhadra (Ratnakaranda Shravakachara)",
       hi: "आचार्य समंतभद्र (रत्नकरंड श्रावकाचार)",
       kn: "ಆಚಾರ್ಯ ಸಮಂತಭದ್ರ (ರತ್ನಕರಂಡ ಶ್ರಾವಕಾಚಾರ)"
-    }
+    },
+    image: "samantabhadra.jpeg"
   },
   // 52
   {
@@ -675,7 +726,8 @@ export const quotes = [
       en: "Acharya Pujyapada (Ishtopadesha)",
       hi: "आचार्य पूज्यपाद (इष्टोपदेश)",
       kn: "ಆಚಾರ್ಯ ಪೂಜ್ಯಪಾದ (ಇಷ್ಟೋಪದೇಶ)"
-    }
+    },
+    image: "pujyapada.jpeg"
   },
   // 53
   {
@@ -688,7 +740,8 @@ export const quotes = [
       en: "Acharya Amritchandra (Purushartha Siddhyupaya)",
       hi: "आचार्य अमृतचंद्र (पुरुषार्थ सिद्धयुपाय)",
       kn: "ಆಚಾರ್ಯ ಅಮೃತಚಂದ್ರ (ಪುರುಷಾರ್ಥ ಸಿದ್ಧ್ಯುಪಾಯ)"
-    }
+    },
+    image: "amritchandra.jpeg"
   },
   // 54
   {
@@ -701,7 +754,8 @@ export const quotes = [
       en: "Acharya Kundakunda (Samayasara)",
       hi: "आचार्य कुंदकुंद (समयसार)",
       kn: "ಆಚಾರ್ಯ ಕುಂದಕುಂದ (ಸಮಯಸಾರ)"
-    }
+    },
+    image: "kundakunda.jpeg"
   },
   // 55
   {
@@ -714,7 +768,8 @@ export const quotes = [
       en: "Namokar Mantra",
       hi: "णमोकार मंत्र",
       kn: "ನಮೋಕಾರ ಮಂತ್ರ"
-    }
+    },
+    image: "namokar_mantra.jpeg"
   },
   // 56
   {
@@ -727,7 +782,8 @@ export const quotes = [
       en: "Jain Wisdom",
       hi: "जैन विज़्डम",
       kn: "ಜೈನ ವಿಸ್ಡಮ್"
-    }
+    },
+    image: "jain_wisdom_lamp.jpeg"
   },
   // 57
   {
@@ -740,7 +796,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_meditation.jpg"
   },
   // 58
   {
@@ -753,7 +810,8 @@ export const quotes = [
       en: "Acharya Manatunga (Bhaktamara Stotra)",
       hi: "आचार्य मानतुंग (भक्तामर स्तोत्र)",
       kn: "ಆಚಾರ್ಯ ಮಾನತುಂಗ (ಭಕ್ತಾಮರ ಸ್ತೋತ್ರ)"
-    }
+    },
+    image: "manatunga.jpeg"
   },
   // 59
   {
@@ -766,7 +824,8 @@ export const quotes = [
       en: "Muni Kshamasagar",
       hi: "मुनि क्षमासागर",
       kn: "ಮುನಿ ಕ್ಷಮಾಸಾಗರ"
-    }
+    },
+    image: "kshamasagar.jpeg"
   },
   // 60
   {
@@ -779,7 +838,8 @@ export const quotes = [
       en: "Uttaradhyayana Sutra",
       hi: "उत्तराध्ययन सूत्र",
       kn: "ಉತ್ತರಾಧ್ಯಯನ ಸೂತ್ರ"
-    }
+    },
+    image: "uttaradhyayana_lotus.jpeg"
   },
   // 61
   {
@@ -792,7 +852,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_compassion.jpeg"
   },
   // 62
   {
@@ -805,7 +866,8 @@ export const quotes = [
       en: "Acharya Siddhasena Divakara",
       hi: "आचार्य सिद्धसेन दिवाकर",
       kn: "ಆಚಾರ್ಯ ಸಿದ್ಧಸೇನ ದಿವಾಕರ"
-    }
+    },
+    image: "siddhasena_divakara.jpeg"
   },
   // 63
   {
@@ -818,7 +880,8 @@ export const quotes = [
       en: "Acharya Amritchandra",
       hi: "आचार्य अमृतचंद्र",
       kn: "ಆಚಾರ್ಯ ಅಮೃತಚಂದ್ರ"
-    }
+    },
+    image: "amritchandra.jpeg"
   },
   // 64
   {
@@ -831,7 +894,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_meditation.jpeg"
   },
   // 65
   {
@@ -844,7 +908,8 @@ export const quotes = [
       en: "Jain Wisdom",
       hi: "जैन विज़्डम",
       kn: "ಜೈನ ವಿಸ್ಡಮ್"
-    }
+    },
+    image: "jain_wisdom.jpeg"
   },
   // 66
   {
@@ -857,7 +922,8 @@ export const quotes = [
       en: "Dashavaikalika Sutra",
       hi: "दशवैकालिक सूत्र",
       kn: "ದಶವೈಕಾಲಿಕ ಸೂತ್ರ"
-    }
+    },
+    image: "dashavaikalika.jpeg"
   },
   // 67
   {
@@ -870,7 +936,8 @@ export const quotes = [
       en: "Acharya Kundakunda",
       hi: "आचार्य कुंदकुंद",
       kn: "ಆಚಾರ್ಯ ಕುಂದಕುಂದ"
-    }
+    },
+    image: "kundakunda.jpeg"
   },
   // 68
   {
@@ -882,8 +949,9 @@ export const quotes = [
     author: {
       en: "Acharya Shubhachandra (Gyanarnava)",
       hi: "आचार्य शुभचंद्र (ज्ञानार्णव)",
-      kn: "ಆಚಾರ್ಯ ಶುಭಚಂದ್ರ (ಜ್ಞಾನಾರ್ಣವ)"
-    }
+      kn: "ಆಚಾರ್ಯ शुभचंद्र (ಜ್ಞಾನಾರ್ಣವ)"
+    },
+    image: "shubhachandra.jpeg"
   },
   // 69
   {
@@ -896,7 +964,8 @@ export const quotes = [
       en: "Muni Tarunsagar",
       hi: "मुनि तरुणसागर",
       kn: "ಮುನಿ ತರುಣಸಾಗರ"
-    }
+    },
+    image: "tarunsagar.png"
   },
   // 70
   {
@@ -909,7 +978,8 @@ export const quotes = [
       en: "Acharya Vidyasagar",
       hi: "आचार्य विद्यासागर",
       kn: "ಆಚಾರ್ಯ ವಿದ್ಯಾಸಾಗರ"
-    }
+    },
+    image: "vidyasagar.png"
   },
   // 71
   {
@@ -922,7 +992,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_compassion.jpeg"
   },
   // 72
   {
@@ -935,7 +1006,8 @@ export const quotes = [
       en: "Samayasara",
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
-    }
+    },
+    image: "samayasara.jpeg"
   },
   // 73
   {
@@ -948,7 +1020,8 @@ export const quotes = [
       en: "Jain Wisdom",
       hi: "जैन विज़्डम",
       kn: "ಜೈನ ವಿಸ್ಡಮ್"
-    }
+    },
+    image: "jain_wisdom_lamp.jpeg"
   },
   // 74
   {
@@ -961,7 +1034,8 @@ export const quotes = [
       en: "Acharya Amitgati",
       hi: "आचार्य अमितगति",
       kn: "ಆಚಾರ್ಯ ಅಮಿತ್ಗತಿ"
-    }
+    },
+    image: "amitgati_ship.jpeg"
   },
   // 75
   {
@@ -974,7 +1048,8 @@ export const quotes = [
       en: "Jain Proverb",
       hi: "जैन कहावत",
       kn: "ಜೈನ ಗಾದೆ"
-    }
+    },
+    image: "jain_proverb_time.jpeg"
   },
   // 76
   {
@@ -987,7 +1062,8 @@ export const quotes = [
       en: "Bhagwan Rishabhdev",
       hi: "भगवान ऋषभदेव",
       kn: "ಭಗವಾನ್ ಋಷಭದೇವ"
-    }
+    },
+    image: "rishabhdev.jpeg"
   },
   // 77
   {
@@ -1000,7 +1076,8 @@ export const quotes = [
       en: "Tattvartha Sutra",
       hi: "तत्त्वार्थ सूत्र",
       kn: "ತತ್ತ್ವಾರ್ಥ ಸೂತ್ರ"
-    }
+    },
+    image: "tattvartha_sutra_wind.jpeg"
   },
   // 78
   {
@@ -1013,7 +1090,8 @@ export const quotes = [
       en: "Acharya Pujyapada",
       hi: "आचार्य पूज्यपाद",
       kn: "ಆಚಾರ್ಯ ಪೂಜ್ಯಪಾದ"
-    }
+    },
+    image: "pujyapada.jpeg"
   },
   // 79
   {
@@ -1026,7 +1104,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_compassion.jpeg"
   },
   // 80
   {
@@ -1039,7 +1118,8 @@ export const quotes = [
       en: "Acharya Kundakunda (Niyamasara)",
       hi: "आचार्य कुंदकुंद (नियमसार)",
       kn: "ಆಚಾರ್ಯ ಕುಂದಕುಂದ (ನಿಯಮಸಾರ)"
-    }
+    },
+    image: "kundakunda.jpeg"
   },
   // 81
   {
@@ -1052,7 +1132,8 @@ export const quotes = [
       en: "Acharya Shantisagar",
       hi: "आचार्य शांतिसागर",
       kn: "ಆಚಾರ್ಯ ಶಾಂತಿಸಾಗರ"
-    }
+    },
+    image: "shantisagar.png"
   },
   // 82
   {
@@ -1065,7 +1146,8 @@ export const quotes = [
       en: "Acharya Amritchandra (Purushartha Siddhyupaya)",
       hi: "आचार्य अमृतचंद्र (पुरुषार्थ सिद्धयुपाय)",
       kn: "ಆಚಾರ್ಯ ಅಮೃತಚಂದ್ರ (ಪುರುಷಾರ್ಥ ಸಿದ್ಧ್ಯುಪಾಯ)"
-    }
+    },
+    image: "amritchandra.jpeg"
   },
   // 83
   {
@@ -1078,7 +1160,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_meditation.jpeg"
   },
   // 84
   {
@@ -1091,7 +1174,8 @@ export const quotes = [
       en: "Jain Proverb",
       hi: "जैन कहावत",
       kn: "ಜೈನ ಗಾದೆ"
-    }
+    },
+    image: "jain_proverb_simplicity.jpeg"
   },
   // 85
   {
@@ -1104,7 +1188,8 @@ export const quotes = [
       en: "Acharya Gunabhadra (Atmanushasana)",
       hi: "आचार्य गुणभद्र (आत्मानुशासन)",
       kn: "ಆಚಾರ್ಯ ಗುಣಭದ್ರ (ಆತ್ಮಾನುಶಾಸನ)"
-    }
+    },
+    image: "gunabhadra.jpeg"
   },
   // 86
   {
@@ -1117,7 +1202,8 @@ export const quotes = [
       en: "Acharya Kundakunda",
       hi: "आचार्य कुंदकुंद",
       kn: "ಆಚಾರ್ಯ ಕುಂದಕುಂದ"
-    }
+    },
+    image: "kundakunda.jpeg"
   },
   // 87
   {
@@ -1130,7 +1216,8 @@ export const quotes = [
       en: "Tattvartha Sutra",
       hi: "तत्त्वार्थ सूत्र",
       kn: "ತತ್ತ್ವಾರ್ಥ ಸೂತ್ರ"
-    }
+    },
+    image: "tattvartha_sutra_cosmos.jpeg"
   },
   // 88
   {
@@ -1143,7 +1230,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_meditation.jpeg"
   },
   // 89
   {
@@ -1156,7 +1244,8 @@ export const quotes = [
       en: "Acharya Jinasena",
       hi: "आचार्य जिनसेन",
       kn: "ಆಚಾರ್ಯ ಜಿನಸೇನ"
-    }
+    },
+    image: "jinasena.jpeg"
   },
   // 90
   {
@@ -1169,7 +1258,8 @@ export const quotes = [
       en: "Muni Sudhasagar",
       hi: "मुनि सुधासागर",
       kn: "ಮುನಿ ಸುಧಾಸಾಗರ"
-    }
+    },
+    image: "sudhasagar.png"
   },
   // 91
   {
@@ -1182,7 +1272,8 @@ export const quotes = [
       en: "Acharya Vidyasagar",
       hi: "आचार्य विद्यासागर",
       kn: "ಆಚಾರ್ಯ ವಿದ್ಯಾಸಾಗರ"
-    }
+    },
+    image: "vidyasagar.png"
   },
   // 92
   {
@@ -1195,7 +1286,8 @@ export const quotes = [
       en: "Acharya Jinasena (Mahapurana)",
       hi: "आचार्य जिनसेन (महापुराण)",
       kn: "ಆಚಾರ್ಯ ಜಿನಸೇನ (ಮಹಾಪುರಾಣ)"
-    }
+    },
+    image: "jinasena.jpeg"
   },
   // 93
   {
@@ -1208,20 +1300,22 @@ export const quotes = [
       en: "Samayasara",
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
-    }
+    },
+    image: "samayasara.jpeg"
   },
   // 94
   {
     text: {
-      en: "Dharma is not in temples, but in conduct.",
-      hi: "धर्म मंदिरों से पहले आचरण में है।",
-      kn: "ಧರ್ಮವು ದೇವಾಲಯಗಳಿಗಿಂತ ಮೊದಲು ಆಚರಣೆಯಲ್ಲಿದೆ."
+      en: "Dharma is in conduct, not in show-off.",
+      hi: "धर्म आचरण में होता है, दिखावे में नहीं।",
+      kn: "ಧರ್ಮವು ಆಚರಣೆಯಲ್ಲಿದೆ, ಪ್ರದರ್ಶನದಲ್ಲಲ್ಲ."
     },
     author: {
       en: "Jain Wisdom",
       hi: "जैन विज़्डम",
       kn: "ಜೈನ ವಿಸ್ಡಮ್"
-    }
+    },
+    image: "jain_wisdom.jpeg"
   },
   // 95
   {
@@ -1234,7 +1328,8 @@ export const quotes = [
       en: "Acharya Pujyapada",
       hi: "आचार्य पूज्यपाद",
       kn: "ಆಚಾರ್ಯ ಪೂಜ್ಯಪಾದ"
-    }
+    },
+    image: "pujyapada.jpeg"
   },
   // 96
   {
@@ -1247,7 +1342,8 @@ export const quotes = [
       en: "Jain Metaphor",
       hi: "जैन रूपक",
       kn: "ಜೈನ ರೂಪಕ"
-    }
+    },
+    image: "jain_metaphor_flower.jpeg"
   },
   // 97
   {
@@ -1260,7 +1356,8 @@ export const quotes = [
       en: "Muni Tarunsagar",
       hi: "मुनि तरुणसागर",
       kn: "ಮುನಿ ತರುಣಸಾಗರ"
-    }
+    },
+    image: "tarunsagar.png"
   },
   // 98
   {
@@ -1273,7 +1370,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer_meditation.jpeg"
   },
   // 99
   {
@@ -1286,7 +1384,8 @@ export const quotes = [
       en: "Uttaradhyayana Sutra",
       hi: "उत्तराध्ययन सूत्र",
       kn: "ಉತ್ತರಾಧ್ಯಯನ ಸೂತ್ರ"
-    }
+    },
+    image: "uttaradhyayana.jpeg"
   },
   // 100
   {
@@ -1299,7 +1398,8 @@ export const quotes = [
       en: "Bhagwan Mahavira (Last Teaching)",
       hi: "भगवान महावीर (अंतिम उपदेश)",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ (ಅಂತಿಮ ಉಪದೇಶ)"
-    }
+    },
+    image: "mahaveer_appa_divo_bhava.jpeg"
   },
   // 101
   {
@@ -1312,7 +1412,8 @@ export const quotes = [
       en: "Bhagwan Rishabhdev (To Bharat)",
       hi: "भगवान ऋषभदेव (भरत से)",
       kn: "ಭಗವಾನ್ ಋಷಭದೇವ (ಭರತನಿಗೆ)"
-    }
+    },
+    image: "rishabhdev.jpeg"
   },
   // 102
   {
@@ -1322,12 +1423,13 @@ export const quotes = [
       kn: "ನಾನು ಆರು ಖಂಡಗಳನ್ನು ಗೆದ್ದೆ, ಆದರೂ ನನ್ನ ಸ್ವಂತ ಸಹೋದರನ ಹೃದಯವನ್ನು ಗೆಲ್ಲಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲವೇ?"
     },
     author: {
-      en: "Chakravarti Bharat (Lamenting during war)",
-      hi: "चक्रवर्ती भरत (युद्ध के दौरान विलाप)",
+      en: "Chakravarti Bharat",
+      hi: "चक्रवर्ती भरत",
       kn: "ಚಕ್ರವರ್ತಿ ಭರತ"
-    }
+    },
+    image: "bharat_king.jpeg"
   },
-  //103
+  // 103
   {
     text: {
       en: "I am standing on the elephant of pride. How can I bow to my younger brothers?",
@@ -1338,7 +1440,8 @@ export const quotes = [
       en: "Bahubali (Before Kevalgyan)",
       hi: "बाहुबली (केवलज्ञान से पूर्व)",
       kn: "ಬಾಹುಬಲಿ (ಕೇವಲಜ್ಞಾನಕ್ಕಿಂತ ಮೊದಲು)"
-    }
+    },
+    image: "bahubali_pride.jpeg"
   },
   // 104
   {
@@ -1351,7 +1454,8 @@ export const quotes = [
       en: "Brahmi & Sundari (To Bahubali)",
       hi: "ब्राह्मी और सुंदरी (बाहुबली से)",
       kn: "ಬ್ರಾಹ್ಮಿ ಮತ್ತು ಸುಂದರಿ"
-    }
+    },
+    image: "brahmi_sundari.jpeg"
   },
   // 105
   {
@@ -1364,7 +1468,8 @@ export const quotes = [
       en: "Chakravarti Bharat",
       hi: "चक्रवर्ती भरत",
       kn: "ಚಕ್ರವರ್ತಿ ಭರತ"
-    }
+    },
+    image: "chakra.jpeg"
   },
   // 106
   {
@@ -1377,7 +1482,8 @@ export const quotes = [
       en: "Bahubali (Renouncing the kingdom)",
       hi: "बाहुबली (राज्य त्यागते समय)",
       kn: "ಬಾಹುಬಲಿ (ರಾಜ್ಯವನ್ನು ತ್ಯಜಿಸುವಾಗ)"
-    }
+    },
+    image: "bahubali_meditation.png"
   },
   // 107
   {
@@ -1390,7 +1496,8 @@ export const quotes = [
       en: "Bhagwan Rishabhdev",
       hi: "भगवान ऋषभदेव",
       kn: "ಭಗವಾನ್ ಋಷಭದೇವ"
-    }
+    },
+    image: "rishabhdev.jpeg"
   },
   // 108
   {
@@ -1403,10 +1510,9 @@ export const quotes = [
       en: "Brahmi (To Rishabhdev)",
       hi: "ब्राह्मी (ऋषभदेव से)",
       kn: "ಬ್ರಾಹ್ಮಿ (ಋಷಭದೇವರಿಗೆ)"
-    }
+    },
+    image: "brahmi.jpeg"
   },
-
-  // --- JAIN RAMAYANA (PADMA PURANA) ---
   // 109
   {
     text: {
@@ -1418,7 +1524,8 @@ export const quotes = [
       en: "Padma (Lord Ram)",
       hi: "पद्म (श्री रामचंद्र)",
       kn: "ಪದ್ಮ (ಶ್ರೀ ರಾಮಚಂದ್ರ)"
-    }
+    },
+    image: "ram.jpeg"
   },
   // 110
   {
@@ -1431,7 +1538,8 @@ export const quotes = [
       en: "Hanuman (Padmapurana)",
       hi: "हनुमान (पद्मपुराण )",
       kn: "ಹನುಮಂತ (ಪದ್ಮಪುರಾಣ)"
-    }
+    },
+    image: "hanuman.jpeg"
   },
   // 111
   {
@@ -1444,7 +1552,8 @@ export const quotes = [
       en: "Sita (During Agni Pariksha)",
       hi: "सीता (अग्नि परीक्षा के समय)",
       kn: "ಸೀತಾ (ಅಗ್ನಿ ಪರೀಕ್ಷೆಯ ಸಮಯದಲ್ಲಿ)"
-    }
+    },
+    image: "sita_agni.jpeg"
   },
   // 112
   {
@@ -1457,7 +1566,8 @@ export const quotes = [
       en: "Bibheeshan (Vibhishana)",
       hi: "बिभीषण (विभीषण)",
       kn: "ಬಿಭೀಷಣ (ವಿಭೀಷಣ)"
-    }
+    },
+    image: "bibheeshan.jpeg"
   },
   // 113
   {
@@ -1470,7 +1580,8 @@ export const quotes = [
       en: "Ravana",
       hi: "रावण",
       kn: "ರಾವಣ"
-    }
+    },
+    image: "ravana_devotion.jpeg"
   },
   // 114
   {
@@ -1483,7 +1594,8 @@ export const quotes = [
       en: "Hanuman",
       hi: "हनुमान",
       kn: "ಹನುಮಂತ"
-    }
+    },
+    image: "hanuman_ocean.jpeg"
   },
   // 115
   {
@@ -1496,7 +1608,8 @@ export const quotes = [
       en: "Sita",
       hi: "सीता",
       kn: "ಸೀತಾ ಮಾತೆ"
-    }
+    },
+    image: "sita.jpeg"
   },
   // 116
   {
@@ -1509,9 +1622,10 @@ export const quotes = [
       en: "Lord Ram",
       hi: "श्री रामचंद्र राम",
       kn: "ಶ್ರೀ ರಾಮಚಂದ್ರ"
-    }
+    },
+    image: "ram.jpeg"
   },
-  // 118
+  // 118 (Note: Input skipped 117, keeping sequence)
   {
     text: {
       en: "I have carried the burden of this body for too long. Now I shall carry the burden of vows.",
@@ -1522,7 +1636,8 @@ export const quotes = [
       en: "Dasharatha",
       hi: "दशरथ",
       kn: "ದಶರಥ"
-    }
+    },
+    image: "dasharatha_renunciation.jpeg"
   },
   // 119
   {
@@ -1535,10 +1650,9 @@ export const quotes = [
       en: "Kumbhakarna",
       hi: "कुंभकर्ण",
       kn: "ಕುಂಭಕರ್ಣ"
-    }
+    },
+    image: "kumbhakarna.jpeg"
   },
-
-  // --- MAHAVIRA & SHRENIK ERA ---
   // 120
   {
     text: {
@@ -1550,7 +1664,8 @@ export const quotes = [
       en: "King Shrenik (To Mahavira)",
       hi: "राजा श्रेणिक (महावीर से)",
       kn: "ರಾಜ ಶ್ರೇಣಿಕ"
-    }
+    },
+    image: "shrenik_mahaveer.jpeg"
   },
   // 121
   {
@@ -1563,7 +1678,8 @@ export const quotes = [
       en: "Gautam Gandhar",
       hi: "गौतम गणधर",
       kn: "ಗೌತಮ ಗಣಧರ"
-    }
+    },
+    image: "gautam_gandhar.jpeg"
   },
   // 122
   {
@@ -1576,7 +1692,8 @@ export const quotes = [
       en: "Chandanbala",
       hi: "चंदनबाला",
       kn: "ಚಂದನಬಾಲಾ"
-    }
+    },
+    image: "chandanbala.jpeg"
   },
   // 123
   {
@@ -1589,7 +1706,8 @@ export const quotes = [
       en: "Anathimuni",
       hi: "अनाथिमुनि",
       kn: "ಅನಾಥಿಮುನಿ"
-    }
+    },
+    image: "anathimuni.jpeg"
   },
   // 124
   {
@@ -1602,7 +1720,8 @@ export const quotes = [
       en: "Anathimuni",
       hi: "अनाथिमुनि",
       kn: "ಅನಾಥಿಮುನಿ"
-    }
+    },
+    image: "anathimuni.jpeg"
   },
   // 125
   {
@@ -1615,7 +1734,8 @@ export const quotes = [
       en: "King Shrenik (Bimbisara)",
       hi: "राजा श्रेणिक (बिंबिसार)",
       kn: "ರಾಜ ಶ್ರೇಣಿಕ (ಬಿಂಬಿಸಾರ)"
-    }
+    },
+    image: "shrenik.jpeg"
   },
   // 126
   {
@@ -1628,10 +1748,9 @@ export const quotes = [
       en: "Kunik (Ajatashatru)",
       hi: "कुणिक (अजातशत्रु)",
       kn: "ಕುಣಿಕ (ಅಜಾತಶತ್ರು)"
-    }
+    },
+    image: "kunik.jpeg"
   },
-
-  // --- FAMOUS KINGS & LEADERS ---
   // 127
   {
     text: {
@@ -1643,7 +1762,8 @@ export const quotes = [
       en: "Emperor Kharavela (Hathigumpha Inscription)",
       hi: "सम्राट खारवेल (हाथीगुम्फा अभिलेख)",
       kn: "ಚಕ್ರವರ್ತಿ ಖಾರವೇಲ (ಹಾಥಿಗುಂಫಾ ಶಾಸನ)"
-    }
+    },
+    image: "kharavela.jpeg"
   },
   // 128
   {
@@ -1656,7 +1776,8 @@ export const quotes = [
       en: "Chamundaraya",
       hi: "चामुंडराय",
       kn: "ಚಾಮುಂಡರಾಯ"
-    }
+    },
+    image: "chamundaraya.jpeg"
   },
   // 129
   {
@@ -1669,7 +1790,8 @@ export const quotes = [
       en: "Chandragupta Maurya",
       hi: "चंद्रगुप्त मौर्य",
       kn: "ಚಂದ್ರಗುಪ್ತ ಮೌರ್ಯ"
-    }
+    },
+    image: "chandragupta.jpeg"
   },
   // 130
   {
@@ -1682,7 +1804,8 @@ export const quotes = [
       en: "Chandragupta Maurya",
       hi: "चंद्रगुप्त मौर्य",
       kn: "ಚಂದ್ರಗುಪ್ತ ಮೌರ್ಯ"
-    }
+    },
+    image: "chandragupta.jpeg"
   },
   // 131
   {
@@ -1695,7 +1818,8 @@ export const quotes = [
       en: "Chamundaraya",
       hi: "चामुंडराय",
       kn: "ಚಾಮುಂಡರಾಯ"
-    }
+    },
+    image: "chamundaraya.jpeg"
   },
   // 132
   {
@@ -1708,7 +1832,8 @@ export const quotes = [
       en: "Shilpa (Sculptor of Gommateshwara - Legend)",
       hi: "शिल्पकार (गोमतेश्वर का)",
       kn: "ಶಿಲ್ಪಿ (ಗೊಮ್ಮಟೇಶ್ವರ)"
-    }
+    },
+    image: "shilpa.jpeg"
   },
   // 133
   {
@@ -1721,10 +1846,9 @@ export const quotes = [
       en: "Amoghavarsha (Rashtrakuta King)",
       hi: "अमोघवर्ष (राष्ट्रकूट राजा)",
       kn: "ಅಮೋಘವರ್ಷ (ರಾಷ್ಟ್ರಕೂಟ ರಾಜ)"
-    }
+    },
+    image: "amoghavarsha.jpeg"
   },
-
-  // --- FAMOUS LINES FROM AAGAMS (NARRATIVE) ---
   // 134
   {
     text: {
@@ -1736,7 +1860,8 @@ export const quotes = [
       en: "Acharya Jinasena (Mahapurana - Famous Verse)",
       hi: "आचार्य जिनसेन (महापुराण)",
       kn: "ಆಚಾರ್ಯ ಜಿನಸೇನ (ಮಹಾಪುರಾಣ)"
-    }
+    },
+    image: "jinasena.jpeg"
   },
   // 135
   {
@@ -1749,7 +1874,8 @@ export const quotes = [
       en: "Acharya Jinasena (Mahapurana)",
       hi: "आचार्य जिनसेन (महापुराण)",
       kn: "ಆಚಾರ್ಯ ಜಿನಸೇನ (ಮಹಾಪುರಾಣ)"
-    }
+    },
+    image: "jinasena.jpeg"
   },
   // 136
   {
@@ -1762,7 +1888,8 @@ export const quotes = [
       en: "Adipurana",
       hi: "आदिपुराण",
       kn: "ಆದಿಪುರಾಣ"
-    }
+    },
+    image: "adipurana.jpeg"
   },
   // 137
   {
@@ -1775,7 +1902,8 @@ export const quotes = [
       en: "Jain Scripture",
       hi: "जैन शास्त्र",
       kn: "ಜೈನ ಶಾಸ್ತ್ರ"
-    }
+    },
+    image: "jain_scripture.jpeg"
   },
   // 138
   {
@@ -1788,7 +1916,8 @@ export const quotes = [
       en: "Padmapurana",
       hi: "पद्मपुराण",
       kn: "ಪದ್ಮಪುರಾಣ"
-    }
+    },
+    image: "padmapurana.jpeg"
   },
   // 139
   {
@@ -1801,7 +1930,8 @@ export const quotes = [
       en: "Acharya Pujyapada (Ishtopadesha)",
       hi: "आचार्य पूज्यपाद (इष्टोपदेश)",
       kn: "ಆಚಾರ್ಯ ಪೂಜ್ಯಪಾದ (ಇಷ್ಟೋಪದೇಶ)"
-    }
+    },
+    image: "pujyapada.jpeg"
   },
   // 140
   {
@@ -1814,7 +1944,8 @@ export const quotes = [
       en: "Ratnakaranda Shravakachara",
       hi: "रत्नकरंड श्रावकाचार",
       kn: "ರತ್ನಕರಂಡ ಶ್ರಾವಕಾಚಾರ"
-    }
+    },
+    image: "ratnakaranda_shravakachara.jpeg"
   },
   // 141
   {
@@ -1827,7 +1958,8 @@ export const quotes = [
       en: "Pandit Todarmal",
       hi: "पंडित टोडरमल",
       kn: "ಪಂಡಿತ್ ತೋಡರಮಲ್ಲ"
-    }
+    },
+    image: "todarmal.jpeg"
   },
   // 142
   {
@@ -1840,7 +1972,8 @@ export const quotes = [
       en: "Niyamasara",
       hi: "नियमसार",
       kn: "ನಿಯಮಸಾರ"
-    }
+    },
+    image: "niyamasara.jpeg"
   },
   // 143
   {
@@ -1853,7 +1986,8 @@ export const quotes = [
       en: "Samayasara",
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
-    }
+    },
+    image: "samayasara.jpeg"
   },
   // 144
   {
@@ -1866,7 +2000,8 @@ export const quotes = [
       en: "Yogasara",
       hi: "योगसार",
       kn: "ಯೋಗಸಾರ"
-    }
+    },
+    image: "yogasara.jpeg"
   },
   // 145
   {
@@ -1879,7 +2014,8 @@ export const quotes = [
       en: "Sarvarthasiddhi",
       hi: "सर्वार्थसिद्धि",
       kn: "ಸರ್ವಾರ್ಥಸಿದ್ಧಿ"
-    }
+    },
+    image: "sarvarthasiddhi.jpeg"
   },
   // 146
   {
@@ -1892,7 +2028,8 @@ export const quotes = [
       en: "Jain Proverb",
       hi: "जैन कहावत",
       kn: "ಜೈನ ಗಾದೆ"
-    }
+    },
+    image: "jain_proverb.jpeg"
   },
   // 147
   {
@@ -1905,7 +2042,8 @@ export const quotes = [
       en: "Upadesha",
       hi: "उपदेश",
       kn: "ಉಪದೇಶ"
-    }
+    },
+    image: "upadesha.jpeg"
   },
   // 148
   {
@@ -1918,7 +2056,8 @@ export const quotes = [
       en: "Adipurana",
       hi: "आदिपुराण",
       kn: "ಆದಿಪುರಾಣ"
-    }
+    },
+    image: "adipurana.jpeg"
   },
   // 149
   {
@@ -1931,7 +2070,8 @@ export const quotes = [
       en: "Acharanga Sutra",
       hi: "आचारांग सूत्र",
       kn: "ಆಚಾರಾಂಗ ಸೂತ್ರ"
-    }
+    },
+    image: "acharanga.jpeg"
   },
   // 150
   {
@@ -1944,7 +2084,8 @@ export const quotes = [
       en: "Uttaradhyayana Sutra",
       hi: "उत्तराध्ययन सूत्र",
       kn: "ಉತ್ತರಾಧ್ಯಯನ ಸೂತ್ರ"
-    }
+    },
+    image: "uttaradhyayana.jpeg"
   },
   // 151
   {
@@ -1957,7 +2098,8 @@ export const quotes = [
       en: "Bhagwan Neminath",
       hi: "भगवान नेमिनाथ",
       kn: "ಭಗವಾನ್ ನೇಮಿನಾಥ"
-    }
+    },
+    image: "neminath.jpeg"
   },
   // 152
   {
@@ -1970,7 +2112,8 @@ export const quotes = [
       en: "Bhagwan Neminath",
       hi: "भगवान नेमिनाथ",
       kn: "ಭಗವಾನ್ ನೇಮಿನಾಥ"
-    }
+    },
+    image: "neminath.jpeg"
   },
   // 153
   {
@@ -1983,7 +2126,8 @@ export const quotes = [
       en: "Sati Rajul",
       hi: "सती राजुल",
       kn: "ಸತಿ ರಾಜುಲ್"
-    }
+    },
+    image: "rajul.jpeg"
   },
   // 154
   {
@@ -1996,7 +2140,8 @@ export const quotes = [
       en: "Sita (Agni Pariksha)",
       hi: "सीता (अग्नि परीक्षा)",
       kn: "ಸೀತಾ ಮಾತೆ (ಅಗ್ನಿ ಪರೀಕ್ಷೆ)"
-    }
+    },
+    image: "sita.jpeg"
   },
   // 155
   {
@@ -2009,7 +2154,8 @@ export const quotes = [
       en: "Bhagwan Parshvanath",
       hi: "भगवान पार्श्वनाथ",
       kn: "ಭಗವಾನ್ ಪಾರ್ಶ್ವನಾಥ"
-    }
+    },
+    image: "parshvanath.jpeg"
   },
   // 156
   {
@@ -2022,7 +2168,8 @@ export const quotes = [
       en: "Yudhishthira (Pandavapurana)",
       hi: "युधिष्ठिर (पांडवपुराण)",
       kn: "ಯುಧಿಷ್ಠಿರ (ಪಾಂಡವಪುರಾಣ)"
-    }
+    },
+    image: "yudhishthira.jpeg"
   },
   // 157
   {
@@ -2035,7 +2182,8 @@ export const quotes = [
       en: "Draupadi",
       hi: "द्रौपदी",
       kn: "ದ್ರೌಪದಿ"
-    }
+    },
+    image: "draupadi.jpeg"
   },
   // 158
   {
@@ -2048,7 +2196,8 @@ export const quotes = [
       en: "Queen Trishala",
       hi: "माता त्रिशला",
       kn: "ತಾಯಿ ತ್ರಿಶಲಾ"
-    }
+    },
+    image: "trishala.jpeg"
   },
   // 159
   {
@@ -2061,7 +2210,8 @@ export const quotes = [
       en: "Sukumal Swami",
       hi: "सुकुमाल स्वामी",
       kn: "ಸುಕುಮಾಲ ಸ್ವಾಮಿ"
-    }
+    },
+    image: "sukumal_swami.jpeg"
   },
   // 160
   {
@@ -2074,10 +2224,9 @@ export const quotes = [
       en: "Kaushal Muni",
       hi: "कौशल मुनि",
       kn: "ಕೌಶಲ ಮುನಿ"
-    }
+    },
+    image: "kaushal_muni.jpeg"
   },
-
-  // --- GREAT ACHARYAS & HISTORICAL FIGURES ---
   // 161
   {
     text: {
@@ -2089,7 +2238,8 @@ export const quotes = [
       en: "Acharya Samantabhadra",
       hi: "आचार्य समंतभद्र",
       kn: "ಆಚಾರ್ಯ ಸಮಂತಭದ್ರ"
-    }
+    },
+    image: "samantabhadra.jpeg"
   },
   // 162
   {
@@ -2102,7 +2252,8 @@ export const quotes = [
       en: "Acharya Akalanka",
       hi: "आचार्य अकलंक देव",
       kn: "ಆಚಾರ್ಯ ಅಕಲಂಕ ದೇವ"
-    }
+    },
+    image: "akalanka.jpeg"
   },
   // 163
   {
@@ -2115,7 +2266,8 @@ export const quotes = [
       en: "Acharya Manatunga",
       hi: "आचार्य मानतुंग",
       kn: "ಆಚಾರ್ಯ ಮಾನತುಂಗ"
-    }
+    },
+    image: "manatunga.jpeg"
   },
   // 164
   {
@@ -2128,7 +2280,8 @@ export const quotes = [
       en: "Acharya Manatunga (Bhaktamara Legend)",
       hi: "आचार्य मानतुंग",
       kn: "ಆಚಾರ್ಯ ಮಾನತುಂಗ"
-    }
+    },
+    image: "manatunga.jpeg"
   },
   // 165
   {
@@ -2140,8 +2293,9 @@ export const quotes = [
     author: {
       en: "Pandit Todarmal",
       hi: "पंडित टोडरमल",
-      kn: "ಪಂಡಿತ್ ತೋಡರಮಲ್ಲ"
-    }
+      kn: "पंडित ತೋಡರಮಲ್ಲ"
+    },
+    image: "todarmal.jpeg"
   },
   // 166
   {
@@ -2154,7 +2308,8 @@ export const quotes = [
       en: "Acharya Virasena (Dhavala Tika)",
       hi: "आचार्य वीरसेन (धवला टीका)",
       kn: "ಆಚಾರ್ಯ ವೀರಸೇನ (ಧವಲಾ ಟೀಕಾ)"
-    }
+    },
+    image: "virasena.jpeg"
   },
   // 167
   {
@@ -2167,7 +2322,8 @@ export const quotes = [
       en: "Attimabbe (Dana Chintamani)",
       hi: "अत्तिमाब्बे (दान चिंतामणि)",
       kn: "ಅತ್ತಿಮಬ್ಬೆ (ದಾನ ಚಿಂತಾಮಣಿ)"
-    }
+    },
+    image: "attimabbe.jpeg"
   },
   // 168
   {
@@ -2180,7 +2336,8 @@ export const quotes = [
       en: "King Vishnuvardhana (Hoysala Dynasty)",
       hi: "राजा विष्णुवर्धन (होयसल राजवंश)",
       kn: "ರಾಜ ವಿಷ್ಣುವರ್ಧನ (ಹೊಯ್ಸಳ ರಾಜವಂಶ)"
-    }
+    },
+    image: "vishnuvardhana.jpeg"
   },
   // 169
   {
@@ -2193,7 +2350,8 @@ export const quotes = [
       en: "Queen Shantala Devi",
       hi: "रानी शांतला देवी",
       kn: "ರಾಣಿ ಶಾಂತಲಾ ದೇವಿ"
-    }
+    },
+    image: "shantala.jpeg"
   },
   // 170
   {
@@ -2206,10 +2364,9 @@ export const quotes = [
       en: "King Amoghavarsha",
       hi: "राजा अमोघवर्ष",
       kn: "ರಾಜ ಅಮೋಘವರ್ಷ"
-    }
+    },
+    image: "amoghavarsha.jpeg"
   },
-
-  // --- MODERN SAINTS (SHANTISAGAR JI to PRESENT) ---
   // 171
   {
     text: {
@@ -2221,7 +2378,8 @@ export const quotes = [
       en: "Acharya Shantisagar",
       hi: "आचार्य शांतिसागर",
       kn: "ಆಚಾರ್ಯ ಶಾಂತಿಸಾಗರ"
-    }
+    },
+    image: "shantisagar.png"
   },
   // 172
   {
@@ -2234,7 +2392,8 @@ export const quotes = [
       en: "Acharya Shantisagar",
       hi: "आचार्य शांतिसागर",
       kn: "ಆಚಾರ್ಯ ಶಾಂತಿಸಾಗರ"
-    }
+    },
+    image: "shantisagar.png"
   },
   // 173
   {
@@ -2247,7 +2406,8 @@ export const quotes = [
       en: "Acharya Vidyasagar",
       hi: "आचार्य विद्यासागर",
       kn: "ಆಚಾರ್ಯ ವಿದ್ಯಾಸಾಗರ"
-    }
+    },
+    image: "vidyasagar.png"
   },
   // 174
   {
@@ -2260,7 +2420,8 @@ export const quotes = [
       en: "Acharya Vidyasagar (Mook Maati)",
       hi: "आचार्य विद्यासागर (मूक माटी)",
       kn: "ಆಚಾರ್ಯ ವಿದ್ಯಾಸಾಗರ (ಮೂಕ ಮಾಟಿ)"
-    }
+    },
+    image: "vidyasagar.png"
   },
   // 175
   {
@@ -2273,7 +2434,8 @@ export const quotes = [
       en: "Acharya Vidyasagar",
       hi: "आचार्य विद्यासागर",
       kn: "ಆಚಾರ್ಯ ವಿದ್ಯಾಸಾಗರ"
-    }
+    },
+    image: "vidyasagar.png"
   },
   // 176
   {
@@ -2286,7 +2448,8 @@ export const quotes = [
       en: "Ganini Aryika Gyanmati Mataji",
       hi: "गणिनी आर्यिका ज्ञानमती माताजी",
       kn: "ಗಣಿನಿ ಆರ್ಯಿಕಾ ಜ್ಞಾನಮತಿ ಮಾತಾಜಿ"
-    }
+    },
+    image: "gyanmati_mataji.jpeg"
   },
   // 177
   {
@@ -2299,7 +2462,8 @@ export const quotes = [
       en: "Ganini Aryika Suyogyanandini Mataji",
       hi: "गणिनी आर्यिका सुयोग्यनंदिनी माताजी",
       kn: "ಗಣಿನಿ ಆರ್ಯಿಕಾ ಸುಯೋಗ್ಯನಂದಿನಿ ಮಾತಾಜಿ"
-    }
+    },
+    image: "suyogyanandini_mataji.jpeg"
   },
   // 178
   {
@@ -2312,7 +2476,8 @@ export const quotes = [
       en: "Ganini Aryika Suyogyanandini Mataji",
       hi: "गणिनी आर्यिका सुयोग्यनंदिनी माताजी",
       kn: "ಗಣಿನಿ ಆರ್ಯಿಕಾ ಸುಯೋಗ್ಯನಂದಿನಿ ಮಾತಾಜಿ"
-    }
+    },
+    image: "suyogyanandini_mataji.jpeg"
   },
   // 179
   {
@@ -2325,7 +2490,8 @@ export const quotes = [
       en: "Acharya Vidyasagar",
       hi: "आचार्य विद्यासागर",
       kn: "ಆಚಾರ್ಯ ವಿದ್ಯಾಸಾಗರ"
-    }
+    },
+    image: "vidyasagar.png"
   },
   // 180
   {
@@ -2338,10 +2504,9 @@ export const quotes = [
       en: "Acharya Vimalsagar",
       hi: "आचार्य विमलसागर",
       kn: "ಆಚಾರ್ಯ ವಿಮಲಸಾಗರ"
-    }
+    },
+    image: "vimalsagar.jpeg"
   },
-
-  // --- MISC FAMOUS LINES ---
   // 181
   {
     text: {
@@ -2353,7 +2518,8 @@ export const quotes = [
       en: "Jivandhar Kumar",
       hi: "जीवंधर कुमार",
       kn: "ಜೀವಂಧರ ಕುಮಾರ"
-    }
+    },
+    image: "jivandhar_kumar.jpeg"
   },
   // 182
   {
@@ -2366,7 +2532,8 @@ export const quotes = [
       en: "Raja Harishchandra",
       hi: "राजा हरिश्चंद्र",
       kn: "ರಾಜ ಹರಿಶ್ಚಂದ್ರ"
-    }
+    },
+    image: "harishchandra.jpeg"
   },
   // 183
   {
@@ -2379,7 +2546,8 @@ export const quotes = [
       en: "Jnanarnava",
       hi: "ज्ञानार्णव",
       kn: "ಜ್ಞಾನಾರ್ಣವ"
-    }
+    },
+    image: "jnanarnava.jpeg"
   },
   // 184
   {
@@ -2392,7 +2560,8 @@ export const quotes = [
       en: "Dhavala",
       hi: "धवला",
       kn: "ಧವಲಾ"
-    }
+    },
+    image: "dhavala.jpeg"
   },
   // 185
   {
@@ -2405,7 +2574,8 @@ export const quotes = [
       en: "Ratnakaranda Shravakachara",
       hi: "रत्नकरंड श्रावकाचार",
       kn: "ರತ್ನಕರಂಡ ಶ್ರಾವಕಾಚಾರ"
-    }
+    },
+    image: "ratnakaranda_shravakachara.jpeg"
   },
   // 186
   {
@@ -2418,7 +2588,8 @@ export const quotes = [
       en: "Ahimsavani",
       hi: "अहिंसावाणी",
       kn: "ಅಹಿಂಸಾವಾಣಿ"
-    }
+    },
+    image: "ahimsavani.jpeg"
   },
   // 187
   {
@@ -2431,7 +2602,8 @@ export const quotes = [
       en: "Digambar Tradition",
       hi: "दिगंबर परंपरा",
       kn: "ದಿಗಂಬರ ಪರಂಪರೆ"
-    }
+    },
+    image: "digambar_tradition.jpeg"
   },
   // 188
   {
@@ -2444,7 +2616,8 @@ export const quotes = [
       en: "Sallekhana Vow Prayer",
       hi: "सल्लेखना पाठ",
       kn: "ಸಲ್ಲೇಖನ ಪಾಠ"
-    }
+    },
+    image: "sallekhana.jpeg"
   },
   // 189
   {
@@ -2457,7 +2630,8 @@ export const quotes = [
       en: "Muni Tradition",
       hi: "मुनि परंपरा",
       kn: "ಮುನಿ ಪರಂಪರೆ"
-    }
+    },
+    image: "muni_tradition.jpeg"
   },
   // 190
   {
@@ -2470,7 +2644,8 @@ export const quotes = [
       en: "Acharya Vidyasagar",
       hi: "आचार्य विद्यासागर",
       kn: "ಆಚಾರ್ಯ ವಿದ್ಯಾಸಾಗರ"
-    }
+    },
+    image: "vidyasagar.png"
   },
   // 191
   {
@@ -2482,8 +2657,9 @@ export const quotes = [
     author: {
       en: "Muni Sudhasagar",
       hi: "मुनि सुधासागर",
-      kn: "ಮುನಿ ಸುಧಾಸಾಗರ"
-    }
+      kn: "मुनि ಸುಧಾಸಾಗರ"
+    },
+    image: "sudhasagar.png"
   },
   // 192
   {
@@ -2496,7 +2672,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer.jpg"
   },
   // 193
   {
@@ -2509,7 +2686,8 @@ export const quotes = [
       en: "Aparigraha Principle",
       hi: "अपरिग्रह सिद्धांत",
       kn: "ಅಪರಿಗ್ರಹ ಸಿದ್ಧಾಂತ"
-    }
+    },
+    image: "aparigraha.jpeg"
   },
   // 194
   {
@@ -2522,7 +2700,8 @@ export const quotes = [
       en: "Vairagya Bhavana",
       hi: "वैराग्य भावना",
       kn: "ವೈರಾಗ್ಯ ಭಾವನೆ"
-    }
+    },
+    image: "vairagya_bhavana.jpeg"
   },
   // 195
   {
@@ -2535,7 +2714,8 @@ export const quotes = [
       en: "Atma Chintan",
       hi: "आत्म चिंतन",
       kn: "ಆತ್ಮ ಚಿಂತನ"
-    }
+    },
+    image: "atma_chintan.jpeg"
   },
   // 196
   {
@@ -2548,7 +2728,8 @@ export const quotes = [
       en: "Jain Declaration of Faith",
       hi: "जैन श्रद्धा",
       kn: "ಜೈನ ಶ್ರದ್ಧೆ"
-    }
+    },
+    image: "jain_faith.jpeg"
   },
   // 197
   {
@@ -2561,20 +2742,22 @@ export const quotes = [
       en: "Jayatu Jinashasanam",
       hi: "जयतु जिनशासनम्",
       kn: "ಜಯತು ಜಿನಶಾಸನಂ"
-    }
+    },
+    image: "jayatu_jinashasanam.jpeg"
   },
   // 198
   {
     text: {
       en: "Forgiveness is the jewel of the brave.",
       hi: "क्षमा वीरों का आभूषण है।",
-      kn: "ಕ್ಷಮೆ ವೀರರ ಆಭರಣ."
+      kn: "क्षಮೆ ವೀರರ ಆಭರಣ."
     },
     author: {
       en: "Kshama Vani",
       hi: "क्षमा वाणी",
       kn: "ಕ್ಷಮಾ ವಾಣಿ"
-    }
+    },
+    image: "kshamavani.jpeg"
   },
   // 199
   {
@@ -2587,7 +2770,8 @@ export const quotes = [
       en: "Digambar Muni Tradition",
       hi: "दिगंबर मुनि परंपरा",
       kn: "ದಿಗಂಬರ ಮುನಿ ಪರಂಪರೆ"
-    }
+    },
+    image: "muni_tradition.jpeg"
   },
   // 200
   {
@@ -2600,7 +2784,8 @@ export const quotes = [
       en: "Bhagwan Mahavira",
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
-    }
+    },
+    image: "mahaveer.jpg"
   },
   // 201
   {
@@ -2613,7 +2798,8 @@ export const quotes = [
       en: "Bhagwan Neminath",
       hi: "भगवान नेमिनाथ",
       kn: "ಭಗವಾನ್ ನೇಮಿನಾಥ"
-    }
+    },
+    image: "neminath.jpeg"
   },
   // 202
   {
@@ -2626,7 +2812,8 @@ export const quotes = [
       en: "Bhagwan Neminath",
       hi: "भगवान नेमिनाथ",
       kn: "ಭಗವಾನ್ ನೇಮಿನಾಥ"
-    }
+    },
+    image: "neminath.jpeg"
   },
   // 203
   {
@@ -2639,10 +2826,9 @@ export const quotes = [
       en: "Bhagwan Neminath",
       hi: "भगवान नेमिनाथ",
       kn: "ಭಗವಾನ್ ನೇಮಿನಾಥ"
-    }
+    },
+    image: "neminath.jpeg"
   },
-
-  // --- SHRI KRISHNA (THE NARAYANA) ---
   // 204
   {
     text: {
@@ -2654,7 +2840,8 @@ export const quotes = [
       en: "Shri Krishna",
       hi: "श्री कृष्ण",
       kn: "ಶ್ರೀ ಕೃಷ್ಣ"
-    }
+    },
+    image: "krishna.jpeg"
   },
   // 205
   {
@@ -2667,7 +2854,8 @@ export const quotes = [
       en: "Shri Krishna",
       hi: "श्री कृष्ण",
       kn: "ಶ್ರೀ ಕೃಷ್ಣ"
-    }
+    },
+    image: "krishna.jpeg"
   },
   // 206
   {
@@ -2680,7 +2868,8 @@ export const quotes = [
       en: "Shri Krishna",
       hi: "श्री कृष्ण",
       kn: "ಶ್ರೀ ಕೃಷ್ಣ"
-    }
+    },
+    image: "krishna.jpeg"
   },
   // 207
   {
@@ -2693,7 +2882,8 @@ export const quotes = [
       en: "Shri Krishna",
       hi: "श्री कृष्ण",
       kn: "ಶ್ರೀ ಕೃಷ್ಣ"
-    }
+    },
+    image: "krishna.jpeg"
   },
   // 208
   {
@@ -2706,7 +2896,8 @@ export const quotes = [
       en: "Shri Krishna",
       hi: "श्री कृष्ण",
       kn: "ಶ್ರೀ ಕೃಷ್ಣ"
-    }
+    },
+    image: "krishna.jpeg"
   },
   // 209
   {
@@ -2719,10 +2910,9 @@ export const quotes = [
       en: "Shri Krishna",
       hi: "श्री कृष्ण",
       kn: "ಶ್ರೀ ಕೃಷ್ಣ"
-    }
+    },
+    image: "krishna.jpeg"
   },
-
-  // --- SHRI BALRAM (THE BALABHADRA) ---
   // 210
   {
     text: {
@@ -2734,7 +2924,8 @@ export const quotes = [
       en: "Balram",
       hi: "बलराम",
       kn: "ಬಲರಾಮ"
-    }
+    },
+    image: "balram.jpeg"
   },
   // 211
   {
@@ -2747,7 +2938,8 @@ export const quotes = [
       en: "Balram",
       hi: "बलराम",
       kn: "ಬಲರಾಮ"
-    }
+    },
+    image: "balram.jpeg"
   },
   // 212
   {
@@ -2760,7 +2952,8 @@ export const quotes = [
       en: "Muni Balram",
       hi: "मुनि बलराम",
       kn: "ಮುನಿ ಬಲರಾಮ"
-    }
+    },
+    image: "balram.jpeg"
   },
   // 213
   {
@@ -2773,7 +2966,8 @@ export const quotes = [
       en: "Muni Balram",
       hi: "मुनि बलराम",
       kn: "ಮುನಿ ಬಲರಾಮ"
-    }
+    },
+    image: "balram.jpeg"
   },
   // 214
   {
@@ -2786,10 +2980,9 @@ export const quotes = [
       en: "Balram",
       hi: "बलराम",
       kn: "ಬಲರಾಮ"
-    }
+    },
+    image: "balram.jpeg"
   },
-
-  // --- PANDAVAS (YUDHISHTHIRA & ARJUNA) ---
   // 215
   {
     text: {
@@ -2801,7 +2994,8 @@ export const quotes = [
       en: "Yudhishthira",
       hi: "युधिष्ठिर",
       kn: "ಯುಧಿಷ್ಠಿರ"
-    }
+    },
+    image: "yudhishthira.jpeg"
   },
   // 216
   {
@@ -2814,7 +3008,8 @@ export const quotes = [
       en: "Arjuna",
       hi: "अर्जुन",
       kn: "ಅರ್ಜುನ"
-    }
+    },
+    image: "arjuna.jpeg"
   },
   // 217
   {
@@ -2827,7 +3022,8 @@ export const quotes = [
       en: "Bhima",
       hi: "भीम",
       kn: "ಭೀಮ"
-    }
+    },
+    image: "bhima.jpeg"
   },
   // 218
   {
@@ -2840,7 +3036,8 @@ export const quotes = [
       en: "Yudhishthira",
       hi: "युधिष्ठिर",
       kn: "ಯುಧಿಷ್ಠಿರ"
-    }
+    },
+    image: "yudhishthira.jpeg"
   },
   // 219
   {
@@ -2853,7 +3050,8 @@ export const quotes = [
       en: "Arjuna",
       hi: "अर्जुन",
       kn: "ಅರ್ಜುನ"
-    }
+    },
+    image: "arjuna.jpeg"
   },
   // 220
   {
@@ -2866,7 +3064,8 @@ export const quotes = [
       en: "Sahadeva",
       hi: "सहदेव",
       kn: "ಸಹದೇವ"
-    }
+    },
+    image: "sahadeva.jpeg"
   },
   // 221
   {
@@ -2879,10 +3078,9 @@ export const quotes = [
       en: "The Pandavas",
       hi: "पांडव",
       kn: "ಪಾಂಡವರು"
-    }
+    },
+    image: "pandavas.jpeg"
   },
-
-  // --- KAURAVAS, KARNA & OTHERS ---
   // 222
   {
     text: {
@@ -2894,7 +3092,8 @@ export const quotes = [
       en: "Duryodhana",
       hi: "दुर्योधन",
       kn: "ದುರ್ಯೋಧನ"
-    }
+    },
+    image: "duryodhana.jpeg"
   },
   // 223
   {
@@ -2907,7 +3106,8 @@ export const quotes = [
       en: "Karna",
       hi: "कर्ण",
       kn: "ಕರ್ಣ"
-    }
+    },
+    image: "karna.jpeg"
   },
   // 224
   {
@@ -2920,7 +3120,8 @@ export const quotes = [
       en: "Bhishma Pitamah",
       hi: "भीष्म पितामह",
       kn: "ಭೀಷ್ಮ ಪಿತಾಮಹ"
-    }
+    },
+    image: "bhishma.jpeg"
   },
   // 225
   {
@@ -2933,7 +3134,8 @@ export const quotes = [
       en: "Dhritarashtra",
       hi: "धृतराष्ट्र",
       kn: "ಧೃತರಾಷ್ಟ್ರ"
-    }
+    },
+    image: "dhritarashtra.jpeg"
   },
   // 226
   {
@@ -2946,10 +3148,9 @@ export const quotes = [
       en: "Ashwatthama",
       hi: "अश्वत्थामा",
       kn: "ಅಶ್ವತ್ಥಾಮ"
-    }
+    },
+    image: "ashwatthama.jpeg"
   },
-
-  // --- DRAUPADI & KUNTI (SHRAVIKAS) ---
   // 227
   {
     text: {
@@ -2961,7 +3162,8 @@ export const quotes = [
       en: "Draupadi",
       hi: "द्रौपदी",
       kn: "ದ್ರೌಪದಿ"
-    }
+    },
+    image: "draupadi.jpeg"
   },
   // 228
   {
@@ -2974,7 +3176,8 @@ export const quotes = [
       en: "Kunti",
       hi: "कुंती",
       kn: "ಕುಂತಿ"
-    }
+    },
+    image: "kunti.jpeg"
   },
   // 229
   {
@@ -2987,10 +3190,9 @@ export const quotes = [
       en: "Kunti",
       hi: "कुंती",
       kn: "ಕುಂತಿ"
-    }
+    },
+    image: "kunti.jpeg"
   },
-
-  // --- MISC MAHABHARATA CONTEXT ---
   // 230
   {
     text: {
@@ -3002,7 +3204,8 @@ export const quotes = [
       en: "Vidura",
       hi: "विदुर",
       kn: "ವಿದುರ"
-    }
+    },
+    image: "vidura.jpeg"
   },
   // 231
   {
@@ -3015,7 +3218,8 @@ export const quotes = [
       en: "Harivamsa Purana",
       hi: "हरिवंश पुराण",
       kn: "ಹರಿವಂಶ ಪುರಾಣ"
-    }
+    },
+    image: "harivamsa_purana.jpeg"
   },
   // 232
   {
@@ -3028,7 +3232,8 @@ export const quotes = [
       en: "King Ugrasena",
       hi: "राजा उग्रसेन",
       kn: "ರಾಜ ಉಗ್ರಸೇನ"
-    }
+    },
+    image: "ugrasena.jpeg"
   },
   // 233
   {
@@ -3041,7 +3246,8 @@ export const quotes = [
       en: "Harivamsa Purana",
       hi: "हरिवंश पुराण",
       kn: "ಹರಿವಂಶ ಪುರಾಣ"
-    }
+    },
+    image: "harivamsa_purana.jpeg"
   },
   // 234
   {
@@ -3053,8 +3259,9 @@ export const quotes = [
     author: {
       en: "Muni Dipayan",
       hi: "मुनि दीपायन",
-      kn: "ಮುನಿ ದೀಪಾಯನ"
-    }
+      kn: "मुनि ದೀಪಾಯನ"
+    },
+    image: "dipayan.jpeg"
   },
   // 235
   {
@@ -3067,7 +3274,8 @@ export const quotes = [
       en: "Jain Scripture",
       hi: "जैन शास्त्र",
       kn: "ಜೈನ ಶಾಸ್ತ್ರ"
-    }
+    },
+    image: "jain_scripture.jpeg"
   },
   // 236
   {
@@ -3080,7 +3288,8 @@ export const quotes = [
       en: "Jain Upadesha",
       hi: "जैन उपदेश",
       kn: "ಜೈನ ಉಪದೇಶ"
-    }
+    },
+    image: "jain_upadesha.jpeg"
   },
   // 237
   {
@@ -3093,7 +3302,8 @@ export const quotes = [
       en: "Agni Dev",
       hi: "अग्नि देव",
       kn: "ಅಗ್ನಿ ದೇವ"
-    }
+    },
+    image: "agni_dev.jpeg"
   },
   // 238
   {
@@ -3106,7 +3316,8 @@ export const quotes = [
       en: "Bhagwan Neminath",
       hi: "भगवान नेमिनाथ",
       kn: "ಭಗವಾನ್ ನೇಮಿನಾಥ"
-    }
+    },
+    image: "neminath.jpeg"
   },
   // 239
   {
@@ -3119,7 +3330,8 @@ export const quotes = [
       en: "Shri Krishna",
       hi: "श्री कृष्ण",
       kn: "ಶ್ರೀ ಕೃಷ್ಣ"
-    }
+    },
+    image: "krishna.jpeg"
   },
   // 240
   {
@@ -3131,8 +3343,9 @@ export const quotes = [
     author: {
       en: "Jain Wisdom",
       hi: "जैन विज़्डम",
-      kn: "ಜೈನ ವಿಸ್ಡಮ್ "
-    }
+      kn: "ಜೈನ ವಿಸ್ಡಮ್"
+    },
+    image: "jain_wisdom.jpeg"
   },
   // 241
   {
@@ -3145,7 +3358,8 @@ export const quotes = [
       en: "Pandavas",
       hi: "पांडव",
       kn: "ಪಾಂಡವರು"
-    }
+    },
+    image: "pandavas.jpeg"
   },
   // 242
   {
@@ -3158,7 +3372,8 @@ export const quotes = [
       en: "Tirth Kshetra Mahima",
       hi: "तीर्थ क्षेत्र महिमा",
       kn: "ತೀರ್ಥ ಕ್ಷೇತ್ರ ಮಹಿಮೆ"
-    }
+    },
+    image: "tirth_kshetra.jpeg"
   },
   // 243
   {
@@ -3171,7 +3386,8 @@ export const quotes = [
       en: "Yudhishthira",
       hi: "युधिष्ठिर",
       kn: "ಯುಧಿಷ್ಠಿರ"
-    }
+    },
+    image: "yudhishthira.jpeg"
   },
   // 244
   {
@@ -3184,7 +3400,8 @@ export const quotes = [
       en: "Pandava Purana",
       hi: "पांडव पुराण",
       kn: "ಪಾಂಡವ ಪುರಾಣ"
-    }
+    },
+    image: "pandava_purana.jpeg"
   },
   // 245
   {
@@ -3197,7 +3414,8 @@ export const quotes = [
       en: "Bhagwan Neminath",
       hi: "भगवान नेमिनाथ",
       kn: "ಭಗವಾನ್ ನೇಮಿನಾಥ"
-    }
+    },
+    image: "neminath.jpeg"
   },
   // 246
   {
@@ -3210,7 +3428,8 @@ export const quotes = [
       en: "Padmapurana",
       hi: "पद्मपुराण",
       kn: "ಪದ್ಮಪುರಾಣ"
-    }
+    },
+    image: "padmapurana.jpeg"
   },
   // 247
   {
@@ -3223,10 +3442,9 @@ export const quotes = [
       en: "Bhagwan Munisuvratnath",
       hi: "भगवान मुनिसुव्रतनाथ",
       kn: "ಭಗವಾನ್ ಮುನಿಸುವ್ರತನಾಥ"
-    }
+    },
+    image: "munisuvratnath.jpeg"
   },
-
-  // --- BHAGWAN PARSHVANATH ---
   // 248
   {
     text: {
@@ -3238,7 +3456,8 @@ export const quotes = [
       en: "Bhagwan Parshvanath",
       hi: "भगवान पार्श्वनाथ",
       kn: "ಭಗವಾನ್ ಪಾರ್ಶ್ವನಾಥ"
-    }
+    },
+    image: "parshvanath.jpeg"
   },
   // 249
   {
@@ -3251,7 +3470,8 @@ export const quotes = [
       en: "Prince Parshvanath",
       hi: "राजकुमार पार्श्वनाथ",
       kn: "ರಾಜಕುಮಾರ ಪಾರ್ಶ್ವನಾಥ"
-    }
+    },
+    image: "parshvanath.jpeg"
   },
   // 250
   {
@@ -3264,7 +3484,8 @@ export const quotes = [
       en: "Bhagwan Parshvanath",
       hi: "भगवान पार्श्वनाथ",
       kn: "ಭಗವಾನ್ ಪಾರ್ಶ್ವನಾಥ"
-    }
+    },
+    image: "parshvanath.jpeg"
   },
   // 251
   {
@@ -3277,10 +3498,9 @@ export const quotes = [
       en: "Bhagwan Parshvanath",
       hi: "भगवान पार्श्वनाथ",
       kn: "ಭಗವಾನ್ ಪಾರ್ಶ್ವನಾಥ"
-    }
+    },
+    image: "parshvanath.jpeg"
   },
-
-  // --- PADMA (LORD RAM) ---
   // 252
   {
     text: {
@@ -3292,7 +3512,8 @@ export const quotes = [
       en: "Padma (Lord Ram)",
       hi: "पद्म (श्री रामचंद्र)",
       kn: "ಪದ್ಮ (ಶ್ರೀ ರಾಮಚಂದ್ರ)"
-    }
+    },
+    image: "ram.jpeg"
   },
   // 253
   {
@@ -3305,7 +3526,8 @@ export const quotes = [
       en: "Padma (Lord Ram)",
       hi: "पद्म (श्री रामचंद्र)",
       kn: "ಪದ್ಮ (ಶ್ರೀ ರಾಮಚಂದ್ರ)"
-    }
+    },
+    image: "ram.jpeg"
   },
   // 254
   {
@@ -3318,7 +3540,8 @@ export const quotes = [
       en: "Padma (Lord Ram)",
       hi: "पद्म (श्री रामचंद्र)",
       kn: "ಪದ್ಮ (ಶ್ರೀ ರಾಮಚಂದ್ರ)"
-    }
+    },
+    image: "ram.jpeg"
   },
   // 255
   {
@@ -3331,7 +3554,8 @@ export const quotes = [
       en: "Padma (Lord Ram)",
       hi: "पद्म (श्री रामचंद्र)",
       kn: "ಪದ್ಮ (ಶ್ರೀ ರಾಮಚಂದ್ರ)"
-    }
+    },
+    image: "ram.jpeg"
   },
   // 256
   {
@@ -3344,10 +3568,9 @@ export const quotes = [
       en: "Muni Ramchandra",
       hi: "मुनि रामचंद्र",
       kn: "ಮುನಿ ರಾಮಚಂದ್ರ"
-    }
+    },
+    image: "ram.jpeg"
   },
-
-  // --- NARAYANA LAKSHMANA ---
   // 257
   {
     text: {
@@ -3359,7 +3582,8 @@ export const quotes = [
       en: "Lakshmana",
       hi: "लक्ष्मण",
       kn: "ಲಕ್ಷ್ಮಣ"
-    }
+    },
+    image: "lakshmana.jpeg"
   },
   // 258
   {
@@ -3372,7 +3596,8 @@ export const quotes = [
       en: "Lakshmana",
       hi: "लक्ष्मण",
       kn: "ಲಕ್ಷ್ಮಣ"
-    }
+    },
+    image: "lakshmana.jpeg"
   },
   // 259
   {
@@ -3385,7 +3610,8 @@ export const quotes = [
       en: "Lakshmana",
       hi: "लक्ष्मण",
       kn: "ಲಕ್ಷ್ಮಣ"
-    }
+    },
+    image: "lakshmana.jpeg"
   },
   // 260
   {
@@ -3398,10 +3624,9 @@ export const quotes = [
       en: "Soul of Lakshmana",
       hi: "लक्ष्मण की आत्मा",
       kn: "ಲಕ್ಷ್ಮಣನ ಆತ್ಮ"
-    }
+    },
+    image: "lakshmana.jpeg"
   },
-
-  // --- DASHANAN RAVANA (PRATI-NARAYANA) ---
   // 261
   {
     text: {
@@ -3413,7 +3638,8 @@ export const quotes = [
       en: "Ravana (Famous Bhakti Incident)",
       hi: "रावण (वीणा वादन)",
       kn: "ರಾವಣ (ವೀಣಾ ವಾದನ)"
-    }
+    },
+    image: "ravana.jpeg"
   },
   // 262
   {
@@ -3426,7 +3652,8 @@ export const quotes = [
       en: "Ravana",
       hi: "रावण",
       kn: "ರಾವಣ"
-    }
+    },
+    image: "ravana.jpeg"
   },
   // 263
   {
@@ -3439,7 +3666,8 @@ export const quotes = [
       en: "Ravana",
       hi: "रावण",
       kn: "ರಾವಣ"
-    }
+    },
+    image: "ravana.jpeg"
   },
   // 264
   {
@@ -3452,7 +3680,8 @@ export const quotes = [
       en: "Ravana",
       hi: "रावण",
       kn: "ರಾವಣ"
-    }
+    },
+    image: "ravana.jpeg"
   },
   // 265
   {
@@ -3465,10 +3694,9 @@ export const quotes = [
       en: "Ravana",
       hi: "रावण",
       kn: "ರಾವಣ"
-    }
+    },
+    image: "ravana.jpeg"
   },
-
-  // --- BHARAT (BROTHER OF RAM) ---
   // 266
   {
     text: {
@@ -3480,8 +3708,10 @@ export const quotes = [
       en: "Bharat",
       hi: "भरत",
       kn: "ಭರತ"
-    }
+    },
+    image: "bharat.jpeg"
   },
+  // 266 (Extra)
   {
     text: {
       en: "Take this kingdom back, Brother. It burns my hands like holding a hot coal.",
@@ -3492,7 +3722,8 @@ export const quotes = [
       en: "Bharat",
       hi: "भरत",
       kn: "ಭರತ"
-    }
+    },
+    image: "bharat.jpeg"
   },
   // 267
   {
@@ -3505,7 +3736,8 @@ export const quotes = [
       en: "Bharat",
       hi: "भरत",
       kn: "ಭರತ"
-    }
+    },
+    image: "bharat.jpeg"
   },
   // 268
   {
@@ -3518,10 +3750,9 @@ export const quotes = [
       en: "Bharat",
       hi: "भरत",
       kn: "ಭರತ"
-    }
+    },
+    image: "bharat.jpeg"
   },
-
-  // --- KAIKEYI & SITA ---
   // 269
   {
     text: {
@@ -3533,7 +3764,8 @@ export const quotes = [
       en: "Kaikeyi",
       hi: "कैकेयी",
       kn: "ಕೈಕೇಯಿ"
-    }
+    },
+    image: "kaikeyi.jpeg"
   },
   // 270
   {
@@ -3546,7 +3778,8 @@ export const quotes = [
       en: "Kaikeyi",
       hi: "कैकेयी",
       kn: "ಕೈಕೇಯಿ"
-    }
+    },
+    image: "kaikeyi.jpeg"
   },
   // 271
   {
@@ -3559,7 +3792,8 @@ export const quotes = [
       en: "Sita",
       hi: "सीता",
       kn: "ಸೀತಾ ಮಾತೆ"
-    }
+    },
+    image: "sita.jpeg"
   },
   // 272
   {
@@ -3572,10 +3806,9 @@ export const quotes = [
       en: "Sita",
       hi: "सीता",
       kn: "ಸೀತಾ ಮಾತೆ"
-    }
+    },
+    image: "sita.jpeg"
   },
-
-  // --- ANJANA & HANUMAN ---
   // 273
   {
     text: {
@@ -3587,7 +3820,8 @@ export const quotes = [
       en: "Anjanadevi",
       hi: "अंजना देवी",
       kn: "ಅಂಜನಾ ದೇವಿ"
-    }
+    },
+    image: "anjanadevi.jpeg"
   },
   // 274
   {
@@ -3600,7 +3834,8 @@ export const quotes = [
       en: "Hanuman",
       hi: "हनुमान",
       kn: "ಹನುಮಂತ"
-    }
+    },
+    image: "hanuman.jpeg"
   },
   // 275
   {
@@ -3613,10 +3848,9 @@ export const quotes = [
       en: "Kamatha (Repentant soul in later birth)",
       hi: "कमठ (बाद के भव में)",
       kn: "ಕಮಠ (ನಂತರದ ಭವದಲ್ಲಿ)"
-    }
+    },
+    image: "kamatha.jpeg"
   },
-
-  // --- MISC JAIN RAMAYANA CHARACTERS ---
   // 276
   {
     text: {
@@ -3628,7 +3862,8 @@ export const quotes = [
       en: "Sugriva",
       hi: "सुग्रीव",
       kn: "ಸುಗ್ರೀವ"
-    }
+    },
+    image: "sugriva.jpeg"
   },
   // 277
   {
@@ -3641,7 +3876,8 @@ export const quotes = [
       en: "Bibheeshan (Vibhishana)",
       hi: "बिभीषण (विभीषण)",
       kn: "ಬಿಭೀಷಣ (ವಿಭೀಷಣ)"
-    }
+    },
+    image: "bibheeshan.jpeg"
   },
   // 278
   {
@@ -3654,7 +3890,8 @@ export const quotes = [
       en: "Muni Lav & Kush",
       hi: "मुनि लव और कुश",
       kn: "ಮುನಿ ಲವ ಮತ್ತು ಕುಶ"
-    }
+    },
+    image: "lav_kush.jpeg"
   },
   // 279
   {
@@ -3667,7 +3904,8 @@ export const quotes = [
       en: "Muni Ram",
       hi: "मुनि राम",
       kn: "ಮುನಿ ರಾಮ"
-    }
+    },
+    image: "ram.jpeg"
   },
   // 280
   {
@@ -3680,7 +3918,8 @@ export const quotes = [
       en: "Bhagwan Parshvanath",
       hi: "भगवान पार्श्वनाथ",
       kn: "ಭಗವಾನ್ ಪಾರ್ಶ್ವನಾಥ"
-    }
+    },
+    image: "parshvanath.jpeg"
   },
   // 281
   {
@@ -3693,7 +3932,8 @@ export const quotes = [
       en: "Padmapurana",
       hi: "पद्मपुराण",
       kn: "ಪದ್ಮಪುರಾಣ"
-    }
+    },
+    image: "padmapurana.jpeg"
   },
   // 282
   {
@@ -3706,7 +3946,8 @@ export const quotes = [
       en: "Kshama Dharma",
       hi: "क्षमा धर्म",
       kn: "ಕ್ಷಮಾ ಧರ್ಮ"
-    }
+    },
+    image: "kshama_dharma.jpeg"
   },
   // 283
   {
@@ -3719,7 +3960,8 @@ export const quotes = [
       en: "Anjanadevi",
       hi: "अंजना देवी",
       kn: "ಅಂಜನಾ ದೇವಿ"
-    }
+    },
+    image: "anjanadevi.jpeg"
   },
   // 284
   {
@@ -3732,7 +3974,8 @@ export const quotes = [
       en: "Bhagwan Munisuvratnath",
       hi: "भगवान मुनिसुव्रतनाथ",
       kn: "ಭಗವಾನ್ ಮುನಿಸುವ್ರತನಾಥ"
-    }
+    },
+    image: "munisuvratnath.jpeg"
   },
   // 285
   {
@@ -3745,7 +3988,8 @@ export const quotes = [
       en: "Jain Philosophy",
       hi: "जैन दर्शन",
       kn: "ಜೈನ ದರ್ಶನ"
-    }
+    },
+    image: "jain_philosophy.jpeg"
   },
   // 286
   {
@@ -3758,7 +4002,8 @@ export const quotes = [
       en: "Bibheeshan (Vibhishana)",
       hi: "बिभीषण (विभीषण)",
       kn: "ಬಿಭೀಷಣ (ವಿಭೀಷಣ)"
-    }
+    },
+    image: "bibheeshan.jpeg"
   },
   // 287
   {
@@ -3771,7 +4016,8 @@ export const quotes = [
       en: "Mandodari",
       hi: "मंदोदरी",
       kn: "ಮಂಡೋದರಿ"
-    }
+    },
+    image: "mandodari.jpeg"
   },
   // 288
   {
@@ -3784,7 +4030,8 @@ export const quotes = [
       en: "Jain Ramayana Invocation",
       hi: "जैन रामायण वंदना",
       kn: "ಜೈನ ರಾಮಾಯಣ ವಂದನೆ"
-    }
+    },
+    image: "jain_ramayana.jpeg"
   },
   // 289
   {
@@ -3797,7 +4044,8 @@ export const quotes = [
       en: "Parshvanath (Incarnation as an Elephant)",
       hi: "पार्श्वनाथ (हाथी का भव)",
       kn: "ಪಾಶ್ವನಾಥ (ಆನೆಯ ಭವ)"
-    }
+    },
+    image: "parshvanath.jpeg"
   },
   // 290
   {
@@ -3810,7 +4058,8 @@ export const quotes = [
       en: "Lord Ramchandra",
       hi: "श्री रामचंद्र",
       kn: "ಶ್ರೀ ರಾಮಚಂದ್ರ"
-    }
+    },
+    image: "ram.jpeg"
   },
   // 291
   {
@@ -3822,8 +4071,9 @@ export const quotes = [
     author: {
       en: "Padmapurana Insight",
       hi: "पद्मपुराण",
-      kn: "ಪದ್ಮಪುರಾಣ"
-    }
+      kn: "पद्मपुराण"
+    },
+    image: "padmapurana.jpeg"
   },
   // 292
   {
@@ -3836,7 +4086,8 @@ export const quotes = [
       en: "Lord Ramchandra",
       hi: "श्री रामचंद्र",
       kn: "ಶ್ರೀ ರಾಮಚಂದ್ರ"
-    }
+    },
+    image: "ram.jpeg"
   },
   // 293
   {
@@ -3849,7 +4100,8 @@ export const quotes = [
       en: "Lord Ramchandra",
       hi: "श्री रामचंद्र",
       kn: "ಶ್ರೀ ರಾಮಚಂದ್ರ"
-    }
+    },
+    image: "ram.jpeg"
   },
   // 294
   {
@@ -3862,10 +4114,11 @@ export const quotes = [
       en: "Lord Ramchandra",
       hi: "श्री रामचंद्र",
       kn: "ಶ್ರೀ ರಾಮಚಂದ್ರ"
-    }
+    },
+    image: "ram.jpeg"
   },
   // 295
-   {
+  {
     text: {
       en: "My blessings to Acharya Kund Kund.",
       hi: "आचार्य कुंदकुंद को मेरा आशीर्वाद।",
@@ -3875,9 +4128,9 @@ export const quotes = [
       en: "Seemandhar Swamy",
       hi: "सीमंधर स्वामी",
       kn: "ಸೀಮಂಧರ ಸ್ವಾಮಿ"
-    }
+    },
+    image: "seemandhar_swamy.jpeg"
   },
-  
   // 296
   {
     text: {
@@ -3889,7 +4142,8 @@ export const quotes = [
       en: "Samayasara (Gatha 38)",
       hi: "समयसार (गाथा 38)",
       kn: "ಸಮಯಸಾರ (ಗಾಥಾ 38)"
-    }
+    },
+    image: "samayasara.jpeg"
   },
   // 297
   {
@@ -3902,7 +4156,8 @@ export const quotes = [
       en: "Samayasara",
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
-    }
+    },
+    image: "samayasara.jpeg"
   },
   // 298
   {
@@ -3915,7 +4170,8 @@ export const quotes = [
       en: "Samayasara",
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
-    }
+    },
+    image: "samayasara.jpeg"
   },
   // 299
   {
@@ -3928,7 +4184,8 @@ export const quotes = [
       en: "Samayasara",
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
-    }
+    },
+    image: "samayasara.jpeg"
   },
   // 300
   {
@@ -3941,7 +4198,8 @@ export const quotes = [
       en: "Samayasara",
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
-    }
+    },
+    image: "samayasara.jpeg"
   },
   // 301
   {
@@ -3954,7 +4212,8 @@ export const quotes = [
       en: "Samayasara",
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
-    }
+    },
+    image: "samayasara.jpeg"
   },
   // 302
   {
@@ -3967,7 +4226,8 @@ export const quotes = [
       en: "Samayasara",
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
-    }
+    },
+    image: "samayasara.jpeg"
   },
   // 303
   {
@@ -3980,7 +4240,8 @@ export const quotes = [
       en: "Samayasara",
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
-    }
+    },
+    image: "samayasara.jpeg"
   },
   // 304
   {
@@ -3993,7 +4254,8 @@ export const quotes = [
       en: "Samayasara",
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
-    }
+    },
+    image: "samayasara.jpeg"
   },
   // 305
   {
@@ -4006,10 +4268,9 @@ export const quotes = [
       en: "Samayasara",
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
-    }
+    },
+    image: "samayasara.jpeg"
   },
-
-  // --- PANCHASTIKAYASARA (THE FIVE REALITIES) - Acharya Kundakunda ---
   // 306
   {
     text: {
@@ -4021,7 +4282,8 @@ export const quotes = [
       en: "Panchastikayasara",
       hi: "पंचास्तिकायसार",
       kn: "ಪಂಚಾಸ್ತಿಕಾಯಸಾರ"
-    }
+    },
+    image: "panchastikayasara.jpeg"
   },
   // 307
   {
@@ -4034,7 +4296,8 @@ export const quotes = [
       en: "Panchastikayasara",
       hi: "पंचास्तिकायसार",
       kn: "ಪಂಚಾಸ್ತಿಕಾಯಸಾರ"
-    }
+    },
+    image: "panchastikayasara.jpeg"
   },
   // 308
   {
@@ -4047,7 +4310,8 @@ export const quotes = [
       en: "Panchastikayasara",
       hi: "पंचास्तिकायसार",
       kn: "ಪಂಚಾಸ್ತಿಕಾಯಸಾರ"
-    }
+    },
+    image: "panchastikayasara.jpeg"
   },
   // 309
   {
@@ -4060,7 +4324,8 @@ export const quotes = [
       en: "Panchastikayasara",
       hi: "पंचास्तिकायसार",
       kn: "ಪಂಚಾಸ್ತಿಕಾಯಸಾರ"
-    }
+    },
+    image: "panchastikayasara.jpeg"
   },
   // 310
   {
@@ -4073,10 +4338,9 @@ export const quotes = [
       en: "Panchastikayasara",
       hi: "पंचास्तिकायसार",
       kn: "ಪಂಚಾಸ್ತಿಕಾಯಸಾರ"
-    }
+    },
+    image: "panchastikayasara.jpeg"
   },
-
-  // --- GOMMATSARA JIVAKANDA (SOUL & BIOLOGY) - Acharya Nemichandra ---
   // 311
   {
     text: {
@@ -4088,7 +4352,8 @@ export const quotes = [
       en: "Gommatsara Jivakanda",
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_jivakanda.jpeg"
   },
   // 312
   {
@@ -4101,7 +4366,8 @@ export const quotes = [
       en: "Gommatsara Jivakanda",
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_jivakanda.jpeg"
   },
   // 313
   {
@@ -4114,7 +4380,8 @@ export const quotes = [
       en: "Gommatsara Jivakanda",
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_jivakanda.jpeg"
   },
   // 314
   {
@@ -4127,7 +4394,8 @@ export const quotes = [
       en: "Gommatsara Jivakanda",
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_jivakanda.jpeg"
   },
   // 315
   {
@@ -4140,7 +4408,8 @@ export const quotes = [
       en: "Gommatsara Jivakanda",
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_jivakanda.jpeg"
   },
   // 316
   {
@@ -4153,7 +4422,8 @@ export const quotes = [
       en: "Gommatsara Jivakanda",
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_jivakanda.jpeg"
   },
   // 317
   {
@@ -4166,7 +4436,8 @@ export const quotes = [
       en: "Gommatsara Jivakanda",
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_jivakanda.jpeg"
   },
   // 318
   {
@@ -4179,7 +4450,8 @@ export const quotes = [
       en: "Gommatsara Jivakanda",
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_jivakanda.jpeg"
   },
   // 319
   {
@@ -4192,7 +4464,8 @@ export const quotes = [
       en: "Gommatsara Jivakanda",
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_jivakanda.jpeg"
   },
   // 320
   {
@@ -4205,10 +4478,9 @@ export const quotes = [
       en: "Gommatsara Jivakanda",
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_jivakanda.jpeg"
   },
-
-  // --- GOMMATSARA KARMAKANDA (THEORY OF KARMA) - Acharya Nemichandra ---
   // 321
   {
     text: {
@@ -4220,7 +4492,8 @@ export const quotes = [
       en: "Gommatsara Karmakanda",
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_karmakanda.jpeg"
   },
   // 322
   {
@@ -4233,7 +4506,8 @@ export const quotes = [
       en: "Gommatsara Karmakanda",
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_karmakanda.jpeg"
   },
   // 323
   {
@@ -4246,7 +4520,8 @@ export const quotes = [
       en: "Gommatsara Karmakanda",
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_karmakanda.jpeg"
   },
   // 324
   {
@@ -4259,7 +4534,8 @@ export const quotes = [
       en: "Gommatsara Karmakanda",
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_karmakanda.jpeg"
   },
   // 325
   {
@@ -4272,7 +4548,8 @@ export const quotes = [
       en: "Gommatsara Karmakanda",
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_karmakanda.jpeg"
   },
   // 326
   {
@@ -4285,7 +4562,8 @@ export const quotes = [
       en: "Gommatsara Karmakanda",
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_karmakanda.jpeg"
   },
   // 327
   {
@@ -4298,7 +4576,8 @@ export const quotes = [
       en: "Gommatsara Karmakanda",
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_karmakanda.jpeg"
   },
   // 328
   {
@@ -4311,7 +4590,8 @@ export const quotes = [
       en: "Gommatsara Karmakanda",
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_karmakanda.jpeg"
   },
   // 329
   {
@@ -4324,7 +4604,8 @@ export const quotes = [
       en: "Gommatsara Karmakanda",
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_karmakanda.jpeg"
   },
   // 330
   {
@@ -4337,10 +4618,9 @@ export const quotes = [
       en: "Gommatsara Karmakanda",
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_karmakanda.jpeg"
   },
-
-  // --- DRAVYASANGRAHA & OTHERS (SUPPLEMENTARY SIDDHANTA) ---
   // 331
   {
     text: {
@@ -4352,7 +4632,8 @@ export const quotes = [
       en: "Dravyasangraha",
       hi: "द्रव्यसंग्रह",
       kn: "ದ್ರವ್ಯಸಂಗ್ರಹ"
-    }
+    },
+    image: "dravyasangraha.jpeg"
   },
   // 332
   {
@@ -4365,7 +4646,8 @@ export const quotes = [
       en: "Dravyasangraha",
       hi: "द्रव्यसंग्रह",
       kn: "ದ್ರವ್ಯಸಂಗ್ರಹ"
-    }
+    },
+    image: "dravyasangraha.jpeg"
   },
   // 333
   {
@@ -4378,7 +4660,8 @@ export const quotes = [
       en: "Dravyasangraha (Nine Truths)",
       hi: "द्रव्यसंग्रह",
       kn: "ದ್ರವ್ಯಸಂಗ್ರಹ"
-    }
+    },
+    image: "dravyasangraha.jpeg"
   },
   // 334
   {
@@ -4391,7 +4674,8 @@ export const quotes = [
       en: "Samayasara",
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
-    }
+    },
+    image: "samayasara.jpeg"
   },
   // 335
   {
@@ -4404,7 +4688,8 @@ export const quotes = [
       en: "Niyamasara",
       hi: "नियमसार",
       kn: "ನಿಯಮಸಾರ"
-    }
+    },
+    image: "niyamasara.jpeg"
   },
   // 336
   {
@@ -4417,7 +4702,8 @@ export const quotes = [
       en: "Purushartha Siddhyupaya",
       hi: "पुरुषार्थ सिद्धयुपाय",
       kn: "ಪುರುಷಾರ್ಥ ಸಿದ್ಧ್ಯುಪಾಯ"
-    }
+    },
+    image: "purushartha_siddhyupaya.jpeg"
   },
   // 337
   {
@@ -4430,7 +4716,8 @@ export const quotes = [
       en: "Jain Ethics",
       hi: "जैन नीति",
       kn: "ಜೈನ ನೀತಿ"
-    }
+    },
+    image: "jain_ethics.jpeg"
   },
   // 338
   {
@@ -4443,7 +4730,8 @@ export const quotes = [
       en: "Tattvartha Sutra",
       hi: "तत्त्वार्थ सूत्र",
       kn: "ತತ್ತ್ವಾರ್ಥ ಸೂತ್ರ"
-    }
+    },
+    image: "tattvartha_sutra.jpeg"
   },
   // 339
   {
@@ -4456,7 +4744,8 @@ export const quotes = [
       en: "Samayasara",
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
-    }
+    },
+    image: "samayasara.jpeg"
   },
   // 340
   {
@@ -4469,7 +4758,8 @@ export const quotes = [
       en: "Digambar Siddhanta",
       hi: "दिगंबर सिद्धांत",
       kn: "ದಿಗಂಬರ ಸಿದ್ಧಾಂತ"
-    }
+    },
+    image: "digambar_siddhanta.jpeg"
   },
   // 341
   {
@@ -4482,7 +4772,8 @@ export const quotes = [
       en: "Gommatsara Karmakanda",
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
-    }
+    },
+    image: "gommatsara_karmakanda.jpeg"
   },
   // 342
   {
@@ -4495,7 +4786,8 @@ export const quotes = [
       en: "Jain Wisdom",
       hi: "जैन सुभाषित",
       kn: "ಜೈನ ಸುಭಾಷಿತ"
-    }
+    },
+    image: "jain_wisdom.jpeg"
   },
   // 343
   {
@@ -4508,7 +4800,8 @@ export const quotes = [
       en: "Kashaya Pahuda",
       hi: "कषाय पाहुड़",
       kn: "ಕಷಾಯ ಪಾಹುಡ"
-    }
+    },
+    image: "kashaya_pahuda.jpeg"
   },
   // 344
   {
@@ -4521,7 +4814,8 @@ export const quotes = [
       en: "Yogasara",
       hi: "योगसार",
       kn: "ಯೋಗಸಾರ"
-    }
+    },
+    image: "yogasara.jpeg"
   },
   // 345
   {
@@ -4534,10 +4828,9 @@ export const quotes = [
       en: "Dravyasangraha",
       hi: "द्रव्यसंग्रह",
       kn: "ದ್ರವ್ಯಸಂಗ್ರಹ"
-    }
+    },
+    image: "dravyasangraha.jpeg"
   },
-
-  // --- DAS LAKSHAN PARVA (THE TEN VIRTUES) ---
   // 346
   {
     text: {
@@ -4549,7 +4842,8 @@ export const quotes = [
       en: "Paryushan Parva",
       hi: "पर्युषण पर्व",
       kn: "ಪರ್ಯುಷಣ ಪರ್ವ"
-    }
+    },
+    image: "paryushan.jpeg"
   },
   // 347
   {
@@ -4562,7 +4856,8 @@ export const quotes = [
       en: "Das Lakshan Dharma",
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
-    }
+    },
+    image: "das_lakshan.jpeg"
   },
   // 348
   {
@@ -4575,7 +4870,8 @@ export const quotes = [
       en: "Das Lakshan Dharma",
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
-    }
+    },
+    image: "das_lakshan.jpeg"
   },
   // 349
   {
@@ -4588,7 +4884,8 @@ export const quotes = [
       en: "Das Lakshan Dharma",
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
-    }
+    },
+    image: "das_lakshan.jpeg"
   },
   // 350
   {
@@ -4601,7 +4898,8 @@ export const quotes = [
       en: "Das Lakshan Dharma",
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
-    }
+    },
+    image: "das_lakshan.jpeg"
   },
   // 351
   {
@@ -4614,7 +4912,8 @@ export const quotes = [
       en: "Das Lakshan Dharma",
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
-    }
+    },
+    image: "das_lakshan.jpeg"
   },
   // 352
   {
@@ -4627,7 +4926,8 @@ export const quotes = [
       en: "Das Lakshan Dharma",
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
-    }
+    },
+    image: "das_lakshan.jpeg"
   },
   // 353
   {
@@ -4640,7 +4940,8 @@ export const quotes = [
       en: "Das Lakshan Dharma",
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
-    }
+    },
+    image: "das_lakshan.jpeg"
   },
   // 354
   {
@@ -4653,7 +4954,8 @@ export const quotes = [
       en: "Das Lakshan Dharma",
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
-    }
+    },
+    image: "das_lakshan.jpeg"
   },
   // 355
   {
@@ -4666,7 +4968,8 @@ export const quotes = [
       en: "Das Lakshan Dharma",
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
-    }
+    },
+    image: "das_lakshan.jpeg"
   },
   // 356
   {
@@ -4679,10 +4982,9 @@ export const quotes = [
       en: "Das Lakshan Dharma",
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
-    }
+    },
+    image: "das_lakshan.jpeg"
   },
-
-  // --- DEEPAWALI (NIRVANA KALYANAK) ---
   // 357
   {
     text: {
@@ -4694,7 +4996,8 @@ export const quotes = [
       en: "Nirvana Ladoo",
       hi: "निर्वाण लाडू",
       kn: "ನಿರ್ವಾಣ ಲಾಡು"
-    }
+    },
+    image: "nirvana_ladoo.jpeg"
   },
   // 358
   {
@@ -4707,10 +5010,9 @@ export const quotes = [
       en: "Diwali Mahaparva",
       hi: "दिवाली महापर्व",
       kn: "ದೀಪಾವಳಿ ಮಹಾಪರ್ವ"
-    }
+    },
+    image: "diwali.jpeg"
   },
-
-  // --- AKSHAYA TRITIYA & RAKSHA BANDHAN ---
   // 359
   {
     text: {
@@ -4722,7 +5024,8 @@ export const quotes = [
       en: "Akshaya Tritiya",
       hi: "अक्षय तृतीया",
       kn: "ಅಕ್ಷಯ ತೃತೀಯ"
-    }
+    },
+    image: "akshaya_tritiya.jpeg"
   },
   // 360
   {
@@ -4735,10 +5038,9 @@ export const quotes = [
       en: "Vishnukumar Muni",
       hi: "विष्णुकुमार मुनि",
       kn: "ವಿಷ್ಣುಕುಮಾರ ಮುನಿ"
-    }
+    },
+    image: "vishnukumar_muni.jpeg"
   },
-
-  // --- SHRUTA PANCHAMI & KSHAMAVANI ---
   // 361
   {
     text: {
@@ -4750,7 +5052,8 @@ export const quotes = [
       en: "Shruta Panchami",
       hi: "श्रुत पंचमी",
       kn: "ಶ್ರುತ ಪಂಚಮಿ"
-    }
+    },
+    image: "shruta_panchami.jpeg"
   },
   // 362
   {
@@ -4763,7 +5066,8 @@ export const quotes = [
       en: "Mahavir Jayanti",
       hi: "महावीर जयंती",
       kn: "ಮಹಾವೀರ ಜಯಂತಿ"
-    }
+    },
+    image: "mahavir_jayanti.jpeg"
   },
   // 363
   {
@@ -4776,7 +5080,8 @@ export const quotes = [
       en: "Kshamavani Parva",
       hi: "क्षमावाणी पर्व",
       kn: "ಕ್ಷಮಾವಾಣಿ ಪರ್ವ"
-    }
+    },
+    image: "kshamavani.jpeg"
   },
   // 364
   {
@@ -4789,7 +5094,8 @@ export const quotes = [
       en: "Ashtanhika Parva",
       hi: "अष्टान्हिका पर्व",
       kn: "ಅಷ್ಟಾಹ್ನಿಕ ಪರ್ವ"
-    }
+    },
+    image: "ashtanhika.jpeg"
   },
   // 365
   {
@@ -4802,7 +5108,8 @@ export const quotes = [
       en: "Jain Definition of Fasting",
       hi: "उपवास का अर्थ",
       kn: "ಉಪವಾಸದ ಅರ್ಥ"
-    }
+    },
+    image: "jain_fasting.jpeg"
   },
   // 366
   {
@@ -4815,6 +5122,7 @@ export const quotes = [
       en: "Eternal Truth",
       hi: "शाश्वत सत्य",
       kn: "ಶಾಶ್ವತ ಸತ್ಯ"
-    }
+    },
+    image: "jain_symbol.jpeg"
   }
 ];

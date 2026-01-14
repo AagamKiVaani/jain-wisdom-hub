@@ -7,8 +7,8 @@ on:
     # - cron: '30 7 * * *'
     # - cron: '30 0 * * *'
     # - cron: '30 4 * * *'
-    # New: 23:45 UTC (5:15 AM IST) - Runs BEFORE the rush hour!
-    - cron: '45 23 * * *'
+    # New: 2:0 UTC (7:30 AM IST) - Runs BEFORE the rush hour!
+    - cron: '0 2 * * *'
 
     # 🌙 EVENING TITHI CHECK: 7:00 PM IST (13:30 UTC)
     - cron: '30 13 * * *'
