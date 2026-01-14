@@ -7,6 +7,11 @@ const defaultLocale = 'en';
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
+  // 🛑 ESCAPE HATCH: If it's an API route, do nothing. Let it pass!
+  if (pathname.startsWith('/api')) {
+    return NextResponse.next();
+  }
+
   // Check if the path already has a language
   const pathnameIsMissingLocale = locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
