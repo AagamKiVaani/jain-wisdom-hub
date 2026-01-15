@@ -1693,7 +1693,7 @@ export const quotes = [
       hi: "चंदनबाला",
       kn: "ಚಂದನಬಾಲಾ"
     },
-    image: "chandanbala.jpeg"
+    image: "chandanbala_offering.jpeg"
   },
   // 123
   {
@@ -1723,20 +1723,7 @@ export const quotes = [
     },
     image: "anathimuni.jpeg"
   },
-  // 125
-  {
-    text: {
-      en: "Better to die with a gem in my mouth (Sallekhana/Suicide) than to let my son commit the sin of killing his father.",
-      hi: "अपने बेटे को पिता की हत्या का पाप करने देने से बेहतर है कि मैं मुँह में हीरा रखकर मर जाऊँ।",
-      kn: "ತಂದೆಯನ್ನು ಕೊಲ್ಲುವ ಪಾಪವನ್ನು ನನ್ನ ಮಗ ಮಾಡುವುದಕ್ಕಿಂತ ನಾನೇ ವಜ್ರವನ್ನು ನುಂಗಿ ಸಾಯುವುದು ಲೇಸು."
-    },
-    author: {
-      en: "King Shrenik (Bimbisara)",
-      hi: "राजा श्रेणिक (बिंबिसार)",
-      kn: "ರಾಜ ಶ್ರೇಣಿಕ (ಬಿಂಬಿಸಾರ)"
-    },
-    image: "shrenik.jpeg"
-  },
+  // 125 Skipped
   // 126
   {
     text: {
@@ -1749,7 +1736,7 @@ export const quotes = [
       hi: "कुणिक (अजातशत्रु)",
       kn: "ಕುಣಿಕ (ಅಜಾತಶತ್ರು)"
     },
-    image: "kunik.jpeg"
+    image: "kunik_repentance.jpeg"
   },
   // 127
   {
@@ -1763,7 +1750,7 @@ export const quotes = [
       hi: "सम्राट खारवेल (हाथीगुम्फा अभिलेख)",
       kn: "ಚಕ್ರವರ್ತಿ ಖಾರವೇಲ (ಹಾಥಿಗುಂಫಾ ಶಾಸನ)"
     },
-    image: "kharavela.jpeg"
+    image: "kharavela_victory.jpeg"
   },
   // 128
   {
@@ -1791,7 +1778,7 @@ export const quotes = [
       hi: "चंद्रगुप्त मौर्य",
       kn: "ಚಂದ್ರಗುಪ್ತ ಮೌರ್ಯ"
     },
-    image: "chandragupta.jpeg"
+    image: "chandragupta_arrow.jpeg"
   },
   // 130
   {
@@ -1805,22 +1792,9 @@ export const quotes = [
       hi: "चंद्रगुप्त मौर्य",
       kn: "ಚಂದ್ರಗುಪ್ತ ಮೌರ್ಯ"
     },
-    image: "chandragupta.jpeg"
+    image: "chandragupta_renunciation.jpeg"
   },
-  // 131
-  {
-    text: {
-      en: "O Goddess! Your milk is for a mortal child, but I seek the milk of immortality (Dharma).",
-      hi: "हे देवी! तुम्हारा दूध नश्वर बालक के लिए है, लेकिन मैं अमरता (धर्म) का दूध चाहता हूँ।",
-      kn: "ಓ ದೇವಿಯೇ! ನಿನ್ನ ಹಾಲು ಮರ್ತ್ಯ ಮಗುವಿಗೆ, ಆದರೆ ನಾನು ಅಮರತ್ವದ (ಧರ್ಮದ) ಹಾಲನ್ನು ಬಯಸುತ್ತೇನೆ."
-    },
-    author: {
-      en: "Chamundaraya",
-      hi: "चामुंडराय",
-      kn: "ಚಾಮುಂಡರಾಯ"
-    },
-    image: "chamundaraya.jpeg"
-  },
+  // 131 Skipped 
   // 132
   {
     text: {
@@ -1833,7 +1807,7 @@ export const quotes = [
       hi: "शिल्पकार (गोमतेश्वर का)",
       kn: "ಶಿಲ್ಪಿ (ಗೊಮ್ಮಟೇಶ್ವರ)"
     },
-    image: "shilpa.jpeg"
+    image: "sculptor_miracle.jpeg"
   },
   // 133
   {
@@ -1847,7 +1821,7 @@ export const quotes = [
       hi: "अमोघवर्ष (राष्ट्रकूट राजा)",
       kn: "ಅಮೋಘವರ್ಷ (ರಾಷ್ಟ್ರಕೂಟ ರಾಜ)"
     },
-    image: "amoghavarsha.jpeg"
+    image: "amoghavarsha_guru.jpeg"
   },
   // 134
   {
@@ -1889,7 +1863,7 @@ export const quotes = [
       hi: "आदिपुराण",
       kn: "ಆದಿಪುರಾಣ"
     },
-    image: "adipurana.jpeg"
+    image: "kshatriya_dharma.jpeg"
   },
   // 137
   {
@@ -1903,7 +1877,7 @@ export const quotes = [
       hi: "जैन शास्त्र",
       kn: "ಜೈನ ಶಾಸ್ತ್ರ"
     },
-    image: "jain_scripture.jpeg"
+    image: "tirthankara_mother.jpeg"
   },
   // 138
   {
@@ -1917,7 +1891,7 @@ export const quotes = [
       hi: "पद्मपुराण",
       kn: "ಪದ್ಮಪುರಾಣ"
     },
-    image: "padmapurana.jpeg"
+    image: "padmapurana_moon.jpeg"
   },
   // 139
   {
@@ -1945,7 +1919,7 @@ export const quotes = [
       hi: "रत्नकरंड श्रावकाचार",
       kn: "ರತ್ನಕರಂಡ ಶ್ರಾವಕಾಚಾರ"
     },
-    image: "ratnakaranda_shravakachara.jpeg"
+    image: "guest_house_metaphor.jpeg"
   },
   // 141
   {
@@ -1973,7 +1947,7 @@ export const quotes = [
       hi: "नियमसार",
       kn: "ನಿಯಮಸಾರ"
     },
-    image: "niyamasara.jpeg"
+    image: "body_temple.jpeg"
   },
   // 143
   {
@@ -2015,7 +1989,7 @@ export const quotes = [
       hi: "सर्वार्थसिद्धि",
       kn: "ಸರ್ವಾರ್ಥಸಿದ್ಧಿ"
     },
-    image: "sarvarthasiddhi.jpeg"
+    image: "gold_fire_metaphor.jpeg"
   },
   // 146
   {
@@ -2029,7 +2003,7 @@ export const quotes = [
       hi: "जैन कहावत",
       kn: "ಜೈನ ಗಾದೆ"
     },
-    image: "jain_proverb.jpeg"
+    image: "god_in_heart.jpeg"
   },
   // 147
   {
@@ -2043,7 +2017,7 @@ export const quotes = [
       hi: "उपदेश",
       kn: "ಉಪದೇಶ"
     },
-    image: "upadesha.jpeg"
+    image: "walking_the_path.jpeg"
   },
   // 148
   {
@@ -2057,7 +2031,7 @@ export const quotes = [
       hi: "आदिपुराण",
       kn: "ಆದಿಪುರಾಣ"
     },
-    image: "adipurana.jpeg"
+    image: "benevolent_king.jpeg"
   },
   // 149
   {
@@ -2071,7 +2045,7 @@ export const quotes = [
       hi: "आचारांग सूत्र",
       kn: "ಆಚಾರಾಂಗ ಸೂತ್ರ"
     },
-    image: "acharanga.jpeg"
+    image: "mahaveer_nature.jpeg"
   },
   // 150
   {
@@ -2085,7 +2059,7 @@ export const quotes = [
       hi: "उत्तराध्ययन सूत्र",
       kn: "ಉತ್ತರಾಧ್ಯಯನ ಸೂತ್ರ"
     },
-    image: "uttaradhyayana.jpeg"
+    image: "mahaveer_meditation.jpeg"
   },
   // 151
   {
@@ -2099,7 +2073,7 @@ export const quotes = [
       hi: "भगवान नेमिनाथ",
       kn: "ಭಗವಾನ್ ನೇಮಿನಾಥ"
     },
-    image: "neminath.jpeg"
+    image: "neminath_chariot.jpeg"
   },
   // 152
   {
@@ -2113,7 +2087,7 @@ export const quotes = [
       hi: "भगवान नेमिनाथ",
       kn: "ಭಗವಾನ್ ನೇಮಿನಾಥ"
     },
-    image: "neminath.jpeg"
+    image: "neminath_monk.jpeg"
   },
   // 153
   {
@@ -2127,7 +2101,7 @@ export const quotes = [
       hi: "सती राजुल",
       kn: "ಸತಿ ರಾಜುಲ್"
     },
-    image: "rajul.jpeg"
+    image: "rajul_ascetic.jpeg"
   },
   // 154
   {
@@ -2141,7 +2115,7 @@ export const quotes = [
       hi: "सीता (अग्नि परीक्षा)",
       kn: "ಸೀತಾ ಮಾತೆ (ಅಗ್ನಿ ಪರೀಕ್ಷೆ)"
     },
-    image: "sita.jpeg"
+    image: "sita_agni.jpeg"
   },
   // 155
   {
@@ -2155,7 +2129,7 @@ export const quotes = [
       hi: "भगवान पार्श्वनाथ",
       kn: "ಭಗವಾನ್ ಪಾರ್ಶ್ವನಾಥ"
     },
-    image: "parshvanath.jpeg"
+    image: "parshvanath_upasarga.jpeg"
   },
   // 156
   {
@@ -2197,7 +2171,7 @@ export const quotes = [
       hi: "माता त्रिशला",
       kn: "ತಾಯಿ ತ್ರಿಶಲಾ"
     },
-    image: "trishala.jpeg"
+    image: "tirthankara_mother.jpeg"
   },
   // 159
   {
@@ -2239,7 +2213,7 @@ export const quotes = [
       hi: "आचार्य समंतभद्र",
       kn: "ಆಚಾರ್ಯ ಸಮಂತಭದ್ರ"
     },
-    image: "samantabhadra.jpeg"
+    image: "samantabhadra_miracle.jpeg"
   },
   // 162
   {
@@ -2253,7 +2227,7 @@ export const quotes = [
       hi: "आचार्य अकलंक देव",
       kn: "ಆಚಾರ್ಯ ಅಕಲಂಕ ದೇವ"
     },
-    image: "akalanka.jpeg"
+    image: "akalanka_debate.jpeg"
   },
   // 163
   {
@@ -2263,11 +2237,11 @@ export const quotes = [
       kn: "ನಾನು ರಾಜನಿಗೆ ತಲೆಬಾಗುವುದಿಲ್ಲ; ಇಂದ್ರಿಯಗಳನ್ನು ಗೆದ್ದ ತಪಸ್ವಿಗೆ ಮಾತ್ರ ನಾನು ತಲೆಬಾಗುತ್ತೇನೆ."
     },
     author: {
-      en: "Acharya Manatunga",
-      hi: "आचार्य मानतुंग",
-      kn: "ಆಚಾರ್ಯ ಮಾನತುಂಗ"
+      en: "King Ativirya",
+      hi: "राजा अतिवीर्य",
+      kn: "ರಾಜ ಅತಿವೀರ್ಯ"
     },
-    image: "manatunga.jpeg"
+    image: "ativirya.jpeg"
   },
   // 164
   {
@@ -2309,7 +2283,7 @@ export const quotes = [
       hi: "आचार्य वीरसेन (धवला टीका)",
       kn: "ಆಚಾರ್ಯ ವೀರಸೇನ (ಧವಲಾ ಟೀಕಾ)"
     },
-    image: "virasena.jpeg"
+    image: "virasena_dhavala.jpeg"
   },
   // 167
   {
@@ -2337,7 +2311,7 @@ export const quotes = [
       hi: "राजा विष्णुवर्धन (होयसल राजवंश)",
       kn: "ರಾಜ ವಿಷ್ಣುವರ್ಧನ (ಹೊಯ್ಸಳ ರಾಜವಂಶ)"
     },
-    image: "vishnuvardhana.jpeg"
+    image: "vishnuvardhana_temple.jpeg"
   },
   // 169
   {
@@ -2351,7 +2325,7 @@ export const quotes = [
       hi: "रानी शांतला देवी",
       kn: "ರಾಣಿ ಶಾಂತಲಾ ದೇವಿ"
     },
-    image: "shantala.jpeg"
+    image: "shantala_dance.jpeg"
   },
   // 170
   {
@@ -2365,7 +2339,7 @@ export const quotes = [
       hi: "राजा अमोघवर्ष",
       kn: "ರಾಜ ಅಮೋಘವರ್ಷ"
     },
-    image: "amoghavarsha.jpeg"
+    image: "amoghavarsha_guru.jpeg"
   },
   // 171
   {
@@ -2407,7 +2381,7 @@ export const quotes = [
       hi: "आचार्य विद्यासागर",
       kn: "ಆಚಾರ್ಯ ವಿದ್ಯಾಸಾಗರ"
     },
-    image: "vidyasagar.png"
+    image: "vidyasagar_bharat.jpeg"
   },
   // 174
   {
@@ -2449,7 +2423,7 @@ export const quotes = [
       hi: "गणिनी आर्यिका ज्ञानमती माताजी",
       kn: "ಗಣಿನಿ ಆರ್ಯಿಕಾ ಜ್ಞಾನಮತಿ ಮಾತಾಜಿ"
     },
-    image: "gyanmati_mataji.jpeg"
+    image: "gyanmati_mataji.png"
   },
   // 177
   {
@@ -2463,7 +2437,7 @@ export const quotes = [
       hi: "गणिनी आर्यिका सुयोग्यनंदिनी माताजी",
       kn: "ಗಣಿನಿ ಆರ್ಯಿಕಾ ಸುಯೋಗ್ಯನಂದಿನಿ ಮಾತಾಜಿ"
     },
-    image: "suyogyanandini_mataji.jpeg"
+    image: "suyogyanandini_mataji_1.png"
   },
   // 178
   {
@@ -2477,7 +2451,7 @@ export const quotes = [
       hi: "गणिनी आर्यिका सुयोग्यनंदिनी माताजी",
       kn: "ಗಣಿನಿ ಆರ್ಯಿಕಾ ಸುಯೋಗ್ಯನಂದಿನಿ ಮಾತಾಜಿ"
     },
-    image: "suyogyanandini_mataji.jpeg"
+    image: "suyogyanandini_mataji_2.png"
   },
   // 179
   {
@@ -2491,7 +2465,7 @@ export const quotes = [
       hi: "आचार्य विद्यासागर",
       kn: "ಆಚಾರ್ಯ ವಿದ್ಯಾಸಾಗರ"
     },
-    image: "vidyasagar.png"
+    image: "vidyasagar_cow.jpeg"
   },
   // 180
   {
@@ -2505,7 +2479,7 @@ export const quotes = [
       hi: "आचार्य विमलसागर",
       kn: "ಆಚಾರ್ಯ ವಿಮಲಸಾಗರ"
     },
-    image: "vimalsagar.jpeg"
+    image: "vimalsagar.png"
   },
   // 181
   {
