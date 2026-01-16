@@ -6,13 +6,13 @@ export function getTomorrowsQuote() {
   // 1. Get "Tomorrow's" Date
   const today = new Date();
   const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 2); // Jump +1 Day
+  tomorrow.setDate(tomorrow.getDate() + 1); // Jump +1 Day
   
   const targetTime = tomorrow.getTime();
   const msPerDay = 24 * 60 * 60 * 1000;
   
   // 2. Calculate days passed up to TOMORROW
-  const daysPassed = Math.floor((targetTime - startDate) / msPerDay);
+  const daysPassed = Math.floor((targetTime - startDate) / msPerDay) + 1;
 
   // 3. The "Prime Jump" Logic (kept identical to preserve sync)
   const primeJump = 53; 
