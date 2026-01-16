@@ -6,7 +6,7 @@ export function getTodaysQuote() {
   const today = new Date().getTime();
   const msPerDay = 24 * 60 * 60 * 1000;
   
-  const daysPassed = Math.floor((today - startDate) / msPerDay) + 1;
+  const daysPassed = Math.floor((today - startDate) / msPerDay) - 1;
 
   // The "Prime Jump" Logic (Deterministic Shuffle)
   const primeJump = 53; 
