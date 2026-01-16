@@ -1625,7 +1625,21 @@ export const quotes = [
     },
     image: "ram.jpeg"
   },
-  // 118 (Note: Input skipped 117, keeping sequence)
+  // 117
+  {
+    text: {
+      en: "Truth has many sides. Insisting that only your view is correct is like a blind man claiming the elephant is just a pillar.",
+      hi: "सत्य के कई पहलू होते हैं। यह आग्रह करना कि केवल आपका दृष्टिकोण ही सही है, अंधे व्यक्ति द्वारा हाथी को खंभा बताने जैसा है।",
+      kn: "ಸತ್ಯಕ್ಕೆ ಹಲವು ಮುಖಗಳಿರುತ್ತವೆ. ನಿಮ್ಮ ದೃಷ್ಟಿಕೋನ ಮಾತ್ರ ಸರಿ ಎಂದು ಹಠ ಮಾಡುವುದು, ಕುರುಡನು ಆನೆಯನ್ನು ಕಂಬ ಎಂದು ಹೇಳಿದಂತೆ."
+    },
+    author: {
+      en: "Anekantavada Principle",
+      hi: "अनेकांतवाद सिद्धांत",
+      kn: "ಅನೇಕಾಂತವಾದ ಸಿದ್ಧಾಂತ"
+    },
+    image: "anekantavada.jpeg"
+  },
+  // 118
   {
     text: {
       en: "I have carried the burden of this body for too long. Now I shall carry the burden of vows.",
@@ -1723,7 +1737,20 @@ export const quotes = [
     },
     image: "anathimuni.jpeg"
   },
-  // 125 Skipped
+  // 125
+  {
+    text: {
+      en: "Just as a heavy stone sinks in water, a soul heavy with sins sinks into the lower worlds (Hell).",
+      hi: "जैसे भारी पत्थर पानी में डूब जाता है, वैसे ही पापों से भारी आत्मा नीचे के लोकों (नरक) में डूब जाती है।",
+      kn: "ಭಾರವಾದ ಕಲ್ಲು ನೀರಿನಲ್ಲಿ ಮುಳುಗುವಂತೆ, ಪಾಪಗಳಿಂದ ಭಾರವಾದ ಆತ್ಮವು ಕೆಳಗಿನ ಲೋಕಗಳಿಗೆ (ನರಕ) ಮುಳುಗುತ್ತದೆ."
+    },
+    author: {
+      en: "Ratnakaranda Shravakachara",
+      hi: "रत्नकरंड श्रावकाचार",
+      kn: "ರತ್ನಕರಂಡ ಶ್ರಾವಕಾಚಾರ"
+    },
+    image: "sinking_stone.jpeg"
+  },
   // 126
   {
     text: {
@@ -1794,7 +1821,20 @@ export const quotes = [
     },
     image: "chandragupta_renunciation.jpeg"
   },
-  // 131 Skipped 
+  // 131
+  {
+    text: {
+      en: "May the entire universe attain bliss; may all beings look at each other with the eyes of a friend.",
+      hi: "संपूर्ण जगत को आनंद प्राप्त हो; सभी प्राणी एक-दूसरे को मित्र की दृष्टि से देखें।",
+      kn: "ಸಮಸ್ತ ಜಗತ್ತಿಗೂ ಆನಂದ ಸಿಗಲಿ; ಎಲ್ಲಾ ಜೀವಿಗಳು ಪರಸ್ಪರ ಮಿತ್ರನ ದೃಷ್ಟಿಯಿಂದ ನೋಡಲಿ."
+    },
+    author: {
+      en: "Mangal Bhavana (Shivmastu Sarva Jagatah)",
+      hi: "मंगल भावना",
+      kn: "ಮಂಗಳ ಭಾವನೆ"
+    },
+    image: "mangal_bhavana.jpeg"
+  },
   // 132
   {
     text: {
@@ -2507,7 +2547,7 @@ export const quotes = [
       hi: "राजा हरिश्चंद्र",
       kn: "ರಾಜ ಹರಿಶ್ಚಂದ್ರ"
     },
-    image: "harishchandra.jpeg"
+    image: "harishchandra_truth.jpeg"
   },
   // 183
   {
@@ -2521,7 +2561,7 @@ export const quotes = [
       hi: "ज्ञानार्णव",
       kn: "ಜ್ಞಾನಾರ್ಣವ"
     },
-    image: "jnanarnava.jpeg"
+    image: "sword_edge_path.jpeg"
   },
   // 184
   {
@@ -2535,7 +2575,7 @@ export const quotes = [
       hi: "धवला",
       kn: "ಧವಲಾ"
     },
-    image: "dhavala.jpeg"
+    image: "chains_attachment.jpeg"
   },
   // 185
   {
@@ -2549,7 +2589,7 @@ export const quotes = [
       hi: "रत्नकरंड श्रावकाचार",
       kn: "ರತ್ನಕರಂಡ ಶ್ರಾವಕಾಚಾರ"
     },
-    image: "ratnakaranda_shravakachara.jpeg"
+    image: "lotus_leaf_water.jpeg"
   },
   // 186
   {
@@ -2563,7 +2603,7 @@ export const quotes = [
       hi: "अहिंसावाणी",
       kn: "ಅಹಿಂಸಾವಾಣಿ"
     },
-    image: "ahimsavani.jpeg"
+    image: "mahaveer_compassion.jpeg"
   },
   // 187
   {
@@ -2577,7 +2617,7 @@ export const quotes = [
       hi: "दिगंबर परंपरा",
       kn: "ದಿಗಂಬರ ಪರಂಪರೆ"
     },
-    image: "digambar_tradition.jpeg"
+    image: "mahaveer_nature.jpeg"
   },
   // 188
   {
@@ -2591,7 +2631,7 @@ export const quotes = [
       hi: "सल्लेखना पाठ",
       kn: "ಸಲ್ಲೇಖನ ಪಾಠ"
     },
-    image: "sallekhana.jpeg"
+    image: "sallekhana_fearless.jpeg"
   },
   // 189
   {
@@ -2605,7 +2645,7 @@ export const quotes = [
       hi: "मुनि परंपरा",
       kn: "ಮುನಿ ಪರಂಪರೆ"
     },
-    image: "muni_tradition.jpeg"
+    image: "digambara_sky.jpeg"
   },
   // 190
   {
@@ -2633,7 +2673,7 @@ export const quotes = [
       hi: "मुनि सुधासागर",
       kn: "मुनि ಸುಧಾಸಾಗರ"
     },
-    image: "sudhasagar.png"
+    image: "crossroads_life.jpeg"
   },
   // 192
   {
@@ -2647,7 +2687,7 @@ export const quotes = [
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
     },
-    image: "mahaveer.jpg"
+    image: "jain_proverb_time.jpeg"
   },
   // 193
   {
@@ -2661,7 +2701,7 @@ export const quotes = [
       hi: "अपरिग्रह सिद्धांत",
       kn: "ಅಪರಿಗ್ರಹ ಸಿದ್ಧಾಂತ"
     },
-    image: "aparigraha.jpeg"
+    image: "hoarding_weight.jpeg"
   },
   // 194
   {
@@ -2675,7 +2715,7 @@ export const quotes = [
       hi: "वैराग्य भावना",
       kn: "ವೈರಾಗ್ಯ ಭಾವನೆ"
     },
-    image: "vairagya_bhavana.jpeg"
+    image: "water_hot_pan.jpeg"
   },
   // 195
   {
@@ -2689,7 +2729,7 @@ export const quotes = [
       hi: "आत्म चिंतन",
       kn: "ಆತ್ಮ ಚಿಂತನ"
     },
-    image: "atma_chintan.jpeg"
+    image: "god_in_heart.jpeg"
   },
   // 196
   {
@@ -2703,7 +2743,7 @@ export const quotes = [
       hi: "जैन श्रद्धा",
       kn: "ಜೈನ ಶ್ರದ್ಧೆ"
     },
-    image: "jain_faith.jpeg"
+    image: "jain_faith_trinity.jpeg"
   },
   // 197
   {
@@ -2717,7 +2757,7 @@ export const quotes = [
       hi: "जयतु जिनशासनम्",
       kn: "ಜಯತು ಜಿನಶಾಸನಂ"
     },
-    image: "jayatu_jinashasanam.jpeg"
+    image: "jain_flag_globe.jpeg"
   },
   // 198
   {
@@ -2731,7 +2771,7 @@ export const quotes = [
       hi: "क्षमा वाणी",
       kn: "ಕ್ಷಮಾ ವಾಣಿ"
     },
-    image: "kshamavani.jpeg"
+    image: "forgiveness_jewel.jpeg"
   },
   // 199
   {
@@ -2745,7 +2785,7 @@ export const quotes = [
       hi: "दिगंबर मुनि परंपरा",
       kn: "ದಿಗಂಬರ ಮುನಿ ಪರಂಪರೆ"
     },
-    image: "muni_tradition.jpeg"
+    image: "bahubali_meditation.png"
   },
   // 200
   {
@@ -2759,7 +2799,7 @@ export const quotes = [
       hi: "भगवान महावीर",
       kn: "ಭಗವಾನ್ ಮಹಾವೀರ"
     },
-    image: "mahaveer.jpg"
+    image: "chandanbala_offering.jpg"
   },
   // 201
   {
@@ -2773,7 +2813,7 @@ export const quotes = [
       hi: "भगवान नेमिनाथ",
       kn: "ಭಗವಾನ್ ನೇಮಿನಾಥ"
     },
-    image: "neminath.jpeg"
+    image: "neminath_crown.jpeg"
   },
   // 202
   {
@@ -2787,7 +2827,7 @@ export const quotes = [
       hi: "भगवान नेमिनाथ",
       kn: "ಭಗವಾನ್ ನೇಮಿನಾಥ"
     },
-    image: "neminath.jpeg"
+    image: "chakra_vs_karma.jpeg"
   },
   // 203
   {
@@ -2801,7 +2841,7 @@ export const quotes = [
       hi: "भगवान नेमिनाथ",
       kn: "ಭಗವಾನ್ ನೇಮಿನಾಥ"
     },
-    image: "neminath.jpeg"
+    image: "mahaveer_meditation.jpeg"
   },
   // 204
   {
@@ -2815,7 +2855,7 @@ export const quotes = [
       hi: "श्री कृष्ण",
       kn: "ಶ್ರೀ ಕೃಷ್ಣ"
     },
-    image: "krishna.jpeg"
+    image: "krishna_neminath_sun.jpeg"
   },
   // 205
   {
@@ -2829,7 +2869,7 @@ export const quotes = [
       hi: "श्री कृष्ण",
       kn: "ಶ್ರೀ ಕೃಷ್ಣ"
     },
-    image: "krishna.jpeg"
+    image: "krishna_battlefield.jpeg"
   },
   // 206
   {
@@ -2843,7 +2883,7 @@ export const quotes = [
       hi: "श्री कृष्ण",
       kn: "ಶ್ರೀ ಕೃಷ್ಣ"
     },
-    image: "krishna.jpeg"
+    image: "krishna_future_tirthankara.jpeg"
   },
   // 207
   {
@@ -2857,7 +2897,7 @@ export const quotes = [
       hi: "श्री कृष्ण",
       kn: "ಶ್ರೀ ಕೃಷ್ಣ"
     },
-    image: "krishna.jpeg"
+    image: "draupadi_shield.jpeg"
   },
   // 208
   {
@@ -2871,7 +2911,7 @@ export const quotes = [
       hi: "श्री कृष्ण",
       kn: "ಶ್ರೀ ಕೃಷ್ಣ"
     },
-    image: "krishna.jpeg"
+    image: "krishna_consoling_balram.jpeg"
   },
   // 209
   {
@@ -2885,7 +2925,7 @@ export const quotes = [
       hi: "श्री कृष्ण",
       kn: "ಶ್ರೀ ಕೃಷ್ಣ"
     },
-    image: "krishna.jpeg"
+    image: "krishna_govardhan_karma.jpeg"
   },
   // 210
   {
@@ -2899,7 +2939,7 @@ export const quotes = [
       hi: "बलराम",
       kn: "ಬಲರಾಮ"
     },
-    image: "balram.jpeg"
+    image: "balram_grief.jpeg"
   },
   // 211
   {
@@ -2913,7 +2953,7 @@ export const quotes = [
       hi: "बलराम",
       kn: "ಬಲರಾಮ"
     },
-    image: "balram.jpeg"
+    image: "balram_renunciation.jpeg"
   },
   // 212
   {
@@ -2927,7 +2967,7 @@ export const quotes = [
       hi: "मुनि बलराम",
       kn: "ಮುನಿ ಬಲರಾಮ"
     },
-    image: "balram.jpeg"
+    image: "balram_meditation.jpeg"
   },
   // 213
   {
@@ -2941,7 +2981,7 @@ export const quotes = [
       hi: "मुनि बलराम",
       kn: "ಮುನಿ ಬಲರಾಮ"
     },
-    image: "balram.jpeg"
+    image: "balram_krishna_contrast.jpeg"
   },
   // 214
   {
@@ -2955,7 +2995,7 @@ export const quotes = [
       hi: "बलराम",
       kn: "ಬಲರಾಮ"
     },
-    image: "balram.jpeg"
+    image: "balram_meditation.jpeg"
   },
   // 215
   {
@@ -2983,7 +3023,7 @@ export const quotes = [
       hi: "अर्जुन",
       kn: "ಅರ್ಜುನ"
     },
-    image: "arjuna.jpeg"
+    image: "arjuna_meditation.jpeg"
   },
   // 217
   {
@@ -2997,7 +3037,7 @@ export const quotes = [
       hi: "भीम",
       kn: "ಭೀಮ"
     },
-    image: "bhima.jpeg"
+    image: "bhima_ahimsa.jpeg"
   },
   // 218
   {
@@ -3011,7 +3051,7 @@ export const quotes = [
       hi: "युधिष्ठिर",
       kn: "ಯುಧಿಷ್ಠಿರ"
     },
-    image: "yudhishthira.jpeg"
+    image: "yudhishthira_battlefield.jpeg"
   },
   // 219
   {
@@ -3025,7 +3065,7 @@ export const quotes = [
       hi: "अर्जुन",
       kn: "ಅರ್ಜುನ"
     },
-    image: "arjuna.jpeg"
+    image: "arjuna_meditation.jpeg"
   },
   // 220
   {
@@ -3039,7 +3079,7 @@ export const quotes = [
       hi: "सहदेव",
       kn: "ಸಹದೇವ"
     },
-    image: "sahadeva.jpeg"
+    image: "sahadeva_soul.jpeg"
   },
   // 221
   {
@@ -3053,7 +3093,7 @@ export const quotes = [
       hi: "पांडव",
       kn: "ಪಾಂಡವರು"
     },
-    image: "pandavas.jpeg"
+    image: "pandavas_shatrunjaya.jpeg"
   },
   // 222
   {
@@ -3067,7 +3107,7 @@ export const quotes = [
       hi: "दुर्योधन",
       kn: "ದುರ್ಯೋಧನ"
     },
-    image: "duryodhana.jpeg"
+    image: "duryodhana_greed.jpeg"
   },
   // 223
   {
@@ -3081,7 +3121,7 @@ export const quotes = [
       hi: "कर्ण",
       kn: "ಕರ್ಣ"
     },
-    image: "karna.jpeg"
+    image: "karna_charity.jpeg"
   },
   // 224
   {
@@ -3095,7 +3135,7 @@ export const quotes = [
       hi: "भीष्म पितामह",
       kn: "ಭೀಷ್ಮ ಪಿತಾಮಹ"
     },
-    image: "bhishma.jpeg"
+    image: "bhishma_bed_arrows.jpeg"
   },
   // 225
   {
@@ -3109,7 +3149,7 @@ export const quotes = [
       hi: "धृतराष्ट्र",
       kn: "ಧೃತರಾಷ್ಟ್ರ"
     },
-    image: "dhritarashtra.jpeg"
+    image: "dhritarashtra_blind.jpeg"
   },
   // 226
   {
@@ -3123,7 +3163,7 @@ export const quotes = [
       hi: "अश्वत्थामा",
       kn: "ಅಶ್ವತ್ಥಾಮ"
     },
-    image: "ashwatthama.jpeg"
+    image: "ashwatthama_fire.jpeg"
   },
   // 227
   {
@@ -3137,7 +3177,7 @@ export const quotes = [
       hi: "द्रौपदी",
       kn: "ದ್ರೌಪದಿ"
     },
-    image: "draupadi.jpeg"
+    image: "draupadi_shield.jpeg"
   },
   // 228
   {
@@ -3151,7 +3191,7 @@ export const quotes = [
       hi: "कुंती",
       kn: "ಕುಂತಿ"
     },
-    image: "kunti.jpeg"
+    image: "kunti_counsel.jpeg"
   },
   // 229
   {
@@ -3165,7 +3205,7 @@ export const quotes = [
       hi: "कुंती",
       kn: "ಕುಂತಿ"
     },
-    image: "kunti.jpeg"
+    image: "kunti_gandhari_mourning.jpeg"
   },
   // 230
   {
@@ -3179,7 +3219,7 @@ export const quotes = [
       hi: "विदुर",
       kn: "ವಿದುರ"
     },
-    image: "vidura.jpeg"
+    image: "dice_karma.jpeg"
   },
   // 231
   {
@@ -3193,7 +3233,7 @@ export const quotes = [
       hi: "हरिवंश पुराण",
       kn: "ಹರಿವಂಶ ಪುರಾಣ"
     },
-    image: "harivamsa_purana.jpeg"
+    image: "dwaraka_burning.jpeg"
   },
   // 232
   {
@@ -3207,7 +3247,7 @@ export const quotes = [
       hi: "राजा उग्रसेन",
       kn: "ರಾಜ ಉಗ್ರಸೇನ"
     },
-    image: "ugrasena.jpeg"
+    image: "ugrasena_protection.jpeg"
   },
   // 233
   {
@@ -3221,7 +3261,7 @@ export const quotes = [
       hi: "हरिवंश पुराण",
       kn: "ಹರಿವಂಶ ಪುರಾಣ"
     },
-    image: "harivamsa_purana.jpeg"
+    image: "yadava_civil_war.jpeg"
   },
   // 234
   {
@@ -3235,7 +3275,7 @@ export const quotes = [
       hi: "मुनि दीपायन",
       kn: "मुनि ದೀಪಾಯನ"
     },
-    image: "dipayan.jpeg"
+    image: "dipayan_anger.jpeg"
   },
   // 235
   {
@@ -3249,7 +3289,7 @@ export const quotes = [
       hi: "जैन शास्त्र",
       kn: "ಜೈನ ಶಾಸ್ತ್ರ"
     },
-    image: "jain_scripture.jpeg"
+    image: "krishna_future_tirthankara.jpeg"
   },
   // 236
   {
@@ -3263,7 +3303,7 @@ export const quotes = [
       hi: "जैन उपदेश",
       kn: "ಜೈನ ಉಪದೇಶ"
     },
-    image: "jain_upadesha.jpeg"
+    image: "virtue_vice_faces.jpeg"
   },
   // 237
   {
@@ -3277,7 +3317,7 @@ export const quotes = [
       hi: "अग्नि देव",
       kn: "ಅಗ್ನಿ ದೇವ"
     },
-    image: "agni_dev.jpeg"
+    image: "fire_soul_karma.jpeg"
   },
   // 238
   {
@@ -3291,7 +3331,7 @@ export const quotes = [
       hi: "भगवान नेमिनाथ",
       kn: "ಭಗವಾನ್ ನೇಮಿನಾಥ"
     },
-    image: "neminath.jpeg"
+    image: "neminath_crown.jpeg"
   },
   // 239
   {
@@ -3305,7 +3345,7 @@ export const quotes = [
       hi: "श्री कृष्ण",
       kn: "ಶ್ರೀ ಕೃಷ್ಣ"
     },
-    image: "krishna.jpeg"
+    image: "krishna_conch.jpeg"
   },
   // 240
   {
@@ -3319,7 +3359,7 @@ export const quotes = [
       hi: "जैन विज़्डम",
       kn: "ಜೈನ ವಿಸ್ಡಮ್"
     },
-    image: "jain_wisdom.jpeg"
+    image: "war_karma_contrast.jpeg"
   },
   // 241
   {
@@ -3333,7 +3373,7 @@ export const quotes = [
       hi: "पांडव",
       kn: "ಪಾಂಡವರು"
     },
-    image: "pandavas.jpeg"
+    image: "weapons_to_flowers.jpeg"
   },
   // 242
   {
@@ -3347,7 +3387,7 @@ export const quotes = [
       hi: "तीर्थ क्षेत्र महिमा",
       kn: "ತೀರ್ಥ ಕ್ಷೇತ್ರ ಮಹಿಮೆ"
     },
-    image: "tirth_kshetra.jpeg"
+    image: "girnar_shatrunjaya.jpeg"
   },
   // 243
   {
@@ -3361,7 +3401,7 @@ export const quotes = [
       hi: "युधिष्ठिर",
       kn: "ಯುಧಿಷ್ಠಿರ"
     },
-    image: "yudhishthira.jpeg"
+    image: "yudhishthira_battlefield.jpeg"
   },
   // 244
   {
@@ -3375,7 +3415,7 @@ export const quotes = [
       hi: "पांडव पुराण",
       kn: "ಪಾಂಡವ ಪುರಾಣ"
     },
-    image: "pandava_purana.jpeg"
+    image: "pandavas_shatrunjaya.jpeg"
   },
   // 245
   {
@@ -3389,7 +3429,7 @@ export const quotes = [
       hi: "भगवान नेमिनाथ",
       kn: "ಭಗವಾನ್ ನೇಮಿನಾಥ"
     },
-    image: "neminath.jpeg"
+    image: "neminath_monk.jpeg"
   },
   // 246
   {
@@ -3403,7 +3443,7 @@ export const quotes = [
       hi: "पद्मपुराण",
       kn: "ಪದ್ಮಪುರಾಣ"
     },
-    image: "padmapurana.jpeg"
+    image: "ravana_devotion.jpeg"
   },
   // 247
   {
@@ -3431,7 +3471,7 @@ export const quotes = [
       hi: "भगवान पार्श्वनाथ",
       kn: "ಭಗವಾನ್ ಪಾರ್ಶ್ವನಾಥ"
     },
-    image: "parshvanath.jpeg"
+    image: "parshvanath_upasarga.jpeg"
   },
   // 249
   {
@@ -3445,7 +3485,7 @@ export const quotes = [
       hi: "राजकुमार पार्श्वनाथ",
       kn: "ರಾಜಕುಮಾರ ಪಾರ್ಶ್ವನಾಥ"
     },
-    image: "parshvanath.jpeg"
+    image: "parshvanath_logs.jpeg"
   },
   // 250
   {
@@ -3459,7 +3499,7 @@ export const quotes = [
       hi: "भगवान पार्श्वनाथ",
       kn: "ಭಗವಾನ್ ಪಾರ್ಶ್ವನಾಥ"
     },
-    image: "parshvanath.jpeg"
+    image: "parshvanath_upasarga.jpeg"
   },
   // 251
   {
@@ -3473,7 +3513,7 @@ export const quotes = [
       hi: "भगवान पार्श्वनाथ",
       kn: "ಭಗವಾನ್ ಪಾರ್ಶ್ವನಾಥ"
     },
-    image: "parshvanath.jpeg"
+    image: "parshvanath_meru.jpeg"
   },
   // 252
   {
@@ -3487,7 +3527,7 @@ export const quotes = [
       hi: "पद्म (श्री रामचंद्र)",
       kn: "ಪದ್ಮ (ಶ್ರೀ ರಾಮಚಂದ್ರ)"
     },
-    image: "ram.jpeg"
+    image: "ram_protecting.jpeg"
   },
   // 253
   {
@@ -3501,7 +3541,7 @@ export const quotes = [
       hi: "पद्म (श्री रामचंद्र)",
       kn: "ಪದ್ಮ (ಶ್ರೀ ರಾಮಚಂದ್ರ)"
     },
-    image: "ram.jpeg"
+    image: "ram_lakshmana_contrast.jpeg"
   },
   // 254
   {
@@ -3515,7 +3555,7 @@ export const quotes = [
       hi: "पद्म (श्री रामचंद्र)",
       kn: "ಪದ್ಮ (ಶ್ರೀ ರಾಮಚಂದ್ರ)"
     },
-    image: "ram.jpeg"
+    image: "sita_agni.jpeg"
   },
   // 255
   {
@@ -3529,7 +3569,7 @@ export const quotes = [
       hi: "पद्म (श्री रामचंद्र)",
       kn: "ಪದ್ಮ (ಶ್ರೀ ರಾಮಚಂದ್ರ)"
     },
-    image: "ram.jpeg"
+    image: "ram_mourning_lakshmana.jpeg"
   },
   // 256
   {
@@ -3543,7 +3583,7 @@ export const quotes = [
       hi: "मुनि रामचंद्र",
       kn: "ಮುನಿ ರಾಮಚಂದ್ರ"
     },
-    image: "ram.jpeg"
+    image: "ram_monk.jpeg"
   },
   // 257
   {
@@ -3557,7 +3597,7 @@ export const quotes = [
       hi: "लक्ष्मण",
       kn: "ಲಕ್ಷ್ಮಣ"
     },
-    image: "lakshmana.jpeg"
+    image: "lakshmana_narayana.jpeg"
   },
   // 258
   {
@@ -3571,7 +3611,7 @@ export const quotes = [
       hi: "लक्ष्मण",
       kn: "ಲಕ್ಷ್ಮಣ"
     },
-    image: "lakshmana.jpeg"
+    image: "lakshmana_kotishila.jpeg"
   },
   // 259
   {
@@ -3585,7 +3625,7 @@ export const quotes = [
       hi: "लक्ष्मण",
       kn: "ಲಕ್ಷ್ಮಣ"
     },
-    image: "lakshmana.jpeg"
+    image: "lakshmana_chakra.jpeg"
   },
   // 260
   {
@@ -3599,7 +3639,7 @@ export const quotes = [
       hi: "लक्ष्मण की आत्मा",
       kn: "ಲಕ್ಷ್ಮಣನ ಆತ್ಮ"
     },
-    image: "lakshmana.jpeg"
+    image: "lakshmana_soul_hell.jpeg"
   },
   // 261
   {
@@ -3613,7 +3653,7 @@ export const quotes = [
       hi: "रावण (वीणा वादन)",
       kn: "ರಾವಣ (ವೀಣಾ ವಾದನ)"
     },
-    image: "ravana.jpeg"
+    image: "ravana_veena.jpeg"
   },
   // 262
   {
@@ -3627,7 +3667,7 @@ export const quotes = [
       hi: "रावण",
       kn: "ರಾವಣ"
     },
-    image: "ravana.jpeg"
+    image: "sita.jpeg"
   },
   // 263
   {
@@ -3641,7 +3681,7 @@ export const quotes = [
       hi: "रावण",
       kn: "ರಾವಣ"
     },
-    image: "ravana.jpeg"
+    image: "ravana_vow.jpeg"
   },
   // 264
   {
@@ -3655,7 +3695,7 @@ export const quotes = [
       hi: "रावण",
       kn: "ರಾವಣ"
     },
-    image: "ravana.jpeg"
+    image: "ravana_sword_karma.jpeg"
   },
   // 265
   {
@@ -3669,7 +3709,7 @@ export const quotes = [
       hi: "रावण",
       kn: "ರಾವಣ"
     },
-    image: "ravana.jpeg"
+    image: "lanka_crack.jpeg"
   },
   // 266
   {
@@ -3683,21 +3723,7 @@ export const quotes = [
       hi: "भरत",
       kn: "ಭರತ"
     },
-    image: "bharat.jpeg"
-  },
-  // 266 (Extra)
-  {
-    text: {
-      en: "Take this kingdom back, Brother. It burns my hands like holding a hot coal.",
-      hi: "इस राज्य को वापस ले लो, भैया। यह मेरे हाथों को जलते हुए कोयले की तरह जलाता है।",
-      kn: "ಈ ರಾಜ್ಯವನ್ನು ಹಿ ತೆಗೆದುಕೊಳ್ಳಿ ಅಣ್ಣ. ಇದು ಸುಡುವ ಕೆಂಡದಂತೆ ನನ್ನ ಕೈಗಳನ್ನು ಸುಡುತ್ತದೆ."
-    },
-    author: {
-      en: "Bharat",
-      hi: "भरत",
-      kn: "ಭರತ"
-    },
-    image: "bharat.jpeg"
+    image: "lotus_leaf_water.jpeg"
   },
   // 267
   {
@@ -3711,7 +3737,7 @@ export const quotes = [
       hi: "भरत",
       kn: "ಭರತ"
     },
-    image: "bharat.jpeg"
+    image: "bharat_floor.jpeg"
   },
   // 268
   {
@@ -3725,7 +3751,7 @@ export const quotes = [
       hi: "भरत",
       kn: "ಭರತ"
     },
-    image: "bharat.jpeg"
+    image: "benevolent_king.jpeg"
   },
   // 269
   {
@@ -3739,7 +3765,7 @@ export const quotes = [
       hi: "कैकेयी",
       kn: "ಕೈಕೇಯಿ"
     },
-    image: "kaikeyi.jpeg"
+    image: "kaikeyi_regret.jpeg"
   },
   // 270
   {
@@ -3753,7 +3779,7 @@ export const quotes = [
       hi: "कैकेयी",
       kn: "ಕೈಕೇಯಿ"
     },
-    image: "kaikeyi.jpeg"
+    image: "ram.jpeg"
   },
   // 271
   {
@@ -3781,7 +3807,7 @@ export const quotes = [
       hi: "सीता",
       kn: "ಸೀತಾ ಮಾತೆ"
     },
-    image: "sita.jpeg"
+    image: "sita_refusing_food.jpeg"
   },
   // 273
   {
@@ -3795,7 +3821,7 @@ export const quotes = [
       hi: "अंजना देवी",
       kn: "ಅಂಜನಾ ದೇವಿ"
     },
-    image: "anjanadevi.jpeg"
+    image: "anjanadevi_hanuman.jpeg"
   },
   // 274
   {
@@ -3809,7 +3835,7 @@ export const quotes = [
       hi: "हनुमान",
       kn: "ಹನುಮಂತ"
     },
-    image: "hanuman.jpeg"
+    image: "hanuman_burning_lanka.jpeg"
   },
   // 275
   {
@@ -3823,7 +3849,7 @@ export const quotes = [
       hi: "कमठ (बाद के भव में)",
       kn: "ಕಮಠ (ನಂತರದ ಭವದಲ್ಲಿ)"
     },
-    image: "kamatha.jpeg"
+    image: "kamatha_serving.jpeg"
   },
   // 276
   {
@@ -3837,7 +3863,7 @@ export const quotes = [
       hi: "सुग्रीव",
       kn: "ಸುಗ್ರೀವ"
     },
-    image: "sugriva.jpeg"
+    image: "sugriva_consoling.jpeg"
   },
   // 277
   {
@@ -3865,7 +3891,7 @@ export const quotes = [
       hi: "मुनि लव और कुश",
       kn: "ಮುನಿ ಲವ ಮತ್ತು ಕುಶ"
     },
-    image: "lav_kush.jpeg"
+    image: "lav_kush_monks.jpeg"
   },
   // 279
   {
@@ -3879,7 +3905,7 @@ export const quotes = [
       hi: "मुनि राम",
       kn: "ಮುನಿ ರಾಮ"
     },
-    image: "ram.jpeg"
+    image: "ram_monk.jpeg"
   },
   // 280
   {
@@ -3893,7 +3919,7 @@ export const quotes = [
       hi: "भगवान पार्श्वनाथ",
       kn: "ಭಗವಾನ್ ಪಾರ್ಶ್ವನಾಥ"
     },
-    image: "parshvanath.jpeg"
+    image: "snake_shedding_skin.jpeg"
   },
   // 281
   {
@@ -3907,7 +3933,7 @@ export const quotes = [
       hi: "पद्मपुराण",
       kn: "ಪದ್ಮಪುರಾಣ"
     },
-    image: "padmapurana.jpeg"
+    image: "fire_soul_karma.jpeg"
   },
   // 282
   {
@@ -3921,7 +3947,7 @@ export const quotes = [
       hi: "क्षमा धर्म",
       kn: "ಕ್ಷಮಾ ಧರ್ಮ"
     },
-    image: "kshama_dharma.jpeg"
+    image: "parshvanath_upasarga.jpeg"
   },
   // 283
   {
@@ -3935,7 +3961,7 @@ export const quotes = [
       hi: "अंजना देवी",
       kn: "ಅಂಜನಾ ದೇವಿ"
     },
-    image: "anjanadevi.jpeg"
+    image: "anjanadevi_repentance.jpeg"
   },
   // 284
   {
@@ -3963,7 +3989,7 @@ export const quotes = [
       hi: "जैन दर्शन",
       kn: "ಜೈನ ದರ್ಶನ"
     },
-    image: "jain_philosophy.jpeg"
+    image: "internal_ramayana.jpeg"
   },
   // 286
   {
@@ -3977,7 +4003,7 @@ export const quotes = [
       hi: "बिभीषण (विभीषण)",
       kn: "ಬಿಭೀಷಣ (ವಿಭೀಷಣ)"
     },
-    image: "bibheeshan.jpeg"
+    image: "tree_no_roots.jpeg"
   },
   // 287
   {
@@ -3991,7 +4017,7 @@ export const quotes = [
       hi: "मंदोदरी",
       kn: "ಮಂಡೋದರಿ"
     },
-    image: "mandodari.jpeg"
+    image: "lankini_fading.jpeg"
   },
   // 288
   {
@@ -4005,7 +4031,7 @@ export const quotes = [
       hi: "जैन रामायण वंदना",
       kn: "ಜೈನ ರಾಮಾಯಣ ವಂದನೆ"
     },
-    image: "jain_ramayana.jpeg"
+    image: "munisuvratnath.jpeg"
   },
   // 289
   {
@@ -4019,7 +4045,7 @@ export const quotes = [
       hi: "पार्श्वनाथ (हाथी का भव)",
       kn: "ಪಾಶ್ವನಾಥ (ಆನೆಯ ಭವ)"
     },
-    image: "parshvanath.jpeg"
+    image: "parshvanath_elephant.jpeg"
   },
   // 290
   {
@@ -4033,7 +4059,7 @@ export const quotes = [
       hi: "श्री रामचंद्र",
       kn: "ಶ್ರೀ ರಾಮಚಂದ್ರ"
     },
-    image: "ram.jpeg"
+    image: "ram_monk.jpeg"
   },
   // 291
   {
@@ -4047,7 +4073,7 @@ export const quotes = [
       hi: "पद्मपुराण",
       kn: "पद्मपुराण"
     },
-    image: "padmapurana.jpeg"
+    image: "ravana_ego_mirror.jpeg"
   },
   // 292
   {
@@ -4061,7 +4087,7 @@ export const quotes = [
       hi: "श्री रामचंद्र",
       kn: "ಶ್ರೀ ರಾಮಚಂದ್ರ"
     },
-    image: "ram.jpeg"
+    image: "sita_earth.jpeg"
   },
   // 293
   {
@@ -4075,7 +4101,7 @@ export const quotes = [
       hi: "श्री रामचंद्र",
       kn: "ಶ್ರೀ ರಾಮಚಂದ್ರ"
     },
-    image: "ram.jpeg"
+    image: "ram_protecting.jpeg"
   },
   // 294
   {
@@ -4089,7 +4115,7 @@ export const quotes = [
       hi: "श्री रामचंद्र",
       kn: "ಶ್ರೀ ರಾಮಚಂದ್ರ"
     },
-    image: "ram.jpeg"
+    image: "ram_three_stages.jpeg"
   },
   // 295
   {
@@ -4117,7 +4143,7 @@ export const quotes = [
       hi: "समयसार (गाथा 38)",
       kn: "ಸಮಯಸಾರ (ಗಾಥಾ 38)"
     },
-    image: "samayasara.jpeg"
+    image: "samayasara_gatha_38.jpeg"
   },
   // 297
   {
@@ -4131,7 +4157,7 @@ export const quotes = [
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
     },
-    image: "samayasara.jpeg"
+    image: "jivandhar_kumar.jpeg"
   },
   // 298
   {
@@ -4145,7 +4171,7 @@ export const quotes = [
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
     },
-    image: "samayasara.jpeg"
+    image: "lotus_leaf_water.jpeg"
   },
   // 299
   {
@@ -4159,7 +4185,7 @@ export const quotes = [
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
     },
-    image: "samayasara.jpeg"
+    image: "god_in_heart.jpeg"
   },
   // 300
   {
@@ -4187,7 +4213,7 @@ export const quotes = [
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
     },
-    image: "samayasara.jpeg"
+    image: "intent_karma.jpeg"
   },
   // 302
   {
@@ -4201,7 +4227,7 @@ export const quotes = [
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
     },
-    image: "samayasara.jpeg"
+    image: "gold_in_stone.jpeg"
   },
   // 303
   {
@@ -4215,7 +4241,7 @@ export const quotes = [
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
     },
-    image: "samayasara.jpeg"
+    image: "ashes_vs_soul.jpeg"
   },
   // 304
   {
@@ -4229,7 +4255,7 @@ export const quotes = [
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
     },
-    image: "samayasara.jpeg"
+    image: "chains_attachment.jpeg"
   },
   // 305
   {
@@ -4243,7 +4269,7 @@ export const quotes = [
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
     },
-    image: "samayasara.jpeg"
+    image: "fire_soul_karma.jpeg"
   },
   // 306
   {
@@ -4257,7 +4283,7 @@ export const quotes = [
       hi: "पंचास्तिकायसार",
       kn: "ಪಂಚಾಸ್ತಿಕಾಯಸಾರ"
     },
-    image: "panchastikayasara.jpeg"
+    image: "gold_metaphor_sat.jpeg"
   },
   // 307
   {
@@ -4271,7 +4297,7 @@ export const quotes = [
       hi: "पंचास्तिकायसार",
       kn: "ಪಂಚಾಸ್ತಿಕಾಯಸಾರ"
     },
-    image: "panchastikayasara.jpeg"
+    image: "wheel_of_time.jpeg"
   },
   // 308
   {
@@ -4285,7 +4311,7 @@ export const quotes = [
       hi: "पंचास्तिकायसार",
       kn: "ಪಂಚಾಸ್ತಿಕಾಯಸಾರ"
     },
-    image: "panchastikayasara.jpeg"
+    image: "jinasena_cosmos.jpeg"
   },
   // 309
   {
@@ -4299,7 +4325,7 @@ export const quotes = [
       hi: "पंचास्तिकायसार",
       kn: "ಪಂಚಾಸ್ತಿಕಾಯಸಾರ"
     },
-    image: "panchastikayasara.jpeg"
+    image: "vast_space.jpeg"
   },
   // 310
   {
@@ -4313,7 +4339,7 @@ export const quotes = [
       hi: "पंचास्तिकायसार",
       kn: "ಪಂಚಾಸ್ತಿಕಾಯಸಾರ"
     },
-    image: "panchastikayasara.jpeg"
+    image: "jinasena_cosmos.jpeg"
   },
   // 311
   {
@@ -4327,7 +4353,7 @@ export const quotes = [
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
     },
-    image: "gommatsara_jivakanda.jpeg"
+    image: "lamp_room_metaphor.jpeg"
   },
   // 312
   {
@@ -4341,7 +4367,7 @@ export const quotes = [
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
     },
-    image: "gommatsara_jivakanda.jpeg"
+    image: "god_in_heart.jpeg"
   },
   // 313
   {
@@ -4355,7 +4381,7 @@ export const quotes = [
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
     },
-    image: "gommatsara_jivakanda.jpeg"
+    image: "nigoda_needle.jpeg"
   },
   // 314
   {
@@ -4369,7 +4395,7 @@ export const quotes = [
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
     },
-    image: "gommatsara_jivakanda.jpeg"
+    image: "gunasthana_ladder.jpeg"
   },
   // 315
   {
@@ -4383,7 +4409,7 @@ export const quotes = [
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
     },
-    image: "gommatsara_jivakanda.jpeg"
+    image: "diamond_mud.jpeg"
   },
   // 316
   {
@@ -4397,7 +4423,7 @@ export const quotes = [
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
     },
-    image: "gommatsara_jivakanda.jpeg"
+    image: "crossroads_life.jpeg"
   },
   // 317
   {
@@ -4411,7 +4437,7 @@ export const quotes = [
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
     },
-    image: "gommatsara_jivakanda.jpeg"
+    image: "light_dust_trap.jpeg"
   },
   // 318
   {
@@ -4425,7 +4451,7 @@ export const quotes = [
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
     },
-    image: "gommatsara_jivakanda.jpeg"
+    image: "soul_window.jpeg"
   },
   // 319
   {
@@ -4439,7 +4465,7 @@ export const quotes = [
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
     },
-    image: "gommatsara_jivakanda.jpeg"
+    image: "plant_fear.jpeg"
   },
   // 320
   {
@@ -4453,7 +4479,7 @@ export const quotes = [
       hi: "गोम्मटसार जीवकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಜೀವಕಾಂಡ"
     },
-    image: "gommatsara_jivakanda.jpeg"
+    image: "wheel_of_time.jpeg"
   },
   // 321
   {
@@ -4495,7 +4521,7 @@ export const quotes = [
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
     },
-    image: "gommatsara_karmakanda.jpeg"
+    image: "karma_glue.jpeg"
   },
   // 324
   {
@@ -4509,7 +4535,7 @@ export const quotes = [
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
     },
-    image: "gommatsara_karmakanda.jpeg"
+    image: "seed_sprout.jpeg"
   },
   // 325
   {
@@ -4523,7 +4549,7 @@ export const quotes = [
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
     },
-    image: "gommatsara_karmakanda.jpeg"
+    image: "gold_fire_metaphor.jpeg"
   },
   // 326
   {
@@ -4537,7 +4563,7 @@ export const quotes = [
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
     },
-    image: "gommatsara_karmakanda.jpeg"
+    image: "mohaniya_king.jpeg"
   },
   // 327
   {
@@ -4551,7 +4577,7 @@ export const quotes = [
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
     },
-    image: "gommatsara_karmakanda.jpeg"
+    image: "tirthankara_nirvana.jpeg"
   },
   // 328
   {
@@ -4565,7 +4591,7 @@ export const quotes = [
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
     },
-    image: "gommatsara_karmakanda.jpeg"
+    image: "karma_glue.jpeg"
   },
   // 329
   {
@@ -4579,7 +4605,7 @@ export const quotes = [
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
     },
-    image: "gommatsara_karmakanda.jpeg"
+    image: "soul_blindfold.jpeg"
   },
   // 330
   {
@@ -4593,7 +4619,7 @@ export const quotes = [
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
     },
-    image: "gommatsara_karmakanda.jpeg"
+    image: "karma_scale.jpeg"
   },
   // 331
   {
@@ -4607,7 +4633,7 @@ export const quotes = [
       hi: "द्रव्यसंग्रह",
       kn: "ದ್ರವ್ಯಸಂಗ್ರಹ"
     },
-    image: "dravyasangraha.jpeg"
+    image: "karma_scale.jpeg"
   },
   // 332
   {
@@ -4621,7 +4647,7 @@ export const quotes = [
       hi: "द्रव्यसंग्रह",
       kn: "ದ್ರವ್ಯಸಂಗ್ರಹ"
     },
-    image: "dravyasangraha.jpeg"
+    image: "fire_soul_karma.jpeg"
   },
   // 333
   {
@@ -4635,7 +4661,7 @@ export const quotes = [
       hi: "द्रव्यसंग्रह",
       kn: "ದ್ರವ್ಯಸಂಗ್ರಹ"
     },
-    image: "dravyasangraha.jpeg"
+    image: "karma_scale.jpeg"
   },
   // 334
   {
@@ -4649,7 +4675,7 @@ export const quotes = [
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
     },
-    image: "samayasara.jpeg"
+    image: "wheel_of_time.jpeg"
   },
   // 335
   {
@@ -4663,7 +4689,7 @@ export const quotes = [
       hi: "नियमसार",
       kn: "ನಿಯಮಸಾರ"
     },
-    image: "niyamasara.jpeg"
+    image: "god_in_heart.jpeg"
   },
   // 336
   {
@@ -4677,7 +4703,7 @@ export const quotes = [
       hi: "पुरुषार्थ सिद्धयुपाय",
       kn: "ಪುರುಷಾರ್ಥ ಸಿದ್ಧ್ಯುಪಾಯ"
     },
-    image: "purushartha_siddhyupaya.jpeg"
+    image: "intent_karma.jpeg"
   },
   // 337
   {
@@ -4691,7 +4717,7 @@ export const quotes = [
       hi: "जैन नीति",
       kn: "ಜೈನ ನೀತಿ"
     },
-    image: "jain_ethics.jpeg"
+    image: "broken_heart_mended.jpeg"
   },
   // 338
   {
@@ -4705,7 +4731,7 @@ export const quotes = [
       hi: "तत्त्वार्थ सूत्र",
       kn: "ತತ್ತ್ವಾರ್ಥ ಸೂತ್ರ"
     },
-    image: "tattvartha_sutra.jpeg"
+    image: "siddhashila.jpeg"
   },
   // 339
   {
@@ -4719,7 +4745,7 @@ export const quotes = [
       hi: "समयसार",
       kn: "ಸಮಯಸಾರ"
     },
-    image: "samayasara.jpeg"
+    image: "crystal_soul.jpeg"
   },
   // 340
   {
@@ -4733,7 +4759,7 @@ export const quotes = [
       hi: "दिगंबर सिद्धांत",
       kn: "ದಿಗಂಬರ ಸಿದ್ಧಾಂತ"
     },
-    image: "digambar_siddhanta.jpeg"
+    image: "seed_potential.jpeg"
   },
   // 341
   {
@@ -4747,7 +4773,7 @@ export const quotes = [
       hi: "गोम्मटसार कर्मकांड",
       kn: "ಗೊಮ್ಮಟಸಾರ ಕರ್ಮಕಾಂಡ"
     },
-    image: "gommatsara_karmakanda.jpeg"
+    image: "sesame_oil.jpeg"
   },
   // 342
   {
@@ -4761,7 +4787,7 @@ export const quotes = [
       hi: "जैन सुभाषित",
       kn: "ಜೈನ ಸುಭಾಷಿತ"
     },
-    image: "jain_wisdom.jpeg"
+    image: "chains_attachment.jpeg"
   },
   // 343
   {
@@ -4775,7 +4801,7 @@ export const quotes = [
       hi: "कषाय पाहुड़",
       kn: "ಕಷಾಯ ಪಾಹುಡ"
     },
-    image: "kashaya_pahuda.jpeg"
+    image: "holding_hot_coal.jpeg"
   },
   // 344
   {
@@ -4789,7 +4815,7 @@ export const quotes = [
       hi: "योगसार",
       kn: "ಯೋಗಸಾರ"
     },
-    image: "yogasara.jpeg"
+    image: "taming_horse.jpeg"
   },
   // 345
   {
@@ -4803,7 +4829,7 @@ export const quotes = [
       hi: "द्रव्यसंग्रह",
       kn: "ದ್ರವ್ಯಸಂಗ್ರಹ"
     },
-    image: "dravyasangraha.jpeg"
+    image: "siddhashila.jpeg"
   },
   // 346
   {
@@ -4817,7 +4843,7 @@ export const quotes = [
       hi: "पर्युषण पर्व",
       kn: "ಪರ್ಯುಷಣ ಪರ್ವ"
     },
-    image: "paryushan.jpeg"
+    image: "washing_cloth.jpeg"
   },
   // 347
   {
@@ -4831,7 +4857,7 @@ export const quotes = [
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
     },
-    image: "das_lakshan.jpeg"
+    image: "water_on_fire.jpeg"
   },
   // 348
   {
@@ -4845,7 +4871,7 @@ export const quotes = [
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
     },
-    image: "das_lakshan.jpeg"
+    image: "soft_meadow.jpeg"
   },
   // 349
   {
@@ -4859,7 +4885,7 @@ export const quotes = [
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
     },
-    image: "das_lakshan.jpeg"
+    image: "straight_arrow.jpeg"
   },
   // 350
   {
@@ -4873,7 +4899,7 @@ export const quotes = [
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
     },
-    image: "das_lakshan.jpeg"
+    image: "washing_cloth.jpeg"
   },
   // 351
   {
@@ -4887,7 +4913,7 @@ export const quotes = [
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
     },
-    image: "das_lakshan.jpeg"
+    image: "harishchandra_truth.jpeg"
   },
   // 352
   {
@@ -4901,7 +4927,7 @@ export const quotes = [
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
     },
-    image: "das_lakshan.jpeg"
+    image: "chariot_cliff.jpeg"
   },
   // 353
   {
@@ -4915,7 +4941,7 @@ export const quotes = [
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
     },
-    image: "das_lakshan.jpeg"
+    image: "gold_fire_metaphor.jpeg"
   },
   // 354
   {
@@ -4929,7 +4955,7 @@ export const quotes = [
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
     },
-    image: "das_lakshan.jpeg"
+    image: "jivandhar_kumar.jpeg"
   },
   // 355
   {
@@ -4943,7 +4969,7 @@ export const quotes = [
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
     },
-    image: "das_lakshan.jpeg"
+    image: "guest_house_metaphor.jpeg"
   },
   // 356
   {
@@ -4957,7 +4983,7 @@ export const quotes = [
       hi: "दशलक्षण धर्म",
       kn: "ದಶಲಕ್ಷಣ ಧರ್ಮ"
     },
-    image: "das_lakshan.jpeg"
+    image: "god_in_heart.jpeg"
   },
   // 357
   {
@@ -4985,7 +5011,7 @@ export const quotes = [
       hi: "दिवाली महापर्व",
       kn: "ದೀಪಾವಳಿ ಮಹಾಪರ್ವ"
     },
-    image: "diwali.jpeg"
+    image: "gautam_kevalgyan.jpeg"
   },
   // 359
   {
@@ -4999,7 +5025,7 @@ export const quotes = [
       hi: "अक्षय तृतीया",
       kn: "ಅಕ್ಷಯ ತೃತೀಯ"
     },
-    image: "akshaya_tritiya.jpeg"
+    image: "sugarcane_offering.jpeg"
   },
   // 360
   {
@@ -5013,7 +5039,7 @@ export const quotes = [
       hi: "विष्णुकुमार मुनि",
       kn: "ವಿಷ್ಣುಕುಮಾರ ಮುನಿ"
     },
-    image: "vishnukumar_muni.jpeg"
+    image: "vishnukumar_protection.jpeg"
   },
   // 361
   {
@@ -5027,7 +5053,7 @@ export const quotes = [
       hi: "श्रुत पंचमी",
       kn: "ಶ್ರುತ ಪಂಚಮಿ"
     },
-    image: "shruta_panchami.jpeg"
+    image: "scripture_worship.jpeg"
   },
   // 362
   {
@@ -5041,7 +5067,7 @@ export const quotes = [
       hi: "महावीर जयंती",
       kn: "ಮಹಾವೀರ ಜಯಂತಿ"
     },
-    image: "mahavir_jayanti.jpeg"
+    image: "mahaveer_nature.jpeg"
   },
   // 363
   {
@@ -5055,7 +5081,7 @@ export const quotes = [
       hi: "क्षमावाणी पर्व",
       kn: "ಕ್ಷಮಾವಾಣಿ ಪರ್ವ"
     },
-    image: "kshamavani.jpeg"
+    image: "unloading_burden.jpeg"
   },
   // 364
   {
@@ -5069,7 +5095,7 @@ export const quotes = [
       hi: "अष्टान्हिका पर्व",
       kn: "ಅಷ್ಟಾಹ್ನಿಕ ಪರ್ವ"
     },
-    image: "ashtanhika.jpeg"
+    image: "nandiishwar_dweep.jpeg"
   },
   // 365
   {
@@ -5083,7 +5109,7 @@ export const quotes = [
       hi: "उपवास का अर्थ",
       kn: "ಉಪವಾಸದ ಅರ್ಥ"
     },
-    image: "jain_fasting.jpeg"
+    image: "lamp_room_metaphor.jpeg"
   },
   // 366
   {
@@ -5097,6 +5123,20 @@ export const quotes = [
       hi: "शाश्वत सत्य",
       kn: "ಶಾಶ್ವತ ಸತ್ಯ"
     },
-    image: "jain_symbol.jpeg"
+    image: "jain_flag_globe.jpeg"
+  },
+  // 377
+  {
+    text: {
+      en: "Take this kingdom back, Brother. It burns my hands like holding a hot coal.",
+      hi: "इस राज्य को वापस ले लो, भैया। यह मेरे हाथों को जलते हुए कोयले की तरह जलाता है।",
+      kn: "ಈ ರಾಜ್ಯವನ್ನು ಹಿ ತೆಗೆದುಕೊಳ್ಳಿ ಅಣ್ಣ. ಇದು ಸುಡುವ ಕೆಂಡದಂತೆ ನನ್ನ ಕೈಗಳನ್ನು ಸುಡುತ್ತದೆ."
+    },
+    author: {
+      en: "Bharat",
+      hi: "भरत",
+      kn: "ಭರತ"
+    },
+    image: "bharat_crown_coal.jpeg"
   }
 ];
