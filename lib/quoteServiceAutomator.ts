@@ -6,7 +6,7 @@ export function getTomorrowsQuote() {
   // 1. Get "Tomorrow's" Date
   const today = new Date();
   const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1); // Jump +1 Day
+  tomorrow.setDate(tomorrow.getDate() + 2); // Jump +1 Day
   
   const targetTime = tomorrow.getTime();
   const msPerDay = 24 * 60 * 60 * 1000;
