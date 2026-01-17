@@ -1,11 +1,14 @@
-// components/DailyWisdom.tsx
 'use client';
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Sparkles, Share2 } from "lucide-react";
 import { toPng } from 'html-to-image';
 import download from 'downloadjs';
-import { span } from "framer-motion/client";
+
+// 👇 1. UPDATE THIS TO YOUR GITHUB URL
+// Example: "https://raw.githubusercontent.com/username/repo/main/images"
+// or "https://username.github.io/repo-name/images"
+const ASSET_BASE_URL = "https://pratham-1127.github.io/jain-wisdom-assets/images"; 
 
 interface QuoteText {
   en: string;
@@ -16,6 +19,7 @@ interface QuoteText {
 interface Quote {
   text: QuoteText;
   author: QuoteText;
+  image?: string; // 👈 2. Added optional image field
 }
 
 interface DailyWisdomProps {
@@ -31,6 +35,7 @@ const translations = {
 
 export default function DailyWisdom({ lang, quote }: DailyWisdomProps) {
   const [isSharing, setIsSharing] = useState(false);
+  const [bgImage, setBgImage] = useState<string | null>(null); // State for the fetched image
   const hiddenCardRef = useRef<HTMLDivElement>(null);
 
   const currentLang = (lang === 'hi' || lang === 'kn') ? lang : 'en';
@@ -40,15 +45,54 @@ export default function DailyWisdom({ lang, quote }: DailyWisdomProps) {
   const text = quote.text[currentLang as keyof QuoteText] || quote.text.en;
   const author = quote.author[currentLang as keyof QuoteText] || quote.author.en;
 
+  // ---------------------------------------------------------
+  // 🖼️ IMAGE PRE-LOADER LOGIC (Handles CORS & Fallback)
+  // ---------------------------------------------------------
+  useEffect(() => {
+    // Reset image when quote changes
+    setBgImage(null);
+
+    if (!quote.image) return; // If no image specified, keep it null (fallback)
+
+    const fetchImage = async () => {
+      try {
+        const fullUrl = `${ASSET_BASE_URL}/${quote.image}`;
+        const response = await fetch(fullUrl);
+        
+        if (!response.ok) throw new Error("Image download failed");
+
+        // Convert to Blob -> Object URL to bypass CORS in html-to-image
+        const blob = await response.blob();
+        const objectUrl = URL.createObjectURL(blob);
+        setBgImage(objectUrl);
+      } catch (error) {
+        console.warn("⚠️ Background image failed to load, falling back to gradient.", error);
+        setBgImage(null); // Ensures fallback renders
+      }
+    };
+
+    fetchImage();
+
+    // Cleanup memory
+    return () => {
+      if (bgImage) URL.revokeObjectURL(bgImage);
+    };
+  }, [quote.image]);
+
+  // ---------------------------------------------------------
+  // 📤 SHARE LOGIC
+  // ---------------------------------------------------------
   const handleShare = async () => {
     if (!hiddenCardRef.current) return;
     setIsSharing(true);
 
     try {
+      // Small delay to ensure render engine catches the image if it just loaded
+      await new Promise(resolve => setTimeout(resolve, 100));
+
       const dataUrl = await toPng(hiddenCardRef.current, { 
-        cacheBust: true, 
+        // cacheBust: true, 
         pixelRatio: 3, 
-        // Using natural CSS background (Rose or Black)
       });
       
       const blob = await (await fetch(dataUrl)).blob();
@@ -65,7 +109,6 @@ export default function DailyWisdom({ lang, quote }: DailyWisdomProps) {
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
             await navigator.clipboard.writeText(shareText);
-            // Optional: If you have a Toast component, show "Caption copied!" here
         } catch (clipboardErr) {
             console.log("Clipboard failed", clipboardErr);
         }
@@ -132,55 +175,75 @@ export default function DailyWisdom({ lang, quote }: DailyWisdomProps) {
         </div>
       </div>
 
-      {/* ==================== 2. HIDDEN TWIN (Rose for Light / Orange for Dark) ==================== */}
+      {/* ==================== 2. HIDDEN TWIN (Smart Background) ==================== */}
       <div className="absolute top-0 left-0 w-full pointer-events-none opacity-0 overflow-hidden h-0">
         <div 
           ref={hiddenCardRef}
-          // 👇 Light Mode: Rose-50 background. Dark Mode: Zinc-950 background.
-          className="w-[1080px] h-[1080px] flex flex-col items-center justify-center p-16 text-center relative
-                     bg-rose-50 text-zinc-900 
-                     dark:bg-zinc-950 dark:text-zinc-100"
+          className="w-[1080px] h-[1080px] flex flex-col items-center justify-center p-16 text-center relative overflow-hidden"
           style={{ fontFamily: 'serif' }}
         >
-            {/* Background Borders (Rose in Light, Orange in Dark) */}
-            <div className="absolute top-0 left-0 w-full h-4 bg-gradient-to-r from-rose-200 via-rose-500 to-rose-200 dark:from-orange-900 dark:via-orange-600 dark:to-orange-900"></div>
-            <div className="absolute bottom-0 left-0 w-full h-4 bg-gradient-to-r from-rose-200 via-rose-500 to-rose-200 dark:from-orange-900 dark:via-orange-600 dark:to-orange-900"></div>
+            {/* Layer 1: BACKGROUND LOGIC 
+               If bgImage exists -> Render Image + Overlay
+               If bgImage is null -> Render Gradient Fallback
+            */}
+            {bgImage ? (
+                <>
+                    {/* The Image */}
+                    <img 
+                        src={bgImage} 
+                        alt="Background" 
+                        className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    {/* The Overlay (Crucial for text readability) */}
+                    <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]"></div>
+                    
+                    {/* Border still looks nice on top of image */}
+                    <div className="absolute top-0 left-0 w-full h-4 bg-orange-600/80 z-20"></div>
+                    <div className="absolute bottom-0 left-0 w-full h-4 bg-orange-600/80 z-20"></div>
+                </>
+            ) : (
+                // FALLBACK: The Original Theme Logic
+                <>
+                    <div className="absolute inset-0 bg-rose-50 dark:bg-zinc-950"></div>
+                    <div className="absolute top-0 left-0 w-full h-4 bg-gradient-to-r from-rose-200 via-rose-500 to-rose-200 dark:from-orange-900 dark:via-orange-600 dark:to-orange-900"></div>
+                    <div className="absolute bottom-0 left-0 w-full h-4 bg-gradient-to-r from-rose-200 via-rose-500 to-rose-200 dark:from-orange-900 dark:via-orange-600 dark:to-orange-900"></div>
+                    <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-[100px] bg-rose-200/60 dark:bg-orange-600/20"></div>
+                </>
+            )}
 
-            {/* Glow (Rose in Light, Orange in Dark) */}
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-[100px]
-                            bg-rose-200/60 dark:bg-orange-600/20"></div>
-
-            {/* Icon (Rose in Light, Orange in Dark) */}
-            <Sparkles className="w-16 h-16 text-rose-500 dark:text-orange-500 mb-10 relative z-10" />
+            {/* Layer 2: CONTENT 
+               Note: We force text color to White/Zinc-100 if image exists, 
+               otherwise we use the theme colors.
+            */}
             
-            {/* Title (Rose in Light, Orange in Dark) */}
-            <p className="text-rose-600 dark:text-orange-500 uppercase tracking-[0.3em] text-2xl font-bold mb-16 relative z-10">
+            {/* Icon */}
+            <Sparkles className={`w-16 h-16 mb-10 relative z-10 ${bgImage ? 'text-orange-400' : 'text-rose-500 dark:text-orange-500'}`} />
+            
+            {/* Title */}
+            <p className={`uppercase tracking-[0.3em] text-2xl font-bold mb-16 relative z-10 ${bgImage ? 'text-orange-300' : 'text-rose-600 dark:text-orange-500'}`}>
                {t.quoteTitle}
             </p>
 
             {/* Main Text */}
             <p className={`relative z-10 max-w-5xl leading-relaxed mb-16 
-                           text-zinc-800 dark:text-zinc-100
-                           ${isHindi ? 'text-7xl font-medium' : 'text-6xl'}`}>
+                          ${isHindi ? 'text-7xl font-medium' : 'text-6xl'}
+                          ${bgImage ? 'text-white drop-shadow-lg' : 'text-zinc-800 dark:text-zinc-100'}`}>
                "{text}"
             </p>
 
-            {/* Separator Line (Rose in Light, Orange in Dark) */}
-            <div className="w-32 h-1 bg-rose-400 dark:bg-orange-600 mb-10 relative z-10"></div>
+            {/* Separator */}
+            <div className={`w-32 h-1 mb-10 relative z-10 ${bgImage ? 'bg-orange-500' : 'bg-rose-400 dark:bg-orange-600'}`}></div>
             
-            {/* Author Text */}
-            <p className="text-3xl font-bold uppercase tracking-widest relative z-10
-                          text-zinc-600 dark:text-zinc-400">
+            {/* Author */}
+            <p className={`text-3xl font-bold uppercase tracking-widest relative z-10 ${bgImage ? 'text-zinc-300' : 'text-zinc-600 dark:text-zinc-400'}`}>
                {author}
             </p>
 
             {/* Footer Branding */}
-            <div className="absolute bottom-20 text-lg flex items-center gap-2
-                            text-zinc-500 dark:text-zinc-500">
+            <div className="absolute bottom-20 text-lg flex items-center gap-2 text-white/60 z-20">
                <span>Jain Wisdom App</span>
             </div>
-            <div className="absolute bottom-10 text-lg flex items-center gap-2
-                            text-zinc-500 dark:text-zinc-500">
+            <div className="absolute bottom-10 text-lg flex items-center gap-2 text-white/60 z-20">
                <span>AagamKiVaani YouTube</span>
             </div>
         </div>
