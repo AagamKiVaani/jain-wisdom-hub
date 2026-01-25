@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Mail, Instagram, ArrowLeft } from "lucide-react";
+import { Mail, ArrowLeft, Bug, ArrowRight } from "lucide-react"; // 🟢 Added Bug & ArrowRight
 
 export const metadata: Metadata = {
   title: "Contact | Jain Wisdom",
@@ -19,6 +19,9 @@ const translations = {
     youtube: "YouTube",
     insta: "Instagram",
     support: "Support",
+    // 🟢 NEW KEYS
+    feedbackTitle: "Found a bug or mistake?",
+    feedbackBtn: "Report an Issue",
   },
   hi: {
     back: "मुख्य पृष्ठ पर जाएं",
@@ -30,6 +33,9 @@ const translations = {
     youtube: "यूट्यूब",
     insta: "इंस्टाग्राम",
     support: "सहयोग करें",
+    // 🟢 NEW KEYS
+    feedbackTitle: "कोई तकनीकी समस्या या त्रुटि?",
+    feedbackBtn: "रिपोर्ट करें (Feedback)",
   },
   kn: {
     back: "ಮನೆಗೆ ಹಿಂತಿರುಗಿ",
@@ -41,6 +47,9 @@ const translations = {
     youtube: "ಯೂಟ್ಯೂಬ್",
     insta: "ಇನ್ಸ್ಟಾಗ್ರಾಮ್",
     support: "ಬೆಂಬಲಿಸಿ",
+    // 🟢 NEW KEYS
+    feedbackTitle: "ದೋಷ ಕಂಡುಬಂದಿದೆಯೇ?",
+    feedbackBtn: "ವರದಿ ಮಾಡಿ (Feedback)",
   },
 };
 
@@ -56,11 +65,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
       {/* Background decoration */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-orange-500/10 blur-[120px] rounded-full pointer-events-none"></div>
 
-      {/* --- BACK BUTTON FIX --- 
-          1. w-full max-w-2xl mx-auto: Aligns it with the text on mobile
-          2. mb-8: Adds space below button on mobile
-          3. md:absolute md:mb-0: Switches to floating style ONLY on desktop
-      */}
+      {/* Back Button */}
       <div className="w-full max-w-2xl mx-auto flex justify-start mb-8 md:mb-0 md:absolute md:top-24 md:left-20 z-20">
          <Link 
             href={`/${lang}`} 
@@ -70,7 +75,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
         </Link>
       </div>
 
-      <div className="max-w-2xl mx-auto relative z-10 text-center">
+      <div className="max-w-2xl mx-auto relative z-10 text-center w-full">
         
         <span className="text-orange-500 font-bold tracking-[0.3em] text-xs uppercase mb-4 block">
           {t.preTitle}
@@ -97,12 +102,11 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
         </div>
 
         {/* Social Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-lg mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-lg mx-auto mb-8">
             {/* YOUTUBE */}
             <a 
                 href="https://www.youtube.com/@AagamKiVani" 
                 target="_blank"
-                aria-label="Subscribe on YouTube"
                 className="flex flex-col items-center justify-center p-6 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-red-500 hover:shadow-[0_0_20px_rgba(239,68,68,0.2)] transition-all group"
             >
                 <div className="w-10 h-10 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
@@ -115,7 +119,6 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
             <a 
                 href="https://www.instagram.com/aagamkivaani/" 
                 target="_blank"
-                aria-label="Follow us on Instagram"
                 className="flex flex-col items-center justify-center p-6 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-pink-500 hover:shadow-[0_0_20px_rgba(236,72,153,0.2)] transition-all group"
             >
                 <div className="w-10 h-10 rounded-full bg-pink-50 dark:bg-pink-900/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
@@ -132,7 +135,6 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
             <a 
                 href="https://buymeacoffee.com/aagamkivaani" 
                 target="_blank"
-                aria-label="Donate Money"
                 className="flex flex-col items-center justify-center p-6 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-yellow-500 hover:shadow-[0_0_20px_rgba(234,179,8,0.2)] transition-all group"
             >
                 <div className="w-10 h-10 rounded-full bg-yellow-50 dark:bg-yellow-900/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
@@ -140,6 +142,32 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                 </div>
                 <span className="font-bold text-sm text-gray-900 dark:text-white">{t.support}</span>
             </a>
+        </div>
+
+        {/* 🟢 NEW: Premium Feedback Card */}
+        <div className="max-w-lg mx-auto">
+            <Link 
+                href={`/${lang}/feedback`}
+                className="group flex items-center justify-between p-4 pl-6 bg-gray-50 dark:bg-white/5 border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-2xl hover:border-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/10 transition-all cursor-pointer"
+            >
+                <div className="flex items-center gap-4 text-left">
+                    <div className="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/20 text-orange-600 flex items-center justify-center">
+                        <Bug size={20} />
+                    </div>
+                    <div>
+                        <p className="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-0.5">
+                            {t.feedbackTitle}
+                        </p>
+                        <p className="font-bold text-gray-900 dark:text-white group-hover:text-orange-600 transition-colors">
+                            {t.feedbackBtn}
+                        </p>
+                    </div>
+                </div>
+                
+                <div className="pr-2 text-gray-400 group-hover:text-orange-500 group-hover:translate-x-1 transition-all">
+                    <ArrowRight size={20} />
+                </div>
+            </Link>
         </div>
 
       </div>

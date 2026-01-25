@@ -1,3 +1,4 @@
+//page.tsx
 import Link from "next/link";
 import { Users, ArrowRight, Ghost, Clock, Sparkles } from "lucide-react";
 import DailyWisdom from "@/components/DailyWisdom";
@@ -85,7 +86,25 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             </Link>
 
             <Link 
-              href={`/${lang}/learn/namokar-mantra`}
+              href={`/${lang}/learn/soul-karma`}
+              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 rounded-3xl hover:border-purple-500 dark:hover:border-purple-500 transition-all hover:shadow-2xl hover:shadow-purple-500/10 backdrop-blur-sm"
+            >
+              <div className="flex items-start justify-between mb-6">
+                  <div className="h-14 w-14 rounded-2xl bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Ghost size={28} />
+                  </div>
+                  <ArrowRight size={20} className="text-gray-300 dark:text-gray-700 group-hover:text-purple-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
+              </div>
+              <div>
+                {/* CHANGED h3 -> h2 */}
+                <h2 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c4_title}</h2>
+                <p className="text-sm text-gray-500 font-medium">{t.c4_sub}</p>
+              </div>
+            </Link>
+
+            <Link 
+              // href={`/${lang}/learn/namokar-mantra`}
+              href={`/${lang}/coming-soon`}
               className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 rounded-3xl hover:border-orange-500 dark:hover:border-orange-500 transition-all hover:shadow-2xl hover:shadow-orange-500/10 backdrop-blur-sm"
             >
               <div className="flex items-start justify-between mb-6">
@@ -102,7 +121,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             </Link>
 
             <Link 
-              href={`/${lang}/learn/kalchakra`}
+              // href={`/${lang}/learn/kalchakra`}
+              href={`/${lang}/coming-soon`}
               className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 rounded-3xl hover:border-green-500 dark:hover:border-green-500 transition-all hover:shadow-2xl hover:shadow-green-500/10 backdrop-blur-sm"
             >
               <div className="flex items-start justify-between mb-6">
@@ -115,23 +135,6 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 {/* CHANGED h3 -> h2 */}
                 <h2 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c3_title}</h2>
                 <p className="text-sm text-gray-500 font-medium">{t.c3_sub}</p>
-              </div>
-            </Link>
-
-            <Link 
-              href={`/${lang}/learn/soul-karma`}
-              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 rounded-3xl hover:border-purple-500 dark:hover:border-purple-500 transition-all hover:shadow-2xl hover:shadow-purple-500/10 backdrop-blur-sm"
-            >
-              <div className="flex items-start justify-between mb-6">
-                  <div className="h-14 w-14 rounded-2xl bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Ghost size={28} />
-                  </div>
-                  <ArrowRight size={20} className="text-gray-300 dark:text-gray-700 group-hover:text-purple-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
-              </div>
-              <div>
-                {/* CHANGED h3 -> h2 */}
-                <h2 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c4_title}</h2>
-                <p className="text-sm text-gray-500 font-medium">{t.c4_sub}</p>
               </div>
             </Link>
 

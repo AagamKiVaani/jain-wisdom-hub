@@ -22,12 +22,13 @@ const translations = {
     about: "About Us",
     contact: "Contact",
     donate: "Donate / Support",
+    feedback: "Feedback / Bugs", // Added Label
     
     backToTop: "Back to Top",
     rights: "All rights reserved."
   },
   hi: {
-    brand: "जैन ज्ञान", // Jain Wisdom
+    brand: "जैन ज्ञान",
     desc: "आधुनिक दुनिया के लिए तीर्थंकरों की प्राचीन विरासत का डिजिटलीकरण। समय, दर्शन और देवत्व के माध्यम से एक दृश्य यात्रा।",
     subscribe: "सब्सक्राइब",
     explore: "अन्वेषण",
@@ -41,12 +42,13 @@ const translations = {
     about: "हमारे बारे में",
     contact: "संपर्क",
     donate: "दान / सहयोग",
+    feedback: "सुझाव / त्रुटि", // Added Label
     
     backToTop: "ऊपर जाएं",
     rights: "सर्वाधिकार सुरक्षित।"
   },
   kn: {
-    brand: "ಜೈನ ಜ್ಞಾನ", // Jain Wisdom
+    brand: "ಜೈನ ಜ್ಞಾನ",
     desc: "ಆಧುನಿಕ ಜಗತ್ತಿಗಾಗಿ ತೀರ್ಥಂಕರರ ಪ್ರಾಚೀನ ಪರಂಪರೆಯನ್ನು ಡಿಜಿಟಲೀಕರಣಗೊಳಿಸುವುದು. ಸಮಯ, ತತ್ವಶಾಸ್ತ್ರ ಮತ್ತು ದೈವತ್ವದ ದೃಶ್ಯ ಪ್ರಯಾಣ.",
     subscribe: "ಸಬ್ಸ್ ಕ್ರೈಬ್",
     explore: "ಅನ್ವೇಷಿಸಿ",
@@ -60,6 +62,7 @@ const translations = {
     about: "ನಮ್ಮ ಬಗ್ಗೆ",
     contact: "ಸಂಪರ್ಕಿಸಿ",
     donate: "ದೇಣಿಗೆ / ಬೆಂಬಲ",
+    feedback: "ಪ್ರತಿಕ್ರಿಯೆ", // Added Label
     
     backToTop: "ಮೇಲಕ್ಕೆ ಹಿಂತಿರುಗಿ",
     rights: "ಎಲ್ಲಾ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ."
@@ -163,10 +166,10 @@ export default function Footer({ lang }: { lang: string }) {
                 <li><Link href={`/${lang}/learn/soul-karma`} className="hover:text-purple-500 transition-colors">{t.soul}</Link></li>
                 
                 {/* Green for Wheel of Time */}
-                <li><Link href={`/${lang}/learn/kalchakra`} className="hover:text-green-500 transition-colors">{t.time}</Link></li>
+                <li><Link href={`/${lang}/coming-soon`} className="hover:text-green-500 transition-colors">{t.time}</Link></li>
                 
                 {/* Orange for Namokar */}
-                <li><Link href={`/${lang}/learn/namokar-mantra`} className="hover:text-orange-500 transition-colors">{t.namokar}</Link></li>
+                <li><Link href={`/${lang}/coming-soon`} className="hover:text-orange-500 transition-colors">{t.namokar}</Link></li>
               </ul>
             </div>
             
@@ -175,6 +178,10 @@ export default function Footer({ lang }: { lang: string }) {
               <ul className={`space-y-4 text-sm ${isIndic ? 'leading-loose' : ''}`}>
                 <li><Link href={`/${lang}/about`} className="hover:text-orange-500 transition-colors">{t.about}</Link></li>
                 <li><Link href={`/${lang}/contact`} className="hover:text-orange-500 transition-colors">{t.contact}</Link></li>
+                
+                {/* 🟢 MOVED FEEDBACK LINK HERE INSIDE THE LIST */}
+                <li><Link href={`/${lang}/feedback`} className="hover:text-orange-500 transition-colors">{t.feedback}</Link></li>
+
                 <li>
                     <a 
                     href= {siteConfig.support.buyMeCoffee}
