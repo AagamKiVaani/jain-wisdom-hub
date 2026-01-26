@@ -1,68 +1,115 @@
 // app/[lang]/coming-soon/page.tsx
 'use client';
 
-// 🟢 1. Import 'use'
 import React, { use } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Lock, Youtube } from 'lucide-react';
+import { ArrowLeft, Bell, Sparkles, Lock, Clock } from 'lucide-react';
+import { siteConfig } from '@/lib/constants'; 
 
-// 🟢 2. Update Type: params is now a Promise
-export default function ComingSoon({ params }: { params: Promise<{ lang: string }> }) {
-  
-  // 🟢 3. Unwrap the params using the use() hook
+const translations = {
+  en: {
+    back: "Return to Library",
+    title: "Unlocking Soon",
+    subtitle: "Digital Aagam Update 1.1",
+    desc: "We are currently rendering the 3D assets and translating the ancient scriptures for this section. Stay tuned.",
+    notify: "Get Notified on YouTube",
+    footer: "EXPECTED RELEASE: NEXT UPDATE"
+  },
+  hi: {
+    back: "वापस जाएं",
+    title: "शीघ्र आ रहा है",
+    subtitle: "डिजिटल आगम अपडेट 1.1",
+    desc: "हम इस अध्याय के लिए 3D दृश्य और प्राचीन शास्त्रों का अनुवाद तैयार कर रहे हैं।",
+    notify: "यूट्यूब पर सूचना पाएं",
+    footer: "अपेक्षित रिलीज़: अगला अपडेट"
+  },
+  kn: {
+    back: "ಗ್ರಂಥಾಲಯಕ್ಕೆ ಹಿಂತಿರುಗಿ",
+    title: "ಶೀಘ್ರದಲ್ಲೇ ತೆರೆಯಲಿದೆ",
+    subtitle: "ಡಿಜಿಟಲ್ ಆಗಮ ಅಪ್‌ಡೇಟ್ 1.1",
+    desc: "ನಾವು ಈ ಅಧ್ಯಾಯಕ್ಕಾಗಿ 3D ದೃಶ್ಯಗಳನ್ನು ಮತ್ತು ಪ್ರಾಚೀನ ಗ್ರಂಥಗಳ ಅನುವಾದವನ್ನು ಸಿದ್ಧಪಡಿಸುತ್ತಿದ್ದೇವೆ.",
+    notify: "YouTube ನಲ್ಲಿ ತಿಳಿಯಿರಿ",
+    footer: "ನಿರೀಕ್ಷಿತ ಬಿಡುಗಡೆ: ಮುಂದಿನ ಅಪ್‌ಡೇಟ್"
+  }
+};
+
+export default function ComingSoonPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = use(params);
+  
+  const t = translations[lang as keyof typeof translations] || translations.en;
 
   return (
-    <div className="relative min-h-screen w-full flex items-center justify-center bg-white dark:bg-black overflow-hidden px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-50 dark:bg-black text-zinc-900 dark:text-white px-4 relative overflow-hidden pt-5 pb-24">
       
-      {/* Background Ambience */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-rose-500/5 dark:bg-rose-900/10 blur-[100px] rounded-full pointer-events-none" />
+      {/* Cinematic Background (Grain + Glow) */}
+      <div className="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-orange-500/10 dark:bg-orange-600/10 rounded-full blur-[120px] pointer-events-none animate-pulse"></div>
 
-      <div className="relative z-10 text-center max-w-lg mx-auto">
+      {/* Floating Elements (Atmosphere) */}
+      <div className="absolute top-1/4 left-1/4 text-orange-500/40 animate-bounce duration-[3000ms]">
+          <Sparkles size={32} />
+      </div>
+      <div className="absolute bottom-1/3 right-1/4 text-purple-500/40 animate-pulse duration-[4000ms]">
+          <Clock size={24} />
+      </div>
+
+      {/* Main Content */}
+      <div className="relative z-10 flex flex-col items-center text-center max-w-2xl">
         
-        {/* Lock Icon Animation */}
-        <div className="mb-8 flex justify-center">
-           <div className="h-24 w-24 rounded-3xl bg-rose-50 dark:bg-white/5 border border-rose-100 dark:border-white/10 flex items-center justify-center shadow-2xl animate-pulse">
-              <Lock size={40} className="text-rose-500 dark:text-rose-400" />
-           </div>
+        {/* Lock Icon Container - Mystic Style */}
+        <div className="mb-8 p-6 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-2xl relative group">
+            <div className="absolute inset-0 bg-orange-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <Lock size={48} className="text-orange-500 relative z-10" />
+        </div>
+
+        {/* Badge */}
+        <div className="mb-6 px-4 py-1.5 rounded-full bg-orange-100 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-500/20 text-orange-600 dark:text-orange-400 text-[10px] font-bold uppercase tracking-[0.2em]">
+            {t.subtitle}
         </div>
 
         {/* Title */}
-        <h1 className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white mb-4 tracking-tighter">
-          Coming Soon
+        <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-zinc-900 to-zinc-500 dark:from-white dark:to-white/40 mb-6 uppercase tracking-tighter">
+            {t.title}
         </h1>
 
-        {/* Subtitle */}
-        <p className="text-lg text-gray-600 dark:text-gray-400 mb-10 leading-relaxed font-serif">
-          The ancient scriptures for this section are currently being digitized. 
-          We are decoding them one by one.
+        {/* Description */}
+        <p className="text-lg md:text-xl text-zinc-600 dark:text-gray-400 font-serif leading-relaxed mb-10 max-w-lg">
+            {t.desc}
         </p>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <a 
-            href="https://youtube.com/@AagamKiVaani" 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto px-8 py-3.5 bg-red-600 hover:bg-red-700 text-white rounded-full font-bold tracking-wide transition-all shadow-lg shadow-red-600/20 flex items-center justify-center gap-2"
-          >
-            <Youtube size={20} />
-            GET NOTIFIED
-          </a>
-          
-          <Link 
-            href={`/${lang}`}
-            className="w-full sm:w-auto px-8 py-3.5 border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-gray-900 dark:text-white rounded-full font-bold tracking-wide transition-all flex items-center justify-center gap-2"
-          >
-            <ArrowLeft size={20} />
-            RETURN HOME
-          </Link>
+        {/* Buttons */}
+        <div className="flex flex-col md:flex-row gap-4 w-full justify-center">
+            {/* Notify Button -> Redirects to YouTube */}
+            <a 
+                href={siteConfig.socials.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-center gap-2 px-8 py-4 bg-zinc-900 dark:bg-white text-white dark:text-black rounded-full font-bold tracking-widest uppercase hover:scale-105 transition-transform shadow-xl hover:shadow-orange-500/20"
+            >
+                <Bell size={18} className="group-hover:rotate-12 transition-transform" /> 
+                {t.notify}
+            </a>
+
+            {/* Back Button */}
+            <Link 
+                href={`/${lang}`}
+                className="flex items-center justify-center gap-2 px-8 py-4 bg-transparent border border-zinc-300 dark:border-white/10 text-zinc-900 dark:text-white rounded-full font-bold tracking-widest uppercase hover:bg-zinc-100 dark:hover:bg-white/5 transition-colors"
+            >
+                <ArrowLeft size={18} /> {t.back}
+            </Link>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-gray-100 dark:border-white/5">
-            <p className="text-xs text-gray-400 uppercase tracking-widest">Expected Release: Next Update</p>
+      </div>
+
+      {/* 🟢 UPDATED: Vibrant Footer Capsule */}
+      <div className="absolute bottom-10 z-20">
+        <div className="px-6 py-2 rounded-full bg-white/80 dark:bg-zinc-900/80 border-2 border-orange-500/50 shadow-[0_0_20px_rgba(249,115,22,0.3)] backdrop-blur-md animate-pulse">
+            <p className="text-xs font-black font-mono text-orange-600 dark:text-orange-400 uppercase tracking-widest drop-shadow-sm">
+                {t.footer}
+            </p>
         </div>
       </div>
+
     </div>
   );
 }

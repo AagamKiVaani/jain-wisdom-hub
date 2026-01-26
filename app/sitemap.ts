@@ -1,6 +1,7 @@
+// app/sitemap.ts
 import { MetadataRoute } from 'next';
+import { tirthankaras } from '@/lib/tirthankara-data'; // Ensure this path is correct
 
-// 1. Define your base URL (Use your Vercel link for now)
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL 
   ? `https://${process.env.NEXT_PUBLIC_BASE_URL}` 
   : 'https://jain-wisdom-hub.vercel.app';
@@ -8,27 +9,38 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 export default function sitemap(): MetadataRoute.Sitemap {
   const languages = ['en', 'hi', 'kn'];
   
-  // 2. Define your generic routes
-  const routes = [
-    '', // Home page
+  // 1. Static Routes
+  const staticRoutes = [
+    '', // Home
     '/learn/kalchakra',
     '/learn/soul-karma',
     '/tirthankars',
     '/learn/namokar-mantra',
     '/about',
-    '/contact' // Add your other pages here
+    '/contact',
+    '/feedback'
   ];
 
-  // 3. Generate a URL for every route + language combo
-  // This creates: /en, /hi, /kn, /en/learn/kalchakra, /hi/learn/kalchakra...
-  const sitemapEntries = routes.flatMap((route) => 
+  // 2. Generate Static Route Entries
+  const staticEntries = staticRoutes.flatMap((route) => 
     languages.map((lang) => ({
       url: `${baseUrl}/${lang}${route}`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
-      priority: route === '' ? 1 : 0.8, // Homepage = 1.0, Others = 0.8
+      priority: route === '' ? 1 : 0.8,
     }))
   );
 
-  return sitemapEntries;
+  // 3. Generate Dynamic Tirthankar Routes (CRITICAL FOR SEO)
+  // Creates: /en/tirthankars/adinath, /hi/tirthankars/mahavir, etc.
+  const tirthankarEntries = tirthankaras.flatMap((tirthankar) => 
+    languages.map((lang) => ({
+      url: `${baseUrl}/${lang}/tirthankars/${tirthankar.id}`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly' as const, // These don't change often
+      priority: 0.9, // High priority
+    }))
+  );
+
+  return [...staticEntries, ...tirthankarEntries];
 }

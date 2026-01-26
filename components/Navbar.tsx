@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image"; // <--- Added Image import
+import Image from "next/image";
 import { Moon, Sun, Languages, ChevronDown } from "lucide-react";
 import { useTheme } from "next-themes";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { siteConfig } from "@/lib/constants";
+import GlobalShare from "./GlobalShare"; // 🟢 Added Import
 
 export default function Navbar({ lang }: { lang: string }) {
   const { theme, setTheme } = useTheme();
@@ -43,30 +44,30 @@ export default function Navbar({ lang }: { lang: string }) {
         {/* --- LOGO + TEXT --- */}
         <Link 
             href={`/${lang}`} 
-            className="flex items-center gap-3 group" // Added flex container
+            className="flex items-center gap-3 group"
         >
-          {/* Logo Image */}
           <div className="relative w-8 h-8 md:w-9 md:h-9">
             <Image 
               src="/icons/logo.png" 
               alt="Jain Wisdom Logo" 
               fill
               className="object-contain"
-              priority // Loads instantly
+              priority 
               quality={100}
               sizes="40px"
             />
           </div>
 
-          {/* Text */}
           <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-500 transition-colors">
             Jain Wisdom
           </span>
         </Link>
 
-        <div className="flex items-center gap-2 md:gap-4">
+        {/* --- ACTIONS --- */}
+        {/* 🟢 Reduced gap on mobile (gap-1) to fit everything */}
+        <div className="flex items-center gap-1 md:gap-4">
           
-          {/* --- YOUTUBE LINK --- */}
+          {/* YOUTUBE LINK */}
           <a
             href={siteConfig.socials.youtube}
             target="_blank"
@@ -86,14 +87,19 @@ export default function Navbar({ lang }: { lang: string }) {
             </span>
           </a>
 
+          {/* 🟢 SHARE BUTTON (New) */}
+          <GlobalShare />
+
           {/* LANGUAGE BUTTON */}
           <div className="relative">
             <button 
               onClick={() => setIsLangOpen(!isLangOpen)}
-              className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-2 text-sm font-medium transition-colors"
+              // 🟢 Reduced padding and gap for mobile
+              className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-1 md:gap-2 text-sm font-medium transition-colors"
             >
               <Languages size={18} />
-              <span className="uppercase">{lang}</span>
+              {/* 🟢 HIDDEN TEXT on Mobile (Only shows on md+) */}
+              <span className="uppercase hidden md:block">{lang}</span>
               <ChevronDown size={14} className={`transition-transform ${isLangOpen ? "rotate-180" : ""}`} />
             </button>
             

@@ -1,3 +1,4 @@
+//page.tsx
 import type { Metadata } from 'next';
 import SoulKarmaClient from './SoulKarmaClient';
 

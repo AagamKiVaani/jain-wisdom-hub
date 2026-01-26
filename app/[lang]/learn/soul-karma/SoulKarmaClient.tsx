@@ -1,3 +1,4 @@
+//SoulKarmaClient.tsx
 "use client";
 
 import { ArrowLeft, Volume2, VolumeX, Info, RefreshCw, Sparkles, Maximize2, Eye, Infinity as InfinityIcon, User, Flame, Layers, Wand2, Sunrise, Frown, Magnet, Zap, Droplets } from "lucide-react"; 
