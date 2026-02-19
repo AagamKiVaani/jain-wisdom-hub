@@ -195,8 +195,8 @@ export default async function TirthankaraDetail({ params }: { params: Promise<{ 
 
          {/* The Component */}
          <CinematicVideo 
-            videoId={t.youtube?.videoId || 'dQw4w9WgXcQ'}
-            thumbnailUrl={t.youtube?.thumbnailUrl || "/images/tirthankar/arhats/adinath.avif"}
+            videoId={t.youtube?.videoId || 'WOIyAPwj4zY'}
+            thumbnailUrl={t.tirthankaraImage || "/images/tirthankar/arhats/adinath.avif"}
             title={`Life of ${t.name[l]}`}
             subtitle="A journey of non-violence and truth"
          />

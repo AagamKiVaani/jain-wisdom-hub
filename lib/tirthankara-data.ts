@@ -354,14 +354,151 @@ export const tirthankaras: Tirthankara[] = [
     gotra: { en: "Kashyap", hi: "कश्यप", kn: "ಕಾಶ್ಯಪ" },
     kevalaVriksha: { en: "Nag Tree", hi: "नाग वृक्ष", kn: "ನಾಗ ಮರ" },
     birthPlace: { en: "Chandrapuri", hi: "चन्द्रपुरी", kn: "ಚಂದ್ರಪುರಿ" },
-    mother: { en: "Lakshmana Mata", hi: "लक्ष्मणा माता", kn: "ಲಕ್ಷ್ಮಣಾ ಮಾತಾ" },
+    mother: { en: "Lakshmana Devi", hi: "लक्ष्मणा देवी", kn: "ಲಕ್ಷ್ಮಣಾ ದೇವಿ" },
     father: { en: "Mahasena Raja", hi: "महासेन राजा", kn: "ಮಹಾಸೇನ ರಾಜ" },
     lifespan: { en: "10 Lakh Purva", hi: "१० लाख पूर्व", kn: "೧೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "150 Dhanush", hi: "१५० धनुष", kn: "೧೫೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/chandraprabha.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    kalyanaks: defaultKalyanaks,
+    
+    yaksha: { en: "Vijaya Yaksha", hi: "विजय यक्ष", kn: "ವಿಜಯ ಯಕ್ಷ" },
+    yakshini: { en: "Jwalamalini Devi", hi: "ज्वालामालिनी देवी", kn: "ಜ್ವಾಲಾಮಾಲಿನಿ ದೇವಿ" },
+    
+    kalyanaks: {
+      garbha: {
+        tithi: { en: "Chaitra Krishna Panchami", hi: "चैत्र कृष्णा पंचमी", kn: "ಚೈತ್ರ ಕೃಷ್ಣ ಪಂಚಮಿ" },
+        location: { en: "Chandrapuri", hi: "चन्द्रपुरी", kn: "ಚಂದ್ರಪುರಿ" },
+        description: { 
+          en: "When the soul of the Tirthankar, residing in the Vaijayant Vimaan, had only six months of lifespan remaining, millions of jewels began raining daily in the city of Chandrapuri. Indra sent the Dikkumari Devis to serve Mata Lakshmana, and they flawlessly purified her body, making it a perfectly sacred space to host the supreme soul.\n\nSix months passed gracefully amidst these miraculous events of celestial descents and jewel showers. On the night of Chaitra Krishna Panchami, during the last watch of the night while sleeping peacefully, Queen Lakshmana saw sixteen highly auspicious dreams indicating the arrival of the Tirthankar.\n\nAh! The supreme soul of the Tirthankar had entered her womb. Beholding these sixteen grand divine dreams—ranging from the Airavat elephant to the smokeless fire—the Queen was thrilled and filled with immense joy.\n\nIn the morning, the Queen narrated these auspicious dreams to Maharaja Mahasena. Explaining their profound meaning, the Maharaja joyfully declared, 'O Devi! The eighth Tirthankar has descended into your womb. It is our supreme fortune that a world-revered soul will be born to us.'\n\nOn this grand occasion, Indra descended to honor and praise the parents of the Tirthankar. Knowing that the Lord would be born in their own city, the citizens of Chandrapuri began celebrating with great joy, singing the glory of the Tirthankar everywhere.", 
+          hi: "जब वैजयन्त विमान में तीर्थंकर के जीव की छह मास आयु शेष रही, तब चन्द्रपुरी नगरी में प्रतिदिन करोड़ों रत्नों की वृष्टि होने लगी। इन्द्र ने दिक्कुमारी देवियों को लक्ष्मणा माता की सेवा के लिए भेजा, जिन्होंने माताजी का शरीर अशुचिरहित कर पूर्णतः शुद्ध कर दिया।\n\nदेवियों का आगमन और रत्नों की वर्षा आदि आश्चर्यकारी घटनाओं के साथ छह मास बीत गए। एक रात्रि, चैत्र कृष्णा पंचमी को, जब महारानी लक्ष्मणादेवी सुखनिद्रा में शयन कर रही थीं, तब उन्होंने रात्रि के पिछले प्रहर में तीर्थंकर के आगमनसूचक अतिमंगल सोलह स्वप्न देखे।\n\nअहा! तीर्थंकर की आत्मा ने उनके उदर में प्रवेश किया। उस समय दिखाई दिए ऐरावत हाथी से लेकर निर्धूम अग्नि तक के इन सोलह महादिव्य स्वप्नों को देखकर महारानी महान हर्षपूर्वक पुलकित हो गईं।\n\nप्रातःकाल महारानी ने महाराजा महासेन से इन मंगल स्वप्नों की बात कही। उनका फल बताते हुए महाराजा ने हर्षपूर्वक कहा, 'हे देवी! तुम्हारी कुक्षि में अष्टम तीर्थंकर का अवतरण हुआ है। यह हमारा परमसौभाग्य है कि जगत्पूज्य आत्मा हमारे यहाँ अवतरित होगा।'\n\nउस अवसर पर इन्द्र ने आकर तीर्थंकर के माता-पिता के रूप में उनका सम्मान किया और स्तुति की। अपनी नगरी में तीर्थंकर प्रभु का जन्म होगा—ऐसा जानकर चन्द्रपुरी के समस्त प्रजाजन अत्यंत हर्षानन्द के साथ खूब आनन्दोत्सव मनाने लगे।", 
+          kn: "ವೈಜಯಂತ ವಿಮಾನದಲ್ಲಿ ತೀರ್ಥಂಕರರ ಜೀವದ ಆಯುಷ್ಯ ಕೇವಲ ಆರು ತಿಂಗಳು ಉಳಿದಿದ್ದಾಗ, ಚಂದ್ರಪುರಿ ನಗರದಲ್ಲಿ ಪ್ರತಿದಿನ ಕೋಟ್ಯಂತರ ರತ್ನಗಳ ಮಳೆಯಾಗಲಾರಂಭಿಸಿತು. ಇಂದ್ರನು ದಿಕ್ಕುಮಾರಿ ದೇವಿಯರನ್ನು ಮಾತಾ ಲಕ್ಷ್ಮಣಾದೇವಿಯ ಸೇವೆಗೆ ಕಳುಹಿಸಿದನು, ಅವರು ತಾಯಿಯ ಶರೀರವನ್ನು ದೋಷರಹಿತವಾಗಿ ಸಂಪೂರ್ಣ ಶುದ್ಧಗೊಳಿಸಿದರು.\n\nದೇವಿಯರ ಆಗಮನ ಮತ್ತು ರತ್ನಗಳ ಮಳೆಯಂತಹ ಆಶ್ಚರ್ಯಕರ ಘಟನೆಗಳೊಂದಿಗೆ ಆರು ತಿಂಗಳು ಕಳೆದವು. ಚೈತ್ರ ಕೃಷ್ಣ ಪಂಚಮಿಯ ರಾತ್ರಿ, ರಾಣಿ ಲಕ್ಷ್ಮಣಾದೇವಿ ಸುಖನಿದ್ರೆಯಲ್ಲಿದ್ದಾಗ, ರಾತ್ರಿಯ ಕೊನೆಯ ಜಾವದಲ್ಲಿ ತೀರ್ಥಂಕರರ ಆಗಮನವನ್ನು ಸೂಚಿಸುವ ಹದಿನಾರು ಮಂಗಳಕರ ಕನಸುಗಳನ್ನು ಕಂಡರು.\n\nಆಹಾ! ತೀರ್ಥಂಕರರ ಆತ್ಮವು ಅವರ ಗರ್ಭವನ್ನು ಪ್ರವೇಶಿಸಿತು. ಐರಾವತ ಆನೆಯಿಂದ ಹಿಡಿದು ನಿರ್ಧೂಮ ಅಗ್ನಿಯವರೆಗಿನ ಈ ಹದಿನಾರು ಮಹಾನ್ ದಿವ್ಯ ಕನಸುಗಳನ್ನು ಕಂಡು ರಾಣಿ ಅತ್ಯಂತ ಹರ್ಷದಿಂದ ಪುಳಕಿತಳಾದಳು.\n\nಮುಂಜಾನೆ, ರಾಣಿ ಮಹಾರಾಜ ಮಹಾಸೇನನಿಗೆ ಈ ಮಂಗಳಕರ ಕನಸುಗಳ ಬಗ್ಗೆ ತಿಳಿಸಿದಳು. ಅವುಗಳ ಅರ್ಥವನ್ನು ವಿವರಿಸುತ್ತಾ ರಾಜನು, 'ಹೇ ದೇವಿ! ನಿನ್ನ ಗರ್ಭದಲ್ಲಿ ಎಂಟನೇ ತೀರ್ಥಂಕರರು ಅವತರಿಸಿದ್ದಾರೆ. ಜಗತ್ಪೂಜ್ಯ ಆತ್ಮವು ನಮ್ಮಲ್ಲಿ ಜನಿಸುವುದು ನಮ್ಮ ಪರಮ ಸೌಭಾಗ್ಯ' ಎಂದು ಹರ್ಷದಿಂದ ಹೇಳಿದನು.\n\nಆ ಸಂದರ್ಭದಲ್ಲಿ ಇಂದ್ರನು ಬಂದು ತೀರ್ಥಂಕರರ ತಾಯಿ-ತಂದೆಯರನ್ನು ಗೌರವಿಸಿ ಸ್ತುತಿಸಿದನು. ತಮ್ಮ ನಗರದಲ್ಲಿ ತೀರ್ಥಂಕರ ಪ್ರಭು ಜನಿಸುವರೆಂದು ತಿಳಿದು, ಚಂದ್ರಪುರಿಯ ಸಮಸ್ತ ಪ್ರಜೆಗಳು ಅತ್ಯಂತ ಸಂತೋಷದಿಂದ ಆನಂದೋತ್ಸವವನ್ನು ಆಚರಿಸಲಾರಂಭಿಸಿದರು." 
+        },
+        extraInfo: { 
+          en: "Dreams: Airavat Elephant, Bull, Lion, Goddess Lakshmi, Two Garlands, Moon, Sun, Pair of Fish, Two Pitchers, Lake, Ocean, Throne, Celestial Plane, Nagendra Bhavan, Heap of Jewels, Smokeless Fire.", 
+          hi: "स्वप्न: ऐरावत हाथी, वृषभ (बैल), सिंह, लक्ष्मी, दो मंगल मालायें, चन्द्र, सूर्य, मीन युगल, दो मंगल कलश, सरोवर, समुद्र, सिंहासन, देव विमान, नागेन्द्र भवन, रत्नराशि, निर्धूम अग्नि।", 
+          kn: "ಕನಸುಗಳು: ಐರಾವತ ಆನೆ, ವೃಷಭ (ಗೂಳಿ), ಸಿಂಹ, ಲಕ್ಷ್ಮಿ, ಎರಡು ಮಂಗಳ ಮಾಲೆಗಳು, ಚಂದ್ರ, ಸೂರ್ಯ, ಮೀನುಗಳ ಜೋಡಿ, ಎರಡು ಮಂಗಳ ಕಲಶಗಳು, ಸರೋವರ, ಸಮುದ್ರ, ಸಿಂಹಾಸನ, ದೇವ ವಿಮಾನ, ನಾಗೇಂದ್ರ ಭವನ, ರತ್ನ ರಾಶಿ, ನಿರ್ಧೂಮ ಅಗ್ನಿ." 
+        },
+        imageMobile: [
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/garbha/1.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/garbha/2.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/garbha/3.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/garbha/4.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/garbha/5.avif"
+        ],
+        imageDesktop: [
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/garbha/1.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/garbha/2.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/garbha/3.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/garbha/4.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/garbha/5.avif"
+        ]
+      },
+      janma: {
+        tithi: { en: "Paush Krishna Ekadashi", hi: "पौष कृष्णा एकादशी", kn: "ಪುಷ್ಯ ಕೃಷ್ಣ ಏಕಾದಶಿ" },
+        location: { en: "Chandrapuri / Mount Meru", hi: "चंद्रपुरी / मेरु पर्वत", kn: "ಚಂದ್ರಪುರಿ / ಮೇರು ಪರ್ವತ" },
+        description: { 
+          en: "Nine months later, at midnight on Paush Krishna Ekadashi, the eighth Tirthankar of this era was born. The dark night was suddenly illuminated by a divine light, and a massive wave of joy swept through the city, as this monumental birth occurred 900 crore Sagaropam after the nirvana of Bhagwan Suparshvanath.\n\nUpon sensing the birth, Indra's celestial throne trembled. He quickly arrived in Chandrapuri with his divine family. Indrani respectfully brought the newborn Tirthankar to him, and taking the infant in his lap, Indra mounted the Airavat elephant to depart towards Mount Meru for the Janmabhishek.\n\nAt Mount Meru, Indra declared the Lord's symbol as the half-moon (Ardh-Chandra). Countless Devas formed a continuous line all the way to the Kshir Sagar (Ocean of Milk) to pass golden urns hand-to-hand. With immense enthusiasm, Saudharma and Ishan Indra bathed the child Tirthankar using these 1008 celestial urns.\n\nFollowing the sacred Abhishek, Indrani adorned the Lord with divine ornaments. Overwhelmed with ecstatic joy, Indra performed the magnificent Tandava dance on Mount Meru, sang hymns of praise, and formally named the radiant infant 'Chandraprabhu'.\n\nThe child Tirthankar Chandraprabhu grew day by day, his radiance increasing like the moon of the bright fortnight. Destined for a total lifespan of 10 Lakh Purva, a towering height of 150 Dhanush, and possessing a pure white complexion, his childhood was joyfully spent playing with celestial beings who took various delightful forms.\n\nAt the tender age of 8, he naturally accepted the Deshvrat (partial vows) and ascended to the fifth Gunasthan. His Kumar Kaal (youthful period) lasted for 2.5 lakh Purva. After his grand coronation, he ruled with supreme happiness and justice for 5 lakh Purva, bringing the total elapsed time of his life to 7.5 lakh Purva.", 
+          hi: "नौ महीने पश्चात, पौष कृष्णा एकादशी की मध्यरात्रि को इस युग के आठवें तीर्थंकर का जन्म हुआ। अंधियारी रात अचानक दिव्य प्रकाश से जगमगा उठी और नगर में खुशी की लहर दौड़ गई, क्योंकि सुपार्श्वनाथ भगवान के निर्वाण के ९०० करोड़ सागरोपम बीत जाने पर यह जन्म हुआ था।\n\nप्रभु जन्म का ज्ञान होते ही स्वर्ग में इन्द्र का आसन कंपित हुआ। वह अपने देव परिवार के साथ चंद्रपुरी आया और भीतर जाकर इन्द्राणी ने नवजात तीर्थंकर को लाकर इन्द्र को सौंपा। इन्द्र बालक को गोद में लेकर ऐरावत हाथी पर विराजमान हुआ और जन्माभिषेक हेतु मेरु पर्वत की ओर प्रस्थान कर गया।\n\nमेरु पर्वत पर पहुंचकर इन्द्र ने उनका चिह्न 'अर्द्ध-चंद्र' घोषित किया। देवों ने क्षीर सागर तक पंक्तिबद्ध होकर स्वर्ण कलश हाथों-हाथ पहुंचाए और अत्यंत उत्साह के साथ सौधर्म एवं ईशान इन्द्र ने उन १००८ कलशों से बाल-तीर्थंकर का महामस्तकाभिषेक किया।\n\nअभिषेक के पश्चात इन्द्राणी ने प्रभु का दिव्य श्रृंगार किया। इन्द्र ने आनंदविभोर होकर मेरु पर्वत पर तांडव नृत्य किया और प्रभु की भावपूर्ण स्तुति करते हुए उन्हें 'चंद्रप्रभु' नाम से संबोधित किया।\n\nबाल-तीर्थंकर चंद्रप्रभु, शुक्ल-पक्ष के चंद्रमा की भांति दिन-प्रतिदिन अपनी कांति में वृद्धिंगत होने लगे। उनकी कुल आयु १० लाख पूर्व, शरीर की ऊंचाई १५० धनुष, और वर्ण श्वेत था। उनका बचपन देवों के साथ अद्भुत क्रीड़ाओं में बीता।\n\nजब वह मात्र ८ वर्ष के हुए, तब उन्होंने सहज वृत्ति से स्वयमेव देशव्रत धारण कर पंचम गुणस्थान प्राप्त किया। उनका कुमार काल २.५ लाख पूर्व का था। तदुपरांत राज्याभिषेक हुआ और सुख पूर्वक राज्य करते-करते ५ लाख पूर्व राज्यकाल में बीत गए। इस प्रकार कुल ७.५ लाख पूर्व का समय व्यतीत हो चुका था।", 
+          kn: "ಒಂಬತ್ತು ತಿಂಗಳ ನಂತರ, ಪುಷ್ಯ ಕೃಷ್ಣ ಏಕಾದಶಿಯ ಮಧ್ಯರಾತ್ರಿ ಈ ಯುಗದ ಎಂಟನೇ ತೀರ್ಥಂಕರರ ಜನನವಾಯಿತು. ಕತ್ತಲ ರಾತ್ರಿಯು ದಿವ್ಯ ಪ್ರಕಾಶದಿಂದ ಬೆಳಗಿತು ಮತ್ತು ಭಗವಾನ್ ಸುಪಾರ್ಶ್ವನಾಥರ ನಿರ್ವಾಣದ 900 ಕೋಟಿ ಸಾಗರೋಪಮ ವರ್ಷಗಳ ನಂತರ ಈ ಜನನವಾಗಿದ್ದರಿಂದ ನಗರದಲ್ಲಿ ಹರ್ಷದ ಅಲೆ ಎದ್ದಿತು.\n\nಪ್ರಭುವಿನ ಜನನದ ಅರಿವಾದ ತಕ್ಷಣ ಸ್ವರ್ಗದಲ್ಲಿ ಇಂದ್ರನ ಸಿಂಹಾಸನ ಕಂಪಿಸಿತು. ಅವನು ತನ್ನ ದೇವ ಪರಿವಾರದೊಂದಿಗೆ ಚಂದ್ರಪುರಿಗೆ ಆಗಮಿಸಿದನು, ಮತ್ತು ಇಂದ್ರಾಣಿಯು ನವಜಾತ ತೀರ್ಥಂಕರರನ್ನು ತಂದು ಇಂದ್ರನಿಗೆ ಒಪ್ಪಿಸಿದಳು. ಇಂದ್ರನು ಮಗುವನ್ನು ಮಡಿಲಲ್ಲಿಟ್ಟುಕೊಂಡು ಐರಾವತ ಆನೆಯ ಮೇಲೆ ಕುಳಿತು ಜನ್ಮಾಭಿಷೇಕಕ್ಕಾಗಿ ಮೇರು ಪರ್ವತದತ್ತ ತೆರಳಿದನು.\n\nಮೇರು ಪರ್ವತವನ್ನು ತಲುಪಿದ ಇಂದ್ರನು ಅವರ ಚಿಹ್ನೆಯನ್ನು 'ಅರ್ಧ-ಚಂದ್ರ' ಎಂದು ಘೋಷಿಸಿದನು. ದೇವತೆಗಳು ಕ್ಷೀರ ಸಾಗರದವರೆಗೆ ಸಾಲಾಗಿ ನಿಂತು 1008 ಸ್ವರ್ಣ ಕಲಶಗಳನ್ನು ಕೈಯಿಂದ ಕೈಗೆ ರವಾನಿಸಿದರು. ಅತ್ಯಂತ ಉತ್ಸಾಹದಿಂದ ಸೌಧರ್ಮ ಮತ್ತು ಈಶಾನ ಇಂದ್ರರು ಆ ಕಲಶಗಳಿಂದ ಬಾಲ-ತೀರ್ಥಂಕರರಿಗೆ ಅಭಿಷೇಕ ಮಾಡಿದರು.\n\nಅಭಿಷೇಕದ ನಂತರ ಇಂದ್ರಾಣಿಯು ಪ್ರಭುವನ್ನು ದಿವ್ಯವಾಗಿ ಅಲಂಕರಿಸಿದಳು. ಆನಂದಭರಿತನಾದ ಇಂದ್ರನು ಮೇರು ಪರ್ವತದ ಮೇಲೆ ತಾಂಡವ ನೃತ್ಯ ಮಾಡಿ, ಪ್ರಭುವನ್ನು ಸ್ತುತಿಸುತ್ತಾ ಅವರಿಗೆ 'ಚಂದ್ರಪ್ರಭು' ಎಂದು ನಾಮಕರಣ ಮಾಡಿದನು.\n\nಬಾಲ-ತೀರ್ಥಂಕರ ಚಂದ್ರಪ್ರಭುಗಳು ಶುಕ್ಲ ಪಕ್ಷದ ಚಂದ್ರನಂತೆ ದಿನದಿಂದ ದಿನಕ್ಕೆ ತಮ್ಮ ಕಾಂತಿಯಲ್ಲಿ ಬೆಳೆಯಲಾರಂಭಿಸಿದರು. ಅವರ ಒಟ್ಟು ಆಯುಷ್ಯ 10 ಲಕ್ಷ ಪೂರ್ವ, ದೇಹದ ಎತ್ತರ 150 ಧನುಷ್, ಮತ್ತು ಬಣ್ಣ ಬಿಳಿಯಾಗಿತ್ತು. ಅವರ ಬಾಲ್ಯವು ದೇವತೆಗಳೊಂದಿಗಿನ ಅದ್ಭುತ ಆಟಗಳಲ್ಲಿ ಕಳೆಯಿತು.\n\nಅವರಿಗೆ ಕೇವಲ 8 ವರ್ಷ ವಯಸ್ಸಾದಾಗ, ಅವರು ಸಹಜವಾಗಿ ದೇಶವ್ರತವನ್ನು ಸ್ವೀಕರಿಸಿ ಐದನೇ ಗುಣಸ್ಥಾನವನ್ನು ತಲುಪಿದರು. ಅವರ ಕುಮಾರ ಕಾಲ 2.5 ಲಕ್ಷ ಪೂರ್ವವಾಗಿತ್ತು. ನಂತರ ಅವರ ಪಟ್ಟಾಭಿಷೇಕವಾಯಿತು ಮತ್ತು ಸುಖವಾಗಿ ರಾಜ್ಯವಾಳುತ್ತಾ 5 ಲಕ್ಷ ಪೂರ್ವ ರಾಜ್ಯಕಾಲ ಕಳೆದವು. ಹೀಗೆ ಒಟ್ಟು 7.5 ಲಕ್ಷ ಪೂರ್ವ ಸಮಯ ಕಳೆದಿತ್ತು." 
+        },
+        extraInfo: { 
+          en: "Lifespan: 10 Lakh Purva | Height: 150 Dhanush | Complexion: White | Kumar Kaal: 2.5 Lakh Purva | Rajya Kaal: 5 Lakh Purva", 
+          hi: "आयु: १० लाख पूर्व | ऊंचाई: १५० धनुष | वर्ण: श्वेत | कुमार काल: २.५ लाख पूर्व | राज्य काल: ५ लाख पूर्व", 
+          kn: "ಆಯುಷ್ಯ: 10 ಲಕ್ಷ ಪೂರ್ವ | ಎತ್ತರ: 150 ಧನುಷ್ | ಬಣ್ಣ: ಬಿಳಿ | ಕುಮಾರ ಕಾಲ: 2.5 ಲಕ್ಷ ಪೂರ್ವ | ರಾಜ್ಯ ಕಾಲ: 5 ಲಕ್ಷ ಪೂರ್ವ" 
+        },
+        imageMobile: [
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/janma/1.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/janma/2.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/janma/3.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/janma/4.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/janma/5.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/janma/6.avif"
+        ],
+        imageDesktop: [
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/janma/1.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/janma/2.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/janma/3.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/janma/4.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/janma/5.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/janma/6.avif"
+        ]
+      },
+      diksha: {
+        tithi: { en: "Paush Krishna Ekadashi", hi: "पौष कृष्णा एकादशी", kn: "ಪುಷ್ಯ ಕೃಷ್ಣ ಏಕಾದಶಿ" },
+        location: { en: "Sarvarth-Sakal-Ritu Vana", hi: "सर्वार्थ-सकल-ऋतु वन", kn: "ಸರ್ವಾರ್ಥ-ಸಕಲ-ಋತು ವನ" },
+        description: { 
+          en: "While Maharaja Chandraprabh was happily ruling, a grand celebration was organized for his birthday. Amidst the joyous festivities, an extremely old and terrified man, leaning on a wooden staff, suddenly entered the royal court. He approached the King, begging to be saved from an impending death predicted by a fortune teller.\n\nThe old man pleaded, 'You are the conqueror of death, please protect me!'. Hearing this, a wise minister calmly replied, 'Have patience, brother. Death is inevitable for all living beings when their lifespan ends. Neither Indras nor kings can save you. Only by following the path of the Jinas can one conquer death and attain the immortal state'.\n\nBefore the minister could even finish his sentence, the old Brahmin mysteriously vanished. Using his Avadhi Gyan (clairvoyance), King Chandraprabh deeply realized that the man was actually a celestial Deva from heaven. The Deva had come to demonstrate the fleeting, transient nature of life, successfully igniting a profound sense of Vairagya (detachment) in the King's heart.\n\nThe King's birthday had now transformed into the day of his great renunciation. Knowing his inner detachment, the Laukantik Devas descended from the heavens to praise and support his decision to take Diksha. Renouncing all worldly attachments, the Lord ascended a divine palanquin and proceeded towards the sacred forest.\n\nArriving at the 'Sarvarth-Sakal-Ritu' forest, which blossomed beautifully, the Lord stripped away all royal ornaments and possessions. Facing the supreme truth, he uttered 'Namah Siddhebhya' and accepted the austere Digambar Diksha. Inspired by his supreme detachment, one thousand subordinate kings also accepted Diksha alongside him.\n\nImmediately upon taking Diksha, the Lord attained the seventh Gunasthan and Manah Paryaya Gyan. After observing a strict fast for two days, Bhagwan Chandraprabh went out for his first Aahar (alms). He received this supreme offering at the house of King Somadatta in the city of Nalinpur, which was celebrated by the Devas with a shower of jewels and the Panchascharya (five divine wonders).", 
+          hi: "जब महाराजा चंद्रप्रभ का भव्य जन्मोत्सव अत्यंत उत्साह के साथ मनाया जा रहा था, तब राजसभा में एक आश्चर्यजनक घटना घटी। आनंदोत्सव के बीच एक अत्यंत वृद्ध और भयभीत पुरुष लकड़ी के सहारे कांपते हुए दरबार में आया और महाराजा से अपनी रक्षा की गुहार लगाने लगा।\n\nवृद्ध ने कहा, 'एक निमित्तज्ञानी ने आज मेरी मृत्यु की भविष्यवाणी की है, आप मृत्युंजय हैं, कृपया मुझे बचा लें'। इस पर एक मंत्री ने धैर्य बंधाते हुए कहा, 'आयु पूर्ण होने पर मृत्यु से इन्द्र या जिनेन्द्र कोई नहीं बचा सकता। हाँ, जिनेन्द्र देव के मार्ग पर चलकर मृत्यु को जीतकर अमर पद अवश्य पाया जा सकता है'।\n\nमंत्री का उत्तर पूरा होने से पूर्व ही वह ब्राह्मण वेशधारी पुरुष अचानक अंतर्धान हो गया। महाराज चंद्रप्रभ ने अपने अवधि ज्ञान से जाना कि वह कोई मनुष्य नहीं, अपितु स्वर्ग से आया हुआ एक देव था, जो उन्हें जीवन की क्षणभंगुरता दिखाने आया था। इस घटना से प्रभु के हृदय में तीव्र वैराग्य जागृत हो गया।\n\nवैराग्य की भावना भाते ही ब्रह्मलोक से लौकांतिक देवों ने आकर प्रभु की वैराग्य परिणति की स्तुति और अनुमोदना की। प्रभु का जन्मोत्सव का दिन ही अब वैरागमय दीक्षा का दिन बन गया। समस्त राजवैभव का त्याग कर, प्रभु एक दिव्य पालकी में आरूढ़ होकर वन की ओर प्रस्थान कर गए।\n\n'सर्वार्थ-सकल-ऋतु' नामक वन में पहुंचकर, प्रभु चंद्रप्रभ ने अपने समस्त आभूषणों और वस्त्रों का त्याग कर दिया। 'नमः सिद्धेभ्यः' का उच्चारण करते हुए उन्होंने मुनिदीक्षा (जिन दीक्षा) अंगीकार की। उनके इस परम वैराग्य का अनुसरण करते हुए उनके साथ १००० अन्य राजाओं ने भी दीक्षा धारण की।\n\nदीक्षा लेते ही उन्हें मनःपर्यय ज्ञान और अनेक लब्धियां प्रकट हो गईं। मुनिदशा में दो उपवासों के पश्चात, नलिनपुर के राजा सोमदत्त को प्रभु को प्रथम पारणा (आहार) कराने का महान सौभाग्य प्राप्त हुआ। उस पावन अवसर पर देवों द्वारा रत्नवृष्टि आदि पंचाश्चर्य किए गए।" , 
+          kn: "ಮಹಾರಾಜ ಚಂದ್ರಪ್ರಭರ ಭವ್ಯ ಜನ್ಮದಿನವನ್ನು ಅತ್ಯಂತ ಉತ್ಸಾಹದಿಂದ ಆಚರಿಸುತ್ತಿರುವಾಗ, ರಾಜಸಭೆಯಲ್ಲಿ ಒಂದು ಆಶ್ಚರ್ಯಕರ ಘಟನೆ ನಡೆಯಿತು. ಆನಂದೋತ್ಸವದ ನಡುವೆ, ಕೋಲಿನ ಆಸರೆಯಿಂದ ನಡುಗುತ್ತಾ ಬಂದ ಅತ್ಯಂತ ವೃದ್ಧ ಮತ್ತು ಭಯಭೀತನಾದ ವ್ಯಕ್ತಿಯೊಬ್ಬ ರಾಜನ ಬಳಿ ಬಂದು ತನ್ನನ್ನು ರಕ್ಷಿಸುವಂತೆ ಬೇಡಿಕೊಂಡನು.\n\nಆ ವೃದ್ಧನು, 'ನಿಮಿತ್ತಜ್ಞಾನಿಯೊಬ್ಬರು ಇಂದು ನನ್ನ ಸಾವಿನ ಭವಿಷ್ಯ ನುಡಿದಿದ್ದಾರೆ, ದಯವಿಟ್ಟು ನನ್ನನ್ನು ಉಳಿಸಿ' ಎಂದು ಪ್ರಾರ್ಥಿಸಿದನು. ಆಗ ಮಂತ್ರಿಯೊಬ್ಬನು, 'ಆಯುಷ್ಯ ಮುಗಿದಾಗ ಸಾವೆಂಬುದು ಎಲ್ಲರಿಗೂ ಅನಿವಾರ್ಯ. ಜಿನರ ಮಾರ್ಗವನ್ನು ಅನುಸರಿಸುವವರು ಮಾತ್ರ ಸಾವನ್ನು ಗೆದ್ದು ಅಮರತ್ವ ಪಡೆಯಬಹುದು' ಎಂದು ವಿವರಿಸಿದನು.\n\nಮಂತ್ರಿಯ ಮಾತು ಮುಗಿಯುವ ಮುನ್ನವೇ ಆ ಬ್ರಾಹ್ಮಣ ವೇಷಧಾರಿ ವೃದ್ಧನು ಇದ್ದಕ್ಕಿದ್ದಂತೆ ಮಾಯವಾದನು. ತಮ್ಮ ಅವಧಿ ಜ್ಞಾನದಿಂದ, ಮಹಾರಾಜ ಚಂದ್ರಪ್ರಭರಿಗೆ ಆತ ಮನುಷ್ಯನಲ್ಲ, ಜೀವನದ ನಶ್ವರತೆಯನ್ನು ತೋರಿಸಲು ಸ್ವರ್ಗದಿಂದ ಬಂದ ದೇವತೆ ಎಂದು ಅರಿವಾಯಿತು. ಈ ಘಟನೆಯಿಂದ ಪ್ರಭುವಿನ ಹೃದಯದಲ್ಲಿ ತೀವ್ರ ವೈರಾಗ್ಯವು ಜಾಗೃತವಾಯಿತು.\n\nವೈರಾಗ್ಯ ಭಾವನೆ ಮೂಡಿದೊಡನೆ, ಲೌಕಾಂತಿಕ ದೇವತೆಗಳು ಬಂದು ಪ್ರಭುವಿನ ವೈರಾಗ್ಯವನ್ನು ಶ್ಲಾಘಿಸಿದರು. ಅವರ ಜನ್ಮದಿನವೇ ದೀಕ್ಷಾ ದಿನವಾಗಿ ಬದಲಾಯಿತು. ಎಲ್ಲಾ ರಾಜವೈಭೋಗಗಳನ್ನು ತ್ಯಜಿಸಿ, ಪ್ರಭುಗಳು ದಿವ್ಯ ಪಲ್ಲಕ್ಕಿಯಲ್ಲಿ ಕುಳಿತು ವನದ ಕಡೆಗೆ ಹೊರಟರು.\n\n'ಸರ್ವಾರ್ಥ-ಸಕಲ-ಋತು' ವನವನ್ನು ತಲುಪಿದ ಭಗವಾನ್ ಚಂದ್ರಪ್ರಭರು ತಮ್ಮ ಎಲ್ಲಾ ಆಭರಣಗಳು ಮತ್ತು ವಸ್ತ್ರಗಳನ್ನು ತ್ಯಜಿಸಿದರು. 'ನಮಃ ಸಿದ್ಧೇಭ್ಯಃ' ಎಂದು ಹೇಳಿ ಅವರು ದಿಗಂಬರ ಜಿನ ದೀಕ್ಷೆಯನ್ನು ಸ್ವೀಕರಿಸಿದರು. ಅವರೊಡನೆ 1000 ರಾಜರೂ ಸಹ ದೀಕ್ಷೆ ಪಡೆದರು.\n\nದೀಕ್ಷೆ ಪಡೆದ ತಕ್ಷಣ ಅವರಿಗೆ ಮನಃಪರ್ಯಾಯ ಜ್ಞಾನ ಪ್ರಾಪ್ತವಾಯಿತು. ಎರಡು ಉಪವಾಸಗಳ ನಂತರ, ನಲಿನ್‌ಪುರದ ರಾಜ ಸೋಮದತ್ತನ ಮನೆಯಲ್ಲಿ ಪ್ರಭುವಿನ ಮೊದಲ ಆಹಾರ (ಪಾರಣೆ) ಸಂಪನ್ನವಾಯಿತು. ಆ ಸಂದರ್ಭದಲ್ಲಿ ದೇವತೆಗಳು ರತ್ನವೃಷ್ಟಿ ಮುಂತಾದ ಪಂಚಾಶ್ಚರ್ಯಗಳನ್ನು ಮಾಡಿದರು." 
+        },
+        extraInfo: { 
+          en: "First Aahar: King Somadatta, Nalinpur. Palanquin: Manohara (also known as Vimala).", 
+          hi: "प्रथम आहार: नलिनपुर के राजा सोमदत्त के यहाँ। पालकी: मनोहरा / विमला।", 
+          kn: "ಮೊದಲ ಆಹಾರ: ನಲಿನ್‌ಪುರದ ರಾಜ ಸೋಮದತ್ತ. ಪಲ್ಲಕ್ಕಿ: ಮನೋಹರಾ / ವಿಮಲಾ." 
+        },
+        imageMobile: [
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/diksha/1.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/diksha/2.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/diksha/3.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/diksha/4.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/diksha/5.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/diksha/6.avif"
+        ],
+        imageDesktop: [
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/diksha/1.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/diksha/2.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/diksha/3.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/diksha/4.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/diksha/5.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/diksha/6.avif"
+        ]
+      },
+      kevalgyan: {
+        tithi: { en: "Phalgun Krishna Saptami", hi: "फाल्गुन कृष्णा सप्तमी", kn: "ಫಾಲ್ಗುಣ ಕೃಷ್ಣ ಸಪ್ತಮಿ" },
+        location: { en: "Sarvarth Vana", hi: "सर्वार्थ वन", kn: "ಸರ್ವಾರ್ಥ ವನ" },
+        description: { 
+          en: "After 3 months of penance, on the day of Phalgun Krishna Saptami, he attained Kevalgyan under the Nag tree in the same Sarvarth forest.\n\nBy the command of Indra, Kuber immediately created a wondrous Samavasaran of 8.5 yojanas.\n\nIn his Samavasaran, there were 93 Ganadharas including Shridatta, 2,50,000 Munis, 3,80,000 Aryikas, 3,00,000 Shravaks, and 5,00,000 Shravikas, and he turned the Dharma wheel for 2.5 lakh Purva years.", 
+          hi: "३ माह की तपस्या के पश्चात, फाल्गुन कृष्णा सप्तमी के दिन, उसी सर्वार्थ वन में नाग वृक्ष के नीचे केवलज्ञान प्रकट किया।\n\nइन्द्र की आज्ञा से, कुबेर ने तत्काल ८.५ योजन बड़े अद्भुत समवसरण की रचना की।\n\nउनके समवसरण में, श्रीदत्त आदि ९३ गणधर, २,५०,००० मुनिराज, ३,८०,००० आर्यिका, ३ लाख श्रावक और ५ लाख श्राविकाएं थीं, और उन्होंने २.५ लाख पूर्व वर्षों तक धर्म चक्र का प्रवर्तन किया।", 
+          kn: "3 ತಿಂಗಳ ತಪಸ್ಸಿನ ನಂತರ, ಫಾಲ್ಗುಣ ಕೃಷ್ಣ ಸಪ್ತಮಿಯ ದಿನ, ಅದೇ ಸರ್ವಾರ್ಥ ವನದಲ್ಲಿ ನಾಗ ಮರದ ಕೆಳಗೆ ಕೇವಲಜ್ಞಾನವನ್ನು ಪಡೆದರು.\n\nಇಂದ್ರನ ಆಜ್ಞೆಯ ಮೇರೆಗೆ, ಕುಬೇರನು ತಕ್ಷಣವೇ 8.5 ಯೋಜನಗಳಷ್ಟು ವಿಸ್ತಾರವಾದ ಅದ್ಭುತ ಸಮವಸರಣವನ್ನು ನಿರ್ಮಿಸಿದನು.\n\nಅವರ ಸಮವಸರಣದಲ್ಲಿ ಶ್ರೀದತ್ತರ ನೇತೃತ್ವದಲ್ಲಿ 93 ಗಣಧರರು, 2,50,000 ಮುನಿಗಳು, 3,80,000 ಆರ್ಯಿಕೆಯರು, 3,00,000 ಶ್ರಾವಕರು ಮತ್ತು 5,00,000 ಶ್ರಾವಿಕೆಯರು ಇದ್ದರು, ಮತ್ತು ಅವರು 2.5 ಲಕ್ಷ ಪೂರ್ವ ವರ್ಷಗಳ ಕಾಲ ಧರ್ಮ ಚಕ್ರವನ್ನು ಪ್ರವರ್ತಿಸಿದರು." 
+        },
+        extraInfo: { 
+          en: "Penance: 3 Months. Samavasaran: 8.5 Yojan. Chief Ganadhara: Shridatta.", 
+          hi: "तपस्या: ३ माह। समवसरण: ८.५ योजन। प्रथम गणधर: श्रीदत्त।", 
+          kn: "ತಪಸ್ಸು: 3 ತಿಂಗಳು. ಸಮವಸರಣ: 8.5 ಯೋಜನ. ಪ್ರಥಮ ಗಣಧರ: ಶ್ರೀದತ್ತ." 
+        },
+        imageMobile: [
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/kevalgyan/1.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/kevalgyan/2.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/kevalgyan/3.avif"
+        ],
+        imageDesktop: [
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/kevalgyan/1.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/kevalgyan/2.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/kevalgyan/3.avif"
+        ]
+      },
+      moksha: {
+        tithi: { en: "Phalgun Shukla Saptami", hi: "फाल्गुन शुक्ल सप्तमी", kn: "ಫಾಲ್ಗುಣ ಶುಕ್ಲ ಸಪ್ತಮಿ" },
+        location: { en: "Sammedachal (Sammed Shikhar Ji)", hi: "सम्मेदाचल", kn: "ಸಮ್ಮೇದಾಚಲ" },
+        description: { 
+          en: "After turning the Dharma wheel for 2.5 lakh Purva years, the omniscient Kevali Chandraprabh arrived at Sammedachal.\n\nThere, on the day of Phalgun Shukla Saptami, after 1 month of Yoga-Nirodha, he attained the Siddha state (Moksha) along with 1000 other souls.", 
+          hi: "२.५ लाख पूर्व वर्षों तक धर्म चक्र का प्रवर्तन करने के पश्चात, केवली चंद्रप्रभ सम्मेदाचल पर पधारे।\n\nवहां उन्होंने फाल्गुन शुक्ल सप्तमी के दिन, १ मास के योग-निरोध पूर्वक, १००० अन्य जीवों सहित सिद्धपद को प्राप्त किया।", 
+          kn: "2.5 ಲಕ್ಷ ಪೂರ್ವ ವರ್ಷಗಳ ಕಾಲ ಧರ್ಮ ಚಕ್ರವನ್ನು ಪ್ರವರ್ತಿಸಿದ ನಂತರ, ಕೇವಲಿ ಚಂದ್ರಪ್ರಭರು ಸಮ್ಮೇದಾಚಲಕ್ಕೆ ಆಗಮಿಸಿದರು.\n\nಅಲ್ಲಿ ಅವರು ಫಾಲ್ಗುಣ ಶುಕ್ಲ ಸಪ್ತಮಿಯ ದಿನ, 1 ತಿಂಗಳ ಯೋಗ-ನಿರೋಧದ ನಂತರ, ಇತರ 1000 ಜೀವಿಗಳೊಂದಿಗೆ ಸಿದ್ಧಪದವನ್ನು (ಮೋಕ್ಷ) ಪಡೆದರು." 
+        },
+        extraInfo: { 
+          en: "Yoga-Nirodha: 1 Month.", 
+          hi: "योग-निरोध: १ मास।", 
+          kn: "ಯೋಗ-ನಿರೋಧ: 1 ತಿಂಗಳು." 
+        },
+        imageMobile: [
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/moksha/1.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/mobile/moksha/2.avif"
+        ],
+        imageDesktop: [
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/moksha/1.avif",
+          "/images/tirthankar/kalyanak/Chandraprabha/desktop/moksha/2.avif"
+        ]
+      }
+    },
     youtube : {
       videoId: "",
       thumbnailUrl: ""
