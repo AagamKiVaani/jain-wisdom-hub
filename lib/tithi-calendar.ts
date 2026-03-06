@@ -240,9 +240,9 @@ export const tithiCalendar: Record<string, TithiEntry> = {
   "2026-02-26": {
     title: { en: "Ashtanhika (Day 3)", hi: "अष्टान्हिका (दिन 3)", kn: "ಅಷ್ಟಾಹ್ನಿಕ (ದಿನ 3)" },
     description: {
-      en: "Day 3 Mantra: Om Hreem Trilokasagara Sanjnaya Namah",
-      hi: "दिन 3 मंत्र: ॐ ह्रीं त्रिलोकसागर संज्ञाय नमः",
-      kn: "ದಿನ 3 ಮಂತ್ರ: ಓಂ ಹ್ರೀಂ ತ್ರಿಲೋಕಸಾಗರ ಸಂಜ್ಞಾಯ ನಮಃ"
+      en: "Day 3 Mantra: Om Hreem Trilokasara Sanjnaya Namah",
+      hi: "दिन 3 मंत्र: ॐ ह्रीं त्रिलोकसार संज्ञाय नमः",
+      kn: "ದಿನ 3 ಮಂತ್ರ: ಓಂ ಹ್ರೀಂ ತ್ರಿಲೋಕಸಾರ ಸಂಜ್ಞಾಯ ನಮಃ"
     },
     type: "ashtanhika"
   },

@@ -2239,7 +2239,7 @@ export const quotes = [
       hi: "कौशल मुनि",
       kn: "ಕೌಶಲ ಮುನಿ"
     },
-    image: "kaushal_muni.jpeg"
+    image: "kaushal_muni.png"
   },
   // 161
   {
