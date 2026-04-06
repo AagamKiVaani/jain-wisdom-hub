@@ -132,13 +132,29 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
             </a>
 
             {/* BUY ME A COFFEE */}
-            <a 
+            {/* <a 
                 href="https://buymeacoffee.com/aagamkivaani" 
                 target="_blank"
                 className="flex flex-col items-center justify-center p-6 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-yellow-500 hover:shadow-[0_0_20px_rgba(234,179,8,0.2)] transition-all group"
             >
                 <div className="w-10 h-10 rounded-full bg-yellow-50 dark:bg-yellow-900/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                     <svg viewBox="0 0 24 24" className="w-5 h-5 text-yellow-600 dark:text-yellow-500 fill-current" xmlns="http://www.w3.org/2000/svg"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/></svg>
+                </div>
+                <span className="font-bold text-sm text-gray-900 dark:text-white">{t.support}</span>
+            </a> */}
+            
+            {/* RAZORPAY */}
+            <a 
+                href="https://razorpay.me/@jainwisdomhub"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center justify-center p-6 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.2)] transition-all group"
+            >
+                <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                    <svg viewBox="0 0 24 24" className="w-5 h-5 text-blue-600 dark:text-blue-500 fill-none stroke-current stroke-2" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="5" width="20" height="14" rx="2" />
+                        <line x1="2" y1="10" x2="22" y2="10" />
+                    </svg>
                 </div>
                 <span className="font-bold text-sm text-gray-900 dark:text-white">{t.support}</span>
             </a>

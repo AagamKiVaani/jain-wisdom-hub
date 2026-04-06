@@ -6,36 +6,40 @@ export default function InstallPrompt() {
   const [isVisible, setIsVisible] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
   
-  // Timers refs to clear them if user navigates away
+  // Timers refs to clear them if user navigates away or dismisses
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    // 🛑 1. SMART CHECKS: Should we even show this?
-    
+  // Helper function to get fresh eligibility status instead of checking only on mount
+  const checkEligibility = () => {
     // A. Is it already installed/running as an app?
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-    if (isStandalone) return;
+    if (window.matchMedia('(display-mode: standalone)').matches) return false;
 
     // B. Did user already install it previously?
-    const hasInstalled = localStorage.getItem('jw-app-installed') === 'true';
-    if (hasInstalled) return;
+    if (localStorage.getItem('jw-app-installed') === 'true') return false;
 
-    // C. Did user click "Later" recently? (30 Minute Cooldown)
+    // C. Did user click "Later" recently? (24 Hour Cooldown)
     const lastDismissed = localStorage.getItem('jw-install-dismissed');
     if (lastDismissed) {
-      const timeSinceDismiss = Date.now() - parseInt(lastDismissed);
-      const cooldownTime = 30 * 60 * 1000; // 30 Minutes
-      if (timeSinceDismiss < cooldownTime) return; // Still in cooldown
+      const timeSinceDismiss = Date.now() - parseInt(lastDismissed, 10);
+      const cooldownTime = 24 * 60 * 60 * 1000; // Changed to 24 Hours for better UX
+      if (timeSinceDismiss < cooldownTime) return false; 
     }
 
-    // 🕵️ 2. DETECT PLATFORM
+    return true;
+  };
+
+  useEffect(() => {
+    // If they aren't eligible right now, don't even bother setting up listeners
+    if (!checkEligibility()) return;
+
+    // 🕵️ DETECT PLATFORM
     const userAgent = window.navigator.userAgent.toLowerCase();
     const isIosDevice = /iphone|ipad|ipod/.test(userAgent);
 
     if (isIosDevice) {
-      // iOS Logic: Wait 24 seconds, then show
+      // iOS Logic: Wait 24 seconds, check eligibility ONE MORE TIME, then show
       timerRef.current = setTimeout(() => {
-        setIsIOS(true);
+        if (checkEligibility()) setIsIOS(true);
       }, 24000);
     } else {
       // Android/Desktop Logic: Listen for browser event
@@ -43,9 +47,12 @@ export default function InstallPrompt() {
         e.preventDefault();
         setDeferredPrompt(e);
         
-        // Wait 20 seconds after the event fires before showing UI
+        // CLEAR any existing timeouts so we don't queue up multiple popups
+        if (timerRef.current) clearTimeout(timerRef.current);
+
+        // Wait 20 seconds, check eligibility with FRESH data, then show
         timerRef.current = setTimeout(() => {
-          setIsVisible(true);
+          if (checkEligibility()) setIsVisible(true);
         }, 20000); 
       };
 
@@ -56,7 +63,9 @@ export default function InstallPrompt() {
         localStorage.setItem('jw-app-installed', 'true');
         setIsVisible(false);
         setDeferredPrompt(null);
+        if (timerRef.current) clearTimeout(timerRef.current);
       };
+      
       window.addEventListener('appinstalled', handleAppInstalled);
 
       return () => {
@@ -91,10 +100,13 @@ export default function InstallPrompt() {
   };
 
   const handleDismiss = () => {
-    // Save current time so we don't bother them for 30 mins
+    // Save current time so we don't bother them for 24 hours
     localStorage.setItem('jw-install-dismissed', Date.now().toString());
     setIsVisible(false);
     setIsIOS(false);
+    
+    // CRITICAL: Kill any pending timeouts so it doesn't pop back up in 2 seconds
+    if (timerRef.current) clearTimeout(timerRef.current);
   };
 
   if (!isVisible && !isIOS) return null;
