@@ -60,7 +60,7 @@ export async function GET(req: Request) {
 
         const options = {
           TTL: 86400, // 86400 seconds = 24 Hours
-          Urgency: 'high'
+          urgency: 'high' as const
         };
 
         if (DAILY_IMAGE && DAILY_IMAGE.trim() !== "") {
