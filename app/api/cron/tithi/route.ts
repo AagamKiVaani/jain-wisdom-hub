@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getTodayTithi } from '@/lib/tithiService'; // 🟢 Updated Import
+import { getTodayTithi } from '@/lib/tithiService'; 
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
 import webpush from 'web-push';
@@ -22,7 +22,7 @@ export async function GET(req: Request) {
 
     await dbConnect();
 
-    // 📅 2. CHECK CALENDAR FOR TODAY (🟢 Updated)
+    // 📅 2. CHECK CALENDAR FOR TODAY
     const todayEvent = getTodayTithi();
 
     if (!todayEvent) {
@@ -67,16 +67,18 @@ export async function GET(req: Request) {
         image: entry.type === 'kalyanak' ? '/images/kalyanak-hero.jpg' : undefined
       };
 
-      const options = {
-        TTL: 43200, // 🟢 Changed to 12 Hours (If their phone is off all day, don't ping them at midnight)
-        Urgency: 'high'
+      // 🟢 FIX 1: Explicitly type the options so TS knows 'high' is a valid urgency literal
+      const options: webpush.RequestOptions = {
+        TTL: 43200, 
+        urgency: 'high'
       };
 
       return webpush.sendNotification(
-        user.subscription,
+        // 🟢 FIX 2: Cast the mongoose subscription object to satisfy web-push
+        user.subscription as webpush.PushSubscription,
         JSON.stringify(userPayload),
         options
-      ).catch(err => {
+      ).catch((err: any) => { // 🟢 FIX 3: Add ': any' to prevent implicit any/unknown errors
         if (err.statusCode === 410 || err.statusCode === 404) {
              console.log(`User ${user._id} subscription expired/invalid.`);
         }
@@ -92,7 +94,7 @@ export async function GET(req: Request) {
     });
 
   } catch (error: any) {
-    console.error("🔥 Morning Cron Failed:", error); // 🟢 Updated log
+    console.error("🔥 Morning Cron Failed:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
