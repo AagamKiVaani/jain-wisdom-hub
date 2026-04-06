@@ -68,6 +68,7 @@ export async function GET(req: Request) {
         }
 
         await webpush.sendNotification(user.subscription, JSON.stringify(payloadData), options);
+        console.log("Notifications Sent ✅");
 
       } catch (err: any) {
         if (err.statusCode === 410) {

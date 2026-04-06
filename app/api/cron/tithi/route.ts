@@ -86,6 +86,7 @@ export async function GET(req: Request) {
     });
 
     await Promise.all(notifications);
+    console.log("Notifications Sent ✅");
 
     return NextResponse.json({ 
         success: true, 
