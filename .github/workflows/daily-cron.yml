@@ -2,17 +2,11 @@ name: Jain Wisdom Scheduler
 
 on:
   schedule:
-    # 🌅 MORNING QUOTE: 5:45 AM IST (00:15 UTC)
-    # - cron: '15 0 * * *'
-    # - cron: '30 7 * * *'
-    # - cron: '30 0 * * *'
-    # - cron: '30 4 * * *'
-    # New: 2:0 UTC (7:30 AM IST) - Runs BEFORE the rush hour!
+    # 🌸 MORNING TITHI CHECK: 5:30 AM IST (00:00 UTC)
+    - cron: '0 0 * * *'
+
+    # 🌅 MORNING QUOTE: 7:30 AM IST (02:00 UTC)
     - cron: '0 2 * * *'
-
-    # 🌙 EVENING TITHI CHECK: 7:00 PM IST (13:30 UTC)
-    - cron: '30 13 * * *'
-
 
   workflow_dispatch: # Allows manual button click for testing
 
@@ -20,18 +14,18 @@ jobs:
   run-jobs:
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Check Morning Job
+      # Step 1: Check Tithi/Festivals (Runs at 5:30 AM IST)
+      - name: Trigger Morning Tithi Check
+        if: github.event.schedule == '0 0 * * *' || github.event_name == 'workflow_dispatch'
+        run: |
+          curl -X GET \
+          -H "Authorization: Bearer ${{ secrets.AAGAM_CRON_KEY }}" \
+          https://jain-wisdom-hub.vercel.app/api/cron/tithi
+
+      # Step 2: Send Daily Quote (Runs at 7:30 AM IST)
       - name: Trigger Morning Quote
-        if: github.event.schedule == '15 0 * * *' || github.event_name == 'workflow_dispatch'
+        if: github.event.schedule == '0 2 * * *' || github.event_name == 'workflow_dispatch'
         run: |
           curl -X GET \
           -H "Authorization: Bearer ${{ secrets.AAGAM_CRON_KEY }}" \
           https://jain-wisdom-hub.vercel.app/api/cron/daily-quote
-
-      # Step 2: Check Evening Job
-      - name: Trigger Evening Tithi
-        if: github.event.schedule == '30 13 * * *' || github.event_name == 'workflow_dispatch'
-        run: |
-          curl -X GET \
-          -H "Authorization: Bearer ${{ secrets.AAGAM_CRON_KEY }}" \
-          https://jain-wisdom-hub.vercel.app/api/cron/evening-notification

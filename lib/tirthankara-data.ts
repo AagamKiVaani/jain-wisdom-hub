@@ -182,7 +182,7 @@ export const tirthankaras: Tirthankara[] = [
     },
     youtube : {
       videoId: "xsngvgeNc_Q",
-      thumbnailUrl: "/images/tirthankar/arhats/adinath.avif"
+      thumbnailUrl: "/images/tirthankar/thumbnails/Adinath.avif"
     }
   },
 
@@ -203,8 +203,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "72 Lakh Purva", hi: "७२ लाख पूर्व", kn: "೭೨ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "450 Dhanush", hi: "४५० धनुष", kn: "೪೫೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/ajitnath.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -229,8 +229,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "60 Lakh Purva", hi: "६० लाख पूर्व", kn: "೬೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "400 Dhanush", hi: "४०० धनुष", kn: "೪೦೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/sambhavnath.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -255,8 +255,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "50 Lakh Purva", hi: "५० लाख पूर्व", kn: "೫೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "350 Dhanush", hi: "३५० धनुष", kn: "೩೫೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/abhinandannath.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -281,8 +281,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "40 Lakh Purva", hi: "४० लाख पूर्व", kn: "೪೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "300 Dhanush", hi: "३०० धनुष", kn: "೩೦೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/sumatinath.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -307,8 +307,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "30 Lakh Purva", hi: "३० लाख पूर्व", kn: "೩೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "250 Dhanush", hi: "२५० धनुष", kn: "೨೫೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/padmaprabha.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -333,8 +333,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "20 Lakh Purva", hi: "२० लाख पूर्व", kn: "೨೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "200 Dhanush", hi: "२०० धनुष", kn: "೨೦೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/suparshvanath.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -500,8 +500,8 @@ export const tirthankaras: Tirthankara[] = [
       }
     },
     youtube : {
-      videoId: "",
-      thumbnailUrl: ""
+      videoId: "yPpGl-lNY2c",
+      thumbnailUrl: "/images/tirthankar/thumbnails/Chandraprabhu.avif"
     }
   },
 
@@ -522,8 +522,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "5 Lakh Purva", hi: "५ लाख पूर्व", kn: "೫ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "100 Dhanush", hi: "१०० धनुष", kn: "೧೦೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/pushpadanta.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -548,8 +548,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "1 Lakh Purva", hi: "१ लाख पूर्व", kn: "೧ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "90 Dhanush", hi: "९० धनुष", kn: "೯೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/sheetalnath.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -574,8 +574,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "84 Thousand Purva", hi: "८४ हजार पूर्व", kn: "೮೪ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "80 Dhanush", hi: "८० धनुष", kn: "೮೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/shreyansnath.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -600,8 +600,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "54 Lakh Purva", hi: "५४ लाख पूर्व", kn: "೫೪ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "70 Dhanush", hi: "७० धनुष", kn: "೭೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/vasupujya.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -626,8 +626,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "60 Lakh Purva", hi: "६० लाख पूर्व", kn: "೬೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "60 Dhanush", hi: "६० धनुष", kn: "೬೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/vimalnath.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -652,8 +652,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "30 Lakh Purva", hi: "३० लाख पूर्व", kn: "೩೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "50 Dhanush", hi: "५० धनुष", kn: "೫೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/anantnath.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -678,8 +678,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "25 Lakh Purva", hi: "२५ लाख पूर्व", kn: "೨೫ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "45 Dhanush", hi: "४५ धनुष", kn: "೪೫ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/dharmanath.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -704,8 +704,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "10 Lakh Purva", hi: "१० लाख पूर्व", kn: "೧೦ ಲಕ್ಷ ಪೂರ್ವ" },
     height: { en: "40 Dhanush", hi: "४० धनुष", kn: "೪೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/shantinath.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -730,8 +730,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "95 Thousand Purva", hi: "९५ हजार पूर्व", kn: "೯೫ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "35 Dhanush", hi: "३५ धनुष", kn: "೩೫ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/kunthunath.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -756,8 +756,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "84 Thousand Purva", hi: "८४ हजार पूर्व", kn: "೮೪ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "30 Dhanush", hi: "३० धनुष", kn: "೩೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/arnath.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -782,8 +782,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "56 Thousand Purva", hi: "५६ हजार पूर्व", kn: "೫೬ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "25 Dhanush", hi: "२५ धनुष", kn: "೨೫ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/mallinath.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -808,8 +808,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "30 Thousand Purva", hi: "३० हजार पूर्व", kn: "೩೦ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "20 Dhanush", hi: "२० धनुष", kn: "೨೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/munisuvrat.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -834,8 +834,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "10 Thousand Purva", hi: "१० हजार पूर्व", kn: "೧೦ ಸಾವಿರ ಪೂರ್ವ" },
     height: { en: "15 Dhanush", hi: "१५ धनुष", kn: "೧೫ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/naminath.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -860,8 +860,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "1000 Years", hi: "१००० वर्ष", kn: "೧೦೦೦ ವರ್ಷ" },
     height: { en: "10 Dhanush", hi: "१० धनुष", kn: "೧೦ ಧನುಷ್" },
     tirthankaraImage: "/images/tirthankar/arhats/neminath.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -886,8 +886,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "100 Years", hi: "१०० वर्ष", kn: "೧೦೦ ವರ್ಷ" },
     height: { en: "9 Hands", hi: "९ हाथ", kn: "೯ ಹಸ್ತ" },
     tirthankaraImage: "/images/tirthankar/arhats/parshvanath.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",
@@ -912,8 +912,8 @@ export const tirthankaras: Tirthankara[] = [
     lifespan: { en: "72 Years", hi: "७२ वर्ष", kn: "೭೨ ವರ್ಷ" },
     height: { en: "7 Hands", hi: "७ हाथ", kn: "೭ ಹಸ್ತ" },
     tirthankaraImage: "/images/tirthankar/arhats/mahavira.avif",
-    yaksha: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
-    yakshini: {en: "Adinath", hi: "आदिनाथ", kn: "ಆದಿನಾಥ"},
+    yaksha: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
+    yakshini: { en: "Data to be added", hi: "डेटा जोड़ा जाना है", kn: "ಡೇಟಾ ಸೇರಿಸಬೇಕಾಗಿದೆ" },
     kalyanaks: defaultKalyanaks,
     youtube : {
       videoId: "",

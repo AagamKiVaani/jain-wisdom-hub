@@ -1,19 +1,10 @@
 // lib/tithiService.ts
 import { tithiCalendar, TithiEntry } from './tithi-calendar';
 
-/**
- * Checks if there is a special event TOMORROW.
- * We use IST (Asia/Kolkata) to ensure alignment with the user's calendar.
- */
-export function getUpcomingTithi(): { date: string, entry: TithiEntry } | null {
-  // 1. Get Current Time
+export function getTodayTithi(): { date: string, entry: TithiEntry } | null {
   const now = new Date();
-  
-  // 2. Add 24 Hours to get "Tomorrow"
-  const tomorrow = new Date(now);
-  tomorrow.setDate(tomorrow.getDate() + 1);
 
-  // 3. Format it strictly as YYYY-MM-DD in IST Timezone
+  // Force strict IST formatting
   const options: Intl.DateTimeFormatOptions = { 
     timeZone: "Asia/Kolkata", 
     year: 'numeric', 
@@ -21,17 +12,15 @@ export function getUpcomingTithi(): { date: string, entry: TithiEntry } | null {
     day: '2-digit' 
   };
   
-  // Note: 'en-CA' locale forces the YYYY-MM-DD format we need
   const formatter = new Intl.DateTimeFormat('en-CA', options); 
-  const tomorrowISO = formatter.format(tomorrow); 
+  const todayISO = formatter.format(now); 
 
-  console.log(`📅 Checking Calendar for Tomorrow (IST): ${tomorrowISO}`);
+  console.log(`📅 Checking Calendar for Today (IST): ${todayISO}`);
 
-  // 4. Look up the date in your data file
-  if (tithiCalendar[tomorrowISO]) {
+  if (tithiCalendar[todayISO]) {
     return { 
-        date: tomorrowISO, 
-        entry: tithiCalendar[tomorrowISO] 
+        date: todayISO, 
+        entry: tithiCalendar[todayISO] 
     };
   }
 

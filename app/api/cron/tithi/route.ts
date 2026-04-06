@@ -1,6 +1,5 @@
-// path: app/api/cron/tithi/route.ts (or wherever your tithi cron lives)
 import { NextResponse } from 'next/server';
-import { getUpcomingTithi } from '@/lib/tithiService';
+import { getTodayTithi } from '@/lib/tithiService'; // 🟢 Updated Import
 import dbConnect from '@/lib/db';
 import User from '@/models/User';
 import webpush from 'web-push';
@@ -23,25 +22,23 @@ export async function GET(req: Request) {
 
     await dbConnect();
 
-    // 📅 2. CHECK CALENDAR FOR TOMORROW
-    const upcoming = getUpcomingTithi();
+    // 📅 2. CHECK CALENDAR FOR TODAY (🟢 Updated)
+    const todayEvent = getTodayTithi();
 
-    if (!upcoming) {
-      console.log("🌑 No Tithi/Kalyanak found for tomorrow.");
+    if (!todayEvent) {
+      console.log("🌑 No Tithi/Kalyanak found for today.");
       return NextResponse.json({ success: true, message: "No notification needed." });
     }
 
-    const { entry, date } = upcoming;
-    console.log(`🚨 Event Found for Tomorrow (${date}): ${entry.title.en}`);
+    const { entry, date } = todayEvent;
+    console.log(`🚨 Event Found for Today (${date}): ${entry.title.en}`);
     
-    // Icon Selection
     let iconPrefix = "🌿";
     if (entry.type === 'kalyanak') iconPrefix = "🎉";
     if (entry.type === 'festival') iconPrefix = "✨";
     if (entry.type === 'ashtanhika') iconPrefix = "🌸";
 
     // 📨 3. SEND PERSONALIZED NOTIFICATIONS
-    // FIX: Only fetch users who have explicitly ENABLED Tithi notifications
     const users = await User.find({ 
         'subscription': { $exists: true },
         'preferences.tithi.enabled': true 
@@ -52,34 +49,26 @@ export async function GET(req: Request) {
     const notifications = users.map(user => {
       if (!user.subscription) return;
 
-      // 🧠 SMART LANGUAGE LOGIC (FIXED)
-      // 1. Try Tithi-specific preference
-      // 2. Try Global App language
-      // 3. Default to Hindi (hi)
       const userLang = user.preferences?.tithi?.lang || user.language || 'hi';
 
-      // Access the translations dynamically
       const titles = entry.title as any;
       const descriptions = entry.description as any;
 
-      // Select text. Fallback to English if specific lang translation is missing.
       const finalTitle = titles[userLang] || titles['en'];
       const finalBody = descriptions[userLang] || descriptions['en'];
 
-      // 🔗 SMART URL
       const targetUrl = userLang === 'en' ? '/' : `/${userLang}`;
 
       const userPayload = {
         title: `${iconPrefix} ${finalTitle}`,
         body: finalBody,
         url: targetUrl, 
-        // Tag is date-specific, preventing it from overwriting Daily Quotes
         tag: `tithi-${date}`, 
         image: entry.type === 'kalyanak' ? '/images/kalyanak-hero.jpg' : undefined
       };
 
       const options = {
-        TTL: 86400, // 86400 seconds = 24 Hours
+        TTL: 43200, // 🟢 Changed to 12 Hours (If their phone is off all day, don't ping them at midnight)
         Urgency: 'high'
       };
 
@@ -90,7 +79,6 @@ export async function GET(req: Request) {
       ).catch(err => {
         if (err.statusCode === 410 || err.statusCode === 404) {
              console.log(`User ${user._id} subscription expired/invalid.`);
-             // Optional: await User.findByIdAndUpdate(user._id, { $unset: { subscription: 1 } });
         }
       });
     });
@@ -104,7 +92,7 @@ export async function GET(req: Request) {
     });
 
   } catch (error: any) {
-    console.error("🔥 Evening Cron Failed:", error);
+    console.error("🔥 Morning Cron Failed:", error); // 🟢 Updated log
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
