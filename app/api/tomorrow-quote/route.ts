@@ -1,3 +1,5 @@
+// app/api/tomorrow-quote/route.ts -> From Jain Wisdom Hub
+
 import { NextResponse } from 'next/server';
 import { getTomorrowsQuote } from '@/lib/quoteServiceAutomator'; 
 

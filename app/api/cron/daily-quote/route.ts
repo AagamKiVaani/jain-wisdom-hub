@@ -1,4 +1,5 @@
-// path: app/api/cron/quote/route.ts
+// path: app/api/cron/daily-quote/route.ts
+
 import { NextResponse } from 'next/server';
 import { getTodaysQuote } from '@/lib/quoteService';
 import dbConnect from '@/lib/db';

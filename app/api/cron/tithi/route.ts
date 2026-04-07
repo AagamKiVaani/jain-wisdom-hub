@@ -1,3 +1,5 @@
+// path: app/api/cron/tithi/route.ts
+
 import { NextResponse } from 'next/server';
 import { getTodayTithi } from '@/lib/tithiService'; 
 import dbConnect from '@/lib/db';

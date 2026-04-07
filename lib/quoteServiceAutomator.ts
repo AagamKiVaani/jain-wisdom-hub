@@ -1,3 +1,5 @@
+// lib/quoteServiceAutomator.ts -> from Jain Wisdom Hub
+
 import { quotes } from "@/lib/quotes";
 
 export function getTomorrowsQuote() {
