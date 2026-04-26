@@ -134,7 +134,7 @@ const extendedAraDetails: Record<number, {
   5: {
     title: { en: "The Era of Sorrow (Current Age)", hi: "दुःषमा (वर्तमान पंचम काल)", kn: "ದುಃಷಮ (ಪ್ರಸ್ತುತ ಪಂಚಮ ಕಾಲ)" },
     lifestyle: { 
-      en: "The present era of decline. Physical strength, morality, and lifespan decrease. Conflicts, diseases, and greed dominate society.", 
+      en: "The present era of decline. Physical strength, morality, and lifespan decrease. Conflicts, integration diseases, and greed dominate society.", 
       hi: "पतन का वर्तमान युग। शारीरिक शक्ति, नैतिकता और आयु घटती जाती है। रोग, संघर्ष और लोभ बढ़ते हैं।", 
       kn: "ಪತನದ ಪ್ರಸ್ತುತ ಯುಗ. ದೈಹಿಕ ಶಕ್ತಿ, ನೈತಿಕತೆ ಮತ್ತು ಆಯಸ್ಸು ಕಡಿಮೆಯಾಗುತ್ತದೆ."
     },
@@ -198,6 +198,12 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
   const [isWheelInView, setIsWheelInView] = useState(false);
   const [hasEntered, setHasEntered] = useState(false);
 
+  // --- FOCUS MODE STATES ---
+  const [isFocusMode, setIsFocusMode] = useState(false);
+  const [showAvasarpiniLabel, setShowAvasarpiniLabel] = useState(false);
+  const [showUtsarpiniLabel, setShowUtsarpiniLabel] = useState(false);
+  const [showAllLabels, setShowAllLabels] = useState(false);
+
   const clickAudioRef = useRef<HTMLAudioElement | null>(null);
   const hoverAudioRef = useRef<HTMLAudioElement | null>(null);
   const bgMusicRef = useRef<HTMLAudioElement | null>(null);
@@ -226,34 +232,24 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
   }, []);
 
   // --- 🌟 GENTLE DRI-FEED PRELOADER ---
-  // Fixes lag on slow networks by loading 1 image at a time
   useEffect(() => {
     let isMounted = true;
 
     const loadSequence = async () => {
-      // Priority: Ara 5 (Current) -> Ara 4, 6 -> Others
       const sequence = [5, 4, 6, 1, 3, 2];
 
       for (const id of sequence) {
-        if (!isMounted) break; // Stop if user left the page
-
-        // 1. Preload Audio (One at a time)
-        // const audio = new window.Audio(`/sounds/kalchakra/ara${id}.mp3`);
+        if (!isMounted) break; 
         
-        // No Preload
         const audio = new window.Audio();
         audio.preload = "none";
         audio.src = `/sounds/kalchakra/ara${id}.mp3`;
         
-        // 2. Preload Images (One by One - Serial Loading)
         for (let i = 1; i <= 11; i++) {
            if (!isMounted) break;
-           
            await new Promise<void>((resolve) => {
-              // ✅ FIX: Use window.Image to avoid conflict with imported Image component
               const img = new window.Image();
               img.src = `/images/kalchakra/ara${id}-${i}.avif`;
-              // If it loads or fails, we move to the next one instantly
               img.onload = () => resolve();
               img.onerror = () => resolve();
            });
@@ -261,24 +257,30 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
       }
     };
 
-    // WAIT 4 SECONDS before starting heavy network activity.
-    // This allows the Toast, Sound, and UI to load perfectly first.
     const timer = setTimeout(() => {
         loadSequence();
     }, 5000);
 
     return () => {
-        isMounted = false; // Kill the loop if user leaves
+        isMounted = false; 
         clearTimeout(timer);
     };
   }, []);
 
-  // --- MODAL LOCK ---
+  // --- MODAL LOCK & FOCUS MODE SCROLL LOCK (FIXED) ---
   useEffect(() => {
-    if (showModal) document.body.style.overflow = "hidden"; 
-    else document.body.style.overflow = "auto"; 
-    return () => { document.body.style.overflow = "auto"; };
-  }, [showModal]);
+    if (showModal || isFocusMode) {
+        document.body.style.overflow = "hidden";
+        document.documentElement.style.overflow = "hidden";
+    } else {
+        document.body.style.overflow = "auto";
+        document.documentElement.style.overflow = "auto";
+    }
+    return () => { 
+        document.body.style.overflow = "auto"; 
+        document.documentElement.style.overflow = "auto";
+    };
+  }, [showModal, isFocusMode]);
 
   // --- ENTER LOGIC ---
   const handleEnterExperience = () => {
@@ -287,10 +289,8 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
         enterClickRef.current.play().catch(() => {});
     }
     if (bgMusicRef.current) {
-        // Prepare music for Ara 5 immediately
         bgMusicRef.current.src = "/sounds/kalchakra/ara5.mp3"; 
         bgMusicRef.current.play().then(() => {
-            // Audio unlocked
         }).catch((e) => console.log("Audio unlock failed", e));
     }
     setHasEntered(true);
@@ -312,26 +312,73 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
     ...aras.map(a => ({ ...a, cycle: "Avasarpini" })), 
     ...[...aras].reverse().map((a, i) => ({ ...a, id: i + 7, cycle: "Utsarpini" }))
   ];
-  const activeWheelAra = wheelData[activeWheelIndex];
+  
+  const activeWheelAra = wheelData[activeWheelIndex] || wheelData[0];
 
   const getNormalizedId = (id: number) => (id > 6 ? 13 - id : id);
   const normalizedId = getNormalizedId(activeWheelAra.id);
+
+  // --- FOCUS MODE KEYBOARD CONTROLS ---
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() === 'f') {
+        setIsFocusMode(prev => !prev);
+        return; 
+      }
+
+      if (!isFocusMode) return;
+      
+      switch(e.key.toLowerCase()) {
+        case 'a': 
+          setActiveWheelIndex(-1); // Reset single slice
+          setShowUtsarpiniLabel(false); // Turn off Utsarpini
+          setShowAllLabels(false); 
+          setShowAvasarpiniLabel(prev => !prev); // Toggle Avasarpini
+          break;
+        case 'u': 
+          setActiveWheelIndex(-1); // Reset single slice
+          setShowAvasarpiniLabel(false); // Turn off Avasarpini
+          setShowAllLabels(false);
+          setShowUtsarpiniLabel(prev => !prev); // Toggle Utsarpini
+          break;
+        case 'b': // <--- NEW 'B' KEY TO TOGGLE BOTH
+          setActiveWheelIndex(-1);
+          setShowAllLabels(false);
+          const isBothOn = showAvasarpiniLabel && showUtsarpiniLabel;
+          setShowAvasarpiniLabel(!isBothOn);
+          setShowUtsarpiniLabel(!isBothOn);
+          break;
+        case 's': 
+          setShowAllLabels(true); 
+          setShowAvasarpiniLabel(true); 
+          setShowUtsarpiniLabel(true); 
+          break;
+        case 'r': 
+          setShowAllLabels(false); 
+          setShowAvasarpiniLabel(false); 
+          setShowUtsarpiniLabel(false); 
+          setActiveWheelIndex(-1);
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isFocusMode]);
 
   // --- MUSIC SWITCHER ---
   useEffect(() => {
     if (!bgMusicRef.current) return;
     const player = bgMusicRef.current;
     
-    const shouldPlay = isWheelInView && !isMuted && hasEntered;
+    const shouldPlay = isWheelInView && !isMuted && hasEntered && !isFocusMode;
     const targetVolume = shouldPlay ? 0.7 : 0;
     const targetSrc = `/sounds/kalchakra/ara${normalizedId}.mp3`;
 
     const currentSrcPath = player.getAttribute('src') || "";
     
-    // Only change source if different
     if (!currentSrcPath.includes(targetSrc)) {
         player.src = targetSrc;
-        // If we switched source, we need to play again if supposed to be playing
         if(shouldPlay) player.play().catch(() => {});
     }
 
@@ -339,7 +386,6 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
          player.play().catch(() => {});
     }
 
-    // Smooth Volume Fade
     const fadeInterval = setInterval(() => {
         if (shouldPlay && player.volume < targetVolume) {
             player.volume = Math.min(player.volume + 0.02, targetVolume);
@@ -353,7 +399,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
     }, 100);
 
     return () => clearInterval(fadeInterval);
-  }, [activeWheelIndex, isWheelInView, isMuted, normalizedId, hasEntered]);
+  }, [activeWheelIndex, isWheelInView, isMuted, normalizedId, hasEntered, isFocusMode]);
 
 
   // --- SFX HELPER ---
@@ -420,7 +466,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
   const t = (key: string) => translations[key]?.[lang] || translations[key]?.['en'] || key;
 
   return (
-    <div className={`min-h-screen text-zinc-900 dark:text-white overflow-hidden font-sans selection:bg-green-500 selection:text-white relative ${!hasEntered ? 'h-screen overflow-hidden' : ''}`}>
+  <div className={`text-zinc-900 dark:text-white font-sans selection:bg-green-500 selection:text-white relative ${(!hasEntered || isFocusMode) ? 'h-screen overflow-hidden' : 'min-h-screen overflow-x-hidden'}`}>
       
       {/* --- ENTRANCE GATE --- */}
       <AnimatePresence>
@@ -466,12 +512,12 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
       </AnimatePresence>
 
       {/* --- GLOBAL BACKGROUND --- */}
-      <div className="fixed inset-0 z-0 bg-zinc-50 dark:bg-zinc-950 transition-colors duration-500">
-         <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+      <div className={`fixed inset-0 transition-colors duration-500 ${isFocusMode ? 'bg-black z-[100]' : 'bg-zinc-50 dark:bg-zinc-950 z-0'}`}>
+         {!isFocusMode && <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>}
       </div>
 
-      <div className="relative z-10">
-      <nav className="fixed top-24 left-6 right-6 z-50 flex justify-between pointer-events-none">
+      <div className={`relative ${isFocusMode ? 'z-[101]' : 'z-10'}`}>
+      <nav className={`fixed top-24 left-6 right-6 z-50 flex justify-between pointer-events-none transition-opacity duration-500 ${isFocusMode ? 'opacity-0' : 'opacity-100'}`}>
         <div className="pointer-events-auto">
             <Link aria-label="Go to Library" href={`/${lang}`} className="flex items-center gap-2 text-zinc-500 hover:text-green-600 bg-white/80 dark:bg-zinc-900/80 px-4 py-2 rounded-full backdrop-blur-md border border-zinc-200/50 dark:border-zinc-800 shadow-sm">
                 <ArrowLeft size={16} /> <span className="text-[10px] font-bold uppercase">{t('backBtn')}</span>
@@ -482,9 +528,9 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
         </button>
       </nav>
 
-        <div className="max-w-5xl mx-auto px-6 py-24">
+        <div className={`max-w-5xl mx-auto px-6 ${isFocusMode ? '' : 'py-24'}`}>
           
-          <header className="mb-20 mt-12">
+          <header className={`mb-20 mt-12 ${isFocusMode ? 'hidden' : 'block'}`}>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/60 dark:bg-black/20 border border-white/20 text-green-700 dark:text-green-400 text-xs font-bold mb-6 tracking-widest uppercase backdrop-blur-md shadow-sm">
                <Clock size={14} /> {t('wheelSubtitle')}
             </div>
@@ -494,7 +540,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
             </p>
           </header>
 
-          <div className="relative border-l-2 border-black/10 dark:border-white/10 ml-4 md:ml-0 space-y-12 mb-32">
+          <div className= {`relative border-l-2 border-black/10 dark:border-white/10 ml-4 md:ml-0 space-y-12 mb-32 ${isFocusMode ? 'hidden' : 'block'}`}>
             {aras.map((ara, index) => (
               <motion.div key={ara.id} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="relative pl-12 md:pl-24 group">
                 <div className={`absolute left-[-9px] top-0 w-5 h-5 rounded-full border-4 border-white/50 dark:border-black/50 ${ara.barColor} transition-all duration-300 group-hover:scale-150 shadow-sm`}></div>
@@ -531,8 +577,8 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
             ))}
           </div>
 
-          {/* --- WHEEL SECTION --- */}
-          <div ref={wheelSectionRef} className="relative w-screen left-1/2 -translate-x-1/2 py-24 border-t border-black/10 dark:border-white/10 overflow-hidden">
+          {/* --- WHEEL SECTION (FIXED FOR FOCUS MODE) --- */}
+          <div ref={wheelSectionRef} className={isFocusMode ? 'fixed inset-0 z-[200] bg-black flex flex-col items-center justify-center overflow-hidden' : 'relative w-screen left-1/2 -translate-x-1/2 py-24 border-t border-black/10 dark:border-white/10 overflow-hidden'}>
               
               <AnimatePresence mode="popLayout">
                  <motion.div 
@@ -541,11 +587,11 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                    animate={{ opacity: 1 }} 
                    exit={{ opacity: 0 }}
                    transition={{ duration: 0.8, ease: "easeInOut" }} 
-                   className={`absolute inset-0 ${currentTheme}`}
+                   className={`absolute inset-0 ${currentTheme} ${isFocusMode ? 'hidden' : ''}`}
                  />
               </AnimatePresence>
 
-              <div className="absolute top-0 left-0 right-0 bottom-0 h-[50%] z-0 opacity-70 pointer-events-none overflow-hidden" style={{ maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)" }}>
+              <div className={`absolute top-0 left-0 right-0 bottom-0 h-[50%] z-0 pointer-events-none overflow-hidden ${isFocusMode ? 'hidden' : 'opacity-70'}`} style={{ maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)" }}>
                  <AnimatePresence mode="wait">
                     <motion.div 
                         key={normalizedId} 
@@ -563,7 +609,6 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                             {[0, 1].map((loopIndex) => (
                                 <div key={loopIndex} className="flex h-full">
                                     {Array.from({ length: 11 }).map((_, i) => (
-                                        // ✅ FIXED: Using Next/Image but with unoptimized logic + style hack for aspect ratio
                                         <Image
                                             key={i}
                                             src={`/images/kalchakra/ara${normalizedId}-${i + 1}.avif`}
@@ -572,8 +617,8 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                                             height={0}
                                             sizes="100vw"
                                             className="h-full w-auto object-cover min-w-[50vw] md:min-w-[33vw] mix-blend-overlay"
-                                            style={{ width: 'auto', height: '100%' }} // Forces w-auto behavior in Next Image
-                                            unoptimized // Respects your existing compression
+                                            style={{ width: 'auto', height: '100%' }} 
+                                            unoptimized 
                                         />
                                     ))}
                                 </div>
@@ -583,35 +628,97 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                 </AnimatePresence>
               </div>
 
-              <div className="relative z-10">
-                  <div className="text-center mb-12">
+              <div className="relative z-10 w-full flex flex-col items-center">
+                  <div className={`text-center mb-12 ${isFocusMode ? 'hidden' : 'block'}`}>
                      <h2 className="text-3xl md:text-5xl font-black uppercase mb-4 drop-shadow-sm">{t('enterTitle')}</h2>
                      <p className="text-zinc-900 dark:text-zinc-100 max-w-lg mx-auto font-medium">{t('enterDesc')}</p>
                   </div>
 
-                  <div className="flex justify-center mb-8">
+                  <div className={`flex justify-center mb-8 ${isFocusMode ? 'hidden' : 'flex'}`}>
                      <div className="flex items-center gap-2 px-4 py-2 bg-white/50 dark:bg-black/50 backdrop-blur-md rounded-full border border-black/5 dark:border-white/10 shadow-sm animate-pulse">
                          <MousePointer2 size={14} className="text-orange-600 dark:text-orange-400" />
                          <span className="text-[10px] font-bold uppercase tracking-widest opacity-80 text-zinc-800 dark:text-zinc-200">{t('interactionHint')}</span>
                      </div>
                   </div>
 
-                  <div className="relative w-[340px] h-[340px] md:w-[600px] md:h-[600px] mx-auto mb-16">
+                  {/* --- THE GLOWING, CENTERED WHEEL (FIXED SIZE & VIEWBOX) --- */}
+                  <div className={`relative mx-auto transition-all duration-500 ${isFocusMode ? 'w-[85vw] h-[85vw] max-w-[650px] max-h-[650px]' : 'w-[340px] h-[340px] md:w-[600px] md:h-[600px] mb-16'}`}>
                       {isMounted ? (
-                        <svg viewBox="-1.8 -1.8 3.6 3.6" className="w-full h-full -rotate-90 drop-shadow-2xl">
+                        <svg viewBox="-2 -2 4 4" className="w-full h-full -rotate-90 drop-shadow-2xl overflow-visible">
                           <defs>
-                            <marker id="arrowhead-down" markerWidth="4" markerHeight="4" refX="0" refY="2" orient="auto"><polygon points="0 0, 4 2, 0 4" fill="#f97316" /></marker>
-                            <marker id="arrowhead-up" markerWidth="4" markerHeight="4" refX="0" refY="2" orient="auto"><polygon points="0 0, 4 2, 0 4" fill="#10b981" /></marker>
+                            <marker id="arrowhead-down" markerWidth="4" markerHeight="4" refX="1.5" refY="2" orient="auto"><polygon points="0 0, 4 2, 0 4" fill="#f97316" /></marker>
+                            <marker id="arrowhead-up" markerWidth="4" markerHeight="4" refX="1.5" refY="2" orient="auto"><polygon points="0 0, 4 2, 0 4" fill="#10b981" /></marker>
                           </defs>
-                          <line x1="-1.75" y1="0" x2="1.75" y2="0" className="stroke-zinc-400 dark:stroke-zinc-600" strokeWidth="0.025" strokeDasharray="0.05 0.05" strokeLinecap="round" />
                           
-                          <path id="avasarpiniArc" d={rightPath} fill="none" stroke="#f97316" strokeWidth="0.04" strokeDasharray="0.1 0.05" markerEnd="url(#arrowhead-down)" className="drop-shadow-md" />
-                          <text fontSize="0.11" fontWeight="900" fill="#f97316" dy="-0.06" letterSpacing="0.02" className="drop-shadow-md"><textPath href="#avasarpiniArc" startOffset="50%" textAnchor="middle">AVASARPINI (DECLINE)</textPath></text>
-                          <text fontSize="0.07" fontWeight="bold" fill="#f97316" dy="0.12" letterSpacing="0.05" className="drop-shadow-md"><textPath href="#avasarpiniArc" startOffset="50%" textAnchor="middle">10 KODAKODI SAGAROPAM</textPath></text>
+                          {/* Vertical Line */}
+                          <line x1="-1.35" y1="0" x2="1.35" y2="0" className={`transition-colors duration-500 ${isFocusMode ? 'stroke-white/20' : 'stroke-zinc-400 dark:stroke-zinc-600'}`} strokeWidth="0.025" strokeDasharray="0.05 0.05" strokeLinecap="round" />
                           
-                          <path id="utsarpiniArc" d={leftPath} fill="none" stroke="#10b981" strokeWidth="0.04" strokeDasharray="0.1 0.05" markerEnd="url(#arrowhead-up)" className="drop-shadow-md" />
-                          <text fontSize="0.11" fontWeight="900" fill="#10b981" dy="-0.06" letterSpacing="0.02" className="drop-shadow-md"><textPath href="#utsarpiniArc" startOffset="50%" textAnchor="middle">UTSARPINI (RISE)</textPath></text>
-                          <text fontSize="0.07" fontWeight="bold" fill="#10b981" dy="0.12" letterSpacing="0.05" className="drop-shadow-md"><textPath href="#utsarpiniArc" startOffset="50%" textAnchor="middle">10 KODAKODI SAGAROPAM</textPath></text>
+                          {/* Horizontal Line (NEW) */}
+                          {/* <line x1="0" y1="-1.85" x2="0" y2="1.85" className={`transition-colors duration-500 ${isFocusMode ? 'stroke-white/20' : 'stroke-zinc-400 dark:stroke-zinc-600'}`} strokeWidth="0.025" strokeDasharray="0.05 0.05" strokeLinecap="round" /> */}
+                          
+                          {/* AVASARPINI ANIMATED ARROW */}
+                          <g className={`transition-opacity duration-300 ${isFocusMode ? (showAvasarpiniLabel ? 'opacity-100 drop-shadow-[0_0_15px_#f97316]' : 'opacity-0') : 'opacity-100 drop-shadow-md'}`}>
+                              {/* The Animated Line (No Arrowhead) */}
+                              <motion.path 
+                                  id="avasarpiniArc" 
+                                  d={rightPath} 
+                                  fill="none" 
+                                  stroke="#f97316" 
+                                  strokeWidth="0.04" 
+                                  initial={{ pathLength: 0 }}
+                                  animate={{ pathLength: (!isFocusMode || showAvasarpiniLabel) ? 1 : 0 }}
+                                  transition={{ duration: 1.5, ease: "easeInOut" }}
+                              />
+                              {/* The Delayed Arrowhead (Fixed Scale & Timing) */}
+                              <motion.path 
+                                  d={rightPath} 
+                                  fill="none" 
+                                  stroke="rgba(0,0,0,0)" 
+                                  strokeWidth="0.04"
+                                  markerEnd="url(#arrowhead-down)"
+                                  initial={{ opacity: 0 }}
+                                  animate={{ opacity: (!isFocusMode || showAvasarpiniLabel) ? 1 : 0 }}
+                                  transition={{ duration: 0.2, delay: (!isFocusMode || showAvasarpiniLabel) ? 1.4 : 0 }}
+                              />
+                              <motion.text fontSize="0.11" fontWeight="900" fill="#f97316" dy="-0.06" letterSpacing="0.02" initial={{ opacity: 0 }} animate={{ opacity: (!isFocusMode || showAvasarpiniLabel) ? 1 : 0 }} transition={{ delay: 1, duration: 0.5 }}>
+                                  <textPath href="#avasarpiniArc" startOffset="50%" textAnchor="middle">AVASARPINI (DECLINE)</textPath>
+                              </motion.text>
+                              <motion.text fontSize="0.07" fontWeight="bold" fill="#f97316" dy="0.12" letterSpacing="0.05" initial={{ opacity: 0 }} animate={{ opacity: (!isFocusMode || showAvasarpiniLabel) ? 1 : 0 }} transition={{ delay: 1, duration: 0.5 }}>
+                                  <textPath href="#avasarpiniArc" startOffset="50%" textAnchor="middle">10 KODAKODI SAGAROPAM</textPath>
+                              </motion.text>
+                          </g>
+
+                          {/* UTSARPINI ANIMATED ARROW */}
+                          <g className={`transition-opacity duration-300 ${isFocusMode ? (showUtsarpiniLabel ? 'opacity-100 drop-shadow-[0_0_15px_#10b981]' : 'opacity-0') : 'opacity-100 drop-shadow-md'}`}>
+                              {/* The Animated Line (No Arrowhead) */}
+                              <motion.path 
+                                  id="utsarpiniArc" 
+                                  d={leftPath} 
+                                  fill="none" 
+                                  stroke="#10b981" 
+                                  strokeWidth="0.04" 
+                                  initial={{ pathLength: 0 }}
+                                  animate={{ pathLength: (!isFocusMode || showUtsarpiniLabel) ? 1 : 0 }}
+                                  transition={{ duration: 1.5, ease: "easeInOut" }}
+                              />
+                              {/* The Delayed Arrowhead (Fixed Scale & Timing) */}
+                              <motion.path 
+                                  d={leftPath} 
+                                  fill="none" 
+                                  stroke="rgba(0,0,0,0)" 
+                                  strokeWidth="0.04"
+                                  markerEnd="url(#arrowhead-up)"
+                                  initial={{ opacity: 0 }}
+                                  animate={{ opacity: (!isFocusMode || showUtsarpiniLabel) ? 1 : 0 }}
+                                  transition={{ duration: 0.2, delay: (!isFocusMode || showUtsarpiniLabel) ? 1.4 : 0 }}
+                              />
+                              <motion.text fontSize="0.11" fontWeight="900" fill="#10b981" dy="-0.06" letterSpacing="0.02" initial={{ opacity: 0 }} animate={{ opacity: (!isFocusMode || showUtsarpiniLabel) ? 1 : 0 }} transition={{ delay: 1, duration: 0.5 }}>
+                                  <textPath href="#utsarpiniArc" startOffset="50%" textAnchor="middle">UTSARPINI (RISE)</textPath>
+                              </motion.text>
+                              <motion.text fontSize="0.07" fontWeight="bold" fill="#10b981" dy="0.12" letterSpacing="0.05" initial={{ opacity: 0 }} animate={{ opacity: (!isFocusMode || showUtsarpiniLabel) ? 1 : 0 }} transition={{ delay: 1, duration: 0.5 }}>
+                                  <textPath href="#utsarpiniArc" startOffset="50%" textAnchor="middle">10 KODAKODI SAGAROPAM</textPath>
+                              </motion.text>
+                          </g>
                           
                           {totalSlices.map((slicePercent, index) => {
                               const startPercent = cumulativePercent;
@@ -623,20 +730,64 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                               const labelX = (Math.cos(2 * Math.PI * midPercent) * 0.75);
                               const labelY = (Math.sin(2 * Math.PI * midPercent) * 0.75);
                               const pathData = `M 0 0 L ${startX.toFixed(5)} ${startY.toFixed(5)} A 1 1 0 0 1 ${endX.toFixed(5)} ${endY.toFixed(5)} Z`;
-                              const isActive = index === activeWheelIndex;
+                              const isAvasarpiniSlice = index >= 0 && index <= 5;
+                              const isUtsarpiniSlice = index >= 6 && index <= 11;
+                              const isActive = index === activeWheelIndex || (isFocusMode && showAvasarpiniLabel && isAvasarpiniSlice) || (isFocusMode && showUtsarpiniLabel && isUtsarpiniSlice);
+                              
                               return (
-                                <g key={index} onClick={() => { setActiveWheelIndex(index); playSound('scifi'); }} className="cursor-pointer group">
-                                      <path d={pathData} fill="currentColor" stroke="#09090b" strokeWidth="0.015" className={`transition-all duration-300 ${isActive ? 'scale-105 z-10 brightness-110 drop-shadow-md' : 'hover:brightness-110'} ${wheelData[index].wheelColor}`} style={{ transformOrigin: "0 0" }} />
-                                      <text x={labelX} y={labelY} fontSize="0.12" fontWeight="900" fill="currentColor" textAnchor="middle" dominantBaseline="central" className="pointer-events-none text-black/40 dark:text-black/60 select-none" transform={`rotate(90, ${labelX}, ${labelY})`}>{wheelData[index].id > 6 ? wheelData[index].id - 6 : wheelData[index].id}</text>
+                                <g key={index} 
+                                    onClick={() => { 
+                                      setActiveWheelIndex(index); 
+                                      setShowAvasarpiniLabel(false); 
+                                      setShowUtsarpiniLabel(false); 
+                                      playSound('scifi'); 
+                                  }}
+                                  className="cursor-pointer group"
+                                >
+                                      <path 
+                                        d={pathData} 
+                                        fill="currentColor" 
+                                        stroke={isFocusMode ? (isActive ? '#ffffff' : 'rgba(255,255,255,0.1)') : '#09090b'} 
+                                        strokeWidth="0.015" 
+                                        className={`transition-all duration-200 transform-gpu ${wheelData[index].wheelColor} ${
+                                          isFocusMode 
+                                            ? isActive ? 'scale-[1.03] z-10 drop-shadow-[0_0_15px_currentColor] opacity-100' : 'opacity-20 hover:opacity-40'
+                                            : isActive ? 'scale-105 z-10 brightness-110 drop-shadow-md opacity-100' : 'hover:brightness-110 opacity-100'
+                                        }`} 
+                                        style={{ transformOrigin: "0 0", willChange: "transform, filter" }} 
+                                      />
+                                      <text 
+                                        x={labelX} y={labelY} 
+                                        fontSize="0.12" fontWeight="900" fill="currentColor" textAnchor="middle" dominantBaseline="central" 
+                                        className={`pointer-events-none select-none transition-all duration-500 ${
+                                          isFocusMode 
+                                            ? isActive ? 'text-white drop-shadow-[0_0_10px_currentColor] opacity-100' : 'opacity-0' 
+                                            : 'text-black/40 dark:text-black/60 opacity-100'
+                                        }`} 
+                                        transform={`rotate(90, ${labelX}, ${labelY})`}
+                                      >
+                                        {wheelData[index].id > 6 ? wheelData[index].id - 6 : wheelData[index].id}
+                                      </text>
                                 </g>
                               );
                           })}
-                          <circle cx="0" cy="0" r="0.45" className="fill-white/80 dark:fill-black/80 stroke-zinc-200 dark:stroke-zinc-800 stroke-[0.01]" />
+                          
+                          <circle cx="0" cy="0" r="0.45" className={`transition-all duration-500 stroke-[0.01] ${isFocusMode ? 'fill-black stroke-white/10' : 'fill-white/80 dark:fill-black/80 stroke-zinc-200 dark:stroke-zinc-800'}`} />
                         </svg>
                       ) : (
                         <div className="w-full h-full rounded-full bg-zinc-100 dark:bg-zinc-800 animate-pulse"></div>
                       )}
-                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none"><RefreshCw className="w-8 h-8 text-zinc-300 dark:text-zinc-700 animate-spin-slow" /></div>
+
+                      {/* ACTIVE ARA NAME (ONLY IN FOCUS MODE) */}
+                      {isFocusMode && activeWheelIndex !== -1 && (
+                          <div className="absolute bottom-6 md:bottom-12 left-0 right-0 text-center animate-in fade-in slide-in-from-bottom-4 duration-500 pointer-events-none">
+                              <h3 className="text-3xl md:text-4xl font-black uppercase text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.6)] tracking-widest">
+                                  {activeWheelAra?.name[l]}
+                              </h3>
+                          </div>
+                      )}
+
+                      <div className={`absolute inset-0 flex items-center justify-center pointer-events-none ${isFocusMode ? 'hidden' : ''}`}><RefreshCw className="w-8 h-8 text-zinc-300 dark:text-zinc-700 animate-spin-slow" /></div>
                   </div>
 
                   <AnimatePresence mode="wait">
@@ -645,7 +796,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                        initial={{ opacity: 0, y: 20 }} 
                        animate={{ opacity: 1, y: 0 }} 
                        exit={{ opacity: 0, y: -20 }} 
-                       className="bg-white/90 dark:bg-black/60 border border-zinc-200 dark:border-white/10 rounded-3xl p-6 md:p-8 max-w-3xl mx-auto shadow-2xl backdrop-blur-xl w-[75%]"
+                       className={`bg-white/90 dark:bg-black/60 border border-zinc-200 dark:border-white/10 rounded-3xl p-6 md:p-8 max-w-3xl mx-auto shadow-2xl backdrop-blur-xl w-[75%] ${isFocusMode ? 'hidden' : 'block'}`}
                      >
                          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                              <div className="flex items-center gap-4">
@@ -685,7 +836,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
           </div>
 
           {/* --- CHART SECTION (Guaranteed Fit) --- */}
-          <div className="mt-32 p-4 md:p-12 bg-white/60 dark:bg-black/80 rounded-3xl text-center mb-24 relative border border-zinc-200 dark:border-white/5 backdrop-blur-md shadow-lg flex flex-col">
+          <div className= {`mt-32 p-4 md:p-12 bg-white/60 dark:bg-black/80 rounded-3xl text-center mb-24 relative border border-zinc-200 dark:border-white/5 backdrop-blur-md shadow-lg flex flex-col ${isFocusMode ? 'hidden' : 'block'}`}>
               
               {/* Header */}
               <div className="flex flex-col items-center mb-8 md:mb-12 shrink-0">
@@ -712,7 +863,6 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
                         <div key={i} className="flex flex-col items-center justify-end h-full flex-1 min-w-0 group relative">
                             
                             {/* Height Value Label */}
-                            {/* Uses absolute positioning on mobile to prevent layout shift, relative on desktop */}
                             <div className="mb-1 md:mb-3">
                                 <div className="text-[7px] md:text-[11px] font-bold text-zinc-500 dark:text-zinc-400 whitespace-nowrap bg-white/80 dark:bg-black/80 px-1 py-0.5 md:px-2 md:py-1 rounded border border-black/5 dark:border-white/5 shadow-sm">
                                    {startHeights[ara.id as keyof typeof startHeights]}
