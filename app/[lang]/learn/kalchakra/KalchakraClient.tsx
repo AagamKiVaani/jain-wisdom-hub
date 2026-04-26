@@ -327,6 +327,30 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
       }
 
       if (!isFocusMode) return;
+
+      // RIGHT SIDE (Avasarpini 1-6) -> Numpad Numbers
+      if (e.code.startsWith('Numpad')) {
+          const num = parseInt(e.code.replace('Numpad', ''));
+          if (num >= 1 && num <= 6) {
+              setShowAllLabels(false);
+              setShowAvasarpiniLabel(false);
+              setShowUtsarpiniLabel(false);
+              setActiveWheelIndex(num - 1); // Maps 1-6 to indices 0-5
+              return;
+          }
+      }
+
+      // LEFT SIDE (Utsarpini 1-6) -> Top Row Numbers (Digit1, Digit2, etc.)
+      if (e.code.startsWith('Digit')) {
+          const num = parseInt(e.code.replace('Digit', ''));
+          if (num >= 1 && num <= 6) {
+              setShowAllLabels(false);
+              setShowAvasarpiniLabel(false);
+              setShowUtsarpiniLabel(false);
+              setActiveWheelIndex(num + 5); // Maps 1-6 to indices 6-11
+              return;
+          }
+      }
       
       switch(e.key.toLowerCase()) {
         case 'a': 
@@ -364,7 +388,7 @@ export default function KalchakraPage({ params }: { params: Promise<{ lang: stri
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isFocusMode]);
+  }, [isFocusMode, showAvasarpiniLabel, showUtsarpiniLabel]);
 
   // --- MUSIC SWITCHER ---
   useEffect(() => {
