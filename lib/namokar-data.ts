@@ -4,6 +4,7 @@ export type Section = {
   type: "text" | "sacred-card" | "line-meaning" | "paramesthi-grid" | "deep-essay"| "science-breakdown" | "story-mode";
   heading: { en: string; hi: string; kn: string };
   content?: { en: string; hi: string; kn: string };
+  audioUrl?: string;
   lines?: { original: string; meaning: { en: string; hi: string; kn: string } }[];
   items?: any[];
 };
@@ -34,6 +35,7 @@ export const jainTopics: Record<string, Topic> = {
           {
             type: "sacred-card",
             heading: { en: "The Main Mantra", hi: "मूल महामंत्र", kn: "ಮೂಲ ಮಹಾಮಂತ್ರ" },
+            audioUrl: "/sounds/namokar/namokar_part_1.MP3",
             content: {
               en: "Ṇamō Arihantāṇaṁ\nṆamō Siddhāṇaṁ\nṆamō Āyariyāṇaṁ\nṆamō Uvajjhāyāṇaṁ\nṆamō Lōē Savva Sāhūṇaṁ",
               hi: "णमो अरिहंताणं\nणमो सिद्धाणं\nणमो आयरियाणं\nणमो उवज्झायाणं\nणमो लोए सव्व साहूणं",
@@ -63,6 +65,7 @@ export const jainTopics: Record<string, Topic> = {
           {
             type: "sacred-card",
             heading: { en: "The Fruit-of-Recitation Verse", hi: "फलश्रुति गाथा", kn: "ಫಲಶ್ರುತಿ ಗಾದೆ" },
+            audioUrl: "/sounds/namokar/namokar_part_2.MP3",
             content: {
               en: "Eso Pancha Namokaro,\nSavva Pavappanasano,\nMangalanam ca Savvesim,\nPadhamam Havai Mangalam.",
               hi: "एसो पंच णमोक्कारो,\nसव्व पावप्पणासणो।\nमंगलाणं च सव्वेसिं,\nपढमं हवई मंगलं॥",

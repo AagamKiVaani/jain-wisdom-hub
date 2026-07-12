@@ -106,8 +106,8 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             </Link>
 
             <Link 
-              // href={`/${lang}/learn/namokar-mantra`}
-              href={`/${lang}/coming-soon`}
+              href={`/${lang}/learn/namokar-mantra`}
+              // href={`/${lang}/coming-soon`}
               className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 rounded-3xl hover:border-orange-500 dark:hover:border-orange-500 transition-all hover:shadow-2xl hover:shadow-orange-500/10 backdrop-blur-sm"
             >
               <div className="flex items-start justify-between mb-6">
