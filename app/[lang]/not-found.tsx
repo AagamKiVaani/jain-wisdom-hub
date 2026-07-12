@@ -9,7 +9,7 @@ const translations = {
   en: {
     title: "404",
     subtitle: "The Path is Lost",
-    desc: "Even the soul wanders in the cycle of Samsara before finding the right path. This page does not exist.",
+    desc: "Even the soul wanders in the cycle of Life before finding the right path. This page does not exist.",
     button: "Return Home"
   },
   hi: {
