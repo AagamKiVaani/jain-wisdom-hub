@@ -59,6 +59,7 @@ export default async function RootLayout({
   return (
     <html lang={lang} suppressHydrationWarning>
       <body 
+        suppressHydrationWarning
         className={`
           ${fontClass} 
           bg-white dark:bg-black text-gray-900 dark:text-gray-100 min-h-screen flex flex-col

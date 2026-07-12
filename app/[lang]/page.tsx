@@ -1,6 +1,6 @@
 //page.tsx
 import Link from "next/link";
-import { Users, ArrowRight, Ghost, Clock, Sparkles } from "lucide-react";
+import { Users, ArrowRight, Ghost, Clock, Sparkles, BookOpen } from "lucide-react";
 import DailyWisdom from "@/components/DailyWisdom";
 import { getTodaysQuote } from "@/lib/quoteService";
 
@@ -14,6 +14,7 @@ const translations = {
     c2_title: "Namokar Mantra", c2_sub: "The Eternal Prayer",
     c3_title: "Wheel of Time", c3_sub: "The Cosmic Cycle",
     c4_title: "Soul & Karma", c4_sub: "The Physics of Soul",
+    c5_title: "Resources Hub", c5_sub: "Download Notes & PDFs",
   },
   hi: {
     badge: "डिजिटल आगम अल्फा 1.0",
@@ -23,6 +24,7 @@ const translations = {
     c2_title: "णमोकार मंत्र", c2_sub: "अनादि मंत्र",
     c3_title: "कालचक्र", c3_sub: "समय का चक्र",
     c4_title: "आत्मा और कर्म", c4_sub: "कर्म सिद्धांत",
+    c5_title: "संसाधन केंद्र", c5_sub: "नोट्स डाउनलोड करें",
   },
   kn: {
     badge: "ಡಿಜಿಟಲ್ ಆಗಮ ಆಲ್ಫಾ 1.0",
@@ -32,6 +34,7 @@ const translations = {
     c2_title: "ನಮೋಕಾರ ಮಂತ್ರ", c2_sub: "ಶಾಶ್ವತ ಪ್ರಾರ್ಥನೆ",
     c3_title: "ಕಾಲಚಕ್ರ", c3_sub: "ವಿಶ್ವದ ಚಕ್ರ",
     c4_title: "ಆತ್ಮ ಮತ್ತು ಕರ್ಮ", c4_sub: "ಆತ್ಮದ ವಿಜ್ಞಾನ",
+    c5_title: "ಸಂಪನ್ಮೂಲಗಳು", c5_sub: "ಟಿಪ್ಪಣಿಗಳನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ",
   }
 };
 
@@ -135,6 +138,22 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 {/* CHANGED h3 -> h2 */}
                 <h2 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c3_title}</h2>
                 <p className="text-sm text-gray-500 font-medium">{t.c3_sub}</p>
+              </div>
+            </Link>
+
+            <Link 
+              href={`/${lang}/resources`}
+              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 rounded-3xl hover:border-blue-500 dark:hover:border-blue-500 transition-all hover:shadow-2xl hover:shadow-blue-500/10 backdrop-blur-sm md:col-span-2"
+            >
+              <div className="flex items-start justify-between mb-6">
+                  <div className="h-14 w-14 rounded-2xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <BookOpen size={28} />
+                  </div>
+                  <ArrowRight size={20} className="text-gray-300 dark:text-gray-700 group-hover:text-blue-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
+              </div>
+              <div>
+                <h2 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c5_title}</h2>
+                <p className="text-sm text-gray-500 font-medium">{t.c5_sub}</p>
               </div>
             </Link>
 
