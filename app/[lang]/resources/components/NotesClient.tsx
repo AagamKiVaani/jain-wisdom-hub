@@ -90,7 +90,7 @@ export default function NotesClient({ initialNotes, isIndic, t }: { initialNotes
     const name = seriesName.toLowerCase();
     if (name.includes('decoding')) return '/images/resources/posters/decoding_jainism.jpeg';
     if (name.includes('tatvarth')) return '/images/resources/posters/tatvarth-series.jpeg';
-    if (name.includes('the jain ramayan')) return '/images/resources/posters/the_jain_ramayan.jpeg';
+    if (name.includes('the jain ramayan')) return '/images/resources/posters/the-jain-ramayan.jpeg';
     return null;
   };
 
