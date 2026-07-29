@@ -16,6 +16,59 @@ export interface Note {
   description?: string;
 }
 
+const getThemeColors = (series: string, section?: string) => {
+  let themeName = 'blue'; 
+  
+  if (series.toLowerCase().includes('ramayan')) themeName = 'golden';
+  else if (series.toLowerCase().includes('decoding')) themeName = 'cyan';
+  else if (series.toLowerCase().includes('tatvarth') && section) {
+    const s = section.toLowerCase();
+    if (s.includes('adhyay 10')) themeName = 'red';
+    else if (s.includes('adhyay 1')) themeName = 'purple';
+    else if (s.includes('adhyay 2')) themeName = 'green';
+    else if (s.includes('adhyay 3')) themeName = 'pink';
+    else if (s.includes('adhyay 4')) themeName = 'blue';
+    else if (s.includes('adhyay 5')) themeName = 'orange';
+    else if (s.includes('adhyay 6')) themeName = 'amber';
+    else if (s.includes('adhyay 7')) themeName = 'teal';
+    else if (s.includes('adhyay 8')) themeName = 'indigo';
+    else if (s.includes('adhyay 9')) themeName = 'lime';
+    else themeName = 'blue';
+  }
+
+  const themes: Record<string, {
+    text: string, 
+    textDark: string,
+    from: string, 
+    to: string, 
+    shadow: string, 
+    hoverBorder: string,
+    badgeBg: string,
+    badgeText: string,
+    badgeBorder: string,
+    badgeHoverBg: string,
+    playBg: string,
+    playShadow: string,
+    hex: string,
+    hexDark: string
+  }> = {
+    purple: { text: 'text-purple-600', textDark: 'dark:text-purple-400', from: 'from-purple-500', to: 'to-purple-700', shadow: 'hover:shadow-purple-500/30', hoverBorder: 'hover:border-purple-500/40', badgeBg: 'bg-purple-50 dark:bg-purple-500/10', badgeText: 'text-purple-700 dark:text-purple-300', badgeBorder: 'border-purple-100 dark:border-purple-500/20', badgeHoverBg: 'hover:bg-purple-100 dark:hover:bg-purple-500/20', playBg: 'bg-purple-600/90 group-hover/video:bg-purple-500', playShadow: 'shadow-[0_0_30px_rgba(168,85,247,0.6)]', hex: '168, 85, 247', hexDark: '192, 132, 252' },
+    green: { text: 'text-green-600', textDark: 'dark:text-green-400', from: 'from-green-500', to: 'to-green-700', shadow: 'hover:shadow-green-500/30', hoverBorder: 'hover:border-green-500/40', badgeBg: 'bg-green-50 dark:bg-green-500/10', badgeText: 'text-green-700 dark:text-green-300', badgeBorder: 'border-green-100 dark:border-green-500/20', badgeHoverBg: 'hover:bg-green-100 dark:hover:bg-green-500/20', playBg: 'bg-green-600/90 group-hover/video:bg-green-500', playShadow: 'shadow-[0_0_30px_rgba(34,197,94,0.6)]', hex: '34, 197, 94', hexDark: '74, 222, 128' },
+    pink: { text: 'text-pink-600', textDark: 'dark:text-pink-400', from: 'from-pink-500', to: 'to-pink-700', shadow: 'hover:shadow-pink-500/30', hoverBorder: 'hover:border-pink-500/40', badgeBg: 'bg-pink-50 dark:bg-pink-500/10', badgeText: 'text-pink-700 dark:text-pink-300', badgeBorder: 'border-pink-100 dark:border-pink-500/20', badgeHoverBg: 'hover:bg-pink-100 dark:hover:bg-pink-500/20', playBg: 'bg-pink-600/90 group-hover/video:bg-pink-500', playShadow: 'shadow-[0_0_30px_rgba(236,72,153,0.6)]', hex: '236, 72, 153', hexDark: '244, 114, 182' },
+    blue: { text: 'text-blue-600', textDark: 'dark:text-blue-400', from: 'from-blue-500', to: 'to-blue-700', shadow: 'hover:shadow-blue-500/30', hoverBorder: 'hover:border-blue-500/40', badgeBg: 'bg-blue-50 dark:bg-blue-500/10', badgeText: 'text-blue-700 dark:text-blue-300', badgeBorder: 'border-blue-100 dark:border-blue-500/20', badgeHoverBg: 'hover:bg-blue-100 dark:hover:bg-blue-500/20', playBg: 'bg-blue-600/90 group-hover/video:bg-blue-500', playShadow: 'shadow-[0_0_30px_rgba(59,130,246,0.6)]', hex: '59, 130, 246', hexDark: '96, 165, 250' },
+    orange: { text: 'text-orange-600', textDark: 'dark:text-orange-400', from: 'from-orange-500', to: 'to-orange-700', shadow: 'hover:shadow-orange-500/30', hoverBorder: 'hover:border-orange-500/40', badgeBg: 'bg-orange-50 dark:bg-orange-500/10', badgeText: 'text-orange-700 dark:text-orange-300', badgeBorder: 'border-orange-100 dark:border-orange-500/20', badgeHoverBg: 'hover:bg-orange-100 dark:hover:bg-orange-500/20', playBg: 'bg-orange-600/90 group-hover/video:bg-orange-500', playShadow: 'shadow-[0_0_30px_rgba(249,115,22,0.6)]', hex: '249, 115, 22', hexDark: '251, 146, 60' },
+    amber: { text: 'text-amber-600', textDark: 'dark:text-amber-400', from: 'from-amber-500', to: 'to-amber-700', shadow: 'hover:shadow-amber-500/30', hoverBorder: 'hover:border-amber-500/40', badgeBg: 'bg-amber-50 dark:bg-amber-500/10', badgeText: 'text-amber-700 dark:text-amber-300', badgeBorder: 'border-amber-100 dark:border-amber-500/20', badgeHoverBg: 'hover:bg-amber-100 dark:hover:bg-amber-500/20', playBg: 'bg-amber-600/90 group-hover/video:bg-amber-500', playShadow: 'shadow-[0_0_30px_rgba(245,158,11,0.6)]', hex: '245, 158, 11', hexDark: '251, 191, 36' },
+    teal: { text: 'text-teal-600', textDark: 'dark:text-teal-400', from: 'from-teal-500', to: 'to-teal-700', shadow: 'hover:shadow-teal-500/30', hoverBorder: 'hover:border-teal-500/40', badgeBg: 'bg-teal-50 dark:bg-teal-500/10', badgeText: 'text-teal-700 dark:text-teal-300', badgeBorder: 'border-teal-100 dark:border-teal-500/20', badgeHoverBg: 'hover:bg-teal-100 dark:hover:bg-teal-500/20', playBg: 'bg-teal-600/90 group-hover/video:bg-teal-500', playShadow: 'shadow-[0_0_30px_rgba(20,184,166,0.6)]', hex: '20, 184, 166', hexDark: '45, 212, 191' },
+    indigo: { text: 'text-indigo-600', textDark: 'dark:text-indigo-400', from: 'from-indigo-500', to: 'to-indigo-700', shadow: 'hover:shadow-indigo-500/30', hoverBorder: 'hover:border-indigo-500/40', badgeBg: 'bg-indigo-50 dark:bg-indigo-500/10', badgeText: 'text-indigo-700 dark:text-indigo-300', badgeBorder: 'border-indigo-100 dark:border-indigo-500/20', badgeHoverBg: 'hover:bg-indigo-100 dark:hover:bg-indigo-500/20', playBg: 'bg-indigo-600/90 group-hover/video:bg-indigo-500', playShadow: 'shadow-[0_0_30px_rgba(99,102,241,0.6)]', hex: '99, 102, 241', hexDark: '129, 140, 248' },
+    lime: { text: 'text-lime-600', textDark: 'dark:text-lime-400', from: 'from-lime-500', to: 'to-lime-700', shadow: 'hover:shadow-lime-500/30', hoverBorder: 'hover:border-lime-500/40', badgeBg: 'bg-lime-50 dark:bg-lime-500/10', badgeText: 'text-lime-700 dark:text-lime-300', badgeBorder: 'border-lime-100 dark:border-lime-500/20', badgeHoverBg: 'hover:bg-lime-100 dark:hover:bg-lime-500/20', playBg: 'bg-lime-600/90 group-hover/video:bg-lime-500', playShadow: 'shadow-[0_0_30px_rgba(132,204,22,0.6)]', hex: '132, 204, 22', hexDark: '163, 230, 53' },
+    red: { text: 'text-red-600', textDark: 'dark:text-red-400', from: 'from-red-500', to: 'to-red-700', shadow: 'hover:shadow-red-500/30', hoverBorder: 'hover:border-red-500/40', badgeBg: 'bg-red-50 dark:bg-red-500/10', badgeText: 'text-red-700 dark:text-red-300', badgeBorder: 'border-red-100 dark:border-red-500/20', badgeHoverBg: 'hover:bg-red-100 dark:hover:bg-red-500/20', playBg: 'bg-red-600/90 group-hover/video:bg-red-500', playShadow: 'shadow-[0_0_30px_rgba(239,68,68,0.6)]', hex: '239, 68, 68', hexDark: '248, 113, 113' },
+    cyan: { text: 'text-cyan-600', textDark: 'dark:text-cyan-400', from: 'from-cyan-500', to: 'to-cyan-700', shadow: 'hover:shadow-cyan-500/30', hoverBorder: 'hover:border-cyan-500/40', badgeBg: 'bg-cyan-50 dark:bg-cyan-500/10', badgeText: 'text-cyan-700 dark:text-cyan-300', badgeBorder: 'border-cyan-100 dark:border-cyan-500/20', badgeHoverBg: 'hover:bg-cyan-100 dark:hover:bg-cyan-500/20', playBg: 'bg-cyan-600/90 group-hover/video:bg-cyan-500', playShadow: 'shadow-[0_0_30px_rgba(6,182,212,0.6)]', hex: '6, 182, 212', hexDark: '34, 211, 238' },
+    golden: { text: 'text-yellow-600', textDark: 'dark:text-yellow-400', from: 'from-yellow-500', to: 'to-yellow-600', shadow: 'hover:shadow-yellow-500/30', hoverBorder: 'hover:border-yellow-500/40', badgeBg: 'bg-yellow-50 dark:bg-yellow-500/10', badgeText: 'text-yellow-700 dark:text-yellow-300', badgeBorder: 'border-yellow-100 dark:border-yellow-500/20', badgeHoverBg: 'hover:bg-yellow-100 dark:hover:bg-yellow-500/20', playBg: 'bg-yellow-500/90 group-hover/video:bg-yellow-400', playShadow: 'shadow-[0_0_30px_rgba(234,179,8,0.6)]', hex: '234, 179, 8', hexDark: '250, 204, 21' },
+  };
+  
+  return themes[themeName];
+};
+
 export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t }: { initialNotes: Note[], isIndic: boolean, t: any }) {
   // Clean up notes: if a series has actual content, remove its series-level "coming soon" placeholder
   const initialNotes = useMemo(() => rawInitialNotes.filter(note => {
@@ -287,6 +340,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                 const sectionNotes = initialNotes.filter(n => n.series === selectedSeries && n.section === section);
                 const sectionNotesCount = sectionNotes.length;
                 const isSectionComingSoon = sectionNotes.length > 0 && sectionNotes.every(n => n.title.toLowerCase().includes("coming soon"));
+                const theme = getThemeColors(selectedSeries || "", section);
 
                 return (
                   <button
@@ -296,7 +350,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                       setSelectedSection(section);
                       setSearchQuery("");
                     }}
-                    className={`group relative p-8 rounded-2xl overflow-hidden text-left flex flex-col justify-between aspect-[4/3] md:aspect-auto md:min-h-[200px] transition-all duration-300 ${isSectionComingSoon ? 'cursor-default' : 'hover:shadow-xl hover:shadow-indigo-500/20'}`}
+                    className={`group relative p-8 rounded-2xl overflow-hidden text-left flex flex-col justify-between aspect-[4/3] md:aspect-auto md:min-h-[200px] transition-all duration-300 ${isSectionComingSoon ? 'cursor-default' : `hover:shadow-xl ${theme.shadow}`}`}
                   >
                     {/* Background Image Logic */}
                     {(() => {
@@ -330,13 +384,13 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                     {/* Text Content */}
                     <div className={`relative z-10 w-full h-full flex flex-col justify-between ${isSectionComingSoon ? 'opacity-40 blur-[1px]' : ''}`}>
                       <div>
-                        <Layers className={`${getSectionPoster(section) ? 'text-white' : 'text-indigo-400'} mb-4 opacity-50 group-hover:opacity-100 transition-opacity`} size={28} />
+                        <Layers className={`${getSectionPoster(section) ? 'text-white' : theme.text} mb-4 opacity-50 group-hover:opacity-100 transition-opacity`} size={28} />
                         <h3 className={`text-xl font-bold uppercase tracking-tight mb-2 ${getSectionPoster(section) ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
                           {section}
                         </h3>
                       </div>
                       {!isSectionComingSoon && (
-                        <div className={`mt-6 inline-flex items-center text-xs font-bold uppercase tracking-widest ${getSectionPoster(section) ? 'text-white/80' : 'text-indigo-500'}`}>
+                        <div className={`mt-6 inline-flex items-center text-xs font-bold uppercase tracking-widest ${getSectionPoster(section) ? 'text-white/80' : theme.text}`}>
                           {sectionNotesCount} items <ArrowRight size={14} className="ml-1 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all" />
                         </div>
                       )}
@@ -394,9 +448,14 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
 
             {selectedSection && (
               <div className="mb-10 flex items-center gap-4">
-                <h2 className="text-2xl md:text-3xl font-black uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">
-                  {selectedSection}
-                </h2>
+                {(() => {
+                  const theme = getThemeColors(selectedSeries || "", selectedSection);
+                  return (
+                    <h2 className={`text-2xl md:text-3xl font-black uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r ${theme.from} ${theme.to}`}>
+                      {selectedSection}
+                    </h2>
+                  );
+                })()}
                 <div className="h-px bg-zinc-200 dark:bg-white/10 grow"></div>
               </div>
             )}
@@ -404,7 +463,10 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
             {/* Flat Notes Grid (since it's already filtered to a section) */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 pb-32">
               <AnimatePresence mode="popLayout">
-                {filteredNotes.map((note) => (
+                {filteredNotes.map((note) => {
+                  const theme = getThemeColors(note.series, note.section);
+                  
+                  return (
                   <motion.div
                     key={note.id}
                     id={`note-${note.id}`}
@@ -413,7 +475,11 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.3 }}
-                    className={`group flex flex-col md:flex-row bg-white/80 dark:bg-zinc-900/60 backdrop-blur-xl border border-zinc-200 dark:border-white/10 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 ${highlightedNoteId === note.id ? 'breathing-highlight' : ''}`}
+                    style={{
+                      '--highlight-hex': theme.hex,
+                      '--highlight-hex-dark': theme.hexDark,
+                    } as React.CSSProperties}
+                    className={`group flex flex-col md:flex-row bg-white/80 dark:bg-zinc-900/60 backdrop-blur-xl border border-zinc-200 dark:border-white/10 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl ${theme.hoverBorder} transition-all duration-500 ${highlightedNoteId === note.id ? 'dynamic-breathing-highlight' : ''}`}
                   >
                     {/* Video Thumbnail Area */}
                     <div
@@ -432,7 +498,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                           <div className="absolute inset-0 bg-black/40 group-hover/video:bg-black/20 transition-colors duration-500"></div>
 
                           <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-16 h-16 rounded-full bg-blue-600/90 flex items-center justify-center shadow-[0_0_30px_rgba(37,99,235,0.6)] group-hover/video:scale-110 group-hover/video:bg-blue-500 transition-all duration-300">
+                            <div className={`w-16 h-16 rounded-full flex items-center justify-center group-hover/video:scale-110 transition-all duration-300 ${theme.playBg} ${theme.playShadow}`}>
                               <PlayCircle size={32} className="text-white ml-1" />
                             </div>
                           </div>
@@ -452,11 +518,11 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                     {/* Content Area */}
                     <div className="p-6 flex flex-col justify-between grow">
                       <div>
-                        <h3 className={`text-xl font-bold text-gray-900 dark:text-white mb-3 leading-tight ${isIndic ? 'tracking-normal' : 'tracking-tight'}`}>
+                        <h3 className={`text-xl font-bold text-gray-900 dark:text-white mb-3 ${isIndic ? 'leading-normal tracking-normal pt-1' : 'leading-tight tracking-tight'}`}>
                           {note.title}
                         </h3>
                         {note.description && (
-                          <p className="text-gray-600 dark:text-gray-400 text-sm font-serif line-clamp-3 mb-4">
+                          <p className={`text-gray-600 dark:text-gray-400 text-sm font-serif line-clamp-3 mb-4 ${isIndic ? 'leading-relaxed pt-1' : ''}`}>
                             {note.description}
                           </p>
                         )}
@@ -465,7 +531,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                       {note.driveFileId ? (
                         <a
                           href={`https://drive.google.com/uc?export=download&id=${note.driveFileId}`}
-                          className="mt-4 flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl bg-blue-50 dark:bg-blue-500/10 hover:bg-blue-100 dark:hover:bg-blue-500/20 border border-blue-100 dark:border-blue-500/20 text-blue-700 dark:text-blue-300 font-bold text-sm uppercase tracking-widest transition-all duration-300 shadow-sm group/btn"
+                          className={`mt-4 flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl font-bold text-sm uppercase tracking-widest transition-all duration-300 shadow-sm group/btn ${theme.badgeBg} ${theme.badgeHoverBg} ${theme.badgeBorder} border ${theme.badgeText}`}
                         >
                           <Download size={18} className="group-hover/btn:animate-bounce-subtle" />
                           {t?.download || "Download PDF"}
@@ -477,7 +543,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                       )}
                     </div>
                   </motion.div>
-                ))}
+                )})}
               </AnimatePresence>
 
               {filteredNotes.length === 0 && (

@@ -38,36 +38,36 @@ body.lock-scroll {
   overflow-x: hidden;
 }
 
-@keyframes breathe {
+@keyframes dynamic-breathe {
   0%, 100% {
-    box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
-    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 0 10px rgba(var(--highlight-hex), 0.5);
+    border-color: rgba(var(--highlight-hex), 0.5);
   }
   50% {
-    box-shadow: 0 0 30px rgba(59, 130, 246, 0.9);
-    border-color: rgba(59, 130, 246, 1);
+    box-shadow: 0 0 30px rgba(var(--highlight-hex), 1);
+    border-color: rgba(var(--highlight-hex), 1);
   }
 }
 
-.breathing-highlight {
-  animation: breathe 2s ease-in-out infinite;
+.dynamic-breathing-highlight {
+  animation: dynamic-breathe 2s ease-in-out infinite;
   z-index: 10;
   transform: scale(1.02);
   transition: transform 0.3s ease;
   border-width: 2px !important;
 }
 
-@keyframes breathe-dark {
+@keyframes dynamic-breathe-dark {
   0%, 100% {
-    box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
-    border-color: rgba(99, 102, 241, 0.4);
+    box-shadow: 0 0 10px rgba(var(--highlight-hex-dark), 0.4);
+    border-color: rgba(var(--highlight-hex-dark), 0.5);
   }
   50% {
-    box-shadow: 0 0 30px rgba(99, 102, 241, 0.9);
-    border-color: rgba(99, 102, 241, 1);
+    box-shadow: 0 0 30px rgba(var(--highlight-hex-dark), 0.9);
+    border-color: rgba(var(--highlight-hex-dark), 1);
   }
 }
 
-.dark .breathing-highlight {
-  animation: breathe-dark 2s ease-in-out infinite;
+.dark .dynamic-breathing-highlight {
+  animation: dynamic-breathe-dark 2s ease-in-out infinite;
 }
