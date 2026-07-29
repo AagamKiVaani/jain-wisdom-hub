@@ -518,14 +518,24 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                     {/* Content Area */}
                     <div className="p-6 flex flex-col justify-between grow">
                       <div>
-                        <h3 className={`text-xl font-bold text-gray-900 dark:text-white mb-3 ${isIndic ? 'leading-normal tracking-normal pt-1' : 'leading-tight tracking-tight'}`}>
-                          {note.title}
-                        </h3>
-                        {note.description && (
-                          <p className={`text-gray-600 dark:text-gray-400 text-sm font-serif line-clamp-3 mb-4 ${isIndic ? 'leading-relaxed pt-1' : ''}`}>
-                            {note.description}
-                          </p>
-                        )}
+                        {(() => {
+                          const containsDevanagari = (text?: string) => text ? /[\u0900-\u097F]/.test(text) : false;
+                          const isTitleIndic = isIndic || containsDevanagari(note.title);
+                          const isDescIndic = isIndic || containsDevanagari(note.description);
+                          
+                          return (
+                            <>
+                              <h3 className={`text-xl font-bold text-gray-900 dark:text-white mb-3 ${isTitleIndic ? 'leading-normal tracking-normal pt-2' : 'leading-tight tracking-tight'}`}>
+                                {note.title}
+                              </h3>
+                              {note.description && (
+                                <p className={`text-gray-600 dark:text-gray-400 text-sm font-serif line-clamp-3 mb-4 ${isDescIndic ? 'leading-relaxed pt-2 pb-1' : ''}`}>
+                                  {note.description}
+                                </p>
+                              )}
+                            </>
+                          );
+                        })()}
                       </div>
 
                       {note.driveFileId ? (
