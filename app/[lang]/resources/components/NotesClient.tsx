@@ -17,18 +17,19 @@ export interface Note {
 }
 
 export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t }: { initialNotes: Note[], isIndic: boolean, t: any }) {
-  // Clean up notes: if a series has valid notes, remove its "coming soon" placeholder
+  // Clean up notes: if a series has actual content, remove its series-level "coming soon" placeholder
   const initialNotes = useMemo(() => rawInitialNotes.filter(note => {
-    const isComingSoonNote = note.title.toLowerCase().includes("coming soon") || (note.section || "").toLowerCase().includes("coming soon");
-    if (!isComingSoonNote) return true;
+    const isSeriesPlaceholder = (note.section === "" || note.section?.toLowerCase() === "coming soon") && note.title.toLowerCase().includes("coming soon");
     
-    // It is a coming soon note. Let's see if this series has any NON-coming soon notes
-    const seriesHasValidNotes = rawInitialNotes.some(n => 
-      n.series === note.series && 
-      !(n.title.toLowerCase().includes("coming soon") || (n.section || "").toLowerCase().includes("coming soon"))
-    );
+    if (isSeriesPlaceholder) {
+      // Keep it ONLY if the series has NO other valid notes
+      const seriesHasOtherNotes = rawInitialNotes.some(n => 
+        n.series === note.series && n.id !== note.id && !((n.section === "" || n.section?.toLowerCase() === "coming soon") && n.title.toLowerCase().includes("coming soon"))
+      );
+      return !seriesHasOtherNotes;
+    }
     
-    return !seriesHasValidNotes; // Keep it only if the series has NO valid notes
+    return true; // Keep everything else (including Section-level coming soon notes like "Adhyay 2" -> "coming soon")
   }), [rawInitialNotes]);
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -38,6 +39,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
   const [playingVideoUrl, setPlayingVideoUrl] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
   const [highlightedNoteId, setHighlightedNoteId] = useState<string | null>(null);
+  const [targetScrollId, setTargetScrollId] = useState<string | null>(null);
   const searchParams = useSearchParams();
 
   // Handle 'highlight' query parameter
@@ -52,28 +54,37 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
         } else {
           setSelectedSection(null);
         }
-        setHighlightedNoteId(highlightId);
-        
-        // Remove the highlight after 5 seconds
-        setTimeout(() => {
-          setHighlightedNoteId(null);
-        }, 5000);
+        setTargetScrollId(highlightId);
       }
     }
   }, [searchParams, initialNotes]);
 
   // Scroll to highlighted note when grid is shown
   useEffect(() => {
-    if (highlightedNoteId && selectedSeries !== null) {
-      // Need a small timeout to let the grid render first
-      setTimeout(() => {
-        const element = document.getElementById(`note-${highlightedNoteId}`);
+    if (targetScrollId && selectedSeries !== null) {
+      // Need a small timeout to let the grid and entrance animations render first
+      const scrollTimer = setTimeout(() => {
+        const element = document.getElementById(`note-${targetScrollId}`);
         if (element) {
+          // Scroll into view first
           element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          
+          // Wait for smooth scroll to finish (approx 800ms) before highlighting
+          setTimeout(() => {
+            setHighlightedNoteId(targetScrollId);
+            
+            // Remove the highlight after 5 seconds
+            setTimeout(() => {
+              setHighlightedNoteId(null);
+              setTargetScrollId(null);
+            }, 5000);
+          }, 800);
         }
-      }, 300);
+      }, 500); // 500ms delay to ensure elements are mounted and animating
+      
+      return () => clearTimeout(scrollTimer);
     }
-  }, [highlightedNoteId, selectedSeries, selectedSection]);
+  }, [targetScrollId, selectedSeries, selectedSection]);
 
   // Prevent background scrolling when modal is open
   useEffect(() => {
@@ -273,15 +284,19 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto pb-32">
               {seriesSections.map(section => {
-                const sectionNotesCount = initialNotes.filter(n => n.series === selectedSeries && n.section === section).length;
+                const sectionNotes = initialNotes.filter(n => n.series === selectedSeries && n.section === section);
+                const sectionNotesCount = sectionNotes.length;
+                const isSectionComingSoon = sectionNotes.length > 0 && sectionNotes.every(n => n.title.toLowerCase().includes("coming soon"));
+
                 return (
                   <button
                     key={section}
                     onClick={() => {
+                      if (isSectionComingSoon) return;
                       setSelectedSection(section);
                       setSearchQuery("");
                     }}
-                    className="group relative p-8 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-indigo-500/20 transition-all duration-300 text-left flex flex-col justify-between aspect-[4/3] md:aspect-auto md:min-h-[200px]"
+                    className={`group relative p-8 rounded-2xl overflow-hidden text-left flex flex-col justify-between aspect-[4/3] md:aspect-auto md:min-h-[200px] transition-all duration-300 ${isSectionComingSoon ? 'cursor-default' : 'hover:shadow-xl hover:shadow-indigo-500/20'}`}
                   >
                     {/* Background Image Logic */}
                     {(() => {
@@ -292,29 +307,39 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                             <img 
                               src={posterUrl} 
                               alt={section} 
-                              className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" 
+                              className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${isSectionComingSoon ? 'opacity-40 blur-[2px]' : 'opacity-80 group-hover:opacity-100 group-hover:scale-105'}`} 
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-                            <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
+                            {!isSectionComingSoon && <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>}
                           </div>
                         );
                       }
                       return (
-                        <div className="absolute inset-0 bg-white/80 dark:bg-zinc-900/60 backdrop-blur-xl border border-zinc-200 dark:border-white/10"></div>
+                        <div className={`absolute inset-0 bg-white/80 dark:bg-zinc-900/60 backdrop-blur-xl border border-zinc-200 dark:border-white/10 ${isSectionComingSoon ? 'opacity-50' : ''}`}></div>
                       );
                     })()}
 
+                    {isSectionComingSoon && (
+                      <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/10">
+                        <div className="px-6 py-2 border border-white/30 bg-black/50 rounded-full text-white font-black tracking-widest uppercase text-lg rotate-[-5deg] shadow-2xl backdrop-blur-md">
+                          Coming Soon
+                        </div>
+                      </div>
+                    )}
+
                     {/* Text Content */}
-                    <div className="relative z-10 w-full h-full flex flex-col justify-between">
+                    <div className={`relative z-10 w-full h-full flex flex-col justify-between ${isSectionComingSoon ? 'opacity-40 blur-[1px]' : ''}`}>
                       <div>
                         <Layers className={`${getSectionPoster(section) ? 'text-white' : 'text-indigo-400'} mb-4 opacity-50 group-hover:opacity-100 transition-opacity`} size={28} />
                         <h3 className={`text-xl font-bold uppercase tracking-tight mb-2 ${getSectionPoster(section) ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
                           {section}
                         </h3>
                       </div>
-                      <div className={`mt-6 inline-flex items-center text-xs font-bold uppercase tracking-widest ${getSectionPoster(section) ? 'text-white/80' : 'text-indigo-500'}`}>
-                        {sectionNotesCount} items <ArrowRight size={14} className="ml-1 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all" />
-                      </div>
+                      {!isSectionComingSoon && (
+                        <div className={`mt-6 inline-flex items-center text-xs font-bold uppercase tracking-widest ${getSectionPoster(section) ? 'text-white/80' : 'text-indigo-500'}`}>
+                          {sectionNotesCount} items <ArrowRight size={14} className="ml-1 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all" />
+                        </div>
+                      )}
                     </div>
                   </button>
                 )
@@ -388,7 +413,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.3 }}
-                    className={`group flex flex-col md:flex-row bg-white/80 dark:bg-zinc-900/60 backdrop-blur-xl border border-zinc-200 dark:border-white/10 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 ${highlightedNoteId === note.id ? 'ring-4 ring-orange-500 shadow-[0_0_30px_rgba(249,115,22,0.5)] scale-[1.02] z-10' : ''}`}
+                    className={`group flex flex-col md:flex-row bg-white/80 dark:bg-zinc-900/60 backdrop-blur-xl border border-zinc-200 dark:border-white/10 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 ${highlightedNoteId === note.id ? 'breathing-highlight' : ''}`}
                   >
                     {/* Video Thumbnail Area */}
                     <div

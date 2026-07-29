@@ -197,7 +197,7 @@ export default function PdfGenerator({ notes = [] }: { notes?: Note[] }) {
         
         const fullWebsiteUrl = selectedNoteId ? `${websiteBaseUrl}?highlight=${selectedNoteId}` : websiteBaseUrl;
         
-        const part1 = "Read more notes at: ";
+        const part1 = "Watch this Sutra Video: ";
         const part2 = "Jain Wisdom Hub";
         
         pdf.setTextColor(80, 80, 80);
