@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Upload, FileDown, Trash2, Link as LinkIcon } from "lucide-react";
+import { Upload, FileDown, Trash2, Link as LinkIcon, BookOpen } from "lucide-react";
 import { jsPDF } from "jspdf";
+import { Note } from "../../resources/components/NotesClient";
 
 const ICONS = {
   youtube: `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.1C2.6 6.3 3.2 5.7 4 5.6C5.9 5.3 12 5.3 12 5.3s6.1 0 8 .3c.8.1 1.4.7 1.5 1.5.3 1.9.3 4.9.3 4.9s0 3-.3 4.9c-.1.8-.7 1.4-1.5 1.5-1.9.3-8 .3-8 .3s-6.1 0-8-.3c-.8-.1-1.4-.7-1.5-1.5-.3-1.9-.3-4.9-.3-4.9s0-3 .3-4.9z"></path><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"></polygon></svg>`,
@@ -11,12 +12,30 @@ const ICONS = {
   whatsapp: `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>`
 };
 
-export default function PdfGenerator() {
+export default function PdfGenerator({ notes = [] }: { notes?: Note[] }) {
   const [images, setImages] = useState<File[]>([]);
-  const [websitePath, setWebsitePath] = useState("/resources");
+  const [selectedSeries, setSelectedSeries] = useState<string>("");
+  const [selectedSection, setSelectedSection] = useState<string>("");
+  const [selectedNoteId, setSelectedNoteId] = useState<string>("");
   const [watermarkText, setWatermarkText] = useState("AAGAM KI VAANI");
   const [watermarkOpacity, setWatermarkOpacity] = useState(0.10);
   const [isGenerating, setIsGenerating] = useState(false);
+
+  // Filter out "coming soon" notes for the PDF Generator
+  const validNotes = notes.filter(n => 
+    !n.title.toLowerCase().includes("coming soon") && 
+    !(n.section || "").toLowerCase().includes("coming soon")
+  );
+
+  // Derived lists for dropdowns
+  const seriesList = Array.from(new Set(validNotes.map(n => n.series).filter(Boolean)));
+  const sectionsList = selectedSeries 
+    ? Array.from(new Set(validNotes.filter(n => n.series === selectedSeries).map(n => n.section).filter(Boolean))) 
+    : [];
+  const filteredNotesForDropdown = validNotes.filter(n => 
+    (!selectedSeries || n.series === selectedSeries) && 
+    (!selectedSection || n.section === selectedSection)
+  );
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -172,9 +191,11 @@ export default function PdfGenerator() {
         pdf.setFont("helvetica", "italic");
         pdf.setFontSize(14);
         
-        // Hardcoded production URL instead of localhost
-        const websiteBaseUrl = "https://jain-wisdom-hub.vercel.app/en";
-        const fullWebsiteUrl = `${websiteBaseUrl}${websitePath.startsWith('/') ? websitePath : '/' + websitePath}`;
+        // Dynamically use localhost for testing if running locally
+        const isLocalhost = typeof window !== 'undefined' && window.location.origin.includes('localhost');
+        const websiteBaseUrl = isLocalhost ? "http://localhost:3000/en/resources" : "https://jain-wisdom-hub.vercel.app/en/resources";
+        
+        const fullWebsiteUrl = selectedNoteId ? `${websiteBaseUrl}?highlight=${selectedNoteId}` : websiteBaseUrl;
         
         const part1 = "Read more notes at: ";
         const part2 = "Jain Wisdom Hub";
@@ -292,17 +313,57 @@ export default function PdfGenerator() {
             </div>
 
             <div className="space-y-4">
-              <div>
+              <div className="bg-gray-950 p-4 rounded-xl border border-gray-800 space-y-4">
                 <label className="block text-sm font-medium text-gray-400 mb-1 flex items-center gap-2">
-                  <LinkIcon className="w-4 h-4" /> Jain Wisdom Hub Path
+                  <BookOpen className="w-4 h-4 text-orange-400" /> Target Website Link (Sutra/Note)
                 </label>
-                <input
-                  type="text"
-                  value={websitePath}
-                  onChange={e => setWebsitePath(e.target.value)}
-                  className="w-full bg-gray-950 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-orange-500"
-                  placeholder="/learn/my-topic"
-                />
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <select
+                    value={selectedSeries}
+                    onChange={(e) => {
+                      setSelectedSeries(e.target.value);
+                      setSelectedSection("");
+                      setSelectedNoteId("");
+                    }}
+                    className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-orange-500 text-sm"
+                  >
+                    <option value="">-- Select Series --</option>
+                    {seriesList.map(s => <option key={s} value={s}>{s}</option>)}
+                  </select>
+
+                  <select
+                    value={selectedSection}
+                    onChange={(e) => {
+                      setSelectedSection(e.target.value);
+                      setSelectedNoteId("");
+                    }}
+                    className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-orange-500 text-sm"
+                    disabled={!selectedSeries}
+                  >
+                    <option value="">-- Select Section (Optional) --</option>
+                    {sectionsList.map(s => <option key={s} value={s}>{s}</option>)}
+                  </select>
+                </div>
+
+                <select
+                  value={selectedNoteId}
+                  onChange={(e) => setSelectedNoteId(e.target.value)}
+                  className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:border-orange-500 text-sm"
+                >
+                  <option value="">-- Select Specific Sutra / Note --</option>
+                  {filteredNotesForDropdown.map(n => (
+                    <option key={n.id} value={n.id}>
+                      {n.section ? `${n.section} - ` : ''}{n.title}
+                    </option>
+                  ))}
+                </select>
+                
+                {selectedNoteId && (
+                  <p className="text-xs text-orange-400/80 font-mono mt-2 break-all bg-orange-950/30 p-2 rounded">
+                    Will link to: /resources?highlight={selectedNoteId}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -334,9 +395,9 @@ export default function PdfGenerator() {
 
             <button
               onClick={generatePDF}
-              disabled={images.length === 0 || isGenerating}
+              disabled={images.length === 0 || isGenerating || !selectedNoteId}
               className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${
-                images.length === 0 ? "bg-gray-800 text-gray-500 cursor-not-allowed" : "bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white shadow-lg"
+                images.length === 0 || !selectedNoteId ? "bg-gray-800 text-gray-500 cursor-not-allowed" : "bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white shadow-lg"
               }`}
             >
               <FileDown className="w-5 h-5" />

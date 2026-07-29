@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Metadata } from "next";
+import { Suspense } from "react";
 import { Sparkles } from "lucide-react";
 import NotesClient from "./components/NotesClient";
 import { fetchNotes } from "@/lib/notesService";
@@ -83,7 +84,9 @@ export default async function ResourcesPage({ params }: { params: Promise<{ lang
         </div>
 
         {/* Client Component for filtering, animations, and interactivity */}
-        <NotesClient initialNotes={notes} isIndic={isIndic} t={t} />
+        <Suspense fallback={<div className="py-20 text-blue-500 animate-pulse">Loading notes...</div>}>
+          <NotesClient initialNotes={notes} isIndic={isIndic} t={t} />
+        </Suspense>
 
       </div>
     </div>

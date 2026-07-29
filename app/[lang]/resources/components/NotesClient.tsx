@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
+import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Download, PlayCircle, BookOpen, X, ArrowLeft, ArrowRight, Maximize2, Layers } from "lucide-react";
 
@@ -15,13 +16,64 @@ export interface Note {
   description?: string;
 }
 
-export default function NotesClient({ initialNotes, isIndic, t }: { initialNotes: Note[], isIndic: boolean, t: any }) {
+export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t }: { initialNotes: Note[], isIndic: boolean, t: any }) {
+  // Clean up notes: if a series has valid notes, remove its "coming soon" placeholder
+  const initialNotes = useMemo(() => rawInitialNotes.filter(note => {
+    const isComingSoonNote = note.title.toLowerCase().includes("coming soon") || (note.section || "").toLowerCase().includes("coming soon");
+    if (!isComingSoonNote) return true;
+    
+    // It is a coming soon note. Let's see if this series has any NON-coming soon notes
+    const seriesHasValidNotes = rawInitialNotes.some(n => 
+      n.series === note.series && 
+      !(n.title.toLowerCase().includes("coming soon") || (n.section || "").toLowerCase().includes("coming soon"))
+    );
+    
+    return !seriesHasValidNotes; // Keep it only if the series has NO valid notes
+  }), [rawInitialNotes]);
+
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSeries, setSelectedSeries] = useState<string | null>(null);
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
 
   const [playingVideoUrl, setPlayingVideoUrl] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [highlightedNoteId, setHighlightedNoteId] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+
+  // Handle 'highlight' query parameter
+  useEffect(() => {
+    const highlightId = searchParams.get('highlight');
+    if (highlightId && initialNotes.length > 0) {
+      const targetNote = initialNotes.find(n => n.id === highlightId);
+      if (targetNote) {
+        setSelectedSeries(targetNote.series);
+        if (targetNote.section) {
+          setSelectedSection(targetNote.section);
+        } else {
+          setSelectedSection(null);
+        }
+        setHighlightedNoteId(highlightId);
+        
+        // Remove the highlight after 5 seconds
+        setTimeout(() => {
+          setHighlightedNoteId(null);
+        }, 5000);
+      }
+    }
+  }, [searchParams, initialNotes]);
+
+  // Scroll to highlighted note when grid is shown
+  useEffect(() => {
+    if (highlightedNoteId && selectedSeries !== null) {
+      // Need a small timeout to let the grid render first
+      setTimeout(() => {
+        const element = document.getElementById(`note-${highlightedNoteId}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
+    }
+  }, [highlightedNoteId, selectedSeries, selectedSection]);
 
   // Prevent background scrolling when modal is open
   useEffect(() => {
@@ -330,12 +382,13 @@ export default function NotesClient({ initialNotes, isIndic, t }: { initialNotes
                 {filteredNotes.map((note) => (
                   <motion.div
                     key={note.id}
+                    id={`note-${note.id}`}
                     layout
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.3 }}
-                    className="group flex flex-col md:flex-row bg-white/80 dark:bg-zinc-900/60 backdrop-blur-xl border border-zinc-200 dark:border-white/10 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:border-blue-500/30 transition-all duration-300"
+                    className={`group flex flex-col md:flex-row bg-white/80 dark:bg-zinc-900/60 backdrop-blur-xl border border-zinc-200 dark:border-white/10 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 ${highlightedNoteId === note.id ? 'ring-4 ring-orange-500 shadow-[0_0_30px_rgba(249,115,22,0.5)] scale-[1.02] z-10' : ''}`}
                   >
                     {/* Video Thumbnail Area */}
                     <div
