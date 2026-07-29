@@ -212,7 +212,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
 
   const getSectionPoster = (sectionName: string) => {
     const name = sectionName.toLowerCase();
-    if (name.includes('intro')) return '/images/resources/posters/intro.jpeg';
+    if (name.includes('intro')) return '/images/resources/posters/introduction-to-tatvarth-series.jpeg';
     if (name.includes('adhyay 10')) return '/images/resources/posters/adhyay-10.jpeg';
     if (name.includes('adhyay 1')) return '/images/resources/posters/adhyay-1.jpeg';
     if (name.includes('adhyay 2')) return '/images/resources/posters/adhyay-2.jpeg';
