@@ -20,6 +20,7 @@ export default function PdfGenerator({ notes = [] }: { notes?: Note[] }) {
   const [watermarkText, setWatermarkText] = useState("AAGAM KI VAANI");
   const [watermarkOpacity, setWatermarkOpacity] = useState(0.10);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [includeMangalacharan, setIncludeMangalacharan] = useState(true);
 
   // Filter out "coming soon" notes for the PDF Generator
   const validNotes = notes.filter(n => 
@@ -97,10 +98,28 @@ export default function PdfGenerator({ notes = [] }: { notes?: Note[] }) {
     });
   };
 
+  const fetchMangalacharanImage = async (): Promise<File | null> => {
+    try {
+      const response = await fetch("/images/pdf-generator/tatvarth-mangalacharan.jpeg");
+      if (!response.ok) return null;
+      const blob = await response.blob();
+      return new File([blob], "tatvarth-mangalacharan.jpeg", { type: "image/jpeg" });
+    } catch (e) {
+      console.error("Failed to fetch Mangalacharan image", e);
+      return null;
+    }
+  };
+
   const applyWatermark = (file: File): Promise<{ dataUrl: string, width: number, height: number }> => {
     return new Promise((resolve) => {
       const img = new Image();
-      img.src = URL.createObjectURL(file);
+      const objectUrl = URL.createObjectURL(file);
+      img.src = objectUrl;
+      img.onerror = () => {
+        console.error("Failed to load image in applyWatermark", file.name);
+        URL.revokeObjectURL(objectUrl);
+        resolve({ dataUrl: "", width: 0, height: 0 });
+      };
       img.onload = () => {
         const canvas = document.createElement("canvas");
         canvas.width = img.width;
@@ -127,6 +146,7 @@ export default function PdfGenerator({ notes = [] }: { notes?: Note[] }) {
         // Display exactly once in the center
         ctx.fillText(watermarkText, 0, 0);
 
+        URL.revokeObjectURL(objectUrl);
         resolve({ dataUrl: canvas.toDataURL("image/jpeg", 0.9), width: canvas.width, height: canvas.height });
       };
     });
@@ -152,8 +172,23 @@ export default function PdfGenerator({ notes = [] }: { notes?: Note[] }) {
       const igIcon = await svgToDataUrl(ICONS.instagram, brandColor);
       const wpIcon = await svgToDataUrl(ICONS.whatsapp, brandColor);
 
-      for (let i = 0; i < images.length; i++) {
-        if (i > 0) pdf.addPage();
+      let pagesToProcess = [...images];
+      if (includeMangalacharan) {
+        const mangalacharanFile = await fetchMangalacharanImage();
+        if (mangalacharanFile) {
+          pagesToProcess.unshift(mangalacharanFile);
+        }
+      }
+
+      let validPageCount = 0;
+
+      for (let i = 0; i < pagesToProcess.length; i++) {
+        // Try to process image first
+        const { dataUrl, width, height } = await applyWatermark(pagesToProcess[i]);
+        if (!dataUrl) continue;
+
+        if (validPageCount > 0) pdf.addPage();
+        validPageCount++;
 
         const centerX = 595.28 / 2;
 
@@ -222,9 +257,7 @@ export default function PdfGenerator({ notes = [] }: { notes?: Note[] }) {
         pdf.setLineWidth(1);
         pdf.line(startX + p1W, linkY + 2, startX + p1W + p2W, linkY + 2);
 
-        // Watermark and Image Draw
-        const { dataUrl, width, height } = await applyWatermark(images[i]);
-        
+        // Image Draw
         const maxImgWidth = 470; 
         const maxImgHeight = 550; 
         
@@ -391,6 +424,19 @@ export default function PdfGenerator({ notes = [] }: { notes?: Note[] }) {
                   className="w-full accent-orange-500"
                 />
               </div>
+
+              <div className="flex items-center gap-3 bg-gray-950 p-4 rounded-xl border border-gray-800">
+                <input
+                  type="checkbox"
+                  id="includeMangalacharan"
+                  checked={includeMangalacharan}
+                  onChange={e => setIncludeMangalacharan(e.target.checked)}
+                  className="w-5 h-5 accent-orange-500 rounded border-gray-700 bg-gray-900 cursor-pointer"
+                />
+                <label htmlFor="includeMangalacharan" className="text-sm font-medium text-gray-300 cursor-pointer">
+                  Include Tatvarth Mangalacharan as First Page
+                </label>
+              </div>
             </div>
 
             <button
@@ -401,7 +447,7 @@ export default function PdfGenerator({ notes = [] }: { notes?: Note[] }) {
               }`}
             >
               <FileDown className="w-5 h-5" />
-              {isGenerating ? "Generating PDF..." : `Generate Premium PDF (${images.length} pages)`}
+              {isGenerating ? "Generating PDF..." : `Generate Premium PDF (${images.length + (includeMangalacharan ? 1 : 0)} pages)`}
             </button>
           </div>
 
