@@ -610,11 +610,14 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
                 transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                className="w-full max-w-6xl aspect-[4/3] sm:aspect-video min-h-[300px] md:min-h-[400px] bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10 relative"
+                className="w-full max-w-6xl aspect-[4/3] sm:aspect-video min-h-[300px] md:min-h-[400px] bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10 relative z-50"
+                style={{ WebkitOverflowScrolling: 'touch' }}
               >
                 <iframe
                   src={getVideoEmbedUrl(playingVideoUrl)}
-                  className="absolute inset-0 w-full h-full"
+                  className="absolute inset-0"
+                  style={{ width: '100%', height: '100%', border: 'none', maxWidth: '100%', maxHeight: '100%' }}
+                  scrolling="no"
                   allow="autoplay; fullscreen; picture-in-picture"
                   allowFullScreen
                 ></iframe>
