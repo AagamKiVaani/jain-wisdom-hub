@@ -606,42 +606,20 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
               </button>
 
               <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
                 className="w-full max-w-6xl aspect-[4/3] sm:aspect-video min-h-[300px] md:min-h-[400px] bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10 relative z-50"
                 style={{ WebkitOverflowScrolling: 'touch' }}
               >
-                {(() => {
-                  const { type, id } = getVideoTypeAndId(playingVideoUrl);
-                  
-                  if (type === 'drive') {
-                    const directStreamUrl = `https://drive.google.com/uc?export=download&id=${id}`;
-                    return (
-                      <video
-                        src={directStreamUrl}
-                        controls
-                        autoPlay
-                        playsInline
-                        className="absolute inset-0 w-full h-full object-contain bg-black"
-                      >
-                        Your browser does not support the video tag.
-                      </video>
-                    );
-                  }
-                  
-                  return (
-                    <iframe
-                      src={getVideoEmbedUrl(playingVideoUrl)}
-                      className="absolute inset-0"
-                      style={{ width: '100%', height: '100%', border: 'none', maxWidth: '100%', maxHeight: '100%' }}
-                      scrolling="no"
-                      allow="autoplay; fullscreen; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  );
-                })()}
+                <iframe
+                  src={getVideoEmbedUrl(playingVideoUrl)}
+                  className="absolute inset-0 w-full h-full"
+                  style={{ border: 'none' }}
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
               </motion.div>
             </motion.div>
           )}
