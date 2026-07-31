@@ -11,7 +11,7 @@ export interface Note {
   series: string;
   section?: string;
   title: string;
-  youtubeLink: string;
+  videoLink: string;
   driveFileId: string;
   description?: string;
 }
@@ -184,22 +184,43 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
     return matchesSearch;
   });
 
-  const getYoutubeEmbedUrl = (url: string) => {
-    if (!url) return "";
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11)
-      ? `https://www.youtube.com/embed/${match[2]}?autoplay=1`
-      : url;
+  const getVideoTypeAndId = (urlOrId: string) => {
+    if (!urlOrId) return { type: 'none', id: '' };
+    const str = urlOrId.trim();
+
+    const ytRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|&v=)([^#&?]*).*/;
+    const ytMatch = str.match(ytRegExp);
+    if (ytMatch && ytMatch[2].length === 11) return { type: 'youtube', id: ytMatch[2] };
+
+    if (str.includes('drive.google.com')) {
+      const match = str.match(/[-\w]{15,}/);
+      if (match) return { type: 'drive', id: match[0] };
+    }
+
+    if (/^[-\w]{15,}$/.test(str)) {
+      return { type: 'drive', id: str };
+    }
+
+    return { type: 'unknown', id: str };
   };
 
-  const getYoutubeThumbnail = (url: string) => {
-    if (!url) return "";
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11)
-      ? `https://img.youtube.com/vi/${match[2]}/hqdefault.jpg`
-      : "";
+  const getVideoEmbedUrl = (urlOrId: string) => {
+    const { type, id } = getVideoTypeAndId(urlOrId);
+    if (type === 'youtube') return `https://www.youtube.com/embed/${id}?autoplay=1`;
+    if (type === 'drive') return `https://drive.google.com/file/d/${id}/preview`;
+    
+    const str = urlOrId.trim();
+    if (str && !str.startsWith('http://') && !str.startsWith('https://')) {
+      return `https://${str}`;
+    }
+    return str;
+  };
+
+  const getVideoThumbnail = (urlOrId: string) => {
+    const { type, id } = getVideoTypeAndId(urlOrId);
+    if (type === 'youtube') return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+    if (type === 'drive') return `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
+    return "";
   };
 
   const getSeriesPoster = (seriesName: string) => {
@@ -485,13 +506,13 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                     <div
                       className="w-full md:w-2/5 aspect-video md:aspect-auto relative bg-black shrink-0 overflow-hidden cursor-pointer group/video"
                       onClick={() => {
-                        if (note.youtubeLink) setPlayingVideoUrl(note.youtubeLink);
+                        if (note.videoLink) setPlayingVideoUrl(note.videoLink);
                       }}
                     >
-                      {note.youtubeLink ? (
+                      {note.videoLink ? (
                         <>
                           <img
-                            src={getYoutubeThumbnail(note.youtubeLink)}
+                            src={getVideoThumbnail(note.videoLink)}
                             alt={note.title}
                             className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover/video:opacity-100 transition-opacity duration-500 group-hover/video:scale-105"
                           />
@@ -592,7 +613,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                 className="w-full max-w-6xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10 relative"
               >
                 <iframe
-                  src={getYoutubeEmbedUrl(playingVideoUrl)}
+                  src={getVideoEmbedUrl(playingVideoUrl)}
                   className="absolute inset-0 w-full h-full"
                   allow="autoplay; fullscreen; picture-in-picture"
                   allowFullScreen
