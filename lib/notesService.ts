@@ -120,14 +120,20 @@ function parseCSV(csv: string): Note[] {
     if (row.length >= 3 && seriesName && !seriesName.startsWith('//') && !seriesName.startsWith('#')) {
       const sectionName = row[1]?.trim() || "";
       const titleName = row[2]?.trim() || "";
+      let parsedVideoLink = row[4]?.trim() || "";
+      if (parsedVideoLink.startsWith("//")) parsedVideoLink = "";
+      
+      let parsedDriveId = row[5]?.trim() || "";
+      if (parsedDriveId.startsWith("//")) parsedDriveId = "";
+
       notes.push({
         id: generateSlugId(seriesName, sectionName, titleName) || `note-${i}`,
         series: seriesName,
         section: sectionName,
         title: titleName,
         description: row[3]?.trim() || "",
-        videoLink: row[4]?.trim() || "",
-        driveFileId: row[5]?.trim() || "",
+        videoLink: parsedVideoLink,
+        driveFileId: parsedDriveId,
       });
     }
   }
