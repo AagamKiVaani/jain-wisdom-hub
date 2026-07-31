@@ -613,14 +613,35 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                 className="w-full max-w-6xl aspect-[4/3] sm:aspect-video min-h-[300px] md:min-h-[400px] bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10 relative z-50"
                 style={{ WebkitOverflowScrolling: 'touch' }}
               >
-                <iframe
-                  src={getVideoEmbedUrl(playingVideoUrl)}
-                  className="absolute inset-0"
-                  style={{ width: '100%', height: '100%', border: 'none', maxWidth: '100%', maxHeight: '100%' }}
-                  scrolling="no"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
+                {(() => {
+                  const { type, id } = getVideoTypeAndId(playingVideoUrl);
+                  
+                  if (type === 'drive') {
+                    const directStreamUrl = `https://drive.google.com/uc?export=download&id=${id}`;
+                    return (
+                      <video
+                        src={directStreamUrl}
+                        controls
+                        autoPlay
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-contain bg-black"
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    );
+                  }
+                  
+                  return (
+                    <iframe
+                      src={getVideoEmbedUrl(playingVideoUrl)}
+                      className="absolute inset-0"
+                      style={{ width: '100%', height: '100%', border: 'none', maxWidth: '100%', maxHeight: '100%' }}
+                      scrolling="no"
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  );
+                })()}
               </motion.div>
             </motion.div>
           )}
