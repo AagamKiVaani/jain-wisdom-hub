@@ -51,25 +51,42 @@ export default function PdfGenerator({ notes = [] }: { notes?: Note[] }) {
   const loadLogoBase64 = async (): Promise<string> => {
     return new Promise((resolve) => {
       const img = new Image();
-      img.src = "/icons/logo.png";
-      img.crossOrigin = "Anonymous";
+      img.src = "/icons/Logo-Final.avif";
       img.onload = () => {
+        // Downscale logo to prevent massive PNG generation which could crash or be dropped
+        const MAX_LOGO_SIZE = 300; 
+        let targetWidth = img.width;
+        let targetHeight = img.height;
+        
+        if (targetWidth > MAX_LOGO_SIZE || targetHeight > MAX_LOGO_SIZE) {
+          if (targetWidth > targetHeight) {
+            targetHeight = Math.round((targetHeight / targetWidth) * MAX_LOGO_SIZE);
+            targetWidth = MAX_LOGO_SIZE;
+          } else {
+            targetWidth = Math.round((targetWidth / targetHeight) * MAX_LOGO_SIZE);
+            targetHeight = MAX_LOGO_SIZE;
+          }
+        }
+
         const canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
+        canvas.width = targetWidth;
+        canvas.height = targetHeight;
         const ctx = canvas.getContext("2d");
         if (ctx) {
           ctx.beginPath();
-          ctx.arc(img.width / 2, img.height / 2, img.width / 2, 0, Math.PI * 2);
+          ctx.arc(targetWidth / 2, targetHeight / 2, Math.min(targetWidth, targetHeight) / 2, 0, Math.PI * 2);
           ctx.closePath();
           ctx.clip();
-          ctx.drawImage(img, 0, 0);
+          ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
           resolve(canvas.toDataURL("image/png"));
         } else {
           resolve("");
         }
       };
-      img.onerror = () => resolve("");
+      img.onerror = (err) => {
+        console.error("Failed to load logo", err);
+        resolve("");
+      };
     });
   };
 
@@ -121,13 +138,28 @@ export default function PdfGenerator({ notes = [] }: { notes?: Note[] }) {
         resolve({ dataUrl: "", width: 0, height: 0 });
       };
       img.onload = () => {
+        // Downscale image to a reasonable max dimension to prevent huge PDF sizes
+        const MAX_DIMENSION = 1200;
+        let targetWidth = img.width;
+        let targetHeight = img.height;
+
+        if (targetWidth > MAX_DIMENSION || targetHeight > MAX_DIMENSION) {
+          if (targetWidth > targetHeight) {
+            targetHeight = Math.round((targetHeight / targetWidth) * MAX_DIMENSION);
+            targetWidth = MAX_DIMENSION;
+          } else {
+            targetWidth = Math.round((targetWidth / targetHeight) * MAX_DIMENSION);
+            targetHeight = MAX_DIMENSION;
+          }
+        }
+
         const canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
+        canvas.width = targetWidth;
+        canvas.height = targetHeight;
         const ctx = canvas.getContext("2d");
         if (!ctx) return resolve({ dataUrl: img.src, width: img.width, height: img.height });
 
-        ctx.drawImage(img, 0, 0);
+        ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
 
         // Robust single Watermark styling
         const fontSize = Math.floor(canvas.width / 8); // Very large for a single stamp
@@ -147,7 +179,8 @@ export default function PdfGenerator({ notes = [] }: { notes?: Note[] }) {
         ctx.fillText(watermarkText, 0, 0);
 
         URL.revokeObjectURL(objectUrl);
-        resolve({ dataUrl: canvas.toDataURL("image/jpeg", 0.9), width: canvas.width, height: canvas.height });
+        // Reduce quality from 0.9 to 0.8 to save space with negligible visual difference
+        resolve({ dataUrl: canvas.toDataURL("image/jpeg", 0.8), width: canvas.width, height: canvas.height });
       };
     });
   };
@@ -201,7 +234,7 @@ export default function PdfGenerator({ notes = [] }: { notes?: Note[] }) {
 
         // Elegant Header
         if (logoBase64) {
-          pdf.addImage(logoBase64, "PNG", centerX - 25, 35, 50, 50);
+          pdf.addImage(logoBase64, "PNG", centerX - 25, 35, 50, 50, "brand_logo");
         }
         
         pdf.setFont("times", "normal");
@@ -271,7 +304,7 @@ export default function PdfGenerator({ notes = [] }: { notes?: Note[] }) {
         
         const imgXOffset = centerX - (finalWidth / 2);
         const imgYOffset = 180 + (maxImgHeight - finalHeight) / 2;
-        pdf.addImage(dataUrl, "JPEG", imgXOffset, imgYOffset, finalWidth, finalHeight);
+        pdf.addImage(dataUrl, "JPEG", imgXOffset, imgYOffset, finalWidth, finalHeight, `page_img_${i}`, "FAST");
 
         // Icon-Only Footer Layout
         const footerY = 770;
@@ -295,9 +328,9 @@ export default function PdfGenerator({ notes = [] }: { notes?: Note[] }) {
         const totalFooterWidth = (socials.length * iconSize) + ((socials.length - 1) * spacing);
         let currentX = centerX - (totalFooterWidth / 2);
 
-        socials.forEach((social) => {
+        socials.forEach((social, idx) => {
           if (social.icon) {
-            pdf.addImage(social.icon, "PNG", currentX, footerY, iconSize, iconSize);
+            pdf.addImage(social.icon, "PNG", currentX, footerY, iconSize, iconSize, `social_icon_${idx}`);
             pdf.link(currentX, footerY, iconSize, iconSize, { url: social.url });
           }
           currentX += iconSize + spacing;
