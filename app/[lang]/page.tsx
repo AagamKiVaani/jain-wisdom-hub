@@ -1,10 +1,23 @@
-//page.tsx
+"use client";
+
+import * as React from "react";
 import Link from "next/link";
-import { Users, ArrowRight, Ghost, Clock, Sparkles, BookOpen } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  Users, 
+  ArrowRight, 
+  Ghost, 
+  Clock, 
+  Sparkles, 
+  BookOpen, 
+  Volume2, 
+  VolumeX, 
+  Compass,
+  BookOpenCheck
+} from "lucide-react";
 import DailyWisdom from "@/components/DailyWisdom";
 import { getTodaysQuote } from "@/lib/quoteService";
 
-// ... (Translations Object stays the same) ...
 const translations = {
   en: {
     badge: "Digital Aagam Alpha 1.0",
@@ -15,6 +28,13 @@ const translations = {
     c3_title: "Wheel of Time", c3_sub: "The Cosmic Cycle",
     c4_title: "Soul & Karma", c4_sub: "The Physics of Soul",
     c5_title: "Resources Hub", c5_sub: "Download Notes & PDFs",
+    soundOn: "Sound Enabled",
+    soundOff: "Sound Muted",
+    shastraTitle: "Archival Digambar Inscription",
+    shastraSource: "Tattvārtha Sūtra — Acharya Umāsvāmi (Ch. 1, Sutra 1-2)",
+    shastraVerse: "सम्यग्दर्शनज्ञानचारित्राणि मोक्षमार्गः॥ १ ॥\nतत्त्वार्थश्रद्धानं सम्यग्दर्शनम्॥ २ ॥",
+    shastraTranslation: "Right belief, right knowledge, and right conduct together constitute the path to liberation (Moksha). Belief in substances (tattvas) ascertained as they are, is right belief.",
+    iconographyNote: "Digambar Iconography: All Tirthankaras, including Mallināth Bhagwān (the 19th male Tirthankar), are depicted strictly unclad (Digambaratva), peaceful, with eyes half-closed in introspective meditation (Nāsāgra Drishti), free from hunger (Kavalahāra), thirst, disease, sleep, and physical fatigue."
   },
   hi: {
     badge: "डिजिटल आगम अल्फा 1.0",
@@ -25,6 +45,13 @@ const translations = {
     c3_title: "कालचक्र", c3_sub: "समय का चक्र",
     c4_title: "आत्मा और कर्म", c4_sub: "कर्म सिद्धांत",
     c5_title: "संसाधन केंद्र", c5_sub: "नोट्स डाउनलोड करें",
+    soundOn: "ध्वनि सक्रिय",
+    soundOff: "ध्वनि म्यूट",
+    shastraTitle: "प्रामाणिक दिगंबर शिलालेख",
+    shastraSource: "तत्त्वार्थ सूत्र — आचार्य उमास्वामी (अध्याय १, सूत्र १-२)",
+    shastraVerse: "सम्यग्दर्शनज्ञानचारित्राणि मोक्षमार्गः॥ १ ॥\nतत्त्वार्थश्रद्धानं सम्यग्दर्शनम्॥ २ ॥",
+    shastraTranslation: "सम्यक दर्शन, सम्यक ज्ञान और सम्यक चरित्र मिलकर मोक्ष का मार्ग हैं। यथार्थ रूप में जीवादि तत्वों का श्रद्धान करना ही सम्यक दर्शन है।",
+    iconographyNote: "दिगंबर प्रतिमा विज्ञान: १९वें तीर्थंकर मल्लिनाथ भगवान (पुरुष राजा जिन्होंने दिगंबर दीक्षा धारण की) सहित सभी २४ तीर्थंकर पूर्णतः अपरिग्रह (नग्न), शांत मुद्रा और नासाग्र दृष्टि में विराजमान हैं, एवं वे क्षुधा (कवलाहार), तृषा, रोग, निद्रा और शारीरिक थकान से सर्वथा रहित हैं।"
   },
   kn: {
     badge: "ಡಿಜಿಟಲ್ ಆಗಮ ಆಲ್ಫಾ 1.0",
@@ -35,129 +62,391 @@ const translations = {
     c3_title: "ಕಾಲಚಕ್ರ", c3_sub: "ವಿಶ್ವದ ಚಕ್ರ",
     c4_title: "ಆತ್ಮ ಮತ್ತು ಕರ್ಮ", c4_sub: "ಆತ್ಮದ ವಿಜ್ಞಾನ",
     c5_title: "ಸಂಪನ್ಮೂಲಗಳು", c5_sub: "ಟಿಪ್ಪಣಿಗಳನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ",
+    soundOn: "ಧ್ವನಿ ಸಕ್ರಿಯ",
+    soundOff: "ಧ್ವನಿ ಮೌನ",
+    shastraTitle: "ದಿನದ ಶಾಸ್ತ್ರ ಶಾಸನ",
+    shastraSource: "ತತ್ತ್ವಾರ್ಥ ಸೂತ್ರ — ಆಚಾರ್ಯ ಉಮಾಸ್ವಾಮಿ (ಅಧ್ಯಾಯ ೧, ಸೂತ್ರ ೧-೨)",
+    shastraVerse: "सम्यग्दर्शनज्ञानचारित्राणि मोक्षमार्गः॥ १ ॥\nतत्त्वार्थश्रद्धानं सम्यग्दर्शनम्॥ २ ॥",
+    shastraTranslation: "ಸಮ್ಯಗ್ದರ್ಶನ, ಸಮ್ಯಗ್ಜ್ಞಾನ ಮತ್ತು ಸಮ್ಯಕ್ಚಾರಿತ್ರ್ಯಗಳು ಒಟ್ಟಾಗಿ ಮೋಕ್ಷದ ಮಾರ್ಗವಾಗಿದೆ. ಯಥಾರ್ಥವಾದ ತತ್ವಗಳ ಶ್ರದ್ಧಾನವೇ ಸಮ್ಯಗ್ದರ್ಶನವು.",
+    iconographyNote: "ದಿಗಂಬರ ಸಂಪ್ರದಾಯ: ೧೯ನೇ ತೀರ್ಥಂಕರ ಮಲ್ಲಿನಾಥ ಭಗವಾನ್ ಸೇರಿದಂತೆ ಎಲ್ಲಾ ತೀರ್ಥಂಕರರು ದಿಗಂಬರ (ಅಚೇಲಕ), ಪ್ರಶಾಂತ ಮುದ್ರೆ ಮತ್ತು ನಾಸಾಗ್ರ ದೃಷ್ಟಿಯಲ್ಲಿ ವಿರಾಜಮಾನರಾಗಿದ್ದಾರೆ, ಹಾಗೂ ಅವರು ಹಸಿವು (ಕವಲಾಹಾರ), ಬಾಯಾರಿಕೆ, ರೋಗ, ನಿದ್ರೆ ಮತ್ತು ದೈಹಿಕ ಆಯಾಸದಿಂದ ಮುಕ್ತರಾಗಿದ್ದಾರೆ."
   }
 };
 
-export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
-  const { lang } = await params;
+const springTransition = {
+  type: "spring" as const,
+  stiffness: 300,
+  damping: 25
+};
+
+export default function Home({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = React.use(params);
   const todaysQuote = getTodaysQuote();
   const t = translations[lang as keyof typeof translations] || translations.en;
   const isIndic = lang === 'hi' || lang === 'kn';
 
+  const [soundEnabled, setSoundEnabled] = React.useState(true);
+  const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
+  const audioCtxRef = React.useRef<AudioContext | null>(null);
+
+  // Initialize Audio Context on demand to satisfy browser autoplay policies
+  const getAudioContext = (): AudioContext | null => {
+    if (typeof window === "undefined") return null;
+    if (!audioCtxRef.current) {
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      if (AudioContextClass) {
+        audioCtxRef.current = new AudioContextClass();
+      }
+    }
+    if (audioCtxRef.current && audioCtxRef.current.state === "suspended") {
+      audioCtxRef.current.resume();
+    }
+    return audioCtxRef.current;
+  };
+
+  // Apple-grade Micro-clicks & Tactile Audio Feedback
+  const playTapSound = (type: "mechanical" | "soft" = "mechanical") => {
+    if (!soundEnabled) return;
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+
+    if (type === "mechanical") {
+      // Crisp, high-frequency metallic micro-click
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(2400, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.02);
+      
+      filter.type = "highpass";
+      filter.frequency.setValueAtTime(1000, ctx.currentTime);
+
+      gain.gain.setValueAtTime(0.04, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.02);
+
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.02);
+    } else {
+      // Soft, organic tactile tap
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(150, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.05);
+
+      filter.type = "lowpass";
+      filter.frequency.setValueAtTime(300, ctx.currentTime);
+
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.05);
+
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.05);
+    }
+  };
+
+  // Micro-haptic Vibration Tap
+  const triggerHapticFeedback = (strength: "light" | "medium" = "light") => {
+    if (typeof window !== "undefined" && navigator.vibrate) {
+      if (strength === "light") {
+        navigator.vibrate(6);
+      } else {
+        navigator.vibrate([10, 6, 10]);
+      }
+    }
+  };
+
+  const handleInteraction = (soundType: "mechanical" | "soft" = "mechanical", hapticStrength: "light" | "medium" = "light") => {
+    playTapSound(soundType);
+    triggerHapticFeedback(hapticStrength);
+  };
+
+  // High-DPI Optimized Celestial Golden Stardust Particle System
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let particles: Array<{ x: number; y: number; radius: number; speedY: number; speedX: number; alpha: number; decay: number }> = [];
+
+    const resizeCanvas = () => {
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      ctx.scale(dpr, dpr);
+    };
+    
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    const createParticle = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      return {
+        x: Math.random() * width,
+        y: height + 10,
+        radius: Math.random() * 1.2 + 0.4,
+        speedY: -(Math.random() * 0.4 + 0.15),
+        speedX: (Math.random() - 0.5) * 0.2,
+        alpha: Math.random() * 0.4 + 0.15,
+        decay: Math.random() * 0.0015 + 0.0005
+      };
+    };
+
+    // Initialize particles
+    for (let i = 0; i < 35; i++) {
+      particles.push({
+        ...createParticle(),
+        y: Math.random() * window.innerHeight
+      });
+    }
+
+    const animate = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      ctx.clearRect(0, 0, width, height);
+      
+      particles.forEach((p, index) => {
+        p.y += p.speedY;
+        p.x += p.speedX;
+        p.alpha -= p.decay;
+
+        if (p.alpha <= 0 || p.y < -10) {
+          particles[index] = createParticle();
+        } else {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(212, 175, 55, ${p.alpha})`; // Divine Gold
+          ctx.shadowBlur = 3;
+          ctx.shadowColor = "rgba(212, 175, 55, 0.4)";
+          ctx.fill();
+        }
+      });
+
+      ctx.shadowBlur = 0;
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    animate();
+
+    return () => {
+      window.removeEventListener("resize", resizeCanvas);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
   return (
-    <div className="relative flex flex-col items-center min-h-screen px-4 pt-0 pb-24 overflow-hidden bg-white dark:bg-black selection:bg-rose-500 selection:text-white">
+    <div className="relative flex flex-col items-center min-h-screen px-4 pt-0 pb-24 overflow-x-hidden bg-white dark:bg-black selection:bg-amber-500 selection:text-black">
+      
+      {/* HTML5 Canvas for Celestial Golden Stardust */}
+      <canvas 
+        ref={canvasRef} 
+        className="absolute inset-0 pointer-events-none z-0 opacity-50 dark:opacity-70"
+      />
 
-      {/* Optimized Background for Mobile (Blur 60px) */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-rose-500/10 dark:bg-rose-900/15 blur-[60px] md:blur-[120px] rounded-full pointer-events-none z-0"></div>
+      {/* Optimized Background Gradient Blur */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-amber-500/5 dark:bg-amber-950/10 blur-[100px] md:blur-[160px] rounded-full pointer-events-none z-0" />
 
-      <div className="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto">
+      {/* Persistent Audio/Haptic Control Panel */}
+      <div className="fixed top-4 right-4 z-50">
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          transition={springTransition}
+          onClick={() => {
+            setSoundEnabled(!soundEnabled);
+            triggerHapticFeedback("medium");
+          }}
+          className="flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-full bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/80 dark:border-zinc-800/80 backdrop-blur-md shadow-md hover:shadow-lg text-zinc-700 dark:text-zinc-300 text-xs font-semibold transition-all"
+          aria-label="Toggle Sound Feedback"
+        >
+          {soundEnabled ? (
+            <>
+              <Volume2 size={14} className="text-amber-600 dark:text-amber-400 animate-pulse" />
+              <span>{t.soundOn}</span>
+            </>
+          ) : (
+            <>
+              <VolumeX size={14} className="text-zinc-400" />
+              <span>{t.soundOff}</span>
+            </>
+          )}
+        </motion.button>
+      </div>
+
+      <div className="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto pt-8">
           
           <DailyWisdom lang={lang} quote={todaysQuote} />
           
           {/* Badge */}
-          <div className="mb-6 px-4 py-1.5 rounded-full bg-orange-50 dark:bg-orange-900/10 text-orange-800 dark:text-orange-300 text-[10px] md:text-xs font-bold uppercase tracking-widest border border-orange-100 dark:border-orange-500/20 shadow-sm">
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={springTransition}
+            className="mb-6 px-4 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950/20 text-amber-800 dark:text-amber-300 text-[10px] md:text-xs font-bold uppercase tracking-widest border border-amber-100 dark:border-amber-500/20 shadow-sm flex items-center gap-1.5"
+          >
+            <Compass size={12} className="animate-spin-slow text-amber-600 dark:text-amber-400" />
             {t.badge}
-          </div>
+          </motion.div>
 
           {/* H1 Title */}
-          <h1 className={`text-5xl md:text-8xl font-black text-center text-gray-900 dark:text-white mb-6 uppercase tracking-tighter ${isIndic ? 'leading-tight py-2' : 'leading-none'}`}>
+          <motion.h1 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...springTransition, delay: 0.05 }}
+            className={`text-4xl sm:text-6xl md:text-8xl font-black text-center text-gray-900 dark:text-white mb-6 uppercase tracking-tighter ${isIndic ? 'leading-tight py-2' : 'leading-none'}`}
+          >
             {t.title}
-          </h1>
+          </motion.h1>
           
-          <p className={`text-lg md:text-xl font-serif text-gray-600 dark:text-gray-400 max-w-2xl text-center mb-16 ${isIndic ? 'leading-loose' : 'leading-relaxed'}`}>
+          <motion.p 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...springTransition, delay: 0.1 }}
+            className={`text-base sm:text-lg md:text-xl font-serif text-gray-600 dark:text-gray-400 max-w-2xl text-center mb-12 px-4 ${isIndic ? 'leading-loose' : 'leading-relaxed'}`}
+          >
             {t.subtitle}
-          </p>
+          </motion.p>
+
+          {/* Archival Manuscript Noise Glassmorphism Panel (Digambar Shastra Inscription) */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ ...springTransition, delay: 0.15 }}
+            className="relative w-full max-w-4xl p-6 sm:p-8 md:p-10 mb-16 rounded-3xl border border-amber-500/20 dark:border-amber-500/10 bg-stone-50/90 dark:bg-stone-950/40 backdrop-blur-md shadow-xl overflow-hidden"
+          >
+            {/* Specular Highlight Overlay */}
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-white/10 dark:to-white/5" />
+            {/* Archival Noise Overlay */}
+            <div className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.05] bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px] mix-blend-overlay" />
+            
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <div className="flex items-center gap-2 mb-5 text-amber-700 dark:text-amber-400">
+                <BookOpenCheck size={20} />
+                <span className="text-xs font-bold uppercase tracking-widest">{t.shastraTitle}</span>
+              </div>
+
+              <blockquote className="text-lg sm:text-xl md:text-2xl font-bold text-amber-900 dark:text-amber-100 mb-5 whitespace-pre-line font-serif tracking-wide leading-relaxed">
+                {t.shastraVerse}
+              </blockquote>
+
+              <p className="text-xs sm:text-sm md:text-base text-stone-700 dark:text-stone-300 max-w-3xl mb-5 font-serif italic leading-relaxed">
+                &ldquo;{t.shastraTranslation}&rdquo;
+              </p>
+
+              <div className="text-[10px] sm:text-xs font-semibold text-amber-800 dark:text-amber-500 uppercase tracking-wider border-t border-amber-500/20 pt-4 w-full max-w-md">
+                {t.shastraSource}
+              </div>
+            </div>
+          </motion.div>
 
           {/* Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-4xl">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-4xl px-2">
             
             <Link 
               href={`/${lang}/tirthankars`}
-              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 rounded-3xl hover:border-rose-500 dark:hover:border-rose-500 transition-all hover:shadow-2xl hover:shadow-rose-500/10 backdrop-blur-sm"
+              onClick={() => handleInteraction("mechanical", "light")}
+              className="group flex flex-col justify-between min-h-[160px] p-6 sm:p-8 bg-white/80 dark:bg-zinc-900/40 border border-zinc-200/80 dark:border-zinc-800/80 rounded-3xl hover:border-amber-500 dark:hover:border-amber-500 transition-all hover:shadow-2xl hover:shadow-amber-500/5 backdrop-blur-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"
             >
               <div className="flex items-start justify-between mb-6">
-                  <div className="h-14 w-14 rounded-2xl bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Users size={28} />
+                  <div className="h-12 w-12 rounded-2xl bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <Users size={24} />
                   </div>
-                  <ArrowRight size={20} className="text-gray-300 dark:text-gray-700 group-hover:text-rose-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
+                  <ArrowRight size={18} className="text-gray-300 dark:text-gray-700 group-hover:text-amber-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
               </div>
               <div>
-                {/* CHANGED h3 -> h2 for Accessibility Hierarchy */}
-                <h2 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c1_title}</h2>
-                <p className="text-sm text-gray-500 font-medium">{t.c1_sub}</p>
+                <h2 className={`text-lg sm:text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c1_title}</h2>
+                <p className="text-xs sm:text-sm text-gray-500 font-medium">{t.c1_sub}</p>
               </div>
             </Link>
 
             <Link 
               href={`/${lang}/learn/soul-karma`}
-              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 rounded-3xl hover:border-purple-500 dark:hover:border-purple-500 transition-all hover:shadow-2xl hover:shadow-purple-500/10 backdrop-blur-sm"
+              onClick={() => handleInteraction("mechanical", "light")}
+              className="group flex flex-col justify-between min-h-[160px] p-6 sm:p-8 bg-white/80 dark:bg-zinc-900/40 border border-zinc-200/80 dark:border-zinc-800/80 rounded-3xl hover:border-purple-500 dark:hover:border-purple-500 transition-all hover:shadow-2xl hover:shadow-purple-500/5 backdrop-blur-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"
             >
               <div className="flex items-start justify-between mb-6">
-                  <div className="h-14 w-14 rounded-2xl bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Ghost size={28} />
+                  <div className="h-12 w-12 rounded-2xl bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <Ghost size={24} />
                   </div>
-                  <ArrowRight size={20} className="text-gray-300 dark:text-gray-700 group-hover:text-purple-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
+                  <ArrowRight size={18} className="text-gray-300 dark:text-gray-700 group-hover:text-purple-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
               </div>
               <div>
-                {/* CHANGED h3 -> h2 */}
-                <h2 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c4_title}</h2>
-                <p className="text-sm text-gray-500 font-medium">{t.c4_sub}</p>
+                <h2 className={`text-lg sm:text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c4_title}</h2>
+                <p className="text-xs sm:text-sm text-gray-500 font-medium">{t.c4_sub}</p>
               </div>
             </Link>
 
             <Link 
               href={`/${lang}/learn/namokar-mantra`}
-              // href={`/${lang}/coming-soon`}
-              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 rounded-3xl hover:border-orange-500 dark:hover:border-orange-500 transition-all hover:shadow-2xl hover:shadow-orange-500/10 backdrop-blur-sm"
+              onClick={() => handleInteraction("mechanical", "light")}
+              className="group flex flex-col justify-between min-h-[160px] p-6 sm:p-8 bg-white/80 dark:bg-zinc-900/40 border border-zinc-200/80 dark:border-zinc-800/80 rounded-3xl hover:border-orange-500 dark:hover:border-orange-500 transition-all hover:shadow-2xl hover:shadow-orange-500/5 backdrop-blur-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"
             >
               <div className="flex items-start justify-between mb-6">
-                  <div className="h-14 w-14 rounded-2xl bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Sparkles size={28} />
+                  <div className="h-12 w-12 rounded-2xl bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <Sparkles size={24} />
                   </div>
-                  <ArrowRight size={20} className="text-gray-300 dark:text-gray-700 group-hover:text-orange-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
+                  <ArrowRight size={18} className="text-gray-300 dark:text-gray-700 group-hover:text-orange-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
               </div>
               <div>
-                {/* CHANGED h3 -> h2 */}
-                <h2 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c2_title}</h2>
-                <p className="text-sm text-gray-500 font-medium">{t.c2_sub}</p>
+                <h2 className={`text-lg sm:text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c2_title}</h2>
+                <p className="text-xs sm:text-sm text-gray-500 font-medium">{t.c2_sub}</p>
               </div>
             </Link>
 
             <Link 
-              // href={`/${lang}/learn/kalchakra`}
               href={`/${lang}/learn/kalchakra`}
-              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 rounded-3xl hover:border-green-500 dark:hover:border-green-500 transition-all hover:shadow-2xl hover:shadow-green-500/10 backdrop-blur-sm"
+              onClick={() => handleInteraction("mechanical", "light")}
+              className="group flex flex-col justify-between min-h-[160px] p-6 sm:p-8 bg-white/80 dark:bg-zinc-900/40 border border-zinc-200/80 dark:border-zinc-800/80 rounded-3xl hover:border-green-500 dark:hover:border-green-500 transition-all hover:shadow-2xl hover:shadow-green-500/5 backdrop-blur-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"
             >
               <div className="flex items-start justify-between mb-6">
-                  <div className="h-14 w-14 rounded-2xl bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <Clock size={28} />
+                  <div className="h-12 w-12 rounded-2xl bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <Clock size={24} />
                   </div>
-                  <ArrowRight size={20} className="text-gray-300 dark:text-gray-700 group-hover:text-green-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
+                  <ArrowRight size={18} className="text-gray-300 dark:text-gray-700 group-hover:text-green-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
               </div>
               <div>
-                {/* CHANGED h3 -> h2 */}
-                <h2 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c3_title}</h2>
-                <p className="text-sm text-gray-500 font-medium">{t.c3_sub}</p>
+                <h2 className={`text-lg sm:text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c3_title}</h2>
+                <p className="text-xs sm:text-sm text-gray-500 font-medium">{t.c3_sub}</p>
               </div>
             </Link>
 
             <Link 
               href={`/${lang}/resources`}
-              className="group flex flex-col p-8 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 rounded-3xl hover:border-blue-500 dark:hover:border-blue-500 transition-all hover:shadow-2xl hover:shadow-blue-500/10 backdrop-blur-sm md:col-span-2"
+              onClick={() => handleInteraction("mechanical", "medium")}
+              className="group flex flex-col justify-between min-h-[160px] p-6 sm:p-8 bg-white/80 dark:bg-zinc-900/40 border border-zinc-200/80 dark:border-zinc-800/80 rounded-3xl hover:border-blue-500 dark:hover:border-blue-500 transition-all hover:shadow-2xl hover:shadow-blue-500/5 backdrop-blur-sm sm:col-span-2 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"
             >
               <div className="flex items-start justify-between mb-6">
-                  <div className="h-14 w-14 rounded-2xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <BookOpen size={28} />
+                  <div className="h-12 w-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <BookOpen size={24} />
                   </div>
-                  <ArrowRight size={20} className="text-gray-300 dark:text-gray-700 group-hover:text-blue-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
+                  <ArrowRight size={18} className="text-gray-300 dark:text-gray-700 group-hover:text-blue-500 -rotate-45 group-hover:rotate-0 transition-all duration-300" />
               </div>
               <div>
-                <h2 className={`text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c5_title}</h2>
-                <p className="text-sm text-gray-500 font-medium">{t.c5_sub}</p>
+                <h2 className={`text-lg sm:text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight mb-1 ${isIndic ? 'leading-normal' : ''}`}>{t.c5_title}</h2>
+                <p className="text-xs sm:text-sm text-gray-500 font-medium">{t.c5_sub}</p>
               </div>
             </Link>
 
           </div>
+
+          {/* Digambar Iconography & Nature of Tirthankar Note */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="mt-16 p-6 max-w-4xl rounded-2xl bg-stone-100/50 dark:bg-zinc-900/20 border border-stone-200/60 dark:border-zinc-800/60 text-center mx-4"
+          >
+            <p className="text-[11px] sm:text-xs font-serif text-stone-500 dark:text-zinc-400 leading-relaxed">
+              {t.iconographyNote}
+            </p>
+          </motion.div>
       </div>
     </div>
   );
