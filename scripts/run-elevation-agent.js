@@ -227,27 +227,30 @@ async function queryGemini(prompt, jsonMode = false) {
 }
 
 // ----------------------------------------------------------------------------
-// 6. CODE SYNTHESIZER
-// ----------------------------------------------------------------------------
-async function synthesize(target, currentCode, pattern) {
+async function synthesize(target, currentCode, pattern, approvedFeatures = []) {
+  const featuresDirective = approvedFeatures.length > 0
+    ? `\nUSER-APPROVED FEATURES TO BUILD (BUILD STRICTLY ONLY THESE - DO NOT INVENT OR ADD OTHER SECTIONS):\n` +
+      approvedFeatures.map(f => `- ${f.name}${f.note ? ` (USER NOTE / CUSTOM INSTRUCTION: "${f.note}")` : ""}`).join("\n")
+    : `1. Elevate this component to a 9/10 visual standard implementing ${pattern.name}.`;
+
   const prompt = `
 You are an expert Frontend Architect (Next.js 15+, Tailwind, Framer Motion) and Digambar Jain scholar.
 
 PAGE: ${target.pageRoute} (${target.sourceFilePath})
-CURRENT GAPS: ${target.missingFeatures.join(", ")}
 DESIGN INSPIRATION: ${pattern.name} (${pattern.concept})
 
 ${DIGAMBAR_CANONICAL_RULES}
+
+${featuresDirective}
+
+2. Ensure tactile micro-interactions (playTapSound), atmospheric noise texture, and responsive layout.
+3. NEXT.JS 16 APP ROUTER RULE: If this is a page.tsx file, params MUST be typed as Promise<{ lang: string }>: export default function Page({ params }: { params: Promise<{ lang: string }> }) and unwrapped using const { lang } = React.use(params);
+4. REVERENCE MANDATE: The revered author of Tattvārtha Sūtra must be written strictly as Acharya Umāsvāmi (NEVER Umasvati).
 
 EXISTING FILE CONTENT:
 \`\`\`tsx
 ${currentCode}
 \`\`\`
-
-YOUR TASK:
-1. Elevate this component to a 9/10 visual standard implementing ${pattern.name}.
-2. Ensure tactile micro-interactions (playTapSound), atmospheric noise texture, and responsive layout.
-4. NEXT.JS 16 APP ROUTER RULE: If this is a page.tsx file, params MUST be typed as Promise<{ lang: string }>: export default function Page({ params }: { params: Promise<{ lang: string }> }) and unwrapped using const { lang } = React.use(params);
 
 OUTPUT FORMAT:
 Return your response in exactly two clearly demarcated sections:
@@ -264,7 +267,7 @@ Return your response in exactly two clearly demarcated sections:
   ],
   "digambarProof": {
     "shastra": "Exact Digambar Shastra name",
-    "author": "Exact Acharya name",
+    "author": "Exact Acharya name (strictly Acharya Umāsvāmi or Acharya Kundkund)",
     "reference": "Chapter / Gatha / Shloka reference",
     "explanation": "Why this aligns strictly with pure Digambar tradition"
   }
@@ -455,11 +458,208 @@ async function getDirectVercelPreviewUrl(branchName) {
     }
   }
 
-  const branchSlug = branchName.replace(/\//g, "-").toLowerCase();
-  return `https://jain-wisdom-git-${branchSlug}-aagams-projects-b0e9e8b5.vercel.app`;
+// ----------------------------------------------------------------------------
+// 7.5 INTERACTIVE FEATURE PROPOSAL & CHECKBOX ENGINE
+// ----------------------------------------------------------------------------
+async function requestProposalApproval(target, pattern, token, chatId) {
+  if (!token || !chatId) {
+    console.warn("Telegram tokens not set. Proceeding in non-interactive mode.");
+    return [{ id: 1, name: `${pattern.name} Visual Elevation`, selected: true, note: "" }];
+  }
+
+  const features = [
+    { id: 1, name: `${pattern.name} Visual Elevation`, selected: true, note: "" },
+    { id: 2, name: "Mechanical Audio Clicks & Sound Toggle", selected: true, note: "" },
+    { id: 3, name: "Celestial Golden Stardust Atmosphere", selected: false, note: "" },
+    { id: 4, name: "Archival Manuscript Noise Glassmorphism", selected: false, note: "" },
+    { id: 5, name: "Verified Digambar Shastra Inscriptions (Acharya Umāsvāmi)", selected: true, note: "" }
+  ];
+
+  function buildKeyboard() {
+    const rows = [];
+    features.forEach((f, idx) => {
+      rows.push([
+        {
+          text: `${f.selected ? "✅" : "⬜"} ${f.id}. ${f.name}`,
+          callback_data: `prop_toggle:${idx}`
+        },
+        {
+          text: f.note ? `📝 Note: "${f.note.slice(0, 8)}..."` : `💬 Note #${f.id}`,
+          callback_data: `prop_note:${idx}`
+        }
+      ]);
+    });
+
+    rows.push([
+      { text: "🚀 Build Selected Features", callback_data: "prop_build" },
+      { text: "❌ Skip This Cycle", callback_data: "prop_skip" }
+    ]);
+
+    return { inline_keyboard: rows };
+  }
+
+  const messageText = `
+🏛️ *JAIN WISDOM DESIGN PROPOSAL*
+
+📍 *TARGET PAGE:* \`${target.name}\` (${target.pageRoute})
+📁 *SOURCE FILE:* \`${target.sourceFilePath}\`
+🌟 *RESEARCH INSPIRATION:* ${pattern.name}
+
+_Tap any item to toggle (✅ / ⬜) or tap 💬 to add custom instructions:_
+`.trim();
+
+  const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: messageText,
+      parse_mode: "Markdown",
+      reply_markup: buildKeyboard()
+    })
+  });
+
+  const msgData = await res.json();
+  if (!msgData.ok) {
+    console.error("Failed to send proposal message:", msgData);
+    return features.filter(f => f.selected);
+  }
+  const messageId = msgData.result.message_id;
+
+  console.log(`[Proposal] Interactive checklist dispatched to Telegram (Msg ID: ${messageId}).`);
+  console.log("Listening for user checkbox toggles and custom notes on Telegram...");
+
+  const maxWaitMs = 15 * 60 * 1000; // 15 minutes
+  const startTime = Date.now();
+  let lastUpdateId = 0;
+  let awaitingNoteForIdx = null;
+
+  while (Date.now() - startTime < maxWaitMs) {
+    try {
+      const updatesRes = await fetch(`https://api.telegram.org/bot${token}/getUpdates?offset=${lastUpdateId + 1}&timeout=10`);
+      const updatesData = await updatesRes.json();
+
+      if (updatesData.ok && updatesData.result.length > 0) {
+        for (const update of updatesData.result) {
+          lastUpdateId = update.update_id;
+
+          // Check for text reply if user tapped "Add Note"
+          if (awaitingNoteForIdx !== null && update.message && update.message.text) {
+            features[awaitingNoteForIdx].note = update.message.text;
+            console.log(`Saved user note for feature #${features[awaitingNoteForIdx].id}: "${update.message.text}"`);
+
+            await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                chat_id: chatId,
+                text: `✅ *Note Saved for Feature #${features[awaitingNoteForIdx].id}:* "${update.message.text}"\n\n_Tap [🚀 Build Selected Features] when ready!_`,
+                parse_mode: "Markdown"
+              })
+            });
+
+            await fetch(`https://api.telegram.org/bot${token}/editMessageReplyMarkup`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                chat_id: chatId,
+                message_id: messageId,
+                reply_markup: buildKeyboard()
+              })
+            });
+
+            awaitingNoteForIdx = null;
+            continue;
+          }
+
+          if (update.callback_query && update.callback_query.data) {
+            const cb = update.callback_query.data;
+
+            if (cb.startsWith("prop_toggle:")) {
+              const idx = parseInt(cb.split(":")[1], 10);
+              features[idx].selected = !features[idx].selected;
+
+              await fetch(`https://api.telegram.org/bot${token}/editMessageReplyMarkup`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  chat_id: chatId,
+                  message_id: messageId,
+                  reply_markup: buildKeyboard()
+                })
+              });
+
+              await fetch(`https://api.telegram.org/bot${token}/answerCallbackQuery`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ callback_query_id: update.callback_query.id })
+              });
+            } else if (cb.startsWith("prop_note:")) {
+              const idx = parseInt(cb.split(":")[1], 10);
+              awaitingNoteForIdx = idx;
+
+              await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  chat_id: chatId,
+                  text: `💬 *Please reply with your custom instructions for Feature #${features[idx].id} (${features[idx].name}):*`,
+                  parse_mode: "Markdown"
+                })
+              });
+
+              await fetch(`https://api.telegram.org/bot${token}/answerCallbackQuery`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ callback_query_id: update.callback_query.id })
+              });
+            } else if (cb === "prop_build") {
+              await fetch(`https://api.telegram.org/bot${token}/answerCallbackQuery`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  callback_query_id: update.callback_query.id,
+                  text: "Building selected features now!"
+                })
+              });
+
+              await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  chat_id: chatId,
+                  text: `⚙️ *Building your selected features...*\n• Enforcing Acharya Umāsvāmi & Kundkund canonical reverence\n• Running Creative Director Polish Pass\n• Compiling Next.js build\n\n_You will receive the direct live preview link shortly!_`,
+                  parse_mode: "Markdown"
+                })
+              });
+
+              return features.filter(f => f.selected);
+            } else if (cb === "prop_skip") {
+              await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  chat_id: chatId,
+                  text: `⏭️ Elevation cycle skipped by user.`
+                })
+              });
+              return null;
+            }
+          }
+        }
+      }
+    } catch (e) {
+      await new Promise(r => setTimeout(r, 4000));
+    }
+    await new Promise(r => setTimeout(r, 2500));
+  }
+
+  console.log("Proposal timed out awaiting user interaction. Proceeding with selected features.");
+  return features.filter(f => f.selected);
 }
 
-async function sendTelegramBriefing(synthesis, pattern, target, branchName, qaPasses) {
+// ----------------------------------------------------------------------------
+// 8. TELEGRAM NOTIFIER WITH DIRECT VERCEL PREVIEW
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) {
@@ -562,10 +762,19 @@ async function main() {
   const pattern = pickDesignPattern(target.pageRoute);
   console.log(`\n[2/5] Selected Pattern: ${pattern.name}`);
 
-  // 3. Synthesize
-  console.log("\n[3/5] Synthesizing with Gemini 3.6 & Digambar Canonical Guardrails...");
+  // 2.5 Interactive Proposal Menu with Checkboxes & Custom Notes
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  const approvedFeatures = await requestProposalApproval(target, pattern, token, chatId);
+  if (!approvedFeatures || approvedFeatures.length === 0) {
+    console.log("No features selected or cycle skipped by user.");
+    return;
+  }
+
+  // 3. Synthesize ONLY user-approved features with custom notes
+  console.log("\n[3/5] Synthesizing user-approved features with Gemini & Digambar Guardrails...");
   const currentCode = fs.readFileSync(path.join(workspaceRoot, target.sourceFilePath), "utf8");
-  const result = await synthesize(target, currentCode, pattern);
+  const result = await synthesize(target, currentCode, pattern, approvedFeatures);
   console.log(`📜 Digambar Source: ${result.digambarProof.shastra} (${result.digambarProof.author})`);
 
   // 3.5 Autonomous Frontend Polish Pass (Creative Director Refinement Loop)
