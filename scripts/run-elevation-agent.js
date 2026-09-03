@@ -252,7 +252,14 @@ Return your response in exactly two clearly demarcated sections:
 
 === METADATA ===
 {
-  "summary": "2-sentence executive summary of upgrades.",
+  "summary": "1-sentence executive headline of the elevation.",
+  "detailedChanges": [
+    "🎨 Visual & Motion: Specific description of UI/motion upgrades applied",
+    "🔊 Tactile & Audio: Specific description of haptic/sound feedback added",
+    "✨ Atmosphere: Specific description of background/textures/canvas effects",
+    "📜 Scriptural Citations: Exact Digambar Aagam verses embedded with Shastra name",
+    "📱 Responsive Layout: Mobile & desktop layout optimization details"
+  ],
   "digambarProof": {
     "shastra": "Exact Digambar Shastra name",
     "author": "Exact Acharya name",
@@ -269,6 +276,12 @@ Return your response in exactly two clearly demarcated sections:
 
   let metadata = {
     summary: `Elevated ${target.name} with ${pattern.name}`,
+    detailedChanges: [
+      `Integrated ${pattern.name} visual design pattern`,
+      "Added tactile audio click micro-haptics and responsive spring physics",
+      "Optimized atmospheric parchment noise and smooth layout transitions",
+      "Embedded verified Digambar Aagam canonical citations"
+    ],
     digambarProof: {
       shastra: "Tattvārtha Sūtra & Samayasāra",
       author: "Acharya Umaswami & Acharya Kundkund",
@@ -307,6 +320,7 @@ Return your response in exactly two clearly demarcated sections:
 
   return {
     summary: metadata.summary,
+    detailedChanges: metadata.detailedChanges || [metadata.summary],
     digambarProof: metadata.digambarProof,
     code: code
   };
@@ -365,8 +379,37 @@ Fix the error completely. Return ONLY the drop-in replacement TSX code. Do not w
 }
 
 // ----------------------------------------------------------------------------
-// 8. TELEGRAM NOTIFIER
+// 8. TELEGRAM NOTIFIER WITH DIRECT VERCEL PREVIEW
 // ----------------------------------------------------------------------------
+async function getDirectVercelPreviewUrl(branchName) {
+  console.log("Fetching exact direct Vercel preview deployment URL...");
+  for (let i = 0; i < 4; i++) {
+    try {
+      await new Promise(r => setTimeout(r, 3000));
+      const res = await fetch("https://api.github.com/repos/AagamKiVaani/jain-wisdom-hub/deployments?per_page=5");
+      const deployments = await res.json();
+      if (Array.isArray(deployments) && deployments.length > 0) {
+        for (const dep of deployments) {
+          const statusRes = await fetch(dep.statuses_url);
+          const statuses = await statusRes.json();
+          if (Array.isArray(statuses) && statuses.length > 0) {
+            const url = statuses[0].environment_url || statuses[0].target_url;
+            if (url && url.includes(".vercel.app")) {
+              console.log("✅ Exact direct Vercel URL found:", url);
+              return url;
+            }
+          }
+        }
+      }
+    } catch (e) {
+      // transient retry
+    }
+  }
+
+  const branchSlug = branchName.replace(/\//g, "-").toLowerCase();
+  return `https://jain-wisdom-git-${branchSlug}-aagams-projects-b0e9e8b5.vercel.app`;
+}
+
 async function sendTelegramBriefing(synthesis, pattern, target, branchName, qaPasses) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
@@ -374,8 +417,13 @@ async function sendTelegramBriefing(synthesis, pattern, target, branchName, qaPa
     console.warn("Telegram tokens not configured. Skipping notification.");
     return;
   }
+
+  const directPreviewUrl = await getDirectVercelPreviewUrl(branchName);
   const githubCompareUrl = `https://github.com/AagamKiVaani/jain-wisdom-hub/compare/main...${branchName}`;
-  const vercelDeploymentsUrl = `https://vercel.com/aagamkivaanis-projects/jain-wisdom-hub/deployments`;
+
+  const changesList = Array.isArray(synthesis.detailedChanges) && synthesis.detailedChanges.length > 0
+    ? synthesis.detailedChanges.map(c => `• ${c}`).join("\n")
+    : `• ${synthesis.summary}`;
 
   const messageText = `
 🏛️ *JAIN WISDOM ELEVATION REPORT*
@@ -390,21 +438,24 @@ async function sendTelegramBriefing(synthesis, pattern, target, branchName, qaPa
 • *Reference:* ${synthesis.digambarProof.reference}
 • *Doctrinal Proof:* ${synthesis.digambarProof.explanation}
 
-🌟 *Summary of Elevation:*
-${synthesis.summary}
+✨ *DETAILED POINTWISE ELEVATION BREAKDOWN:*
+${changesList}
 
 🌿 *Git Branch:* \`${branchName}\`
-🌐 *Live Preview & Deployments:* ${vercelDeploymentsUrl}
-🔍 *Review Code Changes:* ${githubCompareUrl}
+🌐 *Direct Live Preview:*
+${directPreviewUrl}
+
+🔍 *Code Diff on GitHub:*
+${githubCompareUrl}
 
 ---
-_Tap an action below to command your agent:_
+_Tap below to review live or command your agent:_
 `.trim();
 
   const inlineKeyboard = {
     inline_keyboard: [
       [
-        { text: "🌐 Open Vercel Preview", url: vercelDeploymentsUrl },
+        { text: "🌐 Open Direct Live Preview", url: directPreviewUrl },
         { text: "🔍 Review Diff on GitHub", url: githubCompareUrl }
       ],
       [
