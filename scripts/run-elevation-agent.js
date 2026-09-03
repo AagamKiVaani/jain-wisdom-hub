@@ -458,6 +458,10 @@ async function getDirectVercelPreviewUrl(branchName) {
     }
   }
 
+  const branchSlug = branchName.replace(/\//g, "-").toLowerCase();
+  return `https://jain-wisdom-git-${branchSlug}-aagams-projects-b0e9e8b5.vercel.app`;
+}
+
 // ----------------------------------------------------------------------------
 // 7.5 INTERACTIVE FEATURE PROPOSAL & CHECKBOX ENGINE
 // ----------------------------------------------------------------------------
@@ -660,6 +664,8 @@ _Tap any item to toggle (✅ / ⬜) or tap 💬 to add custom instructions:_
 
 // ----------------------------------------------------------------------------
 // 8. TELEGRAM NOTIFIER WITH DIRECT VERCEL PREVIEW
+// ----------------------------------------------------------------------------
+async function sendTelegramBriefing(synthesis, pattern, target, branchName, qaPasses) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) {
