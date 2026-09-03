@@ -245,7 +245,7 @@ ${currentCode}
 YOUR TASK:
 1. Elevate this component to a 9/10 visual standard implementing ${pattern.name}.
 2. Ensure tactile micro-interactions (playTapSound), atmospheric noise texture, and responsive layout.
-3. Every scriptural verse, story, or description MUST be strictly verified Digambar Jain. Cite exact Shastra and Author.
+4. NEXT.JS 16 APP ROUTER RULE: If this is a page.tsx file, params MUST be typed as Promise<{ lang: string }>: export default function Page({ params }: { params: Promise<{ lang: string }> }) and unwrapped using const { lang } = React.use(params);
 
 OUTPUT FORMAT:
 Return your response in exactly two clearly demarcated sections:
