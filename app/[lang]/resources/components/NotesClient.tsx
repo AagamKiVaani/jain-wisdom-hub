@@ -6,6 +6,8 @@ import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Download, PlayCircle, BookOpen, X, ArrowLeft, ArrowRight, ArrowUp, ChevronRight, Maximize2, Layers, Sparkles } from "lucide-react";
 import BorderBeam from "@/components/BorderBeam";
+import { Card3DContainer, Card3DItem } from "@/components/Card3D";
+import { playTapSound } from "@/lib/soundEffects";
 
 export interface Note {
   id: string;
@@ -140,6 +142,9 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Mobile center-focus viewport illumination state
+  const [activeMobileCardId, setActiveMobileCardId] = useState<string | null>(null);
+
   // Handle 'highlight' query parameter
   useEffect(() => {
     const highlightId = searchParams.get('highlight');
@@ -266,6 +271,31 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
     return matchesSearch;
   });
 
+  // Mobile center-focus viewport illumination (illuminated manuscript scroll effect)
+  useEffect(() => {
+    if (typeof window === "undefined" || window.innerWidth >= 768) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute("data-note-id");
+            if (id) setActiveMobileCardId(id);
+          }
+        });
+      },
+      {
+        rootMargin: "-35% 0px -35% 0px",
+        threshold: 0.1,
+      }
+    );
+
+    const cards = document.querySelectorAll("[data-note-id]");
+    cards.forEach((card) => observer.observe(card));
+
+    return () => observer.disconnect();
+  }, [filteredNotes, selectedSeries, selectedSection]);
+
   const getVideoTypeAndId = (urlOrId: string) => {
     if (!urlOrId) return { type: 'none', id: '' };
     const str = urlOrId.trim();
@@ -346,6 +376,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
             <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap sm:flex-nowrap py-0.5">
               <button
                 onClick={() => {
+                  playTapSound();
                   window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
                   setSelectedSeries(null);
                   setSelectedSection(null);
@@ -364,6 +395,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
               <button
                 onClick={() => {
                   if (seriesSections.length > 0) {
+                    playTapSound();
                     scrollToStickyPoint();
                     setSelectedSection(null);
                     setSearchQuery("");
@@ -418,88 +450,104 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
               const seriesTheme = getSeriesTheme(series);
 
               return (
-                <div key={series} className="relative group/card">
+                <motion.div
+                  key={series}
+                  layoutId={`series-card-shell-${series}`}
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  className="relative group/card w-full h-full"
+                >
                   {/* Ambient Halo Glow (Aceternity UI style) */}
                   <div className={`absolute -inset-1 rounded-3xl bg-gradient-to-r ${seriesTheme.glow} opacity-0 group-hover/card:opacity-100 blur-2xl transition-all duration-700 pointer-events-none -z-10`} />
 
-                  <button
+                  <Card3DContainer
+                    containerClassName="w-full h-full"
+                    className="w-full h-full"
                     onClick={() => {
                       if (isComingSoon) return;
+                      playTapSound();
                       scrollToStickyPoint();
                       setSelectedSeries(series);
                       setSelectedSection(null);
                       setSearchQuery("");
                     }}
-                    onMouseMove={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-                      e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-                    }}
-                    className={`group relative flex flex-col items-center justify-center p-10 md:p-12 w-full bg-white/75 dark:bg-zinc-900/75 noise-overlay backdrop-blur-2xl border border-zinc-200/90 dark:border-white/10 rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-500 transform text-center aspect-[4/3] md:aspect-auto md:min-h-[310px] ${seriesTheme.borderHover} ${seriesTheme.shadow} ${isComingSoon ? 'cursor-default' : 'hover:-translate-y-2'}`}
                   >
-                    {/* Aceternity Radial Cursor Spotlight */}
                     <div
-                      className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
-                      style={{
-                        background: `radial-gradient(350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(245, 158, 11, 0.18), transparent 80%)`,
+                      onMouseMove={(e) => {
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                        e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
                       }}
-                    />
+                      className={`group relative flex flex-col items-center justify-center p-10 md:p-12 w-full h-full bg-white/75 dark:bg-zinc-900/75 noise-overlay backdrop-blur-2xl border border-zinc-200/90 dark:border-white/10 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 text-center aspect-[4/3] md:aspect-auto md:min-h-[310px] ${seriesTheme.borderHover} ${seriesTheme.shadow} ${isComingSoon ? 'cursor-default' : 'cursor-pointer'}`}
+                    >
+                      {/* Aceternity Radial Cursor Spotlight */}
+                      <div
+                        className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+                        style={{
+                          background: `radial-gradient(350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(245, 158, 11, 0.18), transparent 80%)`,
+                        }}
+                      />
 
-                    {/* Animated Golden Conic Border Beam */}
-                    <BorderBeam size={220} duration={9} colorFrom="#f59e0b" colorTo="#fbbf24" className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
+                      {/* Animated Golden Conic Border Beam */}
+                      <BorderBeam size={220} duration={9} colorFrom="#f59e0b" colorTo="#fbbf24" className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
 
-                    {(() => {
-                      const posterUrl = getSeriesPoster(series);
-                      if (posterUrl) {
+                      {(() => {
+                        const posterUrl = getSeriesPoster(series);
+                        if (posterUrl) {
+                          return (
+                            <div className="absolute inset-0 w-full h-full overflow-hidden">
+                              <motion.img 
+                                layoutId={`series-poster-${series}`}
+                                src={posterUrl} 
+                                alt={series} 
+                                className="absolute inset-0 w-full h-full object-cover opacity-95 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" 
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                            </div>
+                          );
+                        }
                         return (
-                          <div className="absolute inset-0 w-full h-full overflow-hidden">
-                            <img 
-                              src={posterUrl} 
-                              alt={series} 
-                              className="absolute inset-0 w-full h-full object-cover opacity-95 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" 
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                          </div>
+                          <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-yellow-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         );
-                      }
-                      return (
-                        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-yellow-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                      );
-                    })()}
+                      })()}
 
-                    {isComingSoon && (
-                      <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20 backdrop-blur-[2px] transition-all duration-500">
-                        <div className="px-8 py-3 border border-white/30 bg-black/60 rounded-full text-white font-black tracking-widest uppercase text-2xl rotate-[-5deg] shadow-2xl backdrop-blur-md">
-                          Coming Soon
-                        </div>
-                      </div>
-                    )}
-
-                    <div className={`relative z-10 flex flex-col items-center ${isComingSoon ? 'opacity-50 blur-[2px]' : ''}`}>
-                      {!getSeriesPoster(series) && (
-                        <>
-                          <div className="h-20 w-20 rounded-3xl bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-inner border border-amber-200/40">
-                            <BookOpen size={40} />
+                      {isComingSoon && (
+                        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20 backdrop-blur-[2px] transition-all duration-500">
+                          <div className="px-8 py-3 border border-white/30 bg-black/60 rounded-full text-white font-black tracking-widest uppercase text-2xl rotate-[-5deg] shadow-2xl backdrop-blur-md">
+                            Coming Soon
                           </div>
-                          <h3 className={`text-2xl md:text-3xl font-black uppercase tracking-tight mb-2 ${isIndic ? 'leading-normal' : ''} text-gray-900 dark:text-white`}>
-                            {series}
-                          </h3>
-                        </>
+                        </div>
                       )}
 
-                      <div className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mt-2 ${getSeriesPoster(series) ? 'bg-black/60 text-white backdrop-blur-md border border-white/30 shadow-lg' : 'bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 border border-amber-200/50'}`}>
-                        {seriesNotesCount} Videos & Notes
-                      </div>
+                      {/* Holographic Z-Depth Floating Layer */}
+                      <Card3DItem
+                        translateZ={45}
+                        className={`relative z-10 flex flex-col items-center pointer-events-none ${isComingSoon ? 'opacity-50 blur-[2px]' : ''}`}
+                      >
+                        {!getSeriesPoster(series) && (
+                          <>
+                            <div className="h-20 w-20 rounded-3xl bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-6 shadow-inner border border-amber-200/40">
+                              <BookOpen size={40} />
+                            </div>
+                            <h3 className={`text-2xl md:text-3xl font-black uppercase tracking-tight mb-2 ${isIndic ? 'leading-normal' : ''} text-gray-900 dark:text-white`}>
+                              {series}
+                            </h3>
+                          </>
+                        )}
+
+                        <div className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mt-2 ${getSeriesPoster(series) ? 'bg-black/60 text-white backdrop-blur-md border border-white/30 shadow-lg' : 'bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 border border-amber-200/50'}`}>
+                          {seriesNotesCount} Videos & Notes
+                        </div>
+                      </Card3DItem>
                     </div>
-                  </button>
-                </div>
+                  </Card3DContainer>
+                </motion.div>
               );
             })}
           </motion.div>
         )}
 
         {showSectionSelection && (
-          /* STEP 2: SECTION SELECTION (Adhyays) with Motion Primitives Breadcrumbs */
+          /* STEP 2: SECTION SELECTION (Adhyays) with Apple App Store Spring Morph Expansion */
           <motion.div
             key="section-view"
             initial={{ opacity: 0, y: 20 }}
@@ -508,10 +556,51 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
             transition={{ duration: 0.4 }}
             className="w-full"
           >
-            <div className="text-center mb-10">
-              <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white uppercase tracking-widest mb-3">{selectedSeries}</h2>
-              <p className="text-gray-500 dark:text-gray-400 font-serif text-base">Select a section to explore its sacred sutras and study notes.</p>
-            </div>
+            {/* Apple App Store Morph Expanded Card Banner */}
+            <motion.div
+              layoutId={`series-card-shell-${selectedSeries}`}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="relative w-full max-w-4xl mx-auto mb-12 overflow-hidden rounded-3xl border border-zinc-200/90 dark:border-white/10 shadow-2xl bg-white/80 dark:bg-zinc-900/80 noise-overlay backdrop-blur-2xl"
+            >
+              {getSeriesPoster(selectedSeries) ? (
+                <div className="relative w-full aspect-[21/9] sm:aspect-[24/8] overflow-hidden">
+                  <motion.img 
+                    layoutId={`series-poster-${selectedSeries}`}
+                    src={getSeriesPoster(selectedSeries)!} 
+                    alt={selectedSeries} 
+                    className="w-full h-full object-cover" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent"></div>
+                  <div className="absolute bottom-4 left-6 right-6 flex items-end justify-between">
+                    <div>
+                      <div className="flex items-center gap-1.5 text-amber-400 text-xs font-bold uppercase tracking-widest mb-1">
+                        <span>✦</span>
+                        <span>SACRED SCRIPTURE SERIES</span>
+                        <span>✦</span>
+                      </div>
+                      <h2 className="text-2xl sm:text-4xl font-black text-white uppercase tracking-tight">{selectedSeries}</h2>
+                    </div>
+                    <button
+                      onClick={() => {
+                        playTapSound();
+                        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                        setSelectedSeries(null);
+                        setSelectedSection(null);
+                        setSearchQuery("");
+                      }}
+                      className="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/30 text-white text-xs font-bold uppercase tracking-wider transition-all active:scale-95"
+                    >
+                      <ArrowLeft size={14} /> Back
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="p-8 text-center">
+                  <h2 className="text-3xl font-black uppercase text-gray-900 dark:text-white mb-2">{selectedSeries}</h2>
+                  <p className="text-gray-500 font-serif text-sm">Select a section to explore its sacred sutras and study notes.</p>
+                </div>
+              )}
+            </motion.div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto pb-32">
               {seriesSections.map(section => {
@@ -521,75 +610,85 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                 const theme = getThemeColors(selectedSeries || "", section);
 
                 return (
-                  <button
+                  <Card3DContainer
                     key={section}
+                    containerClassName="w-full h-full"
+                    className="w-full h-full"
                     onClick={() => {
                       if (isSectionComingSoon) return;
+                      playTapSound();
                       scrollToStickyPoint();
                       setSelectedSection(section);
                       setSearchQuery("");
                     }}
-                    onMouseMove={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-                      e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-                    }}
-                    className={`group relative p-8 rounded-3xl overflow-hidden text-left flex flex-col justify-between aspect-[4/3] md:aspect-auto md:min-h-[210px] noise-overlay transition-all duration-500 ${isSectionComingSoon ? 'cursor-default' : `hover:shadow-2xl hover:-translate-y-1.5 ${theme.shadow} ${theme.hoverBorder} border border-transparent`}`}
                   >
-                    {/* Aceternity Radial Cursor Spotlight */}
                     <div
-                      className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
-                      style={{
-                        background: `radial-gradient(300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(245, 158, 11, 0.18), transparent 80%)`,
+                      onMouseMove={(e) => {
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                        e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
                       }}
-                    />
+                      className={`group relative p-8 w-full h-full rounded-3xl overflow-hidden text-left flex flex-col justify-between aspect-[4/3] md:aspect-auto md:min-h-[210px] noise-overlay shadow-md hover:shadow-2xl transition-all duration-500 ${isSectionComingSoon ? 'cursor-default' : `cursor-pointer ${theme.shadow} ${theme.hoverBorder} border border-transparent`}`}
+                    >
+                      {/* Aceternity Radial Cursor Spotlight */}
+                      <div
+                        className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+                        style={{
+                          background: `radial-gradient(300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(245, 158, 11, 0.18), transparent 80%)`,
+                        }}
+                      />
 
-                    {/* Animated Golden Conic Border Beam */}
-                    <BorderBeam size={180} duration={8} colorFrom="#f59e0b" colorTo="#fbbf24" className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
-                    {/* Background Image Logic */}
-                    {(() => {
-                      const posterUrl = getSectionPoster(section);
-                      if (posterUrl) {
+                      {/* Animated Golden Conic Border Beam */}
+                      <BorderBeam size={180} duration={8} colorFrom="#f59e0b" colorTo="#fbbf24" className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
+
+                      {/* Background Image Logic */}
+                      {(() => {
+                        const posterUrl = getSectionPoster(section);
+                        if (posterUrl) {
+                          return (
+                            <div className="absolute inset-0 w-full h-full overflow-hidden">
+                              <img 
+                                src={posterUrl} 
+                                alt={section} 
+                                className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${isSectionComingSoon ? 'opacity-40 blur-[2px]' : 'opacity-95 group-hover:opacity-100 group-hover:scale-105'}`} 
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>
+                            </div>
+                          );
+                        }
                         return (
-                          <div className="absolute inset-0 w-full h-full overflow-hidden">
-                            <img 
-                              src={posterUrl} 
-                              alt={section} 
-                              className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${isSectionComingSoon ? 'opacity-40 blur-[2px]' : 'opacity-95 group-hover:opacity-100 group-hover:scale-105'}`} 
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>
-                          </div>
+                          <div className={`absolute inset-0 bg-white/80 dark:bg-zinc-900/70 backdrop-blur-xl border border-zinc-200/80 dark:border-white/10 ${isSectionComingSoon ? 'opacity-50' : ''}`}></div>
                         );
-                      }
-                      return (
-                        <div className={`absolute inset-0 bg-white/80 dark:bg-zinc-900/70 backdrop-blur-xl border border-zinc-200/80 dark:border-white/10 ${isSectionComingSoon ? 'opacity-50' : ''}`}></div>
-                      );
-                    })()}
+                      })()}
 
-                    {isSectionComingSoon && (
-                      <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20 backdrop-blur-[2px]">
-                        <div className="px-6 py-2 border border-white/30 bg-black/60 rounded-full text-white font-black tracking-widest uppercase text-lg rotate-[-5deg] shadow-2xl backdrop-blur-md">
-                          Coming Soon
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Text Content */}
-                    <div className={`relative z-10 w-full h-full flex flex-col justify-between ${isSectionComingSoon ? 'opacity-40 blur-[1px]' : ''}`}>
-                      <div>
-                        <Layers className={`${getSectionPoster(section) ? 'text-amber-400' : theme.text} mb-4 opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all`} size={28} />
-                        <h3 className={`text-xl font-bold uppercase tracking-tight mb-2 ${getSectionPoster(section) ? 'text-white drop-shadow-md' : 'text-gray-900 dark:text-white'}`}>
-                          {section}
-                        </h3>
-                      </div>
-                      {!isSectionComingSoon && (
-                        <div className={`mt-6 inline-flex items-center text-xs font-bold uppercase tracking-widest ${getSectionPoster(section) ? 'text-white/90' : theme.text}`}>
-                          {sectionNotesCount} items <ArrowRight size={14} className="ml-1 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all" />
+                      {isSectionComingSoon && (
+                        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20 backdrop-blur-[2px]">
+                          <div className="px-6 py-2 border border-white/30 bg-black/60 rounded-full text-white font-black tracking-widest uppercase text-lg rotate-[-5deg] shadow-2xl backdrop-blur-md">
+                            Coming Soon
+                          </div>
                         </div>
                       )}
+
+                      {/* Floating 3D Text Content */}
+                      <Card3DItem
+                        translateZ={40}
+                        className={`relative z-10 w-full h-full flex flex-col justify-between pointer-events-none ${isSectionComingSoon ? 'opacity-40 blur-[1px]' : ''}`}
+                      >
+                        <div>
+                          <Layers className={`${getSectionPoster(section) ? 'text-amber-400' : theme.text} mb-4 opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all`} size={28} />
+                          <h3 className={`text-xl font-bold uppercase tracking-tight mb-2 ${getSectionPoster(section) ? 'text-white drop-shadow-md' : 'text-gray-900 dark:text-white'}`}>
+                            {section}
+                          </h3>
+                        </div>
+                        {!isSectionComingSoon && (
+                          <div className={`mt-6 inline-flex items-center text-xs font-bold uppercase tracking-widest ${getSectionPoster(section) ? 'text-white/90' : theme.text}`}>
+                            {sectionNotesCount} items <ArrowRight size={14} className="ml-1 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all" />
+                          </div>
+                        )}
+                      </Card3DItem>
                     </div>
-                  </button>
-                )
+                  </Card3DContainer>
+                );
               })}
             </div>
           </motion.div>
@@ -633,7 +732,10 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                   />
                   {searchQuery && (
                     <button
-                      onClick={() => setSearchQuery("")}
+                      onClick={() => {
+                        playTapSound();
+                        setSearchQuery("");
+                      }}
                       className="p-1 rounded-full text-zinc-400 hover:text-zinc-600 dark:hover:text-white transition-colors ml-1"
                       title="Clear"
                     >
@@ -649,121 +751,136 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
               <AnimatePresence mode="popLayout">
                 {filteredNotes.map((note) => {
                   const theme = getThemeColors(note.series, note.section);
+                  const isMobileActive = activeMobileCardId === note.id;
                   
                   return (
                   <motion.div
                     key={note.id}
                     id={`note-${note.id}`}
+                    data-note-id={note.id}
                     layout
                     initial={{ opacity: 0, scale: 0.96 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.96 }}
                     transition={{ duration: 0.3 }}
-                    style={{
-                      '--highlight-hex': theme.hex,
-                      '--highlight-hex-dark': theme.hexDark,
-                    } as React.CSSProperties}
-                    onMouseMove={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-                      e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-                    }}
-                    className={`group relative flex flex-col md:flex-row bg-white/85 dark:bg-zinc-900/75 noise-overlay backdrop-blur-2xl border border-zinc-200/90 dark:border-white/10 rounded-3xl overflow-hidden shadow-md hover:shadow-2xl ${theme.hoverBorder} hover:-translate-y-1 transition-all duration-500 ${highlightedNoteId === note.id ? 'dynamic-breathing-highlight' : ''}`}
+                    className="w-full h-full"
                   >
-                    {/* Aceternity Radial Cursor Spotlight */}
-                    <div
-                      className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
-                      style={{
-                        background: `radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(245, 158, 11, 0.14), transparent 80%)`,
-                      }}
-                    />
-
-                    {/* Animated Golden Conic Border Beam */}
-                    <BorderBeam size={160} duration={9} colorFrom="#f59e0b" colorTo="#fbbf24" className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-
-                    {/* Video Thumbnail Area */}
-                    <div
-                      className="w-full md:w-2/5 aspect-video md:aspect-auto relative bg-black shrink-0 overflow-hidden cursor-pointer group/video z-10"
-                      onClick={() => {
-                        if (note.videoLink) setPlayingVideoUrl(note.videoLink);
-                      }}
+                    <Card3DContainer
+                      containerClassName="w-full h-full"
+                      className="w-full h-full"
                     >
-                      {note.videoLink ? (
-                        <>
-                          <img
-                            src={getVideoThumbnail(note.videoLink)}
-                            alt={note.title}
-                            className="absolute inset-0 w-full h-full object-cover opacity-95 md:opacity-90 group-hover/video:opacity-100 transition-all duration-700 group-hover/video:scale-105"
-                          />
-                          <div className="absolute inset-0 bg-black/25 group-hover/video:bg-black/10 transition-colors duration-500"></div>
+                      <div
+                        style={{
+                          '--highlight-hex': theme.hex,
+                          '--highlight-hex-dark': theme.hexDark,
+                        } as React.CSSProperties}
+                        onMouseMove={(e) => {
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                          e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+                        }}
+                        className={`group relative flex flex-col md:flex-row w-full h-full bg-white/85 dark:bg-zinc-900/75 noise-overlay backdrop-blur-2xl border border-zinc-200/90 dark:border-white/10 rounded-3xl overflow-hidden shadow-md hover:shadow-2xl ${theme.hoverBorder} transition-all duration-500 ${highlightedNoteId === note.id ? 'dynamic-breathing-highlight' : ''} ${isMobileActive ? 'border-amber-500/80 shadow-[0_0_35px_rgba(245,158,11,0.28)] md:shadow-md' : ''}`}
+                      >
+                        {/* Aceternity Radial Cursor Spotlight */}
+                        <div
+                          className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
+                          style={{
+                            background: `radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(245, 158, 11, 0.14), transparent 80%)`,
+                          }}
+                        />
 
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="relative">
-                              <span className="absolute -inset-2 rounded-full bg-white/20 animate-ping opacity-0 group-hover/video:opacity-60 transition-opacity duration-300 pointer-events-none" />
-                              <div className={`relative w-16 h-16 rounded-full flex items-center justify-center group-hover/video:scale-110 transition-all duration-300 ${theme.playBg} ${theme.playShadow}`}>
-                                <PlayCircle size={32} className="text-white ml-1" />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 opacity-0 group-hover/video:opacity-100 transition-opacity">
-                            <Maximize2 size={12} className="text-white" />
-                            <span className="text-[10px] font-bold uppercase text-white tracking-wider">Play Video</span>
-                          </div>
-                        </>
-                      ) : (
-                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-900">
-                          <PlayCircle className="text-zinc-700 w-12 h-12 mb-2" />
-                          <span className="text-xs font-bold uppercase tracking-widest text-zinc-600">No Video</span>
-                        </div>
-                      )}
-                    </div>
+                        {/* Animated Golden Conic Border Beam */}
+                        <BorderBeam size={160} duration={9} colorFrom="#f59e0b" colorTo="#fbbf24" className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
 
-                    {/* Content Area with Sacred Temple Inscription Typography */}
-                    <div className="p-6 md:p-7 flex flex-col justify-between grow relative z-10">
-                      <div>
-                        {/* Decorative Brass Flourish Badge */}
-                        <div className="flex items-center gap-1.5 mb-2 text-amber-600/75 dark:text-amber-400/75 text-[10px] font-bold uppercase tracking-widest">
-                          <span className="text-amber-500">✦</span>
-                          <span>{selectedSection || note.series}</span>
-                          <span className="text-amber-500">✦</span>
-                        </div>
-
-                        {(() => {
-                          const containsDevanagari = (text?: string) => text ? /[\u0900-\u097F]/.test(text) : false;
-                          const isTitleIndic = isIndic || containsDevanagari(note.title);
-                          const isDescIndic = isIndic || containsDevanagari(note.description);
-                          
-                          return (
-                            <>
-                              <h3 className={`text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors ${isTitleIndic ? 'leading-normal tracking-normal pt-0.5' : 'leading-tight tracking-tight'}`}>
-                                {note.title}
-                              </h3>
-                              {note.description && (
-                                <div className="border-l-2 border-amber-500/40 dark:border-amber-400/40 pl-3 py-1 my-2.5 bg-amber-500/5 dark:bg-amber-400/5 rounded-r-xl">
-                                  <p className={`text-gray-700 dark:text-amber-100/90 font-serif text-sm md:text-base leading-relaxed tracking-wide italic ${isDescIndic ? 'leading-relaxed' : ''}`}>
-                                    "{note.description}"
-                                  </p>
-                                </div>
-                              )}
-                            </>
-                          );
-                        })()}
-                      </div>
-
-                      {note.driveFileId ? (
-                        <a
-                          href={`https://drive.google.com/uc?export=download&id=${note.driveFileId}`}
-                          className={`mt-4 flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl font-bold text-sm uppercase tracking-widest transition-all duration-300 shadow-sm active:scale-[0.98] group/btn ${theme.badgeBg} ${theme.badgeHoverBg} ${theme.badgeBorder} border ${theme.badgeText}`}
+                        {/* Video Thumbnail Area */}
+                        <div
+                          className="w-full md:w-2/5 aspect-video md:aspect-auto relative bg-black shrink-0 overflow-hidden cursor-pointer group/video z-10"
+                          onClick={() => {
+                            playTapSound();
+                            if (note.videoLink) setPlayingVideoUrl(note.videoLink);
+                          }}
                         >
-                          <Download size={18} className="transition-transform group-hover/btn:-translate-y-0.5" />
-                          {t?.download || "Download PDF"}
-                        </a>
-                      ) : (
-                        <div className="mt-4 py-3.5 text-center text-xs font-bold uppercase tracking-widest text-zinc-400 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl">
-                          PDF Coming Soon
+                          {note.videoLink ? (
+                            <>
+                              <img
+                                src={getVideoThumbnail(note.videoLink)}
+                                alt={note.title}
+                                className="absolute inset-0 w-full h-full object-cover opacity-95 md:opacity-90 group-hover/video:opacity-100 transition-all duration-700 group-hover/video:scale-105"
+                              />
+                              <div className="absolute inset-0 bg-black/25 group-hover/video:bg-black/10 transition-colors duration-500"></div>
+
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="relative">
+                                  <span className="absolute -inset-2 rounded-full bg-white/20 animate-ping opacity-0 group-hover/video:opacity-60 transition-opacity duration-300 pointer-events-none" />
+                                  <div className={`relative w-16 h-16 rounded-full flex items-center justify-center group-hover/video:scale-110 transition-all duration-300 ${theme.playBg} ${theme.playShadow}`}>
+                                    <PlayCircle size={32} className="text-white ml-1" />
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 opacity-0 group-hover/video:opacity-100 transition-opacity">
+                                <Maximize2 size={12} className="text-white" />
+                                <span className="text-[10px] font-bold uppercase text-white tracking-wider">Play Video</span>
+                              </div>
+                            </>
+                          ) : (
+                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-900">
+                              <PlayCircle className="text-zinc-700 w-12 h-12 mb-2" />
+                              <span className="text-xs font-bold uppercase tracking-widest text-zinc-600">No Video</span>
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
+
+                        {/* Content Area with Sacred Temple Inscription Typography */}
+                        <div className="p-6 md:p-7 flex flex-col justify-between grow relative z-10">
+                          <Card3DItem translateZ={35}>
+                            {/* Decorative Brass Flourish Badge */}
+                            <div className="flex items-center gap-1.5 mb-2 text-amber-600/75 dark:text-amber-400/75 text-[10px] font-bold uppercase tracking-widest">
+                              <span className="text-amber-500">✦</span>
+                              <span>{selectedSection || note.series}</span>
+                              <span className="text-amber-500">✦</span>
+                            </div>
+
+                            {(() => {
+                              const containsDevanagari = (text?: string) => text ? /[\u0900-\u097F]/.test(text) : false;
+                              const isTitleIndic = isIndic || containsDevanagari(note.title);
+                              const isDescIndic = isIndic || containsDevanagari(note.description);
+                              
+                              return (
+                                <>
+                                  <h3 className={`text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors ${isTitleIndic ? 'leading-normal tracking-normal pt-0.5' : 'leading-tight tracking-tight'}`}>
+                                    {note.title}
+                                  </h3>
+                                  {note.description && (
+                                    <div className="border-l-2 border-amber-500/40 dark:border-amber-400/40 pl-3 py-1 my-2.5 bg-amber-500/5 dark:bg-amber-400/5 rounded-r-xl">
+                                      <p className={`text-gray-700 dark:text-amber-100/90 font-serif text-sm md:text-base leading-relaxed tracking-wide italic ${isDescIndic ? 'leading-relaxed' : ''}`}>
+                                        "{note.description}"
+                                      </p>
+                                    </div>
+                                  )}
+                                </>
+                              );
+                            })()}
+                          </Card3DItem>
+
+                          <Card3DItem translateZ={45}>
+                            {note.driveFileId ? (
+                              <a
+                                href={`https://drive.google.com/uc?export=download&id=${note.driveFileId}`}
+                                onClick={() => playTapSound()}
+                                className={`mt-4 flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl font-bold text-sm uppercase tracking-widest transition-all duration-300 shadow-sm active:scale-[0.98] group/btn ${theme.badgeBg} ${theme.badgeHoverBg} ${theme.badgeBorder} border ${theme.badgeText}`}
+                              >
+                                <Download size={18} className="transition-transform group-hover/btn:-translate-y-0.5" />
+                                {t?.download || "Download PDF"}
+                              </a>
+                            ) : (
+                              <div className="mt-4 py-3.5 text-center text-xs font-bold uppercase tracking-widest text-zinc-400 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl">
+                                PDF Coming Soon
+                              </div>
+                            )}
+                          </Card3DItem>
+                        </div>
+                      </div>
+                    </Card3DContainer>
                   </motion.div>
                 )})}
               </AnimatePresence>

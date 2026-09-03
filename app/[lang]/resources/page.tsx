@@ -72,18 +72,24 @@ export default async function ResourcesPage({ params }: { params: Promise<{ lang
           </Link>
         </div>
 
-        {/* Hero Section */}
-        <div className="text-center mb-16 animate-in fade-in slide-in-from-top-10 duration-1000">
-          <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-amber-50 dark:bg-amber-500/10 text-amber-800 dark:text-amber-300 text-[10px] md:text-xs font-bold uppercase tracking-widest border border-amber-200/60 dark:border-amber-500/30 shadow-sm backdrop-blur-sm">
+        {/* Divine Seamless Ethereal Hero Header */}
+        <div className="relative text-center mb-14 md:mb-18 w-full max-w-4xl mx-auto flex flex-col items-center">
+          {/* Seamless Radial Ethereal Divine Aura (Zero harsh boxes) */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[500px] md:w-[650px] h-[200px] sm:h-[260px] bg-gradient-to-r from-amber-500/15 via-yellow-400/20 to-amber-600/15 dark:from-amber-500/25 dark:via-yellow-400/20 dark:to-amber-500/20 blur-[80px] md:blur-[110px] rounded-full pointer-events-none -z-10" />
+
+          {/* Soft Golden Aperture Slit (Ultra subtle, seamless) */}
+          <div className="w-36 md:w-64 h-[1.5px] bg-gradient-to-r from-transparent via-amber-400/80 to-transparent mb-6 blur-[0.5px]" />
+
+          <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-amber-500/10 dark:bg-amber-400/10 text-amber-800 dark:text-amber-300 text-[10px] md:text-xs font-bold uppercase tracking-widest border border-amber-500/30 dark:border-amber-400/30 shadow-sm backdrop-blur-md">
             <Sparkles size={14} className="text-amber-500 animate-pulse" />
             {t.badge}
           </div>
           
-          <h1 className={`text-5xl md:text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-zinc-900 via-amber-700 to-zinc-900 dark:from-white dark:via-amber-200 dark:to-white mb-6 uppercase tracking-tighter ${isIndic ? 'leading-tight py-2' : 'leading-none'}`}>
+          <h1 className={`text-5xl md:text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-zinc-900 via-amber-600 to-zinc-900 dark:from-white dark:via-amber-200 dark:to-white mb-6 uppercase tracking-tighter drop-shadow-sm ${isIndic ? 'leading-tight py-2' : 'leading-none'}`}>
             {t.title}
           </h1>
           
-          <p className={`text-lg md:text-xl font-serif text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed ${isIndic ? 'leading-loose' : 'leading-relaxed'}`}>
+          <p className={`text-lg md:text-xl font-serif text-gray-700 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed ${isIndic ? 'leading-loose' : 'leading-relaxed'}`}>
             {t.subtitle}
           </p>
         </div>
