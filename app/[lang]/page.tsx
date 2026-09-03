@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { 
   Users, 
   ArrowRight, 
@@ -34,7 +34,6 @@ const translations = {
     shastraSource: "Tattvārtha Sūtra — Acharya Umāsvāmi (Ch. 1, Sutra 1-2)",
     shastraVerse: "सम्यग्दर्शनज्ञानचारित्राणि मोक्षमार्गः॥ १ ॥\nतत्त्वार्थश्रद्धानं सम्यग्दर्शनम्॥ २ ॥",
     shastraTranslation: "Right belief, right knowledge, and right conduct together constitute the path to liberation (Moksha). Belief in substances (tattvas) ascertained as they are, is right belief.",
-    iconographyNote: "Digambar Iconography: All Tirthankaras, including Mallināth Bhagwān (the 19th male Tirthankar), are depicted strictly unclad (Digambaratva), peaceful, with eyes half-closed in introspective meditation (Nāsāgra Drishti), free from hunger (Kavalahāra), thirst, disease, sleep, and physical fatigue."
   },
   hi: {
     badge: "डिजिटल आगम अल्फा 1.0",
@@ -50,8 +49,7 @@ const translations = {
     shastraTitle: "प्रामाणिक दिगंबर शिलालेख",
     shastraSource: "तत्त्वार्थ सूत्र — आचार्य उमास्वामी (अध्याय १, सूत्र १-२)",
     shastraVerse: "सम्यग्दर्शनज्ञानचारित्राणि मोक्षमार्गः॥ १ ॥\nतत्त्वार्थश्रद्धानं सम्यग्दर्शनम्॥ २ ॥",
-    shastraTranslation: "सम्यक दर्शन, सम्यक ज्ञान और सम्यक चरित्र मिलकर मोक्ष का मार्ग हैं। यथार्थ रूप में जीवादि तत्वों का श्रद्धान करना ही सम्यक दर्शन है।",
-    iconographyNote: "दिगंबर प्रतिमा विज्ञान: १९वें तीर्थंकर मल्लिनाथ भगवान (पुरुष राजा जिन्होंने दिगंबर दीक्षा धारण की) सहित सभी २४ तीर्थंकर पूर्णतः अपरिग्रह (नग्न), शांत मुद्रा और नासाग्र दृष्टि में विराजमान हैं, एवं वे क्षुधा (कवलाहार), तृषा, रोग, निद्रा और शारीरिक थकान से सर्वथा रहित हैं।"
+    shastraTranslation: "सम्यक दर्शन, सम्यक ज्ञान और सम्यक चरित्र मिलकर मोक्ष का मार्ग हैं। यथार्थ रूप में जीवादि तत्वों का श्रद्धान करना ही सम्यक दर्शन है.",
   },
   kn: {
     badge: "ಡಿಜಿಟಲ್ ಆಗಮ ಆಲ್ಫಾ 1.0",
@@ -68,7 +66,6 @@ const translations = {
     shastraSource: "ತತ್ತ್ವಾರ್ಥ ಸೂತ್ರ — ಆಚಾರ್ಯ ಉಮಾಸ್ವಾಮಿ (ಅಧ್ಯಾಯ ೧, ಸೂತ್ರ ೧-೨)",
     shastraVerse: "सम्यग्दर्शनज्ञानचारित्राणि मोक्षमार्गः॥ १ ॥\nतत्त्वार्थश्रद्धानं सम्यग्दर्शनम्॥ २ ॥",
     shastraTranslation: "ಸಮ್ಯಗ್ದರ್ಶನ, ಸಮ್ಯಗ್ಜ್ಞಾನ ಮತ್ತು ಸಮ್ಯಕ್ಚಾರಿತ್ರ್ಯಗಳು ಒಟ್ಟಾಗಿ ಮೋಕ್ಷದ ಮಾರ್ಗವಾಗಿದೆ. ಯಥಾರ್ಥವಾದ ತತ್ವಗಳ ಶ್ರದ್ಧಾನವೇ ಸಮ್ಯಗ್ದರ್ಶನವು.",
-    iconographyNote: "ದಿಗಂಬರ ಸಂಪ್ರದಾಯ: ೧೯ನೇ ತೀರ್ಥಂಕರ ಮಲ್ಲಿನಾಥ ಭಗವಾನ್ ಸೇರಿದಂತೆ ಎಲ್ಲಾ ತೀರ್ಥಂಕರರು ದಿಗಂಬರ (ಅಚೇಲಕ), ಪ್ರಶಾಂತ ಮುದ್ರೆ ಮತ್ತು ನಾಸಾಗ್ರ ದೃಷ್ಟಿಯಲ್ಲಿ ವಿರಾಜಮಾನರಾಗಿದ್ದಾರೆ, ಹಾಗೂ ಅವರು ಹಸಿವು (ಕವಲಾಹಾರ), ಬಾಯಾರಿಕೆ, ರೋಗ, ನಿದ್ರೆ ಮತ್ತು ದೈಹಿಕ ಆಯಾಸದಿಂದ ಮುಕ್ತರಾಗಿದ್ದಾರೆ."
   }
 };
 
@@ -103,7 +100,7 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
     return audioCtxRef.current;
   };
 
-  // High-performance real audio click using /sounds/resources/click2.mp3
+  // High-performance real audio click using /sounds/resources/click2.mp3 with volume 0.65
   const playTapSound = () => {
     if (!soundEnabled) return;
     try {
@@ -209,7 +206,7 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
       {/* Optimized Background Gradient Blur */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-amber-500/5 dark:bg-amber-950/10 blur-[100px] md:blur-[160px] rounded-full pointer-events-none z-0" />
 
-      {/* Persistent Audio/Haptic Control Panel - Cleanly docked at bottom-right away from Navbar */}
+      {/* Persistent Audio/Haptic Control Panel - Strictly positioned at fixed bottom-6 right-6 z-50 */}
       <div className="fixed bottom-6 right-6 z-50">
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -360,7 +357,7 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
 
           </div>
 
-          {/* Archival Manuscript Noise Glassmorphism Panel (Digambar Shastra Inscription) - Gracefully positioned below main navigation */}
+          {/* Archival Manuscript Noise Glassmorphism Panel (Digambar Shastra Inscription) - Author strictly Acharya Umāsvāmi */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -390,16 +387,6 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
                 {t.shastraSource}
               </div>
             </div>
-          </motion.div>
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="mt-16 p-6 max-w-4xl rounded-2xl bg-stone-100/50 dark:bg-zinc-900/20 border border-stone-200/60 dark:border-zinc-800/60 text-center mx-4"
-          >
-            <p className="text-[11px] sm:text-xs font-serif text-stone-500 dark:text-zinc-400 leading-relaxed">
-              {t.iconographyNote}
-            </p>
           </motion.div>
       </div>
     </div>
