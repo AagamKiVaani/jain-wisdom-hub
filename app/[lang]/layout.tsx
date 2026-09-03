@@ -29,9 +29,34 @@ const poppins = Poppins({
   display: "swap", // Ensures text shows up immediately (FCP improvement)
 });
 
+const siteUrl = 'https://jain-wisdom-hub.vercel.app';
+
 export const metadata: Metadata = {
-  title: "Jain Wisdom Hub",
-  description: "A digital encyclopedia of Jain Principles",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Jain Wisdom Hub | Pure Digambar Jain Philosophy & Scriptures",
+    template: "%s | Jain Wisdom Hub"
+  },
+  description: "A digital sanctuary for authentic Digambar Jain philosophy, the 24 Tirthankaras, Namokar Mantra, Kalchakra, Soul & Karma, and downloadable study notes.",
+  keywords: [
+    "Jainism",
+    "Digambar Jain",
+    "Jain Wisdom Hub",
+    "Tirthankara",
+    "Namokar Mantra",
+    "Tattvartha Sutra",
+    "Acharya Umaswami",
+    "Kundakunda Acharya",
+    "Samayasara",
+    "Kalchakra",
+    "Soul and Karma",
+    "Jain Philosophy",
+    "Jain Notes PDF",
+    "Aagam"
+  ],
+  authors: [{ name: "Aagam Ki Vaani", url: "https://www.youtube.com/@AagamKiVani" }],
+  creator: "Aagam Ki Vaani",
+  publisher: "Jain Wisdom Hub",
   manifest: "/manifest.json",
   icons: {
     icon: [
@@ -41,6 +66,51 @@ export const metadata: Metadata = {
     apple: [
       { url: '/icons/logo.png', sizes: '180x180' },
     ],
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    alternateLocale: ["hi_IN", "kn_IN"],
+    url: siteUrl,
+    siteName: "Jain Wisdom Hub",
+    title: "Jain Wisdom Hub | Authentic Digambar Jain Wisdom",
+    description: "Explore the 24 Tirthankaras, Namokar Mantra, Kalchakra, and authentic Digambar Jain scripture digitized for the modern seeker.",
+    images: [
+      {
+        url: "/icons/logo.png",
+        width: 512,
+        height: 512,
+        alt: "Jain Wisdom Hub Sacred Emblem"
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jain Wisdom Hub",
+    description: "Digitizing the ancient legacy of the Tirthankaras for the modern world.",
+    images: ["/icons/logo.png"],
+  },
+  alternates: {
+    canonical: "/",
+    languages: {
+      "en": "/en",
+      "hi": "/hi",
+      "kn": "/kn",
+    },
+  },
+  verification: {
+    google: "googlef82a704e5ae057a8",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
@@ -56,8 +126,40 @@ export default async function RootLayout({
   const isHindi = lang === 'hi';
   const fontClass = isHindi ? poppins.className : inter.className;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        "url": siteUrl,
+        "name": "Jain Wisdom Hub",
+        "description": "Authentic Digambar Jain philosophy, Tirthankaras, scriptures, and sacred knowledge.",
+        "inLanguage": ["en", "hi", "kn"]
+      },
+      {
+        "@type": "Organization",
+        "@id": `${siteUrl}/#organization`,
+        "name": "Jain Wisdom Hub",
+        "url": siteUrl,
+        "logo": `${siteUrl}/icons/logo.png`,
+        "sameAs": [
+          "https://www.youtube.com/@AagamKiVani",
+          "https://www.instagram.com/aagamkivaani",
+          "https://www.facebook.com/share/18FUyhp5Pd/"
+        ]
+      }
+    ]
+  };
+
   return (
     <html lang={lang} suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body 
         suppressHydrationWarning
         className={`
