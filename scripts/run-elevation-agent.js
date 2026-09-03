@@ -110,6 +110,33 @@ function pickDesignPattern(pageRoute) {
   return DESIGN_PATTERNS[Math.floor(Math.random() * DESIGN_PATTERNS.length)];
 }
 
+function getInspirationPattern(pageRoute, workspaceRoot) {
+  const queuePath = path.join(workspaceRoot, "data", "inspirations_queue.json");
+  if (fs.existsSync(queuePath)) {
+    try {
+      const queue = JSON.parse(fs.readFileSync(queuePath, "utf8"));
+      const pendingItem = queue.find(item => item.status === "pending");
+      if (pendingItem) {
+        pendingItem.status = "applied";
+        fs.writeFileSync(queuePath, JSON.stringify(queue, null, 2), "utf8");
+        console.log(`💡 Loaded user-submitted inspiration: ${pendingItem.url || pendingItem.text}`);
+        return {
+          id: `custom-insp-${pendingItem.id}`,
+          name: `Reel Inspiration (${pendingItem.url ? pendingItem.url.slice(0, 35) + "..." : "Custom Design Idea"})`,
+          source: pendingItem.url || "Telegram Inspiration Drop",
+          concept: `User shared reference: ${pendingItem.text}. Analyze and extract the visual layout, smooth motion physics, 3D tilt, or luminous glass aesthetic inspired by this reference.`,
+          keywords: "custom reel inspiration, premium fluid UI, interactive motion",
+          isUserInspiration: true,
+          originalUrl: pendingItem.url
+        };
+      }
+    } catch (e) {
+      console.warn("Could not read inspirations queue:", e.message);
+    }
+  }
+  return pickDesignPattern(pageRoute);
+}
+
 // ----------------------------------------------------------------------------
 // 4. SITE AUDITOR
 // ----------------------------------------------------------------------------
@@ -784,7 +811,48 @@ async function waitForUserFeedbackAndApproval(target, pattern, branchName, works
         for (const update of data.result) {
           lastUpdateId = update.update_id;
 
-          // 1. User sent a text message with feedback
+          // 1. Check for Shared Reel or Design Inspiration Link
+          const rawMsg = update.message ? (update.message.text || update.message.caption || "") : "";
+          const hasUrl = rawMsg.match(/(https?:\/\/[^\s]+)/i);
+          const isReelOrIdea = hasUrl || rawMsg.toLowerCase().includes("reel") || rawMsg.toLowerCase().startsWith("idea:") || rawMsg.toLowerCase().startsWith("inspire:");
+
+          if (update.message && isReelOrIdea && !awaitingFeedback) {
+            console.log(`\n📥 Capturing design inspiration from Telegram: "${rawMsg}"`);
+            const queuePath = path.join(workspaceRoot, "data", "inspirations_queue.json");
+            let queue = [];
+            try {
+              if (fs.existsSync(queuePath)) queue = JSON.parse(fs.readFileSync(queuePath, "utf8"));
+            } catch (e) {}
+
+            const newItem = {
+              id: `insp_${Date.now()}`,
+              url: hasUrl ? hasUrl[0] : "",
+              text: rawMsg,
+              timestamp: new Date().toISOString(),
+              status: "pending"
+            };
+            queue.push(newItem);
+            fs.writeFileSync(queuePath, JSON.stringify(queue, null, 2), "utf8");
+
+            try {
+              execSync("git add data/inspirations_queue.json", { cwd: workspaceRoot, stdio: "pipe" });
+              execSync('git commit -m "Capture user inspiration from Telegram" --allow-empty', { cwd: workspaceRoot, stdio: "pipe" });
+              execSync('git push origin main', { cwd: workspaceRoot, stdio: "pipe" });
+            } catch (e) {}
+
+            await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                chat_id: chatId,
+                text: `📥 *INSPIRATION CAPTURED!*\n\n🔗 *Reference:* ${hasUrl ? hasUrl[0] : "Design Idea"}\n💡 *Status:* Added to your Inspiration Drop Box.\n\n_In the next elevation run, Gemini will study this design technique and propose a custom feature for your website!_`,
+                parse_mode: "Markdown"
+              })
+            });
+            continue;
+          }
+
+          // 2. User sent a text message with feedback on current preview
           if (awaitingFeedback && update.message && update.message.text) {
             const userFeedback = update.message.text;
             console.log(`\n📝 Received user feedback on Telegram: "${userFeedback}"`);
@@ -955,8 +1023,8 @@ async function main() {
   console.log(`🎯 Candidate: ${target.name} (Score: ${target.visualScore}/10)`);
   console.log(`Missing: ${target.missingFeatures.join(", ")}`);
 
-  // 2. Select Inspiration
-  const pattern = pickDesignPattern(target.pageRoute);
+  // 2. Select Inspiration (Checks User Inspiration Drop Box first)
+  const pattern = getInspirationPattern(target.pageRoute, workspaceRoot);
   console.log(`\n[2/5] Selected Pattern: ${pattern.name}`);
 
   // 2.5 Interactive Proposal Menu with Checkboxes & Custom Notes
