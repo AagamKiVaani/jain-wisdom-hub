@@ -103,65 +103,21 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
     return audioCtxRef.current;
   };
 
-  // Apple-grade Micro-clicks & Tactile Audio Feedback
-  const playTapSound = (type: "mechanical" | "soft" = "mechanical") => {
+  // High-performance real audio click using /sounds/resources/click2.mp3
+  const playTapSound = () => {
     if (!soundEnabled) return;
-    const ctx = getAudioContext();
-    if (!ctx) return;
-
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    const filter = ctx.createBiquadFilter();
-
-    osc.connect(filter);
-    filter.connect(gain);
-    gain.connect(ctx.destination);
-
-    if (type === "mechanical") {
-      // Crisp, high-frequency metallic micro-click
-      osc.type = "sine";
-      osc.frequency.setValueAtTime(2400, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.02);
-      
-      filter.type = "highpass";
-      filter.frequency.setValueAtTime(1000, ctx.currentTime);
-
-      gain.gain.setValueAtTime(0.04, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.02);
-
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.02);
-    } else {
-      // Soft, organic tactile tap
-      osc.type = "triangle";
-      osc.frequency.setValueAtTime(150, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.05);
-
-      filter.type = "lowpass";
-      filter.frequency.setValueAtTime(300, ctx.currentTime);
-
-      gain.gain.setValueAtTime(0.15, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.05);
-
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.05);
-    }
-  };
-
-  // Micro-haptic Vibration Tap
-  const triggerHapticFeedback = (strength: "light" | "medium" = "light") => {
-    if (typeof window !== "undefined" && navigator.vibrate) {
-      if (strength === "light") {
-        navigator.vibrate(6);
-      } else {
-        navigator.vibrate([10, 6, 10]);
+    try {
+      const audio = new Audio("/sounds/resources/click2.mp3");
+      audio.volume = 0.65;
+      audio.play().catch(() => {});
+      if (typeof navigator !== "undefined" && navigator.vibrate) {
+        navigator.vibrate(12);
       }
-    }
+    } catch (e) {}
   };
 
-  const handleInteraction = (soundType: "mechanical" | "soft" = "mechanical", hapticStrength: "light" | "medium" = "light") => {
-    playTapSound(soundType);
-    triggerHapticFeedback(hapticStrength);
+  const handleInteraction = (_type?: string, _strength?: string) => {
+    playTapSound();
   };
 
   // High-DPI Optimized Celestial Golden Stardust Particle System
@@ -253,27 +209,27 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
       {/* Optimized Background Gradient Blur */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-amber-500/5 dark:bg-amber-950/10 blur-[100px] md:blur-[160px] rounded-full pointer-events-none z-0" />
 
-      {/* Persistent Audio/Haptic Control Panel */}
-      <div className="fixed top-4 right-4 z-50">
+      {/* Persistent Audio/Haptic Control Panel - Cleanly docked at bottom-right away from Navbar */}
+      <div className="fixed bottom-6 right-6 z-50">
         <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           transition={springTransition}
           onClick={() => {
             setSoundEnabled(!soundEnabled);
-            triggerHapticFeedback("medium");
+            playTapSound();
           }}
-          className="flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-full bg-white/90 dark:bg-zinc-900/90 border border-zinc-200/80 dark:border-zinc-800/80 backdrop-blur-md shadow-md hover:shadow-lg text-zinc-700 dark:text-zinc-300 text-xs font-semibold transition-all"
+          className="flex items-center gap-2 min-h-[44px] px-4 py-2.5 rounded-full bg-white/95 dark:bg-zinc-900/95 border border-amber-500/30 dark:border-amber-500/20 backdrop-blur-md shadow-lg hover:shadow-xl text-zinc-800 dark:text-zinc-200 text-xs font-semibold transition-all"
           aria-label="Toggle Sound Feedback"
         >
           {soundEnabled ? (
             <>
-              <Volume2 size={14} className="text-amber-600 dark:text-amber-400 animate-pulse" />
+              <Volume2 size={15} className="text-amber-600 dark:text-amber-400 animate-pulse" />
               <span>{t.soundOn}</span>
             </>
           ) : (
             <>
-              <VolumeX size={14} className="text-zinc-400" />
+              <VolumeX size={15} className="text-zinc-400" />
               <span>{t.soundOff}</span>
             </>
           )}
@@ -309,45 +265,13 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...springTransition, delay: 0.1 }}
-            className={`text-base sm:text-lg md:text-xl font-serif text-gray-600 dark:text-gray-400 max-w-2xl text-center mb-12 px-4 ${isIndic ? 'leading-loose' : 'leading-relaxed'}`}
+            className={`text-base sm:text-lg md:text-xl font-serif text-gray-600 dark:text-gray-400 max-w-2xl text-center mb-10 px-4 ${isIndic ? 'leading-loose' : 'leading-relaxed'}`}
           >
             {t.subtitle}
           </motion.p>
 
-          {/* Archival Manuscript Noise Glassmorphism Panel (Digambar Shastra Inscription) */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ ...springTransition, delay: 0.15 }}
-            className="relative w-full max-w-4xl p-6 sm:p-8 md:p-10 mb-16 rounded-3xl border border-amber-500/20 dark:border-amber-500/10 bg-stone-50/90 dark:bg-stone-950/40 backdrop-blur-md shadow-xl overflow-hidden"
-          >
-            {/* Specular Highlight Overlay */}
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-white/10 dark:to-white/5" />
-            {/* Archival Noise Overlay */}
-            <div className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.05] bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px] mix-blend-overlay" />
-            
-            <div className="relative z-10 flex flex-col items-center text-center">
-              <div className="flex items-center gap-2 mb-5 text-amber-700 dark:text-amber-400">
-                <BookOpenCheck size={20} />
-                <span className="text-xs font-bold uppercase tracking-widest">{t.shastraTitle}</span>
-              </div>
-
-              <blockquote className="text-lg sm:text-xl md:text-2xl font-bold text-amber-900 dark:text-amber-100 mb-5 whitespace-pre-line font-serif tracking-wide leading-relaxed">
-                {t.shastraVerse}
-              </blockquote>
-
-              <p className="text-xs sm:text-sm md:text-base text-stone-700 dark:text-stone-300 max-w-3xl mb-5 font-serif italic leading-relaxed">
-                &ldquo;{t.shastraTranslation}&rdquo;
-              </p>
-
-              <div className="text-[10px] sm:text-xs font-semibold text-amber-800 dark:text-amber-500 uppercase tracking-wider border-t border-amber-500/20 pt-4 w-full max-w-md">
-                {t.shastraSource}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-4xl px-2">
+          {/* Grid - Directly underneath the Hero header */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-4xl px-2 mb-16">
             
             <Link 
               href={`/${lang}/tirthankars`}
@@ -436,7 +360,37 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
 
           </div>
 
-          {/* Digambar Iconography & Nature of Tirthankar Note */}
+          {/* Archival Manuscript Noise Glassmorphism Panel (Digambar Shastra Inscription) - Gracefully positioned below main navigation */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...springTransition, delay: 0.2 }}
+            className="relative w-full max-w-4xl p-6 sm:p-8 md:p-10 my-8 rounded-3xl border border-amber-500/20 dark:border-amber-500/10 bg-stone-50/90 dark:bg-stone-950/40 backdrop-blur-md shadow-xl overflow-hidden"
+          >
+            {/* Specular Highlight Overlay */}
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/5 to-white/10 dark:to-white/5" />
+            {/* Archival Noise Overlay */}
+            <div className="absolute inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.05] bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px] mix-blend-overlay" />
+            
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <div className="flex items-center gap-2 mb-4 text-amber-700 dark:text-amber-400">
+                <BookOpenCheck size={20} />
+                <span className="text-xs font-bold uppercase tracking-widest">{t.shastraTitle}</span>
+              </div>
+
+              <blockquote className="text-lg sm:text-xl md:text-2xl font-bold text-amber-900 dark:text-amber-100 mb-4 whitespace-pre-line font-serif tracking-wide leading-relaxed">
+                {t.shastraVerse}
+              </blockquote>
+
+              <p className="text-xs sm:text-sm md:text-base text-stone-700 dark:text-stone-300 max-w-3xl mb-4 font-serif italic leading-relaxed">
+                &ldquo;{t.shastraTranslation}&rdquo;
+              </p>
+
+              <div className="text-[10px] sm:text-xs font-semibold text-amber-800 dark:text-amber-500 uppercase tracking-wider border-t border-amber-500/20 pt-4 w-full max-w-md">
+                {t.shastraSource}
+              </div>
+            </div>
+          </motion.div>
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
