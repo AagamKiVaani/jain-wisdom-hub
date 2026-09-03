@@ -206,34 +206,34 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
       {/* Optimized Background Gradient Blur */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-amber-500/5 dark:bg-amber-950/10 blur-[100px] md:blur-[160px] rounded-full pointer-events-none z-0" />
 
-      {/* Persistent Audio/Haptic Control Panel - Strictly positioned at fixed bottom-6 right-6 z-50 */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          transition={springTransition}
-          onClick={() => {
-            setSoundEnabled(!soundEnabled);
-            playTapSound();
-          }}
-          className="flex items-center gap-2 min-h-[44px] px-4 py-2.5 rounded-full bg-white/95 dark:bg-zinc-900/95 border border-amber-500/30 dark:border-amber-500/20 backdrop-blur-md shadow-lg hover:shadow-xl text-zinc-800 dark:text-zinc-200 text-xs font-semibold transition-all"
-          aria-label="Toggle Sound Feedback"
-        >
-          {soundEnabled ? (
-            <>
-              <Volume2 size={15} className="text-amber-600 dark:text-amber-400 animate-pulse" />
-              <span>{t.soundOn}</span>
-            </>
-          ) : (
-            <>
-              <VolumeX size={15} className="text-zinc-400" />
-              <span>{t.soundOff}</span>
-            </>
-          )}
-        </motion.button>
-      </div>
-
-      <div className="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto pt-8">
+      <div className="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto pt-2 sm:pt-4">
+        
+        {/* Sound & Haptic Toggle Card - Positioned right below Navbar on the right side */}
+        <div className="w-full flex justify-end px-4 sm:px-6 mb-2">
+          <motion.button
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            transition={springTransition}
+            onClick={() => {
+              setSoundEnabled(!soundEnabled);
+              playTapSound();
+            }}
+            className="flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/90 dark:bg-zinc-900/90 border border-amber-500/30 dark:border-amber-500/20 backdrop-blur-md shadow-sm hover:shadow-md text-zinc-800 dark:text-zinc-200 text-[11px] sm:text-xs font-semibold transition-all"
+            aria-label="Toggle Sound Feedback"
+          >
+            {soundEnabled ? (
+              <>
+                <Volume2 size={13} className="text-amber-600 dark:text-amber-400 animate-pulse sm:w-3.5 sm:h-3.5" />
+                <span>{t.soundOn}</span>
+              </>
+            ) : (
+              <>
+                <VolumeX size={13} className="text-zinc-400 sm:w-3.5 sm:h-3.5" />
+                <span>{t.soundOff}</span>
+              </>
+            )}
+          </motion.button>
+        </div>
           
           <DailyWisdom lang={lang} quote={todaysQuote} />
           
