@@ -439,15 +439,20 @@ Fix the error completely. Return ONLY the drop-in replacement TSX code. Do not w
 // ----------------------------------------------------------------------------
 async function getDirectVercelPreviewUrl(branchName) {
   console.log(`Fetching exact direct Vercel preview deployment URL for branch: ${branchName}...`);
+  const headers = { "User-Agent": "AntigravityAgent" };
+  if (process.env.GITHUB_TOKEN) {
+    headers["Authorization"] = `Bearer ${process.env.GITHUB_TOKEN}`;
+  }
+
   // Poll for up to 90 seconds (18 attempts * 5s) for Vercel to complete building
   for (let i = 0; i < 18; i++) {
     try {
       await new Promise(r => setTimeout(r, 5000));
-      const res = await fetch("https://api.github.com/repos/AagamKiVaani/jain-wisdom-hub/deployments?per_page=8");
+      const res = await fetch("https://api.github.com/repos/AagamKiVaani/jain-wisdom-hub/deployments?per_page=8", { headers });
       const deployments = await res.json();
       if (Array.isArray(deployments) && deployments.length > 0) {
         for (const dep of deployments) {
-          const statusRes = await fetch(dep.statuses_url);
+          const statusRes = await fetch(dep.statuses_url, { headers });
           const statuses = await statusRes.json();
           if (Array.isArray(statuses) && statuses.length > 0) {
             const url = statuses[0].environment_url || statuses[0].target_url;
