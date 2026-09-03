@@ -34,14 +34,17 @@ const siteUrl = 'https://jain-wisdom-hub.vercel.app';
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Jain Wisdom Hub | Pure Digambar Jain Philosophy & Scriptures",
-    template: "%s | Jain Wisdom Hub"
+    default: "Aagam Ki Vaani | Pure Digambar Jain Philosophy & Scriptures",
+    template: "%s | Aagam Ki Vaani"
   },
-  description: "A digital sanctuary for authentic Digambar Jain philosophy, the 24 Tirthankaras, Namokar Mantra, Kalchakra, Soul & Karma, and downloadable study notes.",
+  description: "A digital sanctuary for authentic Digambar Jain philosophy, the 24 Tirthankaras, Namokar Mantra, Kalchakra, Soul & Karma, and downloadable study notes. आगम से ज्ञान, ज्ञान से दर्शन, दर्शन से आत्मकल्याण।",
   keywords: [
+    "Aagam Ki Vaani",
+    "AagamKiVaani",
+    "आगम की वाणी",
+    "ಆಗಮ ಕೀ ವಾಣಿ",
     "Jainism",
     "Digambar Jain",
-    "Jain Wisdom Hub",
     "Tirthankara",
     "Namokar Mantra",
     "Tattvartha Sutra",
@@ -56,15 +59,16 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Aagam Ki Vaani", url: "https://www.youtube.com/@AagamKiVani" }],
   creator: "Aagam Ki Vaani",
-  publisher: "Jain Wisdom Hub",
+  publisher: "Aagam Ki Vaani",
   manifest: "/manifest.json",
   icons: {
     icon: [
-      { url: '/icons/logo.png', sizes: '32x32' },
-      { url: '/icons/logo.png', sizes: '192x192' }
+      { url: '/icons/favicon-32x32.png', sizes: '32x32' },
+      { url: '/icons/icon-192x192.png', sizes: '192x192' },
+      { url: '/icons/icon-512x512.png', sizes: '512x512' }
     ],
     apple: [
-      { url: '/icons/logo.png', sizes: '180x180' },
+      { url: '/icons/apple-touch-icon.png', sizes: '180x180' },
     ],
   },
   openGraph: {
@@ -72,22 +76,22 @@ export const metadata: Metadata = {
     locale: "en_US",
     alternateLocale: ["hi_IN", "kn_IN"],
     url: siteUrl,
-    siteName: "Jain Wisdom Hub",
-    title: "Jain Wisdom Hub | Authentic Digambar Jain Wisdom",
+    siteName: "Aagam Ki Vaani",
+    title: "Aagam Ki Vaani | Authentic Digambar Jain Wisdom",
     description: "Explore the 24 Tirthankaras, Namokar Mantra, Kalchakra, and authentic Digambar Jain scripture digitized for the modern seeker.",
     images: [
       {
         url: "/icons/logo.png",
         width: 512,
         height: 512,
-        alt: "Jain Wisdom Hub Sacred Emblem"
+        alt: "Aagam Ki Vaani Sacred Master Emblem"
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jain Wisdom Hub",
-    description: "Digitizing the ancient legacy of the Tirthankaras for the modern world.",
+    title: "Aagam Ki Vaani",
+    description: "Digitizing the sacred sound of the Tirthankaras for the modern world. आगम से ज्ञान, ज्ञान से दर्शन, दर्शन से आत्मकल्याण।",
     images: ["/icons/logo.png"],
   },
   alternates: {
@@ -133,19 +137,20 @@ export default async function RootLayout({
         "@type": "WebSite",
         "@id": `${siteUrl}/#website`,
         "url": siteUrl,
-        "name": "Jain Wisdom Hub",
+        "name": "Aagam Ki Vaani",
+        "alternateName": ["आगम की वाणी", "ಆಗಮ ಕೀ ವಾಣಿ", "AagamKiVaani"],
         "description": "Authentic Digambar Jain philosophy, Tirthankaras, scriptures, and sacred knowledge.",
         "inLanguage": ["en", "hi", "kn"]
       },
       {
         "@type": "Organization",
         "@id": `${siteUrl}/#organization`,
-        "name": "Jain Wisdom Hub",
+        "name": "Aagam Ki Vaani",
         "url": siteUrl,
         "logo": `${siteUrl}/icons/logo.png`,
         "sameAs": [
           "https://www.youtube.com/@AagamKiVani",
-          "https://www.instagram.com/aagamkivaani",
+          "https://www.instagram.com/aagam_ki_vaani",
           "https://www.facebook.com/share/18FUyhp5Pd/"
         ]
       }

@@ -44,22 +44,22 @@ export default function Navbar({ lang }: { lang: string }) {
         {/* --- LOGO + TEXT --- */}
         <Link 
             href={`/${lang}`} 
-            className="flex items-center gap-3 group"
+            className="flex items-center gap-2.5 sm:gap-3 group"
         >
-          <div className="relative w-8 h-8 md:w-9 md:h-9">
+          <div className="relative w-8 h-8 md:w-9 md:h-9 rounded-full overflow-hidden shadow-sm group-hover:scale-105 transition-transform">
             <Image 
-              src="/icons/logo.png" 
-              alt="Jain Wisdom Logo" 
+              src="/icons/navbar-logo.webp" 
+              alt="Aagam Ki Vaani Logo" 
               fill
-              className="object-contain"
+              className="object-cover"
               priority 
               quality={100}
               sizes="40px"
             />
           </div>
 
-          <span className="text-xl font-bold tracking-tight text-gray-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-500 transition-colors">
-            Jain Wisdom
+          <span className="text-lg md:text-xl font-bold tracking-tight text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+            {lang === 'hi' ? 'आगम की वाणी' : lang === 'kn' ? 'ಆಗಮ ಕೀ ವಾಣಿ' : 'Aagam Ki Vaani'}
           </span>
         </Link>
 

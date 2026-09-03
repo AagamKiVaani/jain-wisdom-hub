@@ -1,14 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, ArrowUp, Instagram } from "lucide-react"; 
 import { siteConfig } from "@/lib/constants";
 
 // --- TRANSLATIONS CONFIGURATION ---
 const translations = {
   en: {
-    brand: "Jain Wisdom",
-    desc: "Digitizing the ancient legacy of the Tirthankaras for the modern world. A visual journey through time, philosophy, and divinity.",
+    brand: "Aagam Ki Vaani",
+    desc: "Digitizing the sacred sound and timeless teachings of the Tirthankaras for the modern world. आगम से ज्ञान, ज्ञान से दर्शन, दर्शन से आत्मकल्याण।",
     subscribe: "Subscribe",
     explore: "Explore",
     project: "Project",
@@ -22,14 +23,14 @@ const translations = {
     about: "About Us",
     contact: "Contact",
     donate: "Donate / Support",
-    feedback: "Feedback / Bugs", // Added Label
+    feedback: "Feedback / Bugs",
     
     backToTop: "Back to Top",
     rights: "All rights reserved."
   },
   hi: {
-    brand: "जैन ज्ञान",
-    desc: "आधुनिक दुनिया के लिए तीर्थंकरों की प्राचीन विरासत का डिजिटलीकरण। समय, दर्शन और देवत्व के माध्यम से एक दृश्य यात्रा।",
+    brand: "आगम की वाणी",
+    desc: "तीर्थंकरों की दिव्य देशना और प्राचीन आगमों का आधुनिक डिजिटलीकरण। आगम से ज्ञान, ज्ञान से दर्शन, दर्शन से आत्मकल्याण।",
     subscribe: "सब्सक्राइब",
     explore: "अन्वेषण",
     project: "प्रोजेक्ट",
@@ -42,14 +43,14 @@ const translations = {
     about: "हमारे बारे में",
     contact: "संपर्क",
     donate: "दान / सहयोग",
-    feedback: "सुझाव / त्रुटि", // Added Label
+    feedback: "सुझाव / त्रुटि",
     
     backToTop: "ऊपर जाएं",
     rights: "सर्वाधिकार सुरक्षित।"
   },
   kn: {
-    brand: "ಜೈನ ಜ್ಞಾನ",
-    desc: "ಆಧುನಿಕ ಜಗತ್ತಿಗಾಗಿ ತೀರ್ಥಂಕರರ ಪ್ರಾಚೀನ ಪರಂಪರೆಯನ್ನು ಡಿಜಿಟಲೀಕರಣಗೊಳಿಸುವುದು. ಸಮಯ, ತತ್ವಶಾಸ್ತ್ರ ಮತ್ತು ದೈವತ್ವದ ದೃಶ್ಯ ಪ್ರಯಾಣ.",
+    brand: "ಆಗಮ ಕೀ ವಾಣಿ",
+    desc: "ತೀರ್ಥಂಕರರ ದಿವ್ಯ ದೇಶನೆ ಮತ್ತು ಪರಂಪರೆಯನ್ನು ಆಧುನಿಕ ಜಗತ್ತಿಗೆ ತಲುಪಿಸುವುದು. ಆಗಮದಿಂದ ಜ್ಞಾನ, ಜ್ಞಾನದಿಂದ ದರ್ಶನ, ದರ್ಶನದಿಂದ ಆತ್ಮಕಲ್ಯಾಣ.",
     subscribe: "ಸಬ್ಸ್ ಕ್ರೈಬ್",
     explore: "ಅನ್ವೇಷಿಸಿ",
     project: "ಯೋಜನೆ",
@@ -95,9 +96,19 @@ export default function Footer({ lang }: { lang: string }) {
           
           {/* Brand Info */}
           <div>
-            <h2 className={`text-2xl font-black text-gray-900 dark:text-white tracking-tight uppercase mb-4 ${isIndic ? 'leading-normal' : 'leading-none'}`}>
-              {t.brand}
-            </h2>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="relative w-9 h-9 md:w-10 md:h-10 rounded-full overflow-hidden shadow-md">
+                <Image 
+                  src="/icons/navbar-logo.webp" 
+                  alt="Aagam Ki Vaani Emblem" 
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <h2 className={`text-2xl font-black text-gray-900 dark:text-white tracking-tight uppercase ${isIndic ? 'leading-normal' : 'leading-none'}`}>
+                {t.brand}
+              </h2>
+            </div>
             <p className={`max-w-md text-sm mb-8 ${isIndic ? 'leading-loose' : 'leading-relaxed'}`}>
               {t.desc}
             </p>

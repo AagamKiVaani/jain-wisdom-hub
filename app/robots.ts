@@ -1,9 +1,9 @@
 import { MetadataRoute } from 'next';
 
 function getBaseUrl(): string {
-  let url = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://jain-wisdom-hub.vercel.app';
+  let url = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://aagamkivaani.vercel.app';
   if (process.env.NODE_ENV === 'production' && url.includes('localhost')) {
-    url = 'https://jain-wisdom-hub.vercel.app';
+    url = 'https://aagamkivaani.vercel.app';
   }
   if (!url.startsWith('http://') && !url.startsWith('https://')) {
     url = `https://${url}`;

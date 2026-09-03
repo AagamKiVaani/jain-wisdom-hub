@@ -1,7 +1,7 @@
 {
-  "name": "Jain Wisdom Hub",
-  "short_name": "JainWisdom",
-  "description": "Explore the depths of Jain Cosmology, Karma, and Philosophy.",
+  "name": "Aagam Ki Vaani",
+  "short_name": "AagamKiVaani",
+  "description": "Digitizing the eternal sacred sound of the Tirthankaras. आगम से ज्ञान, ज्ञान से दर्शन, दर्शन से आत्मकल्याण।",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

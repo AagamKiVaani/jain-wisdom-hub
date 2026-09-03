@@ -3,11 +3,11 @@ import { tirthankaras } from '@/lib/tirthankara-data';
 import { jainTopics } from '@/lib/namokar-data';
 
 function getBaseUrl(): string {
-  let url = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://jain-wisdom-hub.vercel.app';
+  let url = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://aagamkivaani.vercel.app';
   
   // In production builds, avoid emitting localhost
   if (process.env.NODE_ENV === 'production' && url.includes('localhost')) {
-    url = 'https://jain-wisdom-hub.vercel.app';
+    url = 'https://aagamkivaani.vercel.app';
   }
   
   if (!url.startsWith('http://') && !url.startsWith('https://')) {
