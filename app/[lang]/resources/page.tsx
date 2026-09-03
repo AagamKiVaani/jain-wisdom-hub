@@ -52,33 +52,34 @@ export default async function ResourcesPage({ params }: { params: Promise<{ lang
   const notes = await fetchNotes();
 
   return (
-    <div className="relative flex flex-col items-center min-h-screen pt-24 pb-24 overflow-hidden bg-white dark:bg-black selection:bg-blue-500 selection:text-white">
+    <div className="relative flex flex-col items-center min-h-screen pt-20 md:pt-24 pb-24 overflow-x-clip bg-white dark:bg-black selection:bg-amber-500 selection:text-white">
       
-      {/* Divine Ethereal Background */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-blue-500/10 dark:bg-blue-900/20 blur-[80px] md:blur-[140px] rounded-full pointer-events-none z-0"></div>
-      <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-indigo-500/5 dark:bg-indigo-900/10 blur-[100px] rounded-full pointer-events-none z-0"></div>
+      {/* Divine Ethereal Spiritual Atmosphere */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[700px] bg-gradient-to-b from-amber-500/10 via-yellow-500/5 to-transparent dark:from-amber-600/15 dark:via-yellow-500/5 dark:to-transparent blur-[90px] md:blur-[140px] rounded-full pointer-events-none z-0"></div>
+      <div className="absolute top-1/4 -right-20 w-[500px] h-[500px] bg-amber-500/5 dark:bg-amber-400/10 blur-[110px] rounded-full pointer-events-none z-0"></div>
+      <div className="absolute top-1/3 -left-20 w-[450px] h-[450px] bg-indigo-500/5 dark:bg-indigo-900/15 blur-[120px] rounded-full pointer-events-none z-0"></div>
 
       <div className="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto px-4">
         
         {/* Top Navigation */}
         <div className="w-full flex justify-start mb-12 animate-in fade-in slide-in-from-left-8 duration-700">
-          <Link href={`/${lang}`} className="group flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200 dark:border-white/10 hover:border-blue-500 hover:text-blue-500 transition-all shadow-sm">
-             <span className="text-sm font-bold uppercase tracking-widest text-zinc-600 dark:text-zinc-400 group-hover:text-blue-500 transition-colors">← {t.backHome}</span>
+          <Link href={`/${lang}`} className="group flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 dark:bg-zinc-900/70 backdrop-blur-md border border-zinc-200 dark:border-white/10 hover:border-amber-500/50 hover:text-amber-600 dark:hover:text-amber-400 transition-all shadow-sm">
+             <span className="text-sm font-bold uppercase tracking-widest text-zinc-600 dark:text-zinc-400 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">← {t.backHome}</span>
           </Link>
         </div>
 
         {/* Hero Section */}
         <div className="text-center mb-16 animate-in fade-in slide-in-from-top-10 duration-1000">
-          <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/10 text-blue-800 dark:text-blue-300 text-[10px] md:text-xs font-bold uppercase tracking-widest border border-blue-100 dark:border-blue-500/20 shadow-sm">
-            <Sparkles size={14} className="text-blue-500" />
+          <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-amber-50 dark:bg-amber-500/10 text-amber-800 dark:text-amber-300 text-[10px] md:text-xs font-bold uppercase tracking-widest border border-amber-200/60 dark:border-amber-500/30 shadow-sm backdrop-blur-sm">
+            <Sparkles size={14} className="text-amber-500 animate-pulse" />
             {t.badge}
           </div>
           
-          <h1 className={`text-5xl md:text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 dark:from-white dark:via-blue-200 dark:to-white mb-6 uppercase tracking-tighter ${isIndic ? 'leading-tight py-2' : 'leading-none'}`}>
+          <h1 className={`text-5xl md:text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-zinc-900 via-amber-700 to-zinc-900 dark:from-white dark:via-amber-200 dark:to-white mb-6 uppercase tracking-tighter ${isIndic ? 'leading-tight py-2' : 'leading-none'}`}>
             {t.title}
           </h1>
           
-          <p className={`text-lg md:text-xl font-serif text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed ${isIndic ? 'leading-loose' : 'leading-relaxed'}`}>
+          <p className={`text-lg md:text-xl font-serif text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed ${isIndic ? 'leading-loose' : 'leading-relaxed'}`}>
             {t.subtitle}
           </p>
         </div>

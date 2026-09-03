@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Download, PlayCircle, BookOpen, X, ArrowLeft, ArrowRight, Maximize2, Layers } from "lucide-react";
+import { Search, Download, PlayCircle, BookOpen, X, ArrowLeft, ArrowRight, ArrowUp, ChevronRight, Maximize2, Layers, Sparkles } from "lucide-react";
 
 export interface Note {
   id: string;
@@ -69,6 +69,40 @@ const getThemeColors = (series: string, section?: string) => {
   return themes[themeName];
 };
 
+const getSeriesTheme = (seriesName: string) => {
+  const name = seriesName.toLowerCase();
+  if (name.includes('ramayan')) {
+    return {
+      glow: 'from-amber-500/25 via-yellow-500/20 to-orange-500/10',
+      borderHover: 'hover:border-amber-500/60',
+      shadow: 'hover:shadow-amber-500/20',
+      accentText: 'text-amber-500',
+    };
+  }
+  if (name.includes('tatvarth')) {
+    return {
+      glow: 'from-orange-500/25 via-amber-500/20 to-yellow-500/10',
+      borderHover: 'hover:border-orange-500/60',
+      shadow: 'hover:shadow-orange-500/20',
+      accentText: 'text-orange-500',
+    };
+  }
+  if (name.includes('decoding')) {
+    return {
+      glow: 'from-cyan-500/25 via-blue-500/20 to-indigo-500/10',
+      borderHover: 'hover:border-cyan-500/60',
+      shadow: 'hover:shadow-cyan-500/20',
+      accentText: 'text-cyan-500',
+    };
+  }
+  return {
+    glow: 'from-amber-500/20 via-orange-500/15 to-transparent',
+    borderHover: 'hover:border-amber-500/60',
+    shadow: 'hover:shadow-amber-500/20',
+    accentText: 'text-amber-500',
+  };
+};
+
 export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t }: { initialNotes: Note[], isIndic: boolean, t: any }) {
   // Clean up notes: if a series has actual content, remove its series-level "coming soon" placeholder
   const initialNotes = useMemo(() => rawInitialNotes.filter(note => {
@@ -93,7 +127,17 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
   const [mounted, setMounted] = useState(false);
   const [highlightedNoteId, setHighlightedNoteId] = useState<string | null>(null);
   const [targetScrollId, setTargetScrollId] = useState<string | null>(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const searchParams = useSearchParams();
+
+  // Mobile & desktop scroll-to-top detection
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Handle 'highlight' query parameter
   useEffect(() => {
@@ -138,6 +182,43 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
       return () => clearTimeout(scrollTimer);
     }
   }, [targetScrollId, selectedSeries, selectedSection]);
+
+  const contentContainerRef = useRef<HTMLDivElement>(null);
+
+  // Smooth/instant scroll to dock the sticky bar right under the navbar (64px)
+  const scrollToStickyPoint = () => {
+    if (contentContainerRef.current) {
+      const rect = contentContainerRef.current.getBoundingClientRect();
+      const targetY = window.scrollY + rect.top - 64;
+      window.scrollTo({
+        top: Math.max(0, targetY),
+        left: 0,
+        behavior: 'instant',
+      });
+    }
+  };
+
+  // Scroll positioning when series or section changes
+  useEffect(() => {
+    if (targetScrollId || searchParams.get('highlight')) return;
+
+    if (selectedSeries !== null) {
+      // User opened a series or chapter: dock sticky bar right at the top
+      scrollToStickyPoint();
+      const timer = setTimeout(scrollToStickyPoint, 50);
+      return () => clearTimeout(timer);
+    } else {
+      // User went back to "All Series": scroll to the very top of the page
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
+  }, [selectedSeries, selectedSection]);
+
+  // Initial mount: ensure fresh clean scroll to top
+  useEffect(() => {
+    if (!searchParams.get('highlight')) {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    }
+  }, []);
 
   // Prevent background scrolling when modal is open
   useEffect(() => {
@@ -249,11 +330,72 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto z-10 relative">
+    <div ref={contentContainerRef} className="w-full max-w-7xl mx-auto z-10 relative">
+
+      {/* Sticky Hierarchy Breadcrumb Bar (Permanently visible on mobile & desktop when scrolling) */}
+      <AnimatePresence>
+        {selectedSeries && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
+            className="sticky top-16 z-40 w-full mb-8 py-2 px-3 sm:px-4 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-2xl border border-zinc-200/90 dark:border-white/10 rounded-2xl shadow-md transition-all"
+          >
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap sm:flex-nowrap py-0.5">
+              <button
+                onClick={() => {
+                  window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                  setSelectedSeries(null);
+                  setSelectedSection(null);
+                  setSearchQuery("");
+                }}
+                className="group inline-flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/80 dark:border-white/10 hover:border-amber-500/50 hover:bg-amber-50 dark:hover:bg-amber-500/10 text-[11px] sm:text-xs font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-300 transition-all active:scale-95 shrink-0"
+                title="Back to all series"
+              >
+                <ArrowLeft size={13} className="text-zinc-400 group-hover:text-amber-500 transition-colors shrink-0" />
+                <span className="hidden sm:inline">{t?.allSeries || "All Series"}</span>
+                <span className="sm:hidden">All</span>
+              </button>
+
+              <ChevronRight size={13} className="text-zinc-400 dark:text-zinc-600 shrink-0" />
+
+              <button
+                onClick={() => {
+                  if (seriesSections.length > 0) {
+                    scrollToStickyPoint();
+                    setSelectedSection(null);
+                    setSearchQuery("");
+                  }
+                }}
+                className={`inline-flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-all border shrink-0 ${
+                  selectedSection 
+                    ? "bg-zinc-100 dark:bg-zinc-900 border-zinc-200/80 dark:border-white/10 text-zinc-700 dark:text-zinc-300 hover:border-amber-500/50 hover:text-amber-600 dark:hover:text-amber-400 active:scale-95 cursor-pointer" 
+                    : "bg-amber-500/15 border-amber-500/40 text-amber-800 dark:text-amber-300 font-black cursor-default"
+                }`}
+              >
+                <span className="hidden sm:inline">{selectedSeries}</span>
+                <span className="sm:hidden">{selectedSeries.replace(/\s*Series\s*/i, '').trim()}</span>
+              </button>
+
+              {selectedSection && (
+                <>
+                  <ChevronRight size={13} className="text-zinc-400 dark:text-zinc-600 shrink-0" />
+                  <div className="inline-flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-gradient-to-r from-amber-500/15 to-orange-500/15 border border-amber-500/30 text-amber-800 dark:text-amber-200 text-[11px] sm:text-xs font-black uppercase tracking-wider shadow-xs shrink-0">
+                    <Layers size={12} className="text-amber-500 shrink-0" />
+                    <span>{selectedSection}</span>
+                  </div>
+                </>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <AnimatePresence mode="wait">
 
         {showSeriesSelection && (
-          /* STEP 1: SERIES SELECTION */
+          /* STEP 1: SERIES SELECTION - Aceternity Ambient Glow & Bento Styling */
           <motion.div
             key="series-view"
             initial={{ opacity: 0, y: 20 }}
@@ -272,67 +414,75 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                 (seriesNotes[0].section || "").toLowerCase().includes("coming soon")
               );
 
+              const seriesTheme = getSeriesTheme(series);
+
               return (
-                <button
-                  key={series}
-                  onClick={() => {
-                    if (isComingSoon) return;
-                    setSelectedSeries(series);
-                    setSelectedSection(null);
-                    setSearchQuery("");
-                  }}
-                  className={`group relative flex flex-col items-center justify-center p-12 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-xl border border-zinc-200 dark:border-white/10 rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-500 transform text-center aspect-[4/3] md:aspect-auto md:min-h-[300px] ${isComingSoon ? 'cursor-default' : 'hover:-translate-y-2 hover:border-blue-500/50'}`}
-                >
-                  {(() => {
-                    const posterUrl = getSeriesPoster(series);
-                    if (posterUrl) {
+                <div key={series} className="relative group/card">
+                  {/* Ambient Halo Glow (Aceternity UI style) */}
+                  <div className={`absolute -inset-1 rounded-3xl bg-gradient-to-r ${seriesTheme.glow} opacity-0 group-hover/card:opacity-100 blur-2xl transition-all duration-700 pointer-events-none -z-10`} />
+
+                  <button
+                    onClick={() => {
+                      if (isComingSoon) return;
+                      scrollToStickyPoint();
+                      setSelectedSeries(series);
+                      setSelectedSection(null);
+                      setSearchQuery("");
+                    }}
+                    className={`group relative flex flex-col items-center justify-center p-10 md:p-12 w-full bg-white/70 dark:bg-zinc-900/70 backdrop-blur-2xl border border-zinc-200/90 dark:border-white/10 rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-500 transform text-center aspect-[4/3] md:aspect-auto md:min-h-[310px] ${seriesTheme.borderHover} ${seriesTheme.shadow} ${isComingSoon ? 'cursor-default' : 'hover:-translate-y-2'}`}
+                  >
+                    {(() => {
+                      const posterUrl = getSeriesPoster(series);
+                      if (posterUrl) {
+                        return (
+                          <div className="absolute inset-0 w-full h-full overflow-hidden">
+                            <img 
+                              src={posterUrl} 
+                              alt={series} 
+                              className="absolute inset-0 w-full h-full object-cover opacity-95 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" 
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                          </div>
+                        );
+                      }
                       return (
-                        <div className="absolute inset-0 w-full h-full overflow-hidden">
-                          <img 
-                            src={posterUrl} 
-                            alt={series} 
-                            className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" 
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-                          <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
-                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-yellow-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                       );
-                    }
-                    return (
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    );
-                  })()}
+                    })()}
 
-                  {isComingSoon && (
-                    <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/10 transition-all duration-500">
-                      <div className="px-8 py-3 border border-white/30 bg-black/50 rounded-full text-white font-black tracking-widest uppercase text-2xl rotate-[-5deg] shadow-2xl backdrop-blur-md">
-                        Coming Soon
-                      </div>
-                    </div>
-                  )}
-
-                  <div className={`relative z-10 flex flex-col items-center ${isComingSoon ? 'opacity-50 blur-[2px]' : ''}`}>
-                    {!getSeriesPoster(series) && (
-                      <div className="h-20 w-20 rounded-3xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-inner">
-                        <BookOpen size={40} />
+                    {isComingSoon && (
+                      <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20 backdrop-blur-[2px] transition-all duration-500">
+                        <div className="px-8 py-3 border border-white/30 bg-black/60 rounded-full text-white font-black tracking-widest uppercase text-2xl rotate-[-5deg] shadow-2xl backdrop-blur-md">
+                          Coming Soon
+                        </div>
                       </div>
                     )}
 
-                    <h3 className={`text-2xl md:text-3xl font-black uppercase tracking-tight mb-2 ${isIndic ? 'leading-normal' : ''} ${getSeriesPoster(series) ? 'text-white drop-shadow-lg' : 'text-gray-900 dark:text-white'}`}>
-                      {series}
-                    </h3>
-                    <div className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mt-2 ${getSeriesPoster(series) ? 'bg-white/20 text-white backdrop-blur-md border border-white/30 shadow-lg' : 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'}`}>
-                      {seriesNotesCount} Videos & Notes
+                    <div className={`relative z-10 flex flex-col items-center ${isComingSoon ? 'opacity-50 blur-[2px]' : ''}`}>
+                      {!getSeriesPoster(series) && (
+                        <>
+                          <div className="h-20 w-20 rounded-3xl bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-inner border border-amber-200/40">
+                            <BookOpen size={40} />
+                          </div>
+                          <h3 className={`text-2xl md:text-3xl font-black uppercase tracking-tight mb-2 ${isIndic ? 'leading-normal' : ''} text-gray-900 dark:text-white`}>
+                            {series}
+                          </h3>
+                        </>
+                      )}
+
+                      <div className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mt-2 ${getSeriesPoster(series) ? 'bg-black/60 text-white backdrop-blur-md border border-white/30 shadow-lg' : 'bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 border border-amber-200/50'}`}>
+                        {seriesNotesCount} Videos & Notes
+                      </div>
                     </div>
-                  </div>
-                </button>
+                  </button>
+                </div>
               );
             })}
           </motion.div>
         )}
 
         {showSectionSelection && (
-          /* STEP 2: SECTION SELECTION (Adhyays) */
+          /* STEP 2: SECTION SELECTION (Adhyays) with Motion Primitives Breadcrumbs */
           <motion.div
             key="section-view"
             initial={{ opacity: 0, y: 20 }}
@@ -341,19 +491,9 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
             transition={{ duration: 0.4 }}
             className="w-full"
           >
-            <div className="flex items-center mb-12">
-              <button
-                onClick={() => setSelectedSeries(null)}
-                className="group flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200 dark:border-white/10 hover:border-blue-500 hover:text-blue-500 transition-all shadow-sm"
-              >
-                <ArrowLeft size={16} className="text-zinc-600 dark:text-zinc-400 group-hover:text-blue-500 transition-colors" />
-                <span className="text-sm font-bold uppercase tracking-widest text-zinc-600 dark:text-zinc-400 group-hover:text-blue-500 transition-colors">Back to Series</span>
-              </button>
-            </div>
-
             <div className="text-center mb-10">
-              <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white uppercase tracking-widest mb-4">{selectedSeries}</h2>
-              <p className="text-gray-500 dark:text-gray-400 font-serif">Select a section to view its sutras and notes.</p>
+              <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white uppercase tracking-widest mb-3">{selectedSeries}</h2>
+              <p className="text-gray-500 dark:text-gray-400 font-serif text-base">Select a section to explore its sacred sutras and study notes.</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto pb-32">
@@ -368,10 +508,11 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                     key={section}
                     onClick={() => {
                       if (isSectionComingSoon) return;
+                      scrollToStickyPoint();
                       setSelectedSection(section);
                       setSearchQuery("");
                     }}
-                    className={`group relative p-8 rounded-2xl overflow-hidden text-left flex flex-col justify-between aspect-[4/3] md:aspect-auto md:min-h-[200px] transition-all duration-300 ${isSectionComingSoon ? 'cursor-default' : `hover:shadow-xl ${theme.shadow}`}`}
+                    className={`group relative p-8 rounded-3xl overflow-hidden text-left flex flex-col justify-between aspect-[4/3] md:aspect-auto md:min-h-[210px] transition-all duration-500 ${isSectionComingSoon ? 'cursor-default' : `hover:shadow-2xl hover:-translate-y-1.5 ${theme.shadow} ${theme.hoverBorder} border border-transparent`}`}
                   >
                     {/* Background Image Logic */}
                     {(() => {
@@ -382,21 +523,20 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                             <img 
                               src={posterUrl} 
                               alt={section} 
-                              className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${isSectionComingSoon ? 'opacity-40 blur-[2px]' : 'opacity-80 group-hover:opacity-100 group-hover:scale-105'}`} 
+                              className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${isSectionComingSoon ? 'opacity-40 blur-[2px]' : 'opacity-95 group-hover:opacity-100 group-hover:scale-105'}`} 
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-                            {!isSectionComingSoon && <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>
                           </div>
                         );
                       }
                       return (
-                        <div className={`absolute inset-0 bg-white/80 dark:bg-zinc-900/60 backdrop-blur-xl border border-zinc-200 dark:border-white/10 ${isSectionComingSoon ? 'opacity-50' : ''}`}></div>
+                        <div className={`absolute inset-0 bg-white/80 dark:bg-zinc-900/70 backdrop-blur-xl border border-zinc-200/80 dark:border-white/10 ${isSectionComingSoon ? 'opacity-50' : ''}`}></div>
                       );
                     })()}
 
                     {isSectionComingSoon && (
-                      <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/10">
-                        <div className="px-6 py-2 border border-white/30 bg-black/50 rounded-full text-white font-black tracking-widest uppercase text-lg rotate-[-5deg] shadow-2xl backdrop-blur-md">
+                      <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20 backdrop-blur-[2px]">
+                        <div className="px-6 py-2 border border-white/30 bg-black/60 rounded-full text-white font-black tracking-widest uppercase text-lg rotate-[-5deg] shadow-2xl backdrop-blur-md">
                           Coming Soon
                         </div>
                       </div>
@@ -405,13 +545,13 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                     {/* Text Content */}
                     <div className={`relative z-10 w-full h-full flex flex-col justify-between ${isSectionComingSoon ? 'opacity-40 blur-[1px]' : ''}`}>
                       <div>
-                        <Layers className={`${getSectionPoster(section) ? 'text-white' : theme.text} mb-4 opacity-50 group-hover:opacity-100 transition-opacity`} size={28} />
-                        <h3 className={`text-xl font-bold uppercase tracking-tight mb-2 ${getSectionPoster(section) ? 'text-white' : 'text-gray-900 dark:text-white'}`}>
+                        <Layers className={`${getSectionPoster(section) ? 'text-amber-400' : theme.text} mb-4 opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all`} size={28} />
+                        <h3 className={`text-xl font-bold uppercase tracking-tight mb-2 ${getSectionPoster(section) ? 'text-white drop-shadow-md' : 'text-gray-900 dark:text-white'}`}>
                           {section}
                         </h3>
                       </div>
                       {!isSectionComingSoon && (
-                        <div className={`mt-6 inline-flex items-center text-xs font-bold uppercase tracking-widest ${getSectionPoster(section) ? 'text-white/80' : theme.text}`}>
+                        <div className={`mt-6 inline-flex items-center text-xs font-bold uppercase tracking-widest ${getSectionPoster(section) ? 'text-white/90' : theme.text}`}>
                           {sectionNotesCount} items <ArrowRight size={14} className="ml-1 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all" />
                         </div>
                       )}
@@ -424,7 +564,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
         )}
 
         {showNotesGrid && (
-          /* STEP 3: VIDEOS AND NOTES GRID */
+          /* STEP 3: VIDEOS AND NOTES GRID - Enhanced Search & Micro-Interactions */
           <motion.div
             key="notes-view"
             initial={{ opacity: 0, y: 20 }}
@@ -433,55 +573,46 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
             transition={{ duration: 0.4 }}
             className="w-full"
           >
-            {/* Header / Back Button / Search Bar */}
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
-              <button
-                onClick={() => {
-                  if (seriesSections.length > 0) {
-                    setSelectedSection(null); // Go back to sections
-                  } else {
-                    setSelectedSeries(null); // Go back to series
-                  }
-                  setSearchQuery("");
-                }}
-                className="group flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md border border-zinc-200 dark:border-white/10 hover:border-blue-500 hover:text-blue-500 transition-all shadow-sm shrink-0"
-              >
-                <ArrowLeft size={16} className="text-zinc-600 dark:text-zinc-400 group-hover:text-blue-500 transition-colors" />
-                <span className="text-sm font-bold uppercase tracking-widest text-zinc-600 dark:text-zinc-400 group-hover:text-blue-500 transition-colors">
-                  {seriesSections.length > 0 ? `Back to ${selectedSeries}` : (t?.backToSeries || "Back to Series")}
-                </span>
-              </button>
+            {/* Section Header & Search Bar on Mobile & Desktop */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-8">
+              {selectedSection && (
+                <div className="flex items-center gap-3">
+                  {(() => {
+                    const theme = getThemeColors(selectedSeries || "", selectedSection);
+                    return (
+                      <h2 className={`text-2xl md:text-3xl font-black uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r ${theme.from} ${theme.to}`}>
+                        {selectedSection}
+                      </h2>
+                    );
+                  })()}
+                </div>
+              )}
 
-              <div className="relative w-full max-w-xl">
-                <div className="absolute inset-0 bg-blue-500/10 blur-xl rounded-full pointer-events-none"></div>
-                <div className="relative flex items-center bg-white dark:bg-zinc-900/80 backdrop-blur-xl border border-zinc-200 dark:border-white/10 rounded-full px-6 py-3 shadow-lg">
-                  <Search className="text-blue-500 mr-3" size={20} />
+              <div className="relative w-full sm:w-80 lg:w-96 shrink-0">
+                <div className="absolute inset-0 bg-amber-500/10 blur-xl rounded-full pointer-events-none"></div>
+                <div className="relative flex items-center bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl border border-zinc-200/90 dark:border-white/10 focus-within:border-amber-500/60 focus-within:ring-2 focus-within:ring-amber-500/20 rounded-full px-4 py-2.5 shadow-sm transition-all">
+                  <Search className="text-amber-500 mr-2.5 shrink-0" size={17} />
                   <input
                     type="text"
-                    placeholder={t?.search || "Search..."}
+                    placeholder={t?.search || "Search notes, sutras..."}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full bg-transparent border-none outline-none text-gray-900 dark:text-white placeholder-gray-400 font-serif text-lg"
+                    className="w-full bg-transparent border-none outline-none text-gray-900 dark:text-white placeholder-gray-400 font-serif text-sm"
                   />
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery("")}
+                      className="p-1 rounded-full text-zinc-400 hover:text-zinc-600 dark:hover:text-white transition-colors ml-1"
+                      title="Clear"
+                    >
+                      <X size={14} />
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
 
-            {selectedSection && (
-              <div className="mb-10 flex items-center gap-4">
-                {(() => {
-                  const theme = getThemeColors(selectedSeries || "", selectedSection);
-                  return (
-                    <h2 className={`text-2xl md:text-3xl font-black uppercase tracking-widest text-transparent bg-clip-text bg-gradient-to-r ${theme.from} ${theme.to}`}>
-                      {selectedSection}
-                    </h2>
-                  );
-                })()}
-                <div className="h-px bg-zinc-200 dark:bg-white/10 grow"></div>
-              </div>
-            )}
-
-            {/* Flat Notes Grid (since it's already filtered to a section) */}
+            {/* Flat Notes Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 pb-32">
               <AnimatePresence mode="popLayout">
                 {filteredNotes.map((note) => {
@@ -492,15 +623,15 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                     key={note.id}
                     id={`note-${note.id}`}
                     layout
-                    initial={{ opacity: 0, scale: 0.95 }}
+                    initial={{ opacity: 0, scale: 0.96 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
                     transition={{ duration: 0.3 }}
                     style={{
                       '--highlight-hex': theme.hex,
                       '--highlight-hex-dark': theme.hexDark,
                     } as React.CSSProperties}
-                    className={`group flex flex-col md:flex-row bg-white/80 dark:bg-zinc-900/60 backdrop-blur-xl border border-zinc-200 dark:border-white/10 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl ${theme.hoverBorder} transition-all duration-500 ${highlightedNoteId === note.id ? 'dynamic-breathing-highlight' : ''}`}
+                    className={`group relative flex flex-col md:flex-row bg-white/85 dark:bg-zinc-900/75 backdrop-blur-2xl border border-zinc-200/90 dark:border-white/10 rounded-3xl overflow-hidden shadow-md hover:shadow-2xl ${theme.hoverBorder} hover:-translate-y-1 transition-all duration-500 ${highlightedNoteId === note.id ? 'dynamic-breathing-highlight' : ''}`}
                   >
                     {/* Video Thumbnail Area */}
                     <div
@@ -514,18 +645,21 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                           <img
                             src={getVideoThumbnail(note.videoLink)}
                             alt={note.title}
-                            className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover/video:opacity-100 transition-opacity duration-500 group-hover/video:scale-105"
+                            className="absolute inset-0 w-full h-full object-cover opacity-95 md:opacity-90 group-hover/video:opacity-100 transition-all duration-700 group-hover/video:scale-105"
                           />
-                          <div className="absolute inset-0 bg-black/40 group-hover/video:bg-black/20 transition-colors duration-500"></div>
+                          <div className="absolute inset-0 bg-black/25 group-hover/video:bg-black/10 transition-colors duration-500"></div>
 
                           <div className="absolute inset-0 flex items-center justify-center">
-                            <div className={`w-16 h-16 rounded-full flex items-center justify-center group-hover/video:scale-110 transition-all duration-300 ${theme.playBg} ${theme.playShadow}`}>
-                              <PlayCircle size={32} className="text-white ml-1" />
+                            <div className="relative">
+                              <span className="absolute -inset-2 rounded-full bg-white/20 animate-ping opacity-0 group-hover/video:opacity-60 transition-opacity duration-300 pointer-events-none" />
+                              <div className={`relative w-16 h-16 rounded-full flex items-center justify-center group-hover/video:scale-110 transition-all duration-300 ${theme.playBg} ${theme.playShadow}`}>
+                                <PlayCircle size={32} className="text-white ml-1" />
+                              </div>
                             </div>
                           </div>
-                          <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md px-2.5 py-1.5 rounded-md flex items-center gap-1.5 opacity-0 group-hover/video:opacity-100 transition-opacity">
+                          <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 opacity-0 group-hover/video:opacity-100 transition-opacity">
                             <Maximize2 size={12} className="text-white" />
-                            <span className="text-[10px] font-bold uppercase text-white tracking-wider">Play</span>
+                            <span className="text-[10px] font-bold uppercase text-white tracking-wider">Play Video</span>
                           </div>
                         </>
                       ) : (
@@ -537,7 +671,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                     </div>
 
                     {/* Content Area */}
-                    <div className="p-6 flex flex-col justify-between grow">
+                    <div className="p-6 md:p-7 flex flex-col justify-between grow">
                       <div>
                         {(() => {
                           const containsDevanagari = (text?: string) => text ? /[\u0900-\u097F]/.test(text) : false;
@@ -546,11 +680,11 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                           
                           return (
                             <>
-                              <h3 className={`text-xl font-bold text-gray-900 dark:text-white mb-3 ${isTitleIndic ? 'leading-normal tracking-normal pt-2' : 'leading-tight tracking-tight'}`}>
+                              <h3 className={`text-xl font-bold text-gray-900 dark:text-white mb-2.5 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors ${isTitleIndic ? 'leading-normal tracking-normal pt-1' : 'leading-tight tracking-tight'}`}>
                                 {note.title}
                               </h3>
                               {note.description && (
-                                <p className={`text-gray-600 dark:text-gray-400 text-sm font-serif line-clamp-3 mb-4 ${isDescIndic ? 'leading-relaxed pt-2 pb-1' : ''}`}>
+                                <p className={`text-gray-600 dark:text-gray-400 text-sm font-serif line-clamp-3 mb-4 leading-relaxed ${isDescIndic ? 'leading-relaxed pt-1 pb-1' : ''}`}>
                                   {note.description}
                                 </p>
                               )}
@@ -562,9 +696,9 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                       {note.driveFileId ? (
                         <a
                           href={`https://drive.google.com/uc?export=download&id=${note.driveFileId}`}
-                          className={`mt-4 flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl font-bold text-sm uppercase tracking-widest transition-all duration-300 shadow-sm group/btn ${theme.badgeBg} ${theme.badgeHoverBg} ${theme.badgeBorder} border ${theme.badgeText}`}
+                          className={`mt-4 flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl font-bold text-sm uppercase tracking-widest transition-all duration-300 shadow-sm active:scale-[0.98] group/btn ${theme.badgeBg} ${theme.badgeHoverBg} ${theme.badgeBorder} border ${theme.badgeText}`}
                         >
-                          <Download size={18} className="group-hover/btn:animate-bounce-subtle" />
+                          <Download size={18} className="transition-transform group-hover/btn:-translate-y-0.5" />
                           {t?.download || "Download PDF"}
                         </a>
                       ) : (
@@ -626,6 +760,24 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
         </AnimatePresence>,
         document.body
       )}
+
+      {/* Mobile & Desktop Floating Scroll to Top Pill */}
+      <AnimatePresence>
+        {showScrollTop && selectedSeries && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8, y: 15 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 15 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="fixed bottom-6 right-6 z-40 flex items-center gap-1.5 px-3.5 py-2.5 rounded-full bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs uppercase tracking-wider shadow-2xl shadow-amber-500/40 backdrop-blur-md active:scale-95 transition-all"
+            title="Scroll to top"
+          >
+            <ArrowUp size={15} />
+            <span className="hidden sm:inline">Top</span>
+          </motion.button>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
