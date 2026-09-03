@@ -47,7 +47,7 @@ const translations = {
     soundOn: "ध्वनि सक्रिय",
     soundOff: "ध्वनि म्यूट",
     shastraTitle: "प्रामाणिक दिगंबर शिलालेख",
-    shastraSource: "तत्त्वार्थ सूत्र — आचार्य उमास्वामी (अध्याय १, सूत्र १-२)",
+    shastraSource: "तत्त्वार्थ सूत्र — Acharya Umāsvāmi (अध्याय १, सूत्र १-२)",
     shastraVerse: "सम्यग्दर्शनज्ञानचारित्राणि मोक्षमार्गः॥ १ ॥\nतत्त्वार्थश्रद्धानं सम्यग्दर्शनम्॥ २ ॥",
     shastraTranslation: "सम्यक दर्शन, सम्यक ज्ञान और सम्यक चरित्र मिलकर मोक्ष का मार्ग हैं। यथार्थ रूप में जीवादि तत्वों का श्रद्धान करना ही सम्यक दर्शन है.",
   },
@@ -55,7 +55,7 @@ const translations = {
     badge: "ಡಿಜಿಟಲ್ ಆಗಮ ಆಲ್ಫಾ 1.0",
     title: "ಜ್ಞಾನದ ಮಾರ್ಗ",
     subtitle: "ಅಹಿಂಸೆ, ಸತ್ಯ ಮತ್ತು ಕರ್ಮದ ಪ್ರಾಚೀನ ಜೈನ ತತ್ವಗಳನ್ನು ಅನ್ವೇಷಿಸಿ.",
-    c1_title: "24 ತೀರ್ಥಂಕರರು", c1_sub: "ಪವಿತ್ರ ದರ್ಶನ",
+    c1_title: "24 ತೀರ್ಭಂಕರರು", c1_sub: "ಪವಿತ್ರ ದರ್ಶನ",
     c2_title: "ನಮೋಕಾರ ಮಂತ್ರ", c2_sub: "ಶಾಶ್ವತ ಪ್ರಾರ್ಥನೆ",
     c3_title: "ಕಾಲಚಕ್ರ", c3_sub: "ವಿಶ್ವದ ಚಕ್ರ",
     c4_title: "ಆತ್ಮ ಮತ್ತು ಕರ್ಮ", c4_sub: "ಆತ್ಮದ ವಿಜ್ಞಾನ",
@@ -63,7 +63,7 @@ const translations = {
     soundOn: "ಧ್ವನಿ ಸಕ್ರಿಯ",
     soundOff: "ಧ್ವನಿ ಮೌನ",
     shastraTitle: "ದಿನದ ಶಾಸ್ತ್ರ ಶಾಸನ",
-    shastraSource: "ತತ್ತ್ವಾರ್ಥ ಸೂತ್ರ — ಆಚಾರ್ಯ ಉಮಾಸ್ವಾಮಿ (ಅಧ್ಯಾಯ ೧, ಸೂತ್ರ ೧-೨)",
+    shastraSource: "ತತ್ತ್ವಾರ್ಥ ಸೂತ್ರ — Acharya Umāsvāmi (ಅಧ್ಯಾಯ ೧, ಸೂತ್ರ ೧-೨)",
     shastraVerse: "सम्यग्दर्शनज्ञानचारित्राणि मोक्षमार्गः॥ १ ॥\nतत्त्वार्थश्रद्धानं सम्यग्दर्शनम्॥ २ ॥",
     shastraTranslation: "ಸಮ್ಯಗ್ದರ್ಶನ, ಸಮ್ಯಗ್ಜ್ಞಾನ ಮತ್ತು ಸಮ್ಯಕ್ಚಾರಿತ್ರ್ಯಗಳು ಒಟ್ಟಾಗಿ ಮೋಕ್ಷದ ಮಾರ್ಗವಾಗಿದೆ. ಯಥಾರ್ಥವಾದ ತತ್ವಗಳ ಶ್ರದ್ಧಾನವೇ ಸಮ್ಯಗ್ದರ್ಶನವು.",
   }
@@ -206,34 +206,60 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
       {/* Optimized Background Gradient Blur */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-amber-500/5 dark:bg-amber-950/10 blur-[100px] md:blur-[160px] rounded-full pointer-events-none z-0" />
 
-      <div className="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto pt-2 sm:pt-4">
-        
-        {/* Sound & Haptic Toggle Card - Positioned right below Navbar on the right side */}
-        <div className="w-full flex justify-end px-4 sm:px-6 mb-2">
-          <motion.button
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.96 }}
-            transition={springTransition}
-            onClick={() => {
-              setSoundEnabled(!soundEnabled);
-              playTapSound();
-            }}
-            className="flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/90 dark:bg-zinc-900/90 border border-amber-500/30 dark:border-amber-500/20 backdrop-blur-md shadow-sm hover:shadow-md text-zinc-800 dark:text-zinc-200 text-[11px] sm:text-xs font-semibold transition-all"
-            aria-label="Toggle Sound Feedback"
-          >
-            {soundEnabled ? (
-              <>
-                <Volume2 size={13} className="text-amber-600 dark:text-amber-400 animate-pulse sm:w-3.5 sm:h-3.5" />
-                <span>{t.soundOn}</span>
-              </>
-            ) : (
-              <>
-                <VolumeX size={13} className="text-zinc-400 sm:w-3.5 sm:h-3.5" />
-                <span>{t.soundOff}</span>
-              </>
-            )}
-          </motion.button>
-        </div>
+      {/* Sound & Haptic Toggle Card - Positioned exactly below navbar on the top right corner */}
+      <div className="absolute top-3 right-4 sm:right-6 md:right-8 z-40">
+        <motion.button
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.96 }}
+          transition={springTransition}
+          onClick={() => {
+            const nextSoundState = !soundEnabled;
+            setSoundEnabled(nextSoundState);
+            if (nextSoundState) {
+              // Play directly using mandate-specified parameters
+              try {
+                const audio = new Audio("/sounds/resources/click2.mp3");
+                audio.volume = 0.65;
+                audio.play().catch(() => {});
+              } catch (e) {}
+            }
+          }}
+          className="flex items-center gap-1.5 sm:gap-2 px-3.5 py-2 rounded-full bg-white/95 dark:bg-zinc-900/95 border border-amber-500/30 dark:border-amber-500/20 backdrop-blur-md shadow-md hover:shadow-lg text-zinc-800 dark:text-zinc-200 text-[11px] sm:text-xs font-semibold transition-all"
+          aria-label="Toggle Sound Feedback"
+        >
+          {soundEnabled ? (
+            <>
+              <Volume2 size={13} className="text-amber-600 dark:text-amber-400 animate-pulse sm:w-3.5 sm:h-3.5" />
+              <span>{t.soundOn}</span>
+            </>
+          ) : (
+            <>
+              <VolumeX size={13} className="text-zinc-400 sm:w-3.5 sm:h-3.5" />
+              <span>{t.soundOff}</span>
+            </>
+          )}
+        </motion.button>
+      </div>
+
+      {/* Floating Controls docked strictly at fixed bottom-6 right-6 z-50 */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-2">
+        <motion.button
+          onClick={() => {
+            playTapSound();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          className="p-3 rounded-full bg-white/95 dark:bg-zinc-900/95 border border-amber-500/30 dark:border-amber-500/20 backdrop-blur-md shadow-lg text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 transition-all"
+          aria-label="Scroll to top"
+        >
+          <ArrowRight size={16} className="-rotate-90" />
+        </motion.button>
+      </div>
+
+      <div className="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto pt-16 sm:pt-20">
           
           <DailyWisdom lang={lang} quote={todaysQuote} />
           
@@ -267,7 +293,7 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
             {t.subtitle}
           </motion.p>
 
-          {/* Grid - Directly underneath the Hero header */}
+          {/* Grid - Navigation cards remain highly prominent below hero title */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-4xl px-2 mb-16">
             
             <Link 
