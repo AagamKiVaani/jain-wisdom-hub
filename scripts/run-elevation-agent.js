@@ -43,6 +43,8 @@ MANDATORY DIGAMBAR SCRIPTURAL RULES:
 function validateDigambarContent(text) {
   const lowercase = text.toLowerCase();
   const forbiddenTerms = [
+    { term: "umasvati", reason: "Svetambara spelling. In pure Digambar Jain tradition, the revered author of Tattvārtha Sūtra is strictly Acharya Umāsvāmi (आचार्य उमास्वामी)." },
+    { term: "umaswati", reason: "Use canonical Digambar honorific Acharya Umāsvāmi (उमास्वामी)." },
     { term: "shvetambara", reason: "Refers to non-Digambar sectarian traditions" },
     { term: "swetambar", reason: "Refers to non-Digambar sectarian traditions" },
     { term: "mallinath was a female", reason: "Contradicts Digambar Mahapurana" },
