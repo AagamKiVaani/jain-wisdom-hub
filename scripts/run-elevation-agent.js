@@ -329,6 +329,53 @@ Return your response in exactly two clearly demarcated sections:
 }
 
 // ----------------------------------------------------------------------------
+// 6.5 AUTONOMOUS FRONTEND CRITIC & POLISH PASS
+// ----------------------------------------------------------------------------
+async function refineAndPolishFrontend(target, initialCode, pattern, userNotes = "") {
+  console.log("🎨 Initiating Autonomous Frontend Refinement & Polish Pass...");
+
+  const criticPrompt = `
+You are an award-winning Creative Director, Senior Design Engineer, and scholar of authentic Digambar Jain Philosophy.
+
+Review this newly drafted Next.js 15+ React component for: ${target.name} (${target.pageRoute}).
+Inspiration: ${pattern.name}
+${userNotes ? `USER'S CUSTOM REQUIREMENTS: ${userNotes}` : ""}
+
+${DIGAMBAR_CANONICAL_RULES}
+
+DRAFT CODE:
+\`\`\`tsx
+${initialCode}
+\`\`\`
+
+YOUR TASK - CRITIQUE AND ELEVATE (Take it from an 8/10 to a 9.5/10):
+1. Micro-animations & Motion: Refine Framer Motion spring physics (stiffness: 300, damping: 25).
+2. Atmospheric Polish: Elevate subtle backdrop blurs, specular glass gradient borders, and tactile audio feedback (playTapSound).
+3. Mobile Viewport Excellence: Ensure seamless responsive wrapping, touch targets of at least 44px, and zero horizontal scroll overflow.
+4. Strict Canonical Reverence: Ensure the author of Tattvārtha Sūtra is written as "Acharya Umāsvāmi" (NEVER Umasvati).
+5. Output ONLY the refined, drop-in replacement TSX code. Do not wrap in extra JSON or markdown explanations.
+`;
+
+  try {
+    const polishedResponse = await queryGemini(criticPrompt, false);
+    const cleanedCode = polishedResponse.replace(/^```tsx?\n?/i, "").replace(/```$/i, "").trim();
+
+    // Verify guardrails
+    const guardrail = validateDigambarContent(cleanedCode);
+    if (!guardrail.valid) {
+      console.warn("Polished code triggered guardrail check, retaining initial draft.");
+      return initialCode;
+    }
+
+    console.log("✨ Autonomous Frontend Refinement Pass completed successfully!");
+    return cleanedCode;
+  } catch (e) {
+    console.warn("Refinement pass warning, retaining initial draft:", e.message);
+    return initialCode;
+  }
+}
+
+// ----------------------------------------------------------------------------
 // 7. MULTI-PASS QA
 // ----------------------------------------------------------------------------
 async function verifyMultiPass(workspaceRoot, targetRelPath, candidateCode) {
@@ -520,6 +567,10 @@ async function main() {
   const currentCode = fs.readFileSync(path.join(workspaceRoot, target.sourceFilePath), "utf8");
   const result = await synthesize(target, currentCode, pattern);
   console.log(`📜 Digambar Source: ${result.digambarProof.shastra} (${result.digambarProof.author})`);
+
+  // 3.5 Autonomous Frontend Polish Pass (Creative Director Refinement Loop)
+  console.log("\n[3.5/5] Executing Creative Director Frontend Polish Pass...");
+  result.code = await refineAndPolishFrontend(target, result.code, pattern);
 
   // 4. Create Branch & Run QA
   const timestamp = new Date().toISOString().replace(/[-:T]/g, "").slice(0, 12);
