@@ -229,7 +229,7 @@ const InteractiveCard = ({
   );
 };
 
-export default function Home({ params }: { params: React.Usable<{ lang: string }> }) {
+export default function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = React.use(params);
   const todaysQuote = getTodaysQuote();
   const t = translations[lang as keyof typeof translations] || translations.en;
