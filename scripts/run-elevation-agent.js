@@ -101,12 +101,29 @@ const DESIGN_PATTERNS = [
     source: "Mobbin & Apple HIG",
     concept: "Micro-haptic vibration taps (navigator.vibrate) paired with crisp sub-millisecond mechanical/soft audio clicks.",
     keywords: "playTapSound, click2.mp3, 12ms haptic vibration"
+  },
+  {
+    id: "bento-library-filter",
+    name: "Interactive Bento Grid with Instant Search & Filter",
+    source: "Linear & Vercel UI",
+    concept: "High-density glassmorphic bento cards with responsive category filters, smooth layout animations, and instant query debouncing.",
+    keywords: "framer-motion layout, bento grid, glassmorphism, instant search"
+  },
+  {
+    id: "audio-waveform-visualizer",
+    name: "Sacred Sanskrit Audio & Waveform Visualizer",
+    source: "Awwwards Sound Design",
+    concept: "Interactive audio playback card with animated celestial sound waves, syllable-by-syllable translation reveal, and volume controls.",
+    keywords: "AudioContext, Web Audio analyser, syllable sync, sound waves"
   }
 ];
 
 function pickDesignPattern(pageRoute) {
   if (pageRoute.includes("tirthankar")) return DESIGN_PATTERNS[0];
-  if (pageRoute.includes("soul") || pageRoute.includes("namokar")) return DESIGN_PATTERNS[2];
+  if (pageRoute.includes("kalchakra")) return DESIGN_PATTERNS[1];
+  if (pageRoute.includes("namokar")) return DESIGN_PATTERNS[6];
+  if (pageRoute.includes("soul")) return DESIGN_PATTERNS[2];
+  if (pageRoute.includes("resources")) return DESIGN_PATTERNS[5];
   return DESIGN_PATTERNS[Math.floor(Math.random() * DESIGN_PATTERNS.length)];
 }
 
@@ -138,16 +155,28 @@ function getInspirationPattern(pageRoute, workspaceRoot) {
 }
 
 // ----------------------------------------------------------------------------
-// 4. SITE AUDITOR
+// 4. SITE AUDITOR & PAGE ROTATION ENGINE
 // ----------------------------------------------------------------------------
 function auditPages(workspaceRoot) {
+  // All 7 Real Production Routes
   const candidatePages = [
-    { route: "/tirthankar", relPath: "app/[lang]/tirthankar/page.tsx", name: "Tirthankar Gallery" },
-    { route: "/soul-karma", relPath: "app/[lang]/soul-karma/page.tsx", name: "Soul & Karma Page" },
-    { route: "/kalchakra", relPath: "app/[lang]/kalchakra/page.tsx", name: "Wheel of Time (Kalchakra)" },
-    { route: "/namokar-mantra", relPath: "app/[lang]/namokar-mantra/page.tsx", name: "Namokar Mantra Page" },
+    { route: "/tirthankars", relPath: "app/[lang]/tirthankars/page.tsx", name: "24 Tirthankaras Gallery Hub" },
+    { route: "/learn/kalchakra", relPath: "app/[lang]/learn/kalchakra/page.tsx", name: "Wheel of Time (Kalchakra)" },
+    { route: "/learn/soul-karma", relPath: "app/[lang]/learn/soul-karma/page.tsx", name: "Soul & Karma Interactive Canvas" },
+    { route: "/learn/namokar-mantra", relPath: "app/[lang]/learn/[topic]/page.tsx", name: "Namokar Mantra Sacred Module" },
+    { route: "/resources", relPath: "app/[lang]/resources/page.tsx", name: "Wisdom Library & Notes Hub" },
+    { route: "/about", relPath: "app/[lang]/about/page.tsx", name: "About Aagam Ki Vaani" },
     { route: "/", relPath: "app/[lang]/page.tsx", name: "Home Page" }
   ];
+
+  // Read rotation history to avoid getting stuck on the same page!
+  const historyPath = path.join(workspaceRoot, "data", "elevation_history.json");
+  let recentlyElevated = [];
+  if (fs.existsSync(historyPath)) {
+    try {
+      recentlyElevated = JSON.parse(fs.readFileSync(historyPath, "utf8"));
+    } catch (e) {}
+  }
 
   const targets = [];
   for (const page of candidatePages) {
@@ -155,38 +184,25 @@ function auditPages(workspaceRoot) {
     if (!fs.existsSync(fullPath)) continue;
 
     const content = fs.readFileSync(fullPath, "utf8");
-    const missing = [];
     let score = 5;
 
-    if (!content.includes("playTapSound") && !content.includes("click2.mp3")) {
-      missing.push("Audio tactile micro-haptics");
-      score -= 1;
-    } else {
-      score += 1;
+    // Heavily penalize recently elevated pages so the agent ROTATES through all pages
+    const lastIndex = recentlyElevated.lastIndexOf(page.route);
+    if (lastIndex !== -1) {
+      const recency = recentlyElevated.length - lastIndex;
+      if (recency <= 3) {
+        score += 30; // Push back of line
+      }
     }
 
-    if (!content.includes("Card3D") && !content.includes("perspective")) {
-      missing.push("3D spatial perspective tilt");
-      score -= 1;
-    } else {
-      score += 1.5;
-    }
-
-    if (!content.includes("SacredParticlesCanvas")) {
-      missing.push("Celestial stardust canvas atmosphere");
-    } else {
-      score += 1;
-    }
-
-    if (!content.includes("noise-overlay")) {
-      missing.push("Archival parchment glass texture");
-    }
+    if (!content.includes("framer-motion") && !content.includes("motion.")) score -= 2;
+    if (content.length < 2500) score -= 1.5;
 
     targets.push({
       pageRoute: page.route,
       sourceFilePath: page.relPath,
-      visualScore: Math.max(2, Math.min(10, score)),
-      missingFeatures: missing,
+      visualScore: Math.max(1, score),
+      missingFeatures: ["Dynamic feature elevation queued"],
       name: page.name
     });
   }
@@ -510,21 +526,71 @@ async function getDirectVercelPreviewUrl(branchName) {
 }
 
 // ----------------------------------------------------------------------------
+// 7.4 DYNAMIC GEMINI FEATURE RESEARCHER
+// ----------------------------------------------------------------------------
+async function generateDynamicFeatures(target, pattern, workspaceRoot) {
+  try {
+    const fullPath = path.join(workspaceRoot, target.sourceFilePath);
+    const existingCode = fs.existsSync(fullPath) ? fs.readFileSync(fullPath, "utf8").slice(0, 2500) : "";
+    
+    const prompt = `
+You are the Lead Creative Director & Frontend Architect for Aagam Ki Vaani (a world-class Digambar Jain web portal).
+Target Page: ${target.name} (${target.pageRoute})
+Design Pattern / Inspiration: ${pattern.name} (${pattern.concept})
+
+Source Code Context Excerpt:
+${existingCode.slice(0, 1200)}
+
+Task: Propose exactly 4 to 5 cutting-edge, highly innovative, novel visual, interactive, or architectural features tailored specifically for this page.
+Do NOT suggest generic things that are already implemented on this page.
+Suggest page-specific, thrilling enhancements (e.g. interactive timeline slider, audio pronunciation/chant player, 3D card tilt, sacred geometry visualizer, interactive quiz, search filter tabs, parchment manuscript view, etc.).
+
+Return ONLY a JSON array of 5 objects in this format, with NO markdown formatting:
+[
+  { "id": 1, "name": "Feature 1 title under 35 chars", "selected": true, "note": "" },
+  { "id": 2, "name": "Feature 2 title under 35 chars", "selected": true, "note": "" },
+  { "id": 3, "name": "Feature 3 title under 35 chars", "selected": false, "note": "" },
+  { "id": 4, "name": "Feature 4 title under 35 chars", "selected": false, "note": "" },
+  { "id": 5, "name": "Feature 5 title under 35 chars", "selected": false, "note": "" }
+]
+`;
+    console.log(`🧠 Querying Gemini to research custom features for ${target.name}...`);
+    const res = await queryGemini(prompt, false);
+    const match = res.match(/\[[\s\S]*\]/);
+    if (match) {
+      const parsed = JSON.parse(match[0]);
+      if (Array.isArray(parsed) && parsed.length >= 3) {
+        return parsed.slice(0, 5).map((item, idx) => ({
+          id: idx + 1,
+          name: (item.name || `Enhancement #${idx + 1}`).slice(0, 42),
+          selected: idx < 2,
+          note: ""
+        }));
+      }
+    }
+  } catch (e) {
+    console.warn("Dynamic feature generation fallback:", e.message);
+  }
+
+  return [
+    { id: 1, name: `${pattern.name} Spatial UI`, selected: true, note: "" },
+    { id: 2, name: "Interactive Scripture Motion Physics", selected: true, note: "" },
+    { id: 3, name: "Sacred Sanskrit Audio & Chanting Waves", selected: false, note: "" },
+    { id: 4, name: "Verified Digambar Shastra Inscriptions", selected: false, note: "" },
+    { id: 5, name: "Responsive Mobile Glassmorphic Overlays", selected: false, note: "" }
+  ];
+}
+
+// ----------------------------------------------------------------------------
 // 7.5 INTERACTIVE FEATURE PROPOSAL & CHECKBOX ENGINE
 // ----------------------------------------------------------------------------
-async function requestProposalApproval(target, pattern, token, chatId) {
+async function requestProposalApproval(target, pattern, token, chatId, workspaceRoot) {
   if (!token || !chatId) {
     console.warn("Telegram tokens not set. Proceeding in non-interactive mode.");
     return [{ id: 1, name: `${pattern.name} Visual Elevation`, selected: true, note: "" }];
   }
 
-  const features = [
-    { id: 1, name: `${pattern.name} Visual Elevation`, selected: true, note: "" },
-    { id: 2, name: "Mechanical Audio Clicks & Sound Toggle", selected: true, note: "" },
-    { id: 3, name: "Celestial Golden Stardust Atmosphere", selected: false, note: "" },
-    { id: 4, name: "Archival Manuscript Noise Glassmorphism", selected: false, note: "" },
-    { id: 5, name: "Verified Digambar Shastra Inscriptions (Acharya Umāsvāmi)", selected: true, note: "" }
-  ];
+  const features = await generateDynamicFeatures(target, pattern, workspaceRoot);
 
   function buildKeyboard() {
     const rows = [];
@@ -550,7 +616,7 @@ async function requestProposalApproval(target, pattern, token, chatId) {
   }
 
   const messageText = `
-🏛️ *JAIN WISDOM DESIGN PROPOSAL*
+🏛️ *AAGAM KI VAANI DESIGN PROPOSAL*
 
 📍 *TARGET PAGE:* \`${target.name}\` (${target.pageRoute})
 📁 *SOURCE FILE:* \`${target.sourceFilePath}\`
@@ -1030,11 +1096,22 @@ async function main() {
   // 2.5 Interactive Proposal Menu with Checkboxes & Custom Notes
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
-  const approvedFeatures = await requestProposalApproval(target, pattern, token, chatId);
+  const approvedFeatures = await requestProposalApproval(target, pattern, token, chatId, workspaceRoot);
   if (!approvedFeatures || approvedFeatures.length === 0) {
     console.log("No features selected or cycle skipped by user.");
     return;
   }
+
+  // Record into rotation history so subsequent runs target different pages
+  try {
+    const histPath = path.join(workspaceRoot, "data", "elevation_history.json");
+    let hist = [];
+    if (fs.existsSync(histPath)) {
+      hist = JSON.parse(fs.readFileSync(histPath, "utf8"));
+    }
+    hist.push(target.pageRoute);
+    fs.writeFileSync(histPath, JSON.stringify(hist.slice(-20), null, 2), "utf8");
+  } catch (e) {}
 
   // 3. Synthesize ONLY user-approved features with custom notes
   console.log("\n[3/5] Synthesizing user-approved features with Gemini & Digambar Guardrails...");
