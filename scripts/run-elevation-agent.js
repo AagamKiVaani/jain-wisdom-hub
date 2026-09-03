@@ -241,11 +241,14 @@ DESIGN INSPIRATION: ${pattern.name} (${pattern.concept})
 
 ${DIGAMBAR_CANONICAL_RULES}
 
-${featuresDirective}
-
-2. Ensure tactile micro-interactions (playTapSound), atmospheric noise texture, and responsive layout.
-3. NEXT.JS 16 APP ROUTER RULE: If this is a page.tsx file, params MUST be typed as Promise<{ lang: string }>: export default function Page({ params }: { params: Promise<{ lang: string }> }) and unwrapped using const { lang } = React.use(params);
-4. REVERENCE MANDATE: The revered author of Tattvārtha Sūtra must be written strictly as Acharya Umāsvāmi (NEVER Umasvati).
+CRITICAL UI, AUDIO & POSITIONING MANDATES:
+1. AUDIO TACTILE CLICKS: MUST use the real audio file '/sounds/resources/click2.mp3' with volume 0.65:
+   const playTapSound = () => { if (!soundEnabled) return; try { const a = new Audio("/sounds/resources/click2.mp3"); a.volume = 0.65; a.play().catch(()=>{}); if (typeof navigator !== 'undefined' && navigator.vibrate) navigator.vibrate(12); } catch (e) {} };
+   NEVER synthesize silent or quiet Web Audio oscillators!
+2. FLOATING CONTROLS POSITIONING: If adding a persistent floating sound toggle or controls, position them at "fixed bottom-6 right-6 z-50". NEVER position floating controls at "top-4 right-4" or "top-0" because that directly collides with the Navbar and language toggle!
+3. PAGE HIERARCHY & NAVIGATION: Keep the 5 primary navigation cards immediately prominent below the Hero title and subtitle. Do NOT push cards down by inserting large blocking panels above them. Any archival scripture quote panels must be placed gracefully underneath the cards grid!
+4. NEXT.JS 16 APP ROUTER RULE: If this is a page.tsx file, params MUST be typed as Promise<{ lang: string }>: export default function Page({ params }: { params: Promise<{ lang: string }> }) and unwrapped using const { lang } = React.use(params);
+5. REVERENCE MANDATE: The revered author of Tattvārtha Sūtra must be written strictly as Acharya Umāsvāmi (NEVER Umasvati).
 
 EXISTING FILE CONTENT:
 \`\`\`tsx
@@ -353,10 +356,11 @@ ${initialCode}
 
 YOUR TASK - CRITIQUE AND ELEVATE (Take it from an 8/10 to a 9.5/10):
 1. Micro-animations & Motion: Refine Framer Motion spring physics (stiffness: 300, damping: 25).
-2. Atmospheric Polish: Elevate subtle backdrop blurs, specular glass gradient borders, and tactile audio feedback (playTapSound).
-3. Mobile Viewport Excellence: Ensure seamless responsive wrapping, touch targets of at least 44px, and zero horizontal scroll overflow.
-4. Strict Canonical Reverence: Ensure the author of Tattvārtha Sūtra is written as "Acharya Umāsvāmi" (NEVER Umasvati).
-5. Output ONLY the refined, drop-in replacement TSX code. Do not wrap in extra JSON or markdown explanations.
+2. Audio Realism: Verify that audio click uses new Audio("/sounds/resources/click2.mp3") with volume 0.65. Eliminate any silent custom oscillators.
+3. Element Positioning: Ensure floating controls are docked at "bottom-6 right-6" (NEVER top-4 right-4 which collides with Navbar). Ensure the 5 primary navigation cards remain immediately below the title/subtitle.
+4. Mobile Viewport Excellence: Ensure seamless responsive wrapping, touch targets of at least 44px, and zero horizontal scroll overflow.
+5. Strict Canonical Reverence: Ensure the author of Tattvārtha Sūtra is written as "Acharya Umāsvāmi" (NEVER Umasvati).
+6. Output ONLY the refined, drop-in replacement TSX code. Do not wrap in extra JSON or markdown explanations.
 `;
 
   try {
@@ -434,11 +438,12 @@ Fix the error completely. Return ONLY the drop-in replacement TSX code. Do not w
 // 8. TELEGRAM NOTIFIER WITH DIRECT VERCEL PREVIEW
 // ----------------------------------------------------------------------------
 async function getDirectVercelPreviewUrl(branchName) {
-  console.log("Fetching exact direct Vercel preview deployment URL...");
-  for (let i = 0; i < 4; i++) {
+  console.log(`Fetching exact direct Vercel preview deployment URL for branch: ${branchName}...`);
+  // Poll for up to 90 seconds (18 attempts * 5s) for Vercel to complete building
+  for (let i = 0; i < 18; i++) {
     try {
-      await new Promise(r => setTimeout(r, 3000));
-      const res = await fetch("https://api.github.com/repos/AagamKiVaani/jain-wisdom-hub/deployments?per_page=5");
+      await new Promise(r => setTimeout(r, 5000));
+      const res = await fetch("https://api.github.com/repos/AagamKiVaani/jain-wisdom-hub/deployments?per_page=8");
       const deployments = await res.json();
       if (Array.isArray(deployments) && deployments.length > 0) {
         for (const dep of deployments) {
@@ -446,8 +451,8 @@ async function getDirectVercelPreviewUrl(branchName) {
           const statuses = await statusRes.json();
           if (Array.isArray(statuses) && statuses.length > 0) {
             const url = statuses[0].environment_url || statuses[0].target_url;
-            if (url && url.includes(".vercel.app")) {
-              console.log("✅ Exact direct Vercel URL found:", url);
+            if (url && url.includes(".vercel.app") && statuses[0].state === "success") {
+              console.log("✅ Live direct Vercel URL verified:", url);
               return url;
             }
           }
@@ -457,6 +462,16 @@ async function getDirectVercelPreviewUrl(branchName) {
       // transient retry
     }
   }
+
+  // Fallback to latest deployment environment_url if timeout reached
+  try {
+    const res = await fetch("https://api.github.com/repos/AagamKiVaani/jain-wisdom-hub/deployments?per_page=1");
+    const deployments = await res.json();
+    if (deployments[0]) {
+      const statuses = await (await fetch(deployments[0].statuses_url)).json();
+      if (statuses[0]?.environment_url) return statuses[0].environment_url;
+    }
+  } catch (e) {}
 
   const branchSlug = branchName.replace(/\//g, "-").toLowerCase();
   return `https://jain-wisdom-git-${branchSlug}-aagams-projects-b0e9e8b5.vercel.app`;
