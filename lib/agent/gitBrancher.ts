@@ -17,6 +17,11 @@ export function createElevationBranch(featureSlug: string, cwd: string): string 
 export function commitElevation(branchName: string, message: string, cwd: string): void {
   execSync("git add .", { cwd, stdio: "pipe" });
   execSync(`git commit -m "${message}"`, { cwd, stdio: "pipe" });
+  try {
+    execSync(`git push -u origin ${branchName}`, { cwd, stdio: "pipe" });
+  } catch (e: any) {
+    console.warn("Could not push branch to origin:", e.message);
+  }
 }
 
 export function mergeBranchToMain(branchName: string, cwd: string): void {

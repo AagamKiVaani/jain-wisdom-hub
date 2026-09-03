@@ -90,8 +90,13 @@ async function runAutonomousElevation() {
   console.log(`🚀 Briefing sent to Telegram! Awaiting your approval on mobile...`);
   console.log("==================================================================");
 
-  // Background listen for your approval on Telegram
-  await waitForUserApproval(branchName, workspaceRoot);
+  if (process.env.GITHUB_ACTIONS === "true") {
+    console.log("☁️ Running in GitHub Actions cloud. Branch pushed and briefing dispatched to Telegram.");
+    console.log("Exiting runner successfully so 0 action minutes are wasted.");
+  } else {
+    // Background listen for your approval on Telegram (up to 30 mins)
+    await waitForUserApproval(branchName, workspaceRoot, 30);
+  }
 }
 
 runAutonomousElevation().catch(err => {
