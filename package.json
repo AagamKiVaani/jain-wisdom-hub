@@ -6,7 +6,10 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "agent:elevate": "node --experimental-strip-types scripts/run-elevation-agent.ts",
+    "agent:daemon": "node scripts/agent-daemon.js",
+    "agent:test": "node --experimental-strip-types scripts/test-agent-telegram.ts"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
