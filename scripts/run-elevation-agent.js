@@ -758,6 +758,177 @@ _Tap below to review live or command your agent:_
 }
 
 // ----------------------------------------------------------------------------
+// 8.5 ACTIVE COMMAND CENTER & REVISION ENGINE
+// ----------------------------------------------------------------------------
+async function waitForUserFeedbackAndApproval(target, pattern, branchName, workspaceRoot, timeoutMinutes = 120) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) return "timeout";
+
+  console.log(`\n[Active Command Center] Listening for Telegram feedback & commands on ${branchName}...`);
+  const startTime = Date.now();
+  let lastUpdateId = 0;
+  let awaitingFeedback = false;
+
+  while (Date.now() - startTime < timeoutMinutes * 60 * 1000) {
+    try {
+      const res = await fetch(`https://api.telegram.org/bot${token}/getUpdates?offset=${lastUpdateId + 1}&timeout=15`);
+      const data = await res.json();
+
+      if (data.ok && data.result.length > 0) {
+        for (const update of data.result) {
+          lastUpdateId = update.update_id;
+
+          // 1. User sent a text message with feedback
+          if (awaitingFeedback && update.message && update.message.text) {
+            const userFeedback = update.message.text;
+            console.log(`\n📝 Received user feedback on Telegram: "${userFeedback}"`);
+
+            await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                chat_id: chatId,
+                text: `⚙️ *Revising code based on your feedback:*\n"${userFeedback}"\n\n_Running compiler tests and updating live preview..._`,
+                parse_mode: "Markdown"
+              })
+            });
+
+            const currentCode = fs.readFileSync(path.join(workspaceRoot, target.sourceFilePath), "utf8");
+            const revisionPrompt = `
+You are an expert Next.js Engineer and Digambar Jain scholar.
+The user reviewed the live preview for ${target.name} (${target.pageRoute}) and requested these specific corrections:
+
+USER FEEDBACK / CORRECTIONS:
+"""
+${userFeedback}
+"""
+
+${DIGAMBAR_CANONICAL_RULES}
+
+CRITICAL MANDATES:
+1. AUDIO: MUST use real audio file '/sounds/resources/click2.mp3' with volume 0.65.
+2. POSITIONING: Floating controls MUST be docked at "fixed bottom-6 right-6 z-50" (never top-right colliding with Navbar).
+3. HIERARCHY: Navigation cards must remain prominent below hero title. Shastra quotes below the grid.
+4. REVERENCE: Author of Tattvārtha Sūtra must be strictly written as Acharya Umāsvāmi.
+
+CURRENT CODE:
+\`\`\`tsx
+${currentCode}
+\`\`\`
+
+Apply all requested corrections. Return ONLY the drop-in replacement TSX code.
+`;
+
+            const revisedRaw = await queryGemini(revisionPrompt, false);
+            const revisedCode = revisedRaw.replace(/^```tsx?\n?/i, "").replace(/```$/i, "").trim();
+
+            const qa = await verifyMultiPass(workspaceRoot, target.sourceFilePath, revisedCode);
+            if (qa.passed) {
+              execSync("git add .", { cwd: workspaceRoot, stdio: "pipe" });
+              execSync(`git commit -m "Apply user feedback: ${userFeedback.slice(0, 50)}"`, { cwd: workspaceRoot, stdio: "pipe" });
+              execSync(`git push origin ${branchName}`, { cwd: workspaceRoot, stdio: "pipe" });
+
+              const directPreviewUrl = await getDirectVercelPreviewUrl(branchName);
+
+              await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  chat_id: chatId,
+                  text: `✨ *CHANGES APPLIED & VERIFIED!*\n\n📍 *Target:* \`${target.name}\`\n🌐 *Updated Live Preview:*\n${directPreviewUrl}\n\n_Tap below to review the updated preview:_`,
+                  parse_mode: "Markdown",
+                  reply_markup: {
+                    inline_keyboard: [
+                      [{ text: "🌐 Open Direct Live Preview", url: directPreviewUrl }],
+                      [{ text: "✅ Merge to Main", callback_data: `merge:${branchName}` }],
+                      [{ text: "🔁 Request More Changes", callback_data: `feedback:${branchName}` }]
+                    ]
+                  }
+                })
+              });
+            } else {
+              await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  chat_id: chatId,
+                  text: `⚠️ Could not apply changes due to compiler check: ${qa.error?.slice(0, 200)}`
+                })
+              });
+            }
+
+            awaitingFeedback = false;
+            continue;
+          }
+
+          // 2. User clicked an inline button
+          if (update.callback_query && update.callback_query.data) {
+            const cb = update.callback_query.data;
+
+            await fetch(`https://api.telegram.org/bot${token}/answerCallbackQuery`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ callback_query_id: update.callback_query.id })
+            });
+
+            if (cb === `feedback:${branchName}`) {
+              awaitingFeedback = true;
+              await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  chat_id: chatId,
+                  text: "✍️ *Please reply to this message with all the corrections and mistakes you want fixed:*\n\n_(Type anything you want changed, and I will revise the code and update the preview!)_",
+                  parse_mode: "Markdown",
+                  reply_markup: {
+                    force_reply: true,
+                    input_field_placeholder: "Type your corrections here..."
+                  }
+                })
+              });
+            } else if (cb === `merge:${branchName}`) {
+              console.log(`Merging ${branchName} into main...`);
+              execSync("git checkout main", { cwd: workspaceRoot, stdio: "pipe" });
+              execSync(`git merge ${branchName}`, { cwd: workspaceRoot, stdio: "pipe" });
+              execSync("git push origin main", { cwd: workspaceRoot, stdio: "pipe" });
+
+              await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  chat_id: chatId,
+                  text: `🎉 *SUCCESS!* Branch \`${branchName}\` has been merged into *main* and is now live in production!`
+                })
+              });
+              return "merged";
+            } else if (cb === `discard:${branchName}`) {
+              execSync("git checkout main", { cwd: workspaceRoot, stdio: "pipe" });
+              execSync(`git branch -D ${branchName}`, { cwd: workspaceRoot, stdio: "pipe" });
+
+              await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  chat_id: chatId,
+                  text: `🗑️ Branch \`${branchName}\` has been discarded.`
+                })
+              });
+              return "discarded";
+            }
+          }
+        }
+      }
+    } catch (e) {
+      await new Promise(r => setTimeout(r, 4000));
+    }
+    await new Promise(r => setTimeout(r, 2000));
+  }
+
+  return "timeout";
+}
+
+// ----------------------------------------------------------------------------
 // 9. MASTER ORCHESTRATION ENTRYPOINT
 // ----------------------------------------------------------------------------
 async function main() {
@@ -833,6 +1004,9 @@ async function main() {
   // 5. Notify Telegram
   console.log("\n[5/5] Dispatching briefing to Telegram...");
   await sendTelegramBriefing(result, pattern, target, branchName, qa.iterations);
+
+  // 6. Active Command Center: Listen for User Feedback & Merge Actions
+  await waitForUserFeedbackAndApproval(target, pattern, branchName, workspaceRoot);
 
   console.log("\n==================================================================");
   console.log("🎉 Autonomous elevation cycle completed successfully!");
