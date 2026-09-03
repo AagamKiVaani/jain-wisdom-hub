@@ -38,4 +38,4 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          node --experimental-strip-types scripts/run-elevation-agent.ts
+          node scripts/run-elevation-agent.js

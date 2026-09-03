@@ -7,7 +7,7 @@
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
-    "agent:elevate": "node --experimental-strip-types scripts/run-elevation-agent.ts",
+    "agent:elevate": "node scripts/run-elevation-agent.js",
     "agent:daemon": "node scripts/agent-daemon.js",
     "agent:test": "node --experimental-strip-types scripts/test-agent-telegram.ts"
   },
