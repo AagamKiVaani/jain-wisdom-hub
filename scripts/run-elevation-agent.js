@@ -374,6 +374,8 @@ async function sendTelegramBriefing(synthesis, pattern, target, branchName, qaPa
     console.warn("Telegram tokens not configured. Skipping notification.");
     return;
   }
+  const githubCompareUrl = `https://github.com/AagamKiVaani/jain-wisdom-hub/compare/main...${branchName}`;
+  const vercelDeploymentsUrl = `https://vercel.com/aagamkivaanis-projects/jain-wisdom-hub/deployments`;
 
   const messageText = `
 🏛️ *JAIN WISDOM ELEVATION REPORT*
@@ -392,13 +394,19 @@ async function sendTelegramBriefing(synthesis, pattern, target, branchName, qaPa
 ${synthesis.summary}
 
 🌿 *Git Branch:* \`${branchName}\`
+🌐 *Live Preview & Deployments:* ${vercelDeploymentsUrl}
+🔍 *Review Code Changes:* ${githubCompareUrl}
 
 ---
-_Tap an action below:_
+_Tap an action below to command your agent:_
 `.trim();
 
   const inlineKeyboard = {
     inline_keyboard: [
+      [
+        { text: "🌐 Open Vercel Preview", url: vercelDeploymentsUrl },
+        { text: "🔍 Review Diff on GitHub", url: githubCompareUrl }
+      ],
       [
         { text: "✅ Merge to Main", callback_data: `merge:${branchName}` },
         { text: "❌ Discard", callback_data: `discard:${branchName}` }
