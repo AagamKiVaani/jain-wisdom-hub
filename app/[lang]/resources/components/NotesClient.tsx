@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Download, PlayCircle, BookOpen, X, ArrowLeft, ArrowRight, ArrowUp, ChevronRight, Maximize2, Layers, Sparkles } from "lucide-react";
+import BorderBeam from "@/components/BorderBeam";
 
 export interface Note {
   id: string;
@@ -429,8 +430,24 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                       setSelectedSection(null);
                       setSearchQuery("");
                     }}
-                    className={`group relative flex flex-col items-center justify-center p-10 md:p-12 w-full bg-white/70 dark:bg-zinc-900/70 backdrop-blur-2xl border border-zinc-200/90 dark:border-white/10 rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-500 transform text-center aspect-[4/3] md:aspect-auto md:min-h-[310px] ${seriesTheme.borderHover} ${seriesTheme.shadow} ${isComingSoon ? 'cursor-default' : 'hover:-translate-y-2'}`}
+                    onMouseMove={(e) => {
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                      e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+                    }}
+                    className={`group relative flex flex-col items-center justify-center p-10 md:p-12 w-full bg-white/75 dark:bg-zinc-900/75 noise-overlay backdrop-blur-2xl border border-zinc-200/90 dark:border-white/10 rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-500 transform text-center aspect-[4/3] md:aspect-auto md:min-h-[310px] ${seriesTheme.borderHover} ${seriesTheme.shadow} ${isComingSoon ? 'cursor-default' : 'hover:-translate-y-2'}`}
                   >
+                    {/* Aceternity Radial Cursor Spotlight */}
+                    <div
+                      className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+                      style={{
+                        background: `radial-gradient(350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(245, 158, 11, 0.18), transparent 80%)`,
+                      }}
+                    />
+
+                    {/* Animated Golden Conic Border Beam */}
+                    <BorderBeam size={220} duration={9} colorFrom="#f59e0b" colorTo="#fbbf24" className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
+
                     {(() => {
                       const posterUrl = getSeriesPoster(series);
                       if (posterUrl) {
@@ -512,8 +529,23 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                       setSelectedSection(section);
                       setSearchQuery("");
                     }}
-                    className={`group relative p-8 rounded-3xl overflow-hidden text-left flex flex-col justify-between aspect-[4/3] md:aspect-auto md:min-h-[210px] transition-all duration-500 ${isSectionComingSoon ? 'cursor-default' : `hover:shadow-2xl hover:-translate-y-1.5 ${theme.shadow} ${theme.hoverBorder} border border-transparent`}`}
+                    onMouseMove={(e) => {
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                      e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+                    }}
+                    className={`group relative p-8 rounded-3xl overflow-hidden text-left flex flex-col justify-between aspect-[4/3] md:aspect-auto md:min-h-[210px] noise-overlay transition-all duration-500 ${isSectionComingSoon ? 'cursor-default' : `hover:shadow-2xl hover:-translate-y-1.5 ${theme.shadow} ${theme.hoverBorder} border border-transparent`}`}
                   >
+                    {/* Aceternity Radial Cursor Spotlight */}
+                    <div
+                      className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+                      style={{
+                        background: `radial-gradient(300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(245, 158, 11, 0.18), transparent 80%)`,
+                      }}
+                    />
+
+                    {/* Animated Golden Conic Border Beam */}
+                    <BorderBeam size={180} duration={8} colorFrom="#f59e0b" colorTo="#fbbf24" className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
                     {/* Background Image Logic */}
                     {(() => {
                       const posterUrl = getSectionPoster(section);
@@ -631,11 +663,27 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                       '--highlight-hex': theme.hex,
                       '--highlight-hex-dark': theme.hexDark,
                     } as React.CSSProperties}
-                    className={`group relative flex flex-col md:flex-row bg-white/85 dark:bg-zinc-900/75 backdrop-blur-2xl border border-zinc-200/90 dark:border-white/10 rounded-3xl overflow-hidden shadow-md hover:shadow-2xl ${theme.hoverBorder} hover:-translate-y-1 transition-all duration-500 ${highlightedNoteId === note.id ? 'dynamic-breathing-highlight' : ''}`}
+                    onMouseMove={(e) => {
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                      e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+                    }}
+                    className={`group relative flex flex-col md:flex-row bg-white/85 dark:bg-zinc-900/75 noise-overlay backdrop-blur-2xl border border-zinc-200/90 dark:border-white/10 rounded-3xl overflow-hidden shadow-md hover:shadow-2xl ${theme.hoverBorder} hover:-translate-y-1 transition-all duration-500 ${highlightedNoteId === note.id ? 'dynamic-breathing-highlight' : ''}`}
                   >
+                    {/* Aceternity Radial Cursor Spotlight */}
+                    <div
+                      className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0"
+                      style={{
+                        background: `radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(245, 158, 11, 0.14), transparent 80%)`,
+                      }}
+                    />
+
+                    {/* Animated Golden Conic Border Beam */}
+                    <BorderBeam size={160} duration={9} colorFrom="#f59e0b" colorTo="#fbbf24" className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
+
                     {/* Video Thumbnail Area */}
                     <div
-                      className="w-full md:w-2/5 aspect-video md:aspect-auto relative bg-black shrink-0 overflow-hidden cursor-pointer group/video"
+                      className="w-full md:w-2/5 aspect-video md:aspect-auto relative bg-black shrink-0 overflow-hidden cursor-pointer group/video z-10"
                       onClick={() => {
                         if (note.videoLink) setPlayingVideoUrl(note.videoLink);
                       }}
@@ -670,9 +718,16 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                       )}
                     </div>
 
-                    {/* Content Area */}
-                    <div className="p-6 md:p-7 flex flex-col justify-between grow">
+                    {/* Content Area with Sacred Temple Inscription Typography */}
+                    <div className="p-6 md:p-7 flex flex-col justify-between grow relative z-10">
                       <div>
+                        {/* Decorative Brass Flourish Badge */}
+                        <div className="flex items-center gap-1.5 mb-2 text-amber-600/75 dark:text-amber-400/75 text-[10px] font-bold uppercase tracking-widest">
+                          <span className="text-amber-500">✦</span>
+                          <span>{selectedSection || note.series}</span>
+                          <span className="text-amber-500">✦</span>
+                        </div>
+
                         {(() => {
                           const containsDevanagari = (text?: string) => text ? /[\u0900-\u097F]/.test(text) : false;
                           const isTitleIndic = isIndic || containsDevanagari(note.title);
@@ -680,13 +735,15 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                           
                           return (
                             <>
-                              <h3 className={`text-xl font-bold text-gray-900 dark:text-white mb-2.5 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors ${isTitleIndic ? 'leading-normal tracking-normal pt-1' : 'leading-tight tracking-tight'}`}>
+                              <h3 className={`text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors ${isTitleIndic ? 'leading-normal tracking-normal pt-0.5' : 'leading-tight tracking-tight'}`}>
                                 {note.title}
                               </h3>
                               {note.description && (
-                                <p className={`text-gray-600 dark:text-gray-400 text-sm font-serif line-clamp-3 mb-4 leading-relaxed ${isDescIndic ? 'leading-relaxed pt-1 pb-1' : ''}`}>
-                                  {note.description}
-                                </p>
+                                <div className="border-l-2 border-amber-500/40 dark:border-amber-400/40 pl-3 py-1 my-2.5 bg-amber-500/5 dark:bg-amber-400/5 rounded-r-xl">
+                                  <p className={`text-gray-700 dark:text-amber-100/90 font-serif text-sm md:text-base leading-relaxed tracking-wide italic ${isDescIndic ? 'leading-relaxed' : ''}`}>
+                                    "{note.description}"
+                                  </p>
+                                </div>
                               )}
                             </>
                           );

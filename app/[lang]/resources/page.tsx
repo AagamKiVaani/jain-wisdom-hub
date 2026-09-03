@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { Sparkles } from "lucide-react";
 import NotesClient from "./components/NotesClient";
 import { fetchNotes } from "@/lib/notesService";
+import SacredParticlesCanvas from "@/components/SacredParticlesCanvas";
 
 export const metadata: Metadata = {
   title: "Resources & Notes | Jain Wisdom Hub",
@@ -52,12 +53,15 @@ export default async function ResourcesPage({ params }: { params: Promise<{ lang
   const notes = await fetchNotes();
 
   return (
-    <div className="relative flex flex-col items-center min-h-screen pt-20 md:pt-24 pb-24 overflow-x-clip bg-white dark:bg-black selection:bg-amber-500 selection:text-white">
+    <div className="relative flex flex-col items-center min-h-screen pt-20 md:pt-24 pb-24 overflow-x-clip bg-white dark:bg-black noise-overlay selection:bg-amber-500 selection:text-white">
       
       {/* Divine Ethereal Spiritual Atmosphere */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[700px] bg-gradient-to-b from-amber-500/10 via-yellow-500/5 to-transparent dark:from-amber-600/15 dark:via-yellow-500/5 dark:to-transparent blur-[90px] md:blur-[140px] rounded-full pointer-events-none z-0"></div>
       <div className="absolute top-1/4 -right-20 w-[500px] h-[500px] bg-amber-500/5 dark:bg-amber-400/10 blur-[110px] rounded-full pointer-events-none z-0"></div>
       <div className="absolute top-1/3 -left-20 w-[450px] h-[450px] bg-indigo-500/5 dark:bg-indigo-900/15 blur-[120px] rounded-full pointer-events-none z-0"></div>
+
+      {/* Living Celestial Golden Stardust Canvas */}
+      <SacredParticlesCanvas className="opacity-70 dark:opacity-90" />
 
       <div className="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto px-4">
         
