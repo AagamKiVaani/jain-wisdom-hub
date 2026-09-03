@@ -173,46 +173,55 @@ async function queryGemini(prompt, jsonMode = false) {
   if (!apiKey) throw new Error("GEMINI_API_KEY is not set in environment.");
 
   const models = [
-    "gemini-2.5-flash",
-    "gemini-flash-latest",
     "gemini-3.5-flash",
-    "gemini-3.6-flash",
-    "gemini-pro-latest"
+    "gemini-3.5-flash-lite",
+    "gemini-3.6-flash"
   ];
 
   let lastError = null;
 
   for (const model of models) {
-    try {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-      const body = {
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: {
-          temperature: 0.2
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        console.log(`Querying model: ${model} (attempt ${attempt})...`);
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+        const body = {
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature: 0.2
+          }
+        };
+
+        if (jsonMode) {
+          body.generationConfig.responseMimeType = "application/json";
         }
-      };
 
-      if (jsonMode) {
-        body.generationConfig.responseMimeType = "application/json";
+        const res = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body)
+        });
+
+        const data = await res.json();
+        if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
+          console.log(`✅ Model ${model} responded successfully!`);
+          return data.candidates[0].content.parts[0].text;
+        }
+
+        lastError = data;
+        if (data.error && data.error.code === 503) {
+          console.log(`⚠️ ${model} high demand spike (503). Waiting 3s before retry...`);
+          await new Promise(r => setTimeout(r, 3000));
+        } else {
+          break; // move to next model if not a transient 503
+        }
+      } catch (e) {
+        lastError = e;
       }
-
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-      });
-
-      const data = await res.json();
-      if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
-        return data.candidates[0].content.parts[0].text;
-      }
-      lastError = data;
-    } catch (e) {
-      lastError = e;
     }
   }
 
-  throw new Error(`All Gemini fallback models exhausted: ${JSON.stringify(lastError)}`);
+  throw new Error(`All Gemini models exhausted: ${JSON.stringify(lastError)}`);
 }
 
 // ----------------------------------------------------------------------------
