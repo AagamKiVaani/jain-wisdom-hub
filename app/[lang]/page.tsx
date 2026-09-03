@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   Users, 
   ArrowRight, 
@@ -14,7 +14,7 @@ import {
   VolumeX, 
   Compass,
   BookOpenCheck,
-  ChevronUp
+  ArrowUp
 } from "lucide-react";
 import DailyWisdom from "@/components/DailyWisdom";
 import { getTodaysQuote } from "@/lib/quoteService";
@@ -83,11 +83,21 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
   const isIndic = lang === 'hi' || lang === 'kn';
 
   const [soundEnabled, setSoundEnabled] = React.useState(true);
+  const [showScrollTop, setShowScrollTop] = React.useState(false);
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
 
+  // Monitor scroll for Floating Action controls
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 200);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   // High-performance real audio click using /sounds/resources/click2.mp3 with volume 0.65
-  const playTapSound = () => {
-    if (!soundEnabled) return;
+  const playTapSound = (force = false) => {
+    if (!soundEnabled && !force) return;
     try {
       const audio = new Audio("/sounds/resources/click2.mp3");
       audio.volume = 0.65;
@@ -180,7 +190,7 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
   }, []);
 
   return (
-    <div className="relative flex flex-col items-center min-h-screen px-4 pt-12 pb-24 overflow-x-hidden bg-white dark:bg-black selection:bg-amber-500 selection:text-black">
+    <div className="relative flex flex-col items-center min-h-screen px-4 pt-0 pb-24 overflow-x-hidden bg-white dark:bg-black selection:bg-amber-500 selection:text-black">
       
       {/* HTML5 Canvas for Celestial Golden Stardust */}
       <canvas 
@@ -191,23 +201,25 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
       {/* Optimized Background Gradient Blur */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-amber-500/5 dark:bg-amber-950/10 blur-[100px] md:blur-[160px] rounded-full pointer-events-none z-0" />
 
-      {/* Sound Enabled Card - Placed exactly below the navbar, attached to top right corner of the screen */}
-      <div className="absolute top-0 right-4 sm:right-8 z-40">
+      {/* 'Sounds Enabled' Card: Placed EXACTLY below the navbar on the top right corner of the screen */}
+      <div className="fixed top-16 right-4 sm:right-6 md:right-8 z-40">
         <motion.button
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.96 }}
           transition={springTransition}
           onClick={() => {
-            setSoundEnabled(!soundEnabled);
-            // Play sound immediately on state change for interactive confirmation
-            const nextState = !soundEnabled;
-            if (nextState) {
-              const audio = new Audio("/sounds/resources/click2.mp3");
-              audio.volume = 0.65;
-              audio.play().catch(() => {});
+            const newSoundState = !soundEnabled;
+            setSoundEnabled(newSoundState);
+            // Forcefully play sound feedback on toggle transition
+            if (newSoundState) {
+              try {
+                const audio = new Audio("/sounds/resources/click2.mp3");
+                audio.volume = 0.65;
+                audio.play().catch(() => {});
+              } catch (e) {}
             }
           }}
-          className="flex items-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-b-2xl border-x border-b border-amber-500/30 dark:border-amber-500/20 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md shadow-md hover:shadow-lg text-zinc-800 dark:text-zinc-200 text-[11px] sm:text-xs font-semibold transition-all"
+          className="flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white/90 dark:bg-zinc-900/90 border border-amber-500/30 dark:border-amber-500/20 backdrop-blur-md shadow-lg hover:shadow-xl text-zinc-800 dark:text-zinc-200 text-[11px] sm:text-xs font-semibold transition-all"
           aria-label="Toggle Sound Feedback"
         >
           {soundEnabled ? (
@@ -224,8 +236,32 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
         </motion.button>
       </div>
 
-      <div className="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto pt-6 sm:pt-8">
-          
+      {/* Floating controls strictly docked at bottom-6 right-6 z-50 */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.div
+            initial={{ opacity: 0, y: 15, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 15, scale: 0.9 }}
+            transition={springTransition}
+            className="fixed bottom-6 right-6 z-50"
+          >
+            <button
+              onClick={() => {
+                playTapSound();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+              className="flex items-center justify-center w-11 h-11 rounded-full bg-white dark:bg-zinc-900 border border-amber-500/30 text-amber-600 dark:text-amber-400 shadow-xl hover:bg-amber-50 dark:hover:bg-amber-950/20 transition-all focus:outline-none"
+              aria-label="Scroll to top"
+            >
+              <ArrowUp size={18} />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto pt-16 sm:pt-20">
+        
           <DailyWisdom lang={lang} quote={todaysQuote} />
           
           {/* Badge */}
@@ -233,7 +269,7 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={springTransition}
-            className="mb-6 mt-4 px-4 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950/20 text-amber-800 dark:text-amber-300 text-[10px] md:text-xs font-bold uppercase tracking-widest border border-amber-100 dark:border-amber-500/20 shadow-sm flex items-center gap-1.5"
+            className="mb-6 px-4 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950/20 text-amber-800 dark:text-amber-300 text-[10px] md:text-xs font-bold uppercase tracking-widest border border-amber-100 dark:border-amber-500/20 shadow-sm flex items-center gap-1.5"
           >
             <Compass size={12} className="animate-spin-slow text-amber-600 dark:text-amber-400" />
             {t.badge}
@@ -258,8 +294,8 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
             {t.subtitle}
           </motion.p>
 
-          {/* Navigation Grid - Prominent and placed directly below the hero header */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-4xl px-2 mb-16">
+          {/* Grid - Highly Prominent, Directly underneath the Hero header */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-4xl px-2 mb-16 relative z-10">
             
             <Link 
               href={`/${lang}/tirthankars`}
@@ -348,7 +384,7 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
 
           </div>
 
-          {/* Archival Manuscript Panel (Digambar Shastra Inscription) - Strict Reverence to Acharya Umāsvāmi */}
+          {/* Archival Manuscript Noise Glassmorphism Panel (Digambar Shastra Inscription) - Author strictly Acharya Umāsvāmi */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -380,23 +416,6 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
             </div>
           </motion.div>
       </div>
-
-      {/* Floating controls strictly docked at fixed bottom-6 right-6 z-50 */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
-        <motion.button
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.92 }}
-          onClick={() => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-            playTapSound();
-          }}
-          className="p-3 rounded-full bg-white/90 dark:bg-zinc-900/90 border border-amber-500/30 dark:border-amber-500/20 shadow-lg text-amber-600 dark:text-amber-400 backdrop-blur-md transition-all hover:bg-amber-50 dark:hover:bg-zinc-850"
-          aria-label="Scroll to Top"
-        >
-          <ChevronUp size={20} />
-        </motion.button>
-      </div>
-
     </div>
   );
 }
