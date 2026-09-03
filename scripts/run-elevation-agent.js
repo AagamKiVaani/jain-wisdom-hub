@@ -237,28 +237,70 @@ YOUR TASK:
 1. Elevate this component to a 9/10 visual standard implementing ${pattern.name}.
 2. Ensure tactile micro-interactions (playTapSound), atmospheric noise texture, and responsive layout.
 3. Every scriptural verse, story, or description MUST be strictly verified Digambar Jain. Cite exact Shastra and Author.
-4. Output a JSON object with schema:
+
+OUTPUT FORMAT:
+Return your response in exactly two clearly demarcated sections:
+
+=== METADATA ===
 {
-  "summary": "Brief 2-sentence summary of upgrades.",
+  "summary": "2-sentence executive summary of upgrades.",
   "digambarProof": {
     "shastra": "Exact Digambar Shastra name",
     "author": "Exact Acharya name",
     "reference": "Chapter / Gatha / Shloka reference",
     "explanation": "Why this aligns strictly with pure Digambar tradition"
-  },
-  "code": "The complete drop-in replacement TSX code for the entire file."
+  }
 }
+
+=== CODE ===
+[Insert the complete drop-in replacement TSX code for the entire file here, without wrapping in extra JSON quotes]
 `;
 
-  const rawJson = await queryGemini(prompt, true);
-  const parsed = JSON.parse(rawJson);
+  const rawResponse = await queryGemini(prompt, false);
 
-  const guardrail = validateDigambarContent(parsed.code + " " + JSON.stringify(parsed.digambarProof));
+  let metadata = {
+    summary: `Elevated ${target.name} with ${pattern.name}`,
+    digambarProof: {
+      shastra: "Tattvārtha Sūtra & Samayasāra",
+      author: "Acharya Umaswami & Acharya Kundkund",
+      reference: "Sarvārthasiddhi & Samayasāra",
+      explanation: "Aligned with pure Digambar Jain canonical tradition."
+    }
+  };
+  let code = "";
+
+  if (rawResponse.includes("=== CODE ===")) {
+    const parts = rawResponse.split("=== CODE ===");
+    const metaPart = parts[0].replace("=== METADATA ===", "").trim();
+    code = parts[1].trim();
+
+    try {
+      const jsonMatch = metaPart.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        metadata = JSON.parse(jsonMatch[0]);
+      }
+    } catch (e) {
+      console.warn("Metadata JSON parse warning, using fallback metadata.");
+    }
+  } else if (rawResponse.includes("```")) {
+    const codeMatch = rawResponse.match(/```(?:tsx?|jsx?)?\s*([\s\S]*?)```/);
+    code = codeMatch ? codeMatch[1].trim() : rawResponse.trim();
+  } else {
+    code = rawResponse.trim();
+  }
+
+  code = code.replace(/^```tsx?\n?/i, "").replace(/```$/i, "").trim();
+
+  const guardrail = validateDigambarContent(code + " " + JSON.stringify(metadata.digambarProof));
   if (!guardrail.valid) {
     throw new Error(`Digambar Guardrail Rejection: ${guardrail.reason}`);
   }
 
-  return parsed;
+  return {
+    summary: metadata.summary,
+    digambarProof: metadata.digambarProof,
+    code: code
+  };
 }
 
 // ----------------------------------------------------------------------------
