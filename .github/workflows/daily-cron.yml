@@ -24,7 +24,7 @@ jobs:
         run: |
            curl --fail -m 30 -X GET \
             -H "Authorization: Bearer ${{ secrets.AAGAM_CRON_KEY }}" \
-            https://jain-wisdom-hub.vercel.app/api/cron/tithi
+            https://aagamkivaani.vercel.app/api/cron/tithi
 
   daily-quote:
     runs-on: ubuntu-latest
@@ -36,4 +36,4 @@ jobs:
         run: |
            curl --fail -m 30 -X GET \
             -H "Authorization: Bearer ${{ secrets.AAGAM_CRON_KEY }}" \
-            https://jain-wisdom-hub.vercel.app/api/cron/daily-quote
+            https://aagamkivaani.vercel.app/api/cron/daily-quote
