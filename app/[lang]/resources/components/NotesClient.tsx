@@ -226,7 +226,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
   const getSeriesPoster = (seriesName: string) => {
     const name = seriesName.toLowerCase();
     if (name.includes('decoding')) return '/images/resources/posters/decoding_jainism.jpeg';
-    if (name.includes('tatvarth')) return '/images/resources/posters/tatvarth-series.jpeg';
+    if (name.includes('tatvarth')) return '/images/resources/posters/tatvarth-series.png';
     if (name.includes('the jain ramayan')) return '/images/resources/posters/the-jain-ramayan.jpeg';
     return null;
   };
