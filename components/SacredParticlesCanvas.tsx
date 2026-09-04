@@ -17,7 +17,7 @@ interface Particle {
 
 export default function SacredParticlesCanvas({
   className = "",
-  quantity = 45,
+  quantity = 75,
 }: {
   className?: string;
   quantity?: number;
@@ -34,9 +34,9 @@ export default function SacredParticlesCanvas({
     let width = (canvas.width = canvas.parentElement?.clientWidth || window.innerWidth);
     let height = (canvas.height = canvas.parentElement?.clientHeight || window.innerHeight);
 
-    // Dynamic particle count: lower on small mobile screens for optimal battery & performance
+    // Dynamic particle count: optimal density for mobile & desktop
     const isMobile = width < 768;
-    const particleCount = isMobile ? Math.min(24, quantity) : quantity;
+    const particleCount = isMobile ? Math.min(45, quantity) : quantity;
 
     // Sacred golden and amber color palette
     const goldTones = [
@@ -53,9 +53,9 @@ export default function SacredParticlesCanvas({
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        radius: Math.random() * 1.8 + 0.6,
-        baseAlpha: Math.random() * 0.4 + 0.2,
-        alpha: Math.random() * 0.4 + 0.2,
+        radius: Math.random() * 2.2 + 1.0,
+        baseAlpha: Math.random() * 0.4 + 0.35,
+        alpha: Math.random() * 0.4 + 0.35,
         pulseSpeed: Math.random() * 0.02 + 0.008,
         pulseOffset: Math.random() * Math.PI * 2,
         vx: (Math.random() - 0.5) * 0.25,

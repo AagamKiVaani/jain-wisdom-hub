@@ -5,6 +5,7 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 import { ArrowLeft, Play, Pause, Info, BookOpen, Quote, Sparkles, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { Topic } from "@/lib/namokar-data";
+import SacredParticlesCanvas from "@/components/SacredParticlesCanvas";
 
 export default function TopicClient({ data, lang, l }: { data: Topic, lang: string, l: "en" | "hi" | "kn" }) {
   const [expandedLine, setExpandedLine] = useState<string | null>(null);
@@ -53,12 +54,15 @@ export default function TopicClient({ data, lang, l }: { data: Topic, lang: stri
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-black pb-32 overflow-hidden selection:bg-orange-500 selection:text-white">
+    <div className="relative min-h-screen bg-zinc-50 dark:bg-black pb-32 overflow-hidden selection:bg-orange-500 selection:text-white">
       
-      {/* 1. FIXED NAVIGATION */}
+      {/* Background Celestial Particles */}
+      <SacredParticlesCanvas className="opacity-80 dark:opacity-90" quantity={70} />
+
+      {/* 1. FIXED NAVIGATION - Positioned just below sticky navbar (Navbar h-16 = 64px) */}
       <Link 
         href={`/${lang}`} 
-        className="fixed top-6 left-4 md:top-8 md:left-8 z-[100] flex items-center gap-2 text-zinc-600 dark:text-zinc-400 hover:text-orange-600 dark:hover:text-orange-400 transition-all bg-white/80 dark:bg-black/60 px-5 py-2.5 rounded-full backdrop-blur-xl border border-zinc-200 dark:border-white/10 shadow-lg group"
+        className="fixed top-20 left-4 md:top-24 md:left-8 z-40 flex items-center gap-2 text-zinc-700 dark:text-zinc-300 hover:text-orange-600 dark:hover:text-orange-400 transition-all bg-white/90 dark:bg-zinc-950/80 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full backdrop-blur-xl border border-zinc-200 dark:border-white/10 shadow-lg hover:shadow-xl group"
       >
          <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> 
          <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.25em]">LIBRARY</span>

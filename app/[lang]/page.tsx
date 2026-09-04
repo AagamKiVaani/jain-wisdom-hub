@@ -134,22 +134,25 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
+    const isMobileScreen = window.innerWidth < 768;
+    const count = isMobileScreen ? 50 : 90;
+
     const createParticle = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
       return {
         x: Math.random() * width,
         y: height + 10,
-        radius: Math.random() * 1.2 + 0.4,
-        speedY: -(Math.random() * 0.4 + 0.15),
-        speedX: (Math.random() - 0.5) * 0.2,
-        alpha: Math.random() * 0.4 + 0.15,
-        decay: Math.random() * 0.0015 + 0.0005
+        radius: Math.random() * 1.8 + 0.9,
+        speedY: -(Math.random() * 0.45 + 0.15),
+        speedX: (Math.random() - 0.5) * 0.25,
+        alpha: Math.random() * 0.4 + 0.35,
+        decay: Math.random() * 0.0012 + 0.0004
       };
     };
 
     // Initialize particles
-    for (let i = 0; i < 35; i++) {
+    for (let i = 0; i < count; i++) {
       particles.push({
         ...createParticle(),
         y: Math.random() * window.innerHeight
@@ -171,9 +174,9 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
         } else {
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(212, 175, 55, ${p.alpha})`; // Divine Gold
-          ctx.shadowBlur = 3;
-          ctx.shadowColor = "rgba(212, 175, 55, 0.4)";
+          ctx.fillStyle = `rgba(245, 158, 11, ${p.alpha})`; // Radiant Sacred Amber-Gold
+          ctx.shadowBlur = 6;
+          ctx.shadowColor = `rgba(245, 158, 11, ${p.alpha * 0.7})`;
           ctx.fill();
         }
       });
