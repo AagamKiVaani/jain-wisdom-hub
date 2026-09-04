@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Sparkles, Share2 } from "lucide-react";
+import { motion } from "framer-motion";
 import { toPng } from 'html-to-image';
 import download from 'downloadjs';
 
@@ -28,9 +29,9 @@ interface DailyWisdomProps {
 }
 
 const translations = {
-  en: { quoteTitle: "Quote of the day" },
-  hi: { quoteTitle: "आज का सूत्र" },
-  kn: { quoteTitle: "ಇಂದಿನ ಬೋಧನೆ" }
+  en: { quoteTitle: "Quote of the day", share: "Share", sharing: "Sharing..." },
+  hi: { quoteTitle: "आज का सूत्र", share: "शेयर करें", sharing: "साझा हो रहा है..." },
+  kn: { quoteTitle: "ಇಂದಿನ ಬೋಧನೆ", share: "ಹಂಚಿಕೊಳ್ಳಿ", sharing: "ಹಂಚಲಾಗುತ್ತಿದೆ..." }
 };
 
 export default function DailyWisdom({ lang, quote }: DailyWisdomProps) {
@@ -87,6 +88,16 @@ export default function DailyWisdom({ lang, quote }: DailyWisdomProps) {
     setIsSharing(true);
 
     try {
+      // Tactile audio feedback & haptics
+      try {
+        const a = new Audio("/sounds/resources/click2.mp3");
+        a.volume = 0.65;
+        a.play().catch(() => {});
+        if (typeof navigator !== "undefined" && navigator.vibrate) {
+          navigator.vibrate(12);
+        }
+      } catch (e) {}
+
       // Small delay to ensure render engine catches the image if it just loaded
       await new Promise(resolve => setTimeout(resolve, 100));
 
@@ -96,13 +107,16 @@ export default function DailyWisdom({ lang, quote }: DailyWisdomProps) {
       });
       
       const blob = await (await fetch(dataUrl)).blob();
-      const file = new File([blob], 'jain-wisdom-quote.png', { type: 'image/png' });
+      const file = new File([blob], 'aagam-ki-vaani-quote.png', { type: 'image/png' });
 
-      const shareText = `✨ *Today's Jain Wisdom* ✨\n\n"${text}"\n\n📲 *Download the App:*\nhttps://jain-wisdom-hub.vercel.app \n\n🎥 *Watch on YouTube:*\nhttps://youtube.com/@AagamKiVani`;
+      const shareUrl = "https://aagamkivaani.vercel.app";
+      const youtubeUrl = "https://youtube.com/@aagamkivaani";
+
+      const shareText = `✨ *Aagam Ki Vaani | आज का सूत्र* ✨\n\n"${text}"\n— *${author}*\n\n📲 *Explore Scriptures & Download Notes:*\n${shareUrl}\n\n🎥 *Watch on YouTube:*\n${youtubeUrl}`;
 
       const shareData = {
         files: [file],
-        title: 'Jain Wisdom Daily',
+        title: 'Aagam Ki Vaani — Daily Wisdom',
         text: shareText,
       };
 
@@ -115,7 +129,7 @@ export default function DailyWisdom({ lang, quote }: DailyWisdomProps) {
 
         await navigator.share(shareData);
       } else {
-        download(dataUrl, 'jain-wisdom-quote.png');
+        download(dataUrl, 'aagam-ki-vaani-quote.png');
       }
     } catch (err) {
       console.error('Share failed:', err);
@@ -126,7 +140,7 @@ export default function DailyWisdom({ lang, quote }: DailyWisdomProps) {
 
   return (
     <>
-      {/* ==================== 1. VISIBLE BAR (Unchanged) ==================== */}
+      {/* ==================== 1. VISIBLE BAR ==================== */}
       <div className="relative w-full max-w-6xl mx-auto mt-6 mb-8 px-4 animate-in fade-in slide-in-from-top-4 duration-1000">
         <div className="relative p-[1px] rounded-2xl overflow-hidden bg-gradient-to-r from-orange-200 via-orange-400 to-orange-200 dark:from-orange-900 dark:via-orange-600 dark:to-orange-900 bg-[length:200%_auto] animate-shimmer">
           <div className="relative bg-white/95 dark:bg-black/95 backdrop-blur-md rounded-2xl py-3 px-5 md:px-8 flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 text-center shadow-sm">
@@ -152,24 +166,44 @@ export default function DailyWisdom({ lang, quote }: DailyWisdomProps) {
             
             <div className="hidden md:block w-[1px] h-4 bg-zinc-200 dark:bg-zinc-800 shrink-0"></div>
             
-            <button 
+            {/* VIBRANT BREATHING POPPING SHARE BUTTON */}
+            <motion.button 
               onClick={handleShare}
               disabled={isSharing}
-              className="group flex items-center gap-2 px-4 py-1.5 rounded-full 
-                         bg-zinc-50 dark:bg-white/5 border border-zinc-200 dark:border-white/10
-                         hover:bg-orange-50 dark:hover:bg-orange-500/10 hover:border-orange-200 dark:hover:border-orange-500/30
-                         transition-all duration-300"
+              animate={isSharing ? {} : {
+                scale: [1, 1.04, 1],
+                boxShadow: [
+                  "0 0 0 0 rgba(249, 115, 22, 0)",
+                  "0 0 14px 3px rgba(249, 115, 22, 0.45)",
+                  "0 0 0 0 rgba(249, 115, 22, 0)"
+                ]
+              }}
+              transition={{
+                duration: 2.2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.94 }}
+              className="relative group flex items-center gap-2 px-4 py-1.5 rounded-full 
+                         bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 
+                         hover:from-amber-400 hover:via-orange-400 hover:to-amber-500
+                         text-white font-bold shadow-lg shadow-orange-500/30 dark:shadow-orange-950/50
+                         border border-amber-300/50 cursor-pointer overflow-hidden transition-all duration-300 shrink-0"
               title="Share Quote"
             > 
-              <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
-                {isSharing ? "Sharing..." : "Share"}
+              {/* Light sweep gleam effect on hover */}
+              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/35 to-transparent pointer-events-none" />
+
+              <span className="text-[11px] font-extrabold uppercase tracking-widest text-white drop-shadow-sm">
+                {isSharing ? t.sharing : t.share}
               </span>
               {isSharing ? (
-                <Sparkles className="w-3 h-3 text-orange-500 animate-spin" /> 
+                <Sparkles className="w-3.5 h-3.5 text-white animate-spin" /> 
               ) : (
-                <Share2 className="w-3 h-3 text-zinc-400 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors" />
+                <Share2 className="w-3.5 h-3.5 text-white group-hover:rotate-12 transition-transform drop-shadow-sm" />
               )}
-            </button>
+            </motion.button>
 
           </div>
         </div>
@@ -240,11 +274,13 @@ export default function DailyWisdom({ lang, quote }: DailyWisdomProps) {
             </p>
 
             {/* Footer Branding */}
-            <div className="absolute bottom-20 text-lg flex items-center gap-2 text-white/60 z-20">
-               <span>Jain Wisdom App</span>
+            <div className="absolute bottom-16 text-xl flex items-center gap-3 text-white/80 z-20 font-sans tracking-wide">
+               <span>🌐 aagamkivaani.vercel.app</span>
+               <span>•</span>
+               <span>🎥 YouTube: @aagamkivaani</span>
             </div>
-            <div className="absolute bottom-10 text-lg flex items-center gap-2 text-white/60 z-20">
-               <span>AagamKiVaani YouTube</span>
+            <div className="absolute bottom-8 text-sm text-white/50 z-20 font-sans tracking-widest uppercase">
+               आगम से ज्ञान, ज्ञान से दर्शन, दर्शन से आत्मकल्याण
             </div>
         </div>
       </div>

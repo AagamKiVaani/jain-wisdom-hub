@@ -105,7 +105,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-lg mx-auto mb-8">
             {/* YOUTUBE */}
             <a 
-                href="https://www.youtube.com/@AagamKiVani" 
+                href="https://www.youtube.com/@aagamkivaani" 
                 target="_blank"
                 className="flex flex-col items-center justify-center p-6 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-red-500 hover:shadow-[0_0_20px_rgba(239,68,68,0.2)] transition-all group"
             >

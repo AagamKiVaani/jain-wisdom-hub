@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     "Jain Notes PDF",
     "Aagam"
   ],
-  authors: [{ name: "Aagam Ki Vaani", url: "https://www.youtube.com/@AagamKiVani" }],
+  authors: [{ name: "Aagam Ki Vaani", url: "https://www.youtube.com/@aagamkivaani" }],
   creator: "Aagam Ki Vaani",
   publisher: "Aagam Ki Vaani",
   manifest: "/manifest.json",
@@ -153,7 +153,7 @@ export default async function RootLayout({
         "url": siteUrl,
         "logo": `${siteUrl}/icons/logo.png`,
         "sameAs": [
-          "https://www.youtube.com/@AagamKiVani",
+          "https://www.youtube.com/@aagamkivaani",
           "https://www.instagram.com/aagam_ki_vaani",
           "https://www.facebook.com/share/18FUyhp5Pd/"
         ]
