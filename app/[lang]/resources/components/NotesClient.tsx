@@ -26,7 +26,7 @@ const getThemeColors = (series: string, section?: string) => {
   if (sLower.includes('ramayan')) themeName = 'golden';
   else if (sLower.includes('decoding')) themeName = 'cyan';
   else if (sLower.includes('stotra') || sLower.includes('stavan')) themeName = 'pink';
-  else if (sLower.includes('mahaveer') || sLower.includes('mahavir') || sLower.includes('mahagatha')) themeName = 'golden';
+  else if (sLower.includes('mahaveer') || sLower.includes('mahavir') || sLower.includes('mahagatha')) themeName = 'purple';
   else if (sLower.includes('gems')) themeName = 'teal';
   else if (sLower.includes('tatvarth') && section) {
     const s = section.toLowerCase();
@@ -112,10 +112,10 @@ const getSeriesTheme = (seriesName: string) => {
   }
   if (name.includes('mahaveer') || name.includes('mahavir') || name.includes('mahagatha')) {
     return {
-      glow: 'from-amber-500/30 via-yellow-500/25 to-orange-500/15',
-      borderHover: 'hover:border-amber-500/70',
-      shadow: 'hover:shadow-amber-500/25',
-      accentText: 'text-amber-500',
+      glow: 'from-purple-600/30 via-violet-500/25 to-indigo-500/15',
+      borderHover: 'hover:border-purple-500/70',
+      shadow: 'hover:shadow-purple-500/25',
+      accentText: 'text-purple-500',
     };
   }
   if (name.includes('gems')) {
@@ -164,6 +164,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
   // Direct In-App PDF Download State with interactive loading feedback
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const [downloadedId, setDownloadedId] = useState<string | null>(null);
+  const [failedThumbnails, setFailedThumbnails] = useState<Record<string, boolean>>({});
 
   const handleDownload = async (note: Note) => {
     if (downloadingId) return; // Prevent multiple simultaneous triggers
@@ -444,7 +445,12 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
 
   const getVideoThumbnail = (urlOrId: string) => {
     const { type, id } = getVideoTypeAndId(urlOrId);
-    if (type === 'youtube') return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+    if (type === 'youtube') {
+      if (failedThumbnails[id]) {
+        return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+      }
+      return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+    }
     if (type === 'drive') return `https://drive.google.com/thumbnail?id=${id}&sz=w1200`;
     return "";
   };
@@ -456,6 +462,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
     if (name.includes('the jain ramayan') || name.includes('ramayan')) return '/images/resources/posters/the-jain-ramayan.jpeg';
     if (name.includes('stotra') || name.includes('stavan')) return '/images/resources/posters/stotra-stavan.png';
     if (name.includes('mahaveer') || name.includes('mahavir') || name.includes('mahagatha')) return '/images/resources/posters/Bhagwan-Mahveer.png';
+    if (name.includes('gems')) return '/images/resources/posters/gems-of-jainism.png';
     return null;
   };
 
@@ -958,19 +965,39 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                         >
                           {hasValidVideo(note) ? (
                             <>
-                              <img
-                                src={getVideoThumbnail(note.videoLink)}
-                                alt={note.title}
-                                loading="lazy"
-                                decoding="async"
-                                onError={(e) => {
-                                  const target = e.currentTarget;
-                                  if (target.src.includes('maxresdefault.jpg')) {
-                                    target.src = target.src.replace('maxresdefault.jpg', 'hqdefault.jpg');
-                                  }
-                                }}
-                                className="absolute inset-0 w-full h-full object-cover opacity-95 md:opacity-90 group-hover/video:opacity-100 transition-all duration-700 group-hover/video:scale-105"
-                              />
+                              {(() => {
+                                const { id: videoId } = getVideoTypeAndId(note.videoLink);
+                                return (
+                                  <img
+                                    key={note.videoLink}
+                                    src={getVideoThumbnail(note.videoLink)}
+                                    alt={note.title}
+                                    loading="lazy"
+                                    decoding="async"
+                                    ref={(img) => {
+                                      if (img && img.complete && img.naturalWidth <= 120 && img.src.includes('maxresdefault.jpg')) {
+                                        img.src = img.src.replace('maxresdefault.jpg', 'hqdefault.jpg');
+                                        if (videoId) setFailedThumbnails(prev => ({ ...prev, [videoId]: true }));
+                                      }
+                                    }}
+                                    onLoad={(e) => {
+                                      const target = e.currentTarget;
+                                      if (target.naturalWidth <= 120 && target.src.includes('maxresdefault.jpg')) {
+                                        target.src = target.src.replace('maxresdefault.jpg', 'hqdefault.jpg');
+                                        if (videoId) setFailedThumbnails(prev => ({ ...prev, [videoId]: true }));
+                                      }
+                                    }}
+                                    onError={(e) => {
+                                      const target = e.currentTarget;
+                                      if (target.src.includes('maxresdefault.jpg')) {
+                                        target.src = target.src.replace('maxresdefault.jpg', 'hqdefault.jpg');
+                                        if (videoId) setFailedThumbnails(prev => ({ ...prev, [videoId]: true }));
+                                      }
+                                    }}
+                                    className="absolute inset-0 w-full h-full object-cover opacity-95 md:opacity-90 group-hover/video:opacity-100 transition-all duration-700 group-hover/video:scale-105"
+                                  />
+                                );
+                              })()}
                               <div className="absolute inset-0 bg-black/25 group-hover/video:bg-black/10 transition-colors duration-500"></div>
 
                               <div className="absolute inset-0 flex items-center justify-center">
