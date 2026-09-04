@@ -29,7 +29,7 @@ const poppins = Poppins({
   display: "swap", // Ensures text shows up immediately (FCP improvement)
 });
 
-const siteUrl = 'https://jain-wisdom-hub.vercel.app';
+const siteUrl = 'https://aagamkivaani.vercel.app';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -63,13 +63,17 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   icons: {
     icon: [
-      { url: '/icons/favicon-32x32.png', sizes: '32x32' },
-      { url: '/icons/icon-192x192.png', sizes: '192x192' },
-      { url: '/icons/icon-512x512.png', sizes: '512x512' }
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icons/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/icons/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icons/icon-96x96.png', sizes: '96x96', type: 'image/png' },
+      { url: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png' }
     ],
     apple: [
-      { url: '/icons/apple-touch-icon.png', sizes: '180x180' },
+      { url: '/icons/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     ],
+    shortcut: '/favicon.ico',
   },
   openGraph: {
     type: "website",
@@ -160,6 +164,12 @@ export default async function RootLayout({
   return (
     <html lang={lang} suppressHydrationWarning>
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/icons/favicon-48x48.png" type="image/png" sizes="48x48" />
+        <link rel="icon" href="/icons/favicon-32x32.png" type="image/png" sizes="32x32" />
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+        <meta name="theme-color" content="#09090b" />
+        <meta property="og:site_name" content="Aagam Ki Vaani" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
