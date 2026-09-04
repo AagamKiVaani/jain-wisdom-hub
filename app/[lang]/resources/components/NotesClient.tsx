@@ -511,8 +511,8 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                       })()}
 
                       {isComingSoon && (
-                        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20 backdrop-blur-[2px] transition-all duration-500">
-                          <div className="px-8 py-3 border border-white/30 bg-black/60 rounded-full text-white font-black tracking-widest uppercase text-2xl rotate-[-5deg] shadow-2xl backdrop-blur-md">
+                        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/30 backdrop-blur-[1.5px] transition-all duration-500">
+                          <div className="px-4 py-1.5 border border-white/25 bg-black/75 rounded-full text-white font-bold tracking-widest uppercase text-xs md:text-sm shadow-xl backdrop-blur-md">
                             Coming Soon
                           </div>
                         </div>
@@ -662,8 +662,8 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                       })()}
 
                       {isSectionComingSoon && (
-                        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20 backdrop-blur-[2px]">
-                          <div className="px-6 py-2 border border-white/30 bg-black/60 rounded-full text-white font-black tracking-widest uppercase text-lg rotate-[-5deg] shadow-2xl backdrop-blur-md">
+                        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/30 backdrop-blur-[1.5px]">
+                          <div className="px-3.5 py-1 border border-white/25 bg-black/75 rounded-full text-white font-bold tracking-wider uppercase text-[11px] md:text-xs shadow-lg backdrop-blur-md">
                             Coming Soon
                           </div>
                         </div>
@@ -863,20 +863,43 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                           </Card3DItem>
 
                           <Card3DItem translateZ={45}>
-                            {note.driveFileId ? (
-                              <a
-                                href={`https://drive.google.com/uc?export=download&id=${note.driveFileId}`}
-                                onClick={() => playTapSound()}
-                                className={`mt-4 flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl font-bold text-sm uppercase tracking-widest transition-all duration-300 shadow-sm active:scale-[0.98] group/btn ${theme.badgeBg} ${theme.badgeHoverBg} ${theme.badgeBorder} border ${theme.badgeText}`}
-                              >
-                                <Download size={18} className="transition-transform group-hover/btn:-translate-y-0.5" />
-                                {t?.download || "Download PDF"}
-                              </a>
-                            ) : (
-                              <div className="mt-4 py-3.5 text-center text-xs font-bold uppercase tracking-widest text-zinc-400 border border-dashed border-zinc-300 dark:border-zinc-700 rounded-xl">
-                                PDF Coming Soon
-                              </div>
-                            )}
+                            {(() => {
+                              const rawDrive = (note.driveFileId || "").trim().toLowerCase();
+                              
+                              // If user entered 'no', 'none', 'false', 'n/a' etc in Google Sheet -> hide PDF option completely
+                              const isNoPdf = rawDrive === 'no' || rawDrive === 'none' || rawDrive === 'n' || rawDrive === 'false' || rawDrive === 'na' || rawDrive === 'n/a';
+                              if (isNoPdf) {
+                                return null;
+                              }
+
+                              // If a valid drive file ID or URL is provided
+                              if (note.driveFileId && note.driveFileId.trim() !== '') {
+                                const isDirectUrl = note.driveFileId.startsWith('http://') || note.driveFileId.startsWith('https://');
+                                const downloadUrl = isDirectUrl 
+                                  ? note.driveFileId 
+                                  : `https://drive.google.com/uc?export=download&id=${note.driveFileId}`;
+
+                                return (
+                                  <a
+                                    href={downloadUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={() => playTapSound()}
+                                    className={`mt-4 flex items-center justify-center gap-2 w-full py-2.5 sm:py-3 px-4 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider sm:tracking-widest transition-all duration-300 shadow-sm active:scale-[0.98] group/btn ${theme.badgeBg} ${theme.badgeHoverBg} ${theme.badgeBorder} border ${theme.badgeText}`}
+                                  >
+                                    <Download size={16} className="transition-transform group-hover/btn:-translate-y-0.5" />
+                                    {t?.download || "Download PDF"}
+                                  </a>
+                                );
+                              }
+
+                              // If left blank -> Coming Soon (reduced size)
+                              return (
+                                <div className="mt-3 py-2 text-center text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 border border-dashed border-zinc-200 dark:border-zinc-800/80 rounded-xl bg-zinc-50/50 dark:bg-zinc-900/30">
+                                  PDF Coming Soon
+                                </div>
+                              );
+                            })()}
                           </Card3DItem>
                         </div>
                       </div>
