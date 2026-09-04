@@ -259,14 +259,13 @@ export default function PdfGenerator({ notes = [] }: { notes?: Note[] }) {
         pdf.setFont("helvetica", "italic");
         pdf.setFontSize(14);
         
-        // Dynamically use localhost for testing if running locally
-        const isLocalhost = typeof window !== 'undefined' && window.location.origin.includes('localhost');
-        const websiteBaseUrl = isLocalhost ? "http://localhost:3000/en/resources" : "https://jain-wisdom-hub.vercel.app/en/resources";
+        // Always use production Aagam Ki Vaani URL (no localhost)
+        const websiteBaseUrl = "https://aagamkivaani.vercel.app/en/resources";
         
-        const fullWebsiteUrl = selectedNoteId ? `${websiteBaseUrl}?highlight=${selectedNoteId}` : websiteBaseUrl;
+        const fullWebsiteUrl = selectedNoteId ? `${websiteBaseUrl}?highlight=${encodeURIComponent(selectedNoteId)}` : websiteBaseUrl;
         
-        const part1 = "Wanna Watch this Sutra Video? Click Here --> ";
-        const part2 = "Jain Wisdom Hub";
+        const part1 = "Wanna Watch this Video? Click Here --> ";
+        const part2 = "Aagam Ki Vaani";
         
         pdf.setTextColor(80, 80, 80);
         const p1W = pdf.getTextWidth(part1);
@@ -427,7 +426,7 @@ export default function PdfGenerator({ notes = [] }: { notes?: Note[] }) {
                 
                 {selectedNoteId && (
                   <p className="text-xs text-orange-400/80 font-mono mt-2 break-all bg-orange-950/30 p-2 rounded">
-                    Will link to: /resources?highlight={selectedNoteId}
+                    Will link to: https://aagamkivaani.vercel.app/en/resources?highlight={selectedNoteId}
                   </p>
                 )}
               </div>

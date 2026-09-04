@@ -260,11 +260,23 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
   // Mobile center-focus viewport illumination state
   const [activeMobileCardId, setActiveMobileCardId] = useState<string | null>(null);
 
-  // Handle 'highlight' query parameter
+  // Handle 'highlight' query parameter from PDF or external links
   useEffect(() => {
-    const highlightId = searchParams.get('highlight');
-    if (highlightId && initialNotes.length > 0) {
-      const targetNote = initialNotes.find(n => n.id === highlightId);
+    const rawHighlight = searchParams.get('highlight');
+    if (rawHighlight && initialNotes.length > 0) {
+      let highlightId = "";
+      try {
+        highlightId = decodeURIComponent(rawHighlight).trim();
+      } catch {
+        highlightId = rawHighlight.trim();
+      }
+
+      // Case-insensitive match on ID or Title
+      const targetNote = initialNotes.find(n => 
+        n.id.toLowerCase() === highlightId.toLowerCase() ||
+        n.title.toLowerCase() === highlightId.toLowerCase()
+      );
+
       if (targetNote) {
         setSelectedSeries(targetNote.series);
         if (targetNote.section) {
@@ -272,36 +284,46 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
         } else {
           setSelectedSection(null);
         }
-        setTargetScrollId(highlightId);
+        setTargetScrollId(targetNote.id);
       }
     }
   }, [searchParams, initialNotes]);
 
-  // Scroll to highlighted note when grid is shown
+  // Scroll to highlighted note when grid is shown (with retry to ensure Framer Motion has mounted)
   useEffect(() => {
-    if (targetScrollId && selectedSeries !== null) {
-      // Need a small timeout to let the grid and entrance animations render first
-      const scrollTimer = setTimeout(() => {
-        const element = document.getElementById(`note-${targetScrollId}`);
-        if (element) {
-          // Scroll into view first
-          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          
-          // Wait for smooth scroll to finish (approx 800ms) before highlighting
-          setTimeout(() => {
-            setHighlightedNoteId(targetScrollId);
-            
-            // Remove the highlight after 5 seconds
-            setTimeout(() => {
-              setHighlightedNoteId(null);
-              setTargetScrollId(null);
-            }, 5000);
-          }, 800);
-        }
-      }, 500); // 500ms delay to ensure elements are mounted and animating
-      
-      return () => clearTimeout(scrollTimer);
-    }
+    if (!targetScrollId) return;
+
+    let attempts = 0;
+    const maxAttempts = 35; // Try up to 3.5 seconds
+    let scrollTimeout: NodeJS.Timeout;
+
+    const tryScrollAndHighlight = () => {
+      attempts++;
+      const element = document.getElementById(`note-${targetScrollId}`);
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        // Offset for top navbar (64px) + sticky breadcrumbs (approx 56px) = 120px
+        const targetY = window.scrollY + rect.top - 120;
+        
+        window.scrollTo({
+          top: Math.max(0, targetY),
+          behavior: 'smooth'
+        });
+
+        setHighlightedNoteId(targetScrollId);
+
+        setTimeout(() => {
+          setHighlightedNoteId(null);
+          setTargetScrollId(null);
+        }, 5000);
+      } else if (attempts < maxAttempts) {
+        scrollTimeout = setTimeout(tryScrollAndHighlight, 100);
+      }
+    };
+
+    scrollTimeout = setTimeout(tryScrollAndHighlight, 150);
+
+    return () => clearTimeout(scrollTimeout);
   }, [targetScrollId, selectedSeries, selectedSection]);
 
   const contentContainerRef = useRef<HTMLDivElement>(null);
@@ -671,33 +693,34 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                       })()}
 
                       {isComingSoon && (
-                        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/30 backdrop-blur-[1.5px] transition-all duration-500">
-                          <div className="px-4 py-1.5 border border-white/25 bg-black/75 rounded-full text-white font-bold tracking-widest uppercase text-xs md:text-sm shadow-xl backdrop-blur-md">
-                            Coming Soon
-                          </div>
+                        <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 px-3.5 py-1 bg-black/75 border border-amber-400/50 backdrop-blur-md rounded-full text-amber-300 text-[11px] font-bold uppercase tracking-wider shadow-lg">
+                          <Sparkles size={11} className="text-amber-400 shrink-0" />
+                          <span>Coming Soon</span>
                         </div>
                       )}
 
                       {/* Holographic Z-Depth Floating Layer */}
-                      <Card3DItem
-                        translateZ={45}
-                        className={`relative z-10 flex flex-col items-center pointer-events-none ${isComingSoon ? 'opacity-50 blur-[2px]' : ''}`}
-                      >
-                        {!getSeriesPoster(series) && (
-                          <>
-                            <div className="h-20 w-20 rounded-3xl bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-6 shadow-inner border border-amber-200/40">
-                              <BookOpen size={40} />
-                            </div>
-                            <h3 className={`text-2xl md:text-3xl font-black uppercase tracking-tight mb-2 ${isIndic ? 'leading-normal' : ''} text-gray-900 dark:text-white`}>
-                              {series}
-                            </h3>
-                          </>
-                        )}
-
-                        <div className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mt-2 ${getSeriesPoster(series) ? 'bg-black/60 text-white backdrop-blur-md border border-white/30 shadow-lg' : 'bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 border border-amber-200/50'}`}>
+                      {getSeriesPoster(series) ? (
+                        /* When poster is present, dock badge at bottom-right and fade out on hover so artwork is 100% visible */
+                        <div className="absolute bottom-3.5 right-3.5 z-20 px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider bg-black/70 text-white/95 backdrop-blur-md border border-white/30 shadow-lg group-hover:opacity-0 group-hover:translate-y-1 transition-all duration-300 pointer-events-none">
                           {formatResourceCounts(seriesNotes)}
                         </div>
-                      </Card3DItem>
+                      ) : (
+                        <Card3DItem
+                          translateZ={45}
+                          className="relative z-10 flex flex-col items-center pointer-events-none"
+                        >
+                          <div className="h-20 w-20 rounded-3xl bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-6 shadow-inner border border-amber-200/40">
+                            <BookOpen size={40} />
+                          </div>
+                          <h3 className={`text-2xl md:text-3xl font-black uppercase tracking-tight mb-2 ${isIndic ? 'leading-normal' : ''} text-gray-900 dark:text-white`}>
+                            {series}
+                          </h3>
+                          <div className="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mt-2 bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 border border-amber-200/50">
+                            {formatResourceCounts(seriesNotes)}
+                          </div>
+                        </Card3DItem>
+                      )}
                     </div>
                   </Card3DContainer>
                 </motion.div>
@@ -825,17 +848,16 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                       })()}
 
                       {isSectionComingSoon && (
-                        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/30 backdrop-blur-[1.5px]">
-                          <div className="px-3.5 py-1 border border-white/25 bg-black/75 rounded-full text-white font-bold tracking-wider uppercase text-[11px] md:text-xs shadow-lg backdrop-blur-md">
-                            Coming Soon
-                          </div>
+                        <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 px-3 py-1 bg-black/75 border border-amber-400/50 backdrop-blur-md rounded-full text-amber-300 text-[11px] font-bold uppercase tracking-wider shadow-lg">
+                          <Sparkles size={11} className="text-amber-400 shrink-0" />
+                          <span>Coming Soon</span>
                         </div>
                       )}
 
                       {/* Floating 3D Text Content */}
                       <Card3DItem
                         translateZ={40}
-                        className={`relative z-10 w-full h-full flex flex-col justify-between pointer-events-none ${isSectionComingSoon ? 'opacity-40 blur-[1px]' : ''}`}
+                        className="relative z-10 w-full h-full flex flex-col justify-between pointer-events-none"
                       >
                         <div>
                           <Layers className={`${getSectionPoster(section) ? 'text-amber-400' : theme.text} mb-4 opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all`} size={28} />
@@ -844,7 +866,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                           </h3>
                         </div>
                         {!isSectionComingSoon && (
-                          <div className={`mt-6 inline-flex items-center text-xs font-bold uppercase tracking-widest ${getSectionPoster(section) ? 'text-white/90' : theme.text}`}>
+                          <div className={`mt-6 inline-flex items-center text-xs font-bold uppercase tracking-widest transition-opacity duration-300 ${getSectionPoster(section) ? 'text-white/90 group-hover:opacity-0' : theme.text}`}>
                             {formatResourceCounts(sectionNotes)} <ArrowRight size={14} className="ml-1 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all" />
                           </div>
                         )}
