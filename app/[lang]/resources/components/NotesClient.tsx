@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Download, PlayCircle, BookOpen, X, ArrowLeft, ArrowRight, ArrowUp, ChevronRight, Maximize2, Layers, Sparkles } from "lucide-react";
+import { Search, Download, PlayCircle, BookOpen, X, ArrowLeft, ArrowRight, ArrowUp, ChevronRight, Maximize2, Layers, Sparkles, Loader2, Check } from "lucide-react";
 import BorderBeam from "@/components/BorderBeam";
 import { Card3DContainer, Card3DItem } from "@/components/Card3D";
 import { playTapSound } from "@/lib/soundEffects";
@@ -132,6 +132,58 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
   const [targetScrollId, setTargetScrollId] = useState<string | null>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const searchParams = useSearchParams();
+
+  // Direct In-App PDF Download State with interactive loading feedback
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
+  const [downloadedId, setDownloadedId] = useState<string | null>(null);
+
+  const handleDownload = async (note: Note) => {
+    if (downloadingId) return; // Prevent multiple simultaneous triggers
+    setDownloadingId(note.id);
+    playTapSound();
+
+    try {
+      const title = note.title || "Notes";
+      const apiUrl = `/api/download?id=${encodeURIComponent(note.driveFileId)}&title=${encodeURIComponent(title)}`;
+
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+      }
+
+      const blob = await response.blob();
+      const objectUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = objectUrl;
+      const cleanName = `${title.replace(/[^\w\s-]/gi, '').replace(/\s+/g, '_')}.pdf`;
+      link.download = cleanName;
+      document.body.appendChild(link);
+      link.click();
+
+      // Graceful cleanup
+      setTimeout(() => {
+        window.URL.revokeObjectURL(objectUrl);
+        if (document.body.contains(link)) {
+          document.body.removeChild(link);
+        }
+      }, 200);
+
+      setDownloadingId(null);
+      setDownloadedId(note.id);
+      setTimeout(() => {
+        setDownloadedId(null);
+      }, 3000);
+    } catch (err) {
+      console.warn("Direct download proxy fallback:", err);
+      // Failsafe: if proxy fetch errors (e.g. strict CSP or offline), open directly in new tab
+      const isDirectUrl = note.driveFileId.startsWith('http://') || note.driveFileId.startsWith('https://');
+      const fallbackUrl = isDirectUrl 
+        ? note.driveFileId 
+        : `https://drive.google.com/uc?export=download&id=${note.driveFileId}`;
+      window.open(fallbackUrl, "_blank");
+      setDownloadingId(null);
+    }
+  };
 
   // Mobile & desktop scroll-to-top detection
   useEffect(() => {
@@ -874,22 +926,40 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
 
                               // If a valid drive file ID or URL is provided
                               if (note.driveFileId && note.driveFileId.trim() !== '') {
-                                const isDirectUrl = note.driveFileId.startsWith('http://') || note.driveFileId.startsWith('https://');
-                                const downloadUrl = isDirectUrl 
-                                  ? note.driveFileId 
-                                  : `https://drive.google.com/uc?export=download&id=${note.driveFileId}`;
+                                const isDownloading = downloadingId === note.id;
+                                const isDownloaded = downloadedId === note.id;
 
                                 return (
-                                  <a
-                                    href={downloadUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    onClick={() => playTapSound()}
-                                    className={`mt-4 flex items-center justify-center gap-2 w-full py-2.5 sm:py-3 px-4 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider sm:tracking-widest transition-all duration-300 shadow-sm active:scale-[0.98] group/btn ${theme.badgeBg} ${theme.badgeHoverBg} ${theme.badgeBorder} border ${theme.badgeText}`}
+                                  <button
+                                    type="button"
+                                    onClick={() => handleDownload(note)}
+                                    disabled={isDownloading}
+                                    aria-label={`Download PDF notes for ${note.title}`}
+                                    className={`mt-4 flex items-center justify-center gap-2 w-full py-2.5 sm:py-3 px-4 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider sm:tracking-widest transition-all duration-300 shadow-sm active:scale-[0.98] group/btn border ${
+                                      isDownloaded
+                                        ? "bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500/40 text-emerald-600 dark:text-emerald-400"
+                                        : isDownloading
+                                        ? "bg-amber-50 dark:bg-amber-950/40 border-amber-500/40 text-amber-600 dark:text-amber-400 cursor-wait animate-pulse"
+                                        : `${theme.badgeBg} ${theme.badgeHoverBg} ${theme.badgeBorder} ${theme.badgeText}`
+                                    }`}
                                   >
-                                    <Download size={16} className="transition-transform group-hover/btn:-translate-y-0.5" />
-                                    {t?.download || "Download PDF"}
-                                  </a>
+                                    {isDownloaded ? (
+                                      <>
+                                        <Check size={16} className="text-emerald-500" />
+                                        <span>Downloaded! ✓</span>
+                                      </>
+                                    ) : isDownloading ? (
+                                      <>
+                                        <Loader2 size={16} className="animate-spin text-amber-500" />
+                                        <span>Preparing PDF...</span>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <Download size={16} className="transition-transform group-hover/btn:-translate-y-0.5" />
+                                        <span>{t?.download || "Download PDF"}</span>
+                                      </>
+                                    )}
+                                  </button>
                                 );
                               }
 
