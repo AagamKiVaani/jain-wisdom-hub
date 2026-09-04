@@ -144,19 +144,53 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
 
     try {
       const title = note.title || "Notes";
-      const apiUrl = `/api/download?id=${encodeURIComponent(note.driveFileId)}&title=${encodeURIComponent(title)}`;
+      const series = note.series || "";
+      const section = note.section || "";
+      const apiUrl = `/api/download?id=${encodeURIComponent(note.driveFileId)}&title=${encodeURIComponent(title)}&series=${encodeURIComponent(series)}&section=${encodeURIComponent(section)}`;
 
       const response = await fetch(apiUrl);
       if (!response.ok) {
         throw new Error(`Server returned ${response.status}`);
       }
 
+      // 🎯 Extract exact Google Drive filename from response headers
+      let downloadFilename = "";
+      const xFileName = response.headers.get("x-file-name");
+      const disposition = response.headers.get("content-disposition");
+
+      if (xFileName) {
+        try {
+          downloadFilename = decodeURIComponent(xFileName);
+        } catch {
+          downloadFilename = xFileName;
+        }
+      } else if (disposition) {
+        const matchUtf8 = disposition.match(/filename\*=(?:UTF-8'')?([^;]+)/i);
+        if (matchUtf8 && matchUtf8[1]) {
+          try {
+            downloadFilename = decodeURIComponent(matchUtf8[1].trim().replace(/^["']|["']$/g, ""));
+          } catch {
+            downloadFilename = matchUtf8[1].trim().replace(/^["']|["']$/g, "");
+          }
+        } else {
+          const matchRegular = disposition.match(/filename="?([^";\n]+)"?/i);
+          if (matchRegular && matchRegular[1]) {
+            downloadFilename = matchRegular[1].trim().replace(/^["']|["']$/g, "");
+          }
+        }
+      }
+
+      if (!downloadFilename) {
+        // Rich fallback if header not present
+        const parts = [note.series, note.section, note.title].filter(Boolean);
+        downloadFilename = `${parts.join(" - ")}.pdf`.replace(/[<>:"/\\|?*]/g, "");
+      }
+
       const blob = await response.blob();
       const objectUrl = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = objectUrl;
-      const cleanName = `${title.replace(/[^\w\s-]/gi, '').replace(/\s+/g, '_')}.pdf`;
-      link.download = cleanName;
+      link.download = downloadFilename;
       document.body.appendChild(link);
       link.click();
 
@@ -831,7 +865,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                           e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
                           e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
                         }}
-                        className={`group relative flex flex-col md:flex-row w-full h-full bg-white/85 dark:bg-zinc-900/75 noise-overlay backdrop-blur-2xl border border-zinc-200/90 dark:border-white/10 rounded-3xl overflow-hidden shadow-md hover:shadow-2xl ${theme.hoverBorder} transition-all duration-500 ${highlightedNoteId === note.id ? 'dynamic-breathing-highlight' : ''} ${isMobileActive ? 'border-amber-500/80 shadow-[0_0_35px_rgba(245,158,11,0.28)] md:shadow-md' : ''}`}
+                        className={`group relative flex flex-col w-full h-full bg-white/85 dark:bg-zinc-900/75 noise-overlay backdrop-blur-2xl border border-zinc-200/90 dark:border-white/10 rounded-3xl overflow-hidden shadow-md hover:shadow-2xl ${theme.hoverBorder} transition-all duration-500 ${highlightedNoteId === note.id ? 'dynamic-breathing-highlight' : ''} ${isMobileActive ? 'border-amber-500/80 shadow-[0_0_35px_rgba(245,158,11,0.28)] md:shadow-md' : ''}`}
                       >
                         {/* Aceternity Radial Cursor Spotlight */}
                         <div
@@ -844,9 +878,9 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                         {/* Animated Golden Conic Border Beam */}
                         <BorderBeam size={160} duration={9} colorFrom="#f59e0b" colorTo="#fbbf24" className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
 
-                        {/* Video Thumbnail Area */}
+                        {/* Video Thumbnail Area - Always Full 16:9 Widescreen Ratio */}
                         <div
-                          className="w-full md:w-2/5 aspect-video md:aspect-auto relative bg-black shrink-0 overflow-hidden cursor-pointer group/video z-10"
+                          className="w-full aspect-video relative bg-black shrink-0 overflow-hidden cursor-pointer group/video z-10"
                           onClick={() => {
                             playTapSound();
                             if (note.videoLink) setPlayingVideoUrl(note.videoLink);
@@ -883,7 +917,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                         </div>
 
                         {/* Content Area with Sacred Temple Inscription Typography */}
-                        <div className="p-6 md:p-7 flex flex-col justify-between grow relative z-10">
+                        <div className="p-5 sm:p-6 flex flex-col justify-between grow relative z-10">
                           <Card3DItem translateZ={35}>
                             {/* Decorative Brass Flourish Badge */}
                             <div className="flex items-center gap-1.5 mb-2 text-amber-600/75 dark:text-amber-400/75 text-[10px] font-bold uppercase tracking-widest">
