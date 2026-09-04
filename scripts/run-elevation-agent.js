@@ -64,15 +64,36 @@ function validateDigambarContent(text) {
 }
 
 // ----------------------------------------------------------------------------
-// 3. DESIGN & TECH TREND HUNTER
+// 3. DESIGN & TECH TREND HUNTER (IMMERSIVE 3D & MOTION)
 // ----------------------------------------------------------------------------
 const DESIGN_PATTERNS = [
   {
     id: "spatial-3d-card",
     name: "Apple VisionOS Layered Spatial Cards",
     source: "Godly.website & Aceternity UI",
-    concept: "Cards with multi-plane 3D depth tilt, dynamic cursor-tracking specular glass glares, and spring touch compression.",
-    keywords: "perspective: 1000px, Card3DContainer, Card3DItem, translateZ"
+    concept: "Cards with multi-plane 3D depth tilt, dynamic cursor-tracking specular glass glares, and translateZ layer elevation.",
+    keywords: "perspective: 1000px, Card3DContainer, Card3DItem, translateZ, transform-style: preserve-3d"
+  },
+  {
+    id: "holographic-3d-pin",
+    name: "Aceternity 3D Hologram Pin & Glow Horizon",
+    source: "Aceternity UI & Awwwards",
+    concept: "Floating 3D perspective pin effect that lifts sacred iconography into the foreground on hover with radiant horizon waves.",
+    keywords: "3D pin, perspective transforms, radiant pulse, z-depth elevation"
+  },
+  {
+    id: "ambient-3d-tilt-gallery",
+    name: "Interactive Gyroscopic 3D Tilt Gallery",
+    source: "Godly.website & Awwwards",
+    concept: "Rich multi-column gallery with real-time 3D tilt tracking cursor and touch coordinates, dynamic specular glare sheen, and spring touch compression.",
+    keywords: "perspective: 1200px, rotateX, rotateY, dynamic glare reflection, spring physics"
+  },
+  {
+    id: "spline-threejs-geometry",
+    name: "Three.js & Spline 3D Sacred Geometry Particles",
+    source: "Three.js & Spline Design",
+    concept: "Interactive 3D particle constellation responding dynamically to cursor position, scroll inertia, and celestial lighting.",
+    keywords: "SacredParticlesCanvas, Three.js 3D canvas, interactive constellation, stardust field"
   },
   {
     id: "tracing-beam-timeline",
@@ -119,11 +140,11 @@ const DESIGN_PATTERNS = [
 ];
 
 function pickDesignPattern(pageRoute) {
-  if (pageRoute.includes("tirthankar")) return DESIGN_PATTERNS[0];
-  if (pageRoute.includes("kalchakra")) return DESIGN_PATTERNS[1];
-  if (pageRoute.includes("namokar")) return DESIGN_PATTERNS[6];
-  if (pageRoute.includes("soul")) return DESIGN_PATTERNS[2];
-  if (pageRoute.includes("resources")) return DESIGN_PATTERNS[5];
+  if (pageRoute.includes("tirthankar")) return DESIGN_PATTERNS[2]; // Gyroscopic 3D Tilt Gallery for Tirthankaras!
+  if (pageRoute.includes("kalchakra")) return DESIGN_PATTERNS[4];  // Tracing Beam Timeline
+  if (pageRoute.includes("namokar")) return DESIGN_PATTERNS[9];    // Audio Waveform
+  if (pageRoute.includes("soul")) return DESIGN_PATTERNS[3];       // 3D Geometry Particles
+  if (pageRoute.includes("resources")) return DESIGN_PATTERNS[8];  // Bento Library Filter
   return DESIGN_PATTERNS[Math.floor(Math.random() * DESIGN_PATTERNS.length)];
 }
 
@@ -158,13 +179,13 @@ function getInspirationPattern(pageRoute, workspaceRoot) {
 // 4. SITE AUDITOR & PAGE ROTATION ENGINE
 // ----------------------------------------------------------------------------
 function auditPages(workspaceRoot) {
-  // All 7 Real Production Routes
+  // All 7 Real Production Routes - Targeting actual interactive client components where visual elevation happens!
   const candidatePages = [
-    { route: "/tirthankars", relPath: "app/[lang]/tirthankars/page.tsx", name: "24 Tirthankaras Gallery Hub" },
-    { route: "/learn/kalchakra", relPath: "app/[lang]/learn/kalchakra/page.tsx", name: "Wheel of Time (Kalchakra)" },
-    { route: "/learn/soul-karma", relPath: "app/[lang]/learn/soul-karma/page.tsx", name: "Soul & Karma Interactive Canvas" },
-    { route: "/learn/namokar-mantra", relPath: "app/[lang]/learn/[topic]/page.tsx", name: "Namokar Mantra Sacred Module" },
-    { route: "/resources", relPath: "app/[lang]/resources/page.tsx", name: "Wisdom Library & Notes Hub" },
+    { route: "/tirthankars", relPath: "app/[lang]/tirthankars/TirthankarGalleryClient.tsx", name: "24 Tirthankaras Gallery Hub" },
+    { route: "/learn/kalchakra", relPath: "app/[lang]/learn/kalchakra/KalchakraClient.tsx", name: "Wheel of Time (Kalchakra)" },
+    { route: "/learn/soul-karma", relPath: "app/[lang]/learn/soul-karma/SoulKarmaClient.tsx", name: "Soul & Karma Interactive Canvas" },
+    { route: "/learn/namokar-mantra", relPath: "app/[lang]/learn/[topic]/TopicClient.tsx", name: "Namokar Mantra Sacred Module" },
+    { route: "/resources", relPath: "app/[lang]/resources/components/NotesClient.tsx", name: "Wisdom Library & Notes Hub" },
     { route: "/about", relPath: "app/[lang]/about/page.tsx", name: "About Aagam Ki Vaani" },
     { route: "/", relPath: "app/[lang]/page.tsx", name: "Home Page" }
   ];
@@ -272,9 +293,9 @@ async function queryGemini(prompt, jsonMode = false) {
 // ----------------------------------------------------------------------------
 async function synthesize(target, currentCode, pattern, approvedFeatures = []) {
   const featuresDirective = approvedFeatures.length > 0
-    ? `\nUSER-APPROVED FEATURES TO BUILD (BUILD STRICTLY ONLY THESE - DO NOT INVENT OR ADD OTHER SECTIONS):\n` +
+    ? `\nUSER-APPROVED FEATURES TO BUILD (BUILD STRICTLY AS ADDITIVE FRONTEND ENHANCEMENTS - DO NOT REMOVE ANY EXISTING CONTENT):\n` +
       approvedFeatures.map(f => `- ${f.name}${f.note ? ` (USER NOTE / CUSTOM INSTRUCTION: "${f.note}")` : ""}`).join("\n")
-    : `1. Elevate this component to a 9/10 visual standard implementing ${pattern.name}.`;
+    : `1. Elevate this component to an award-winning visual and 3D standard implementing ${pattern.name}.`;
 
   const prompt = `
 You are an expert Frontend Architect (Next.js 15+, Tailwind, Framer Motion) and Digambar Jain scholar.
@@ -284,16 +305,38 @@ DESIGN INSPIRATION: ${pattern.name} (${pattern.concept})
 
 ${DIGAMBAR_CANONICAL_RULES}
 
+=============================================================================
+CRITICAL MANDATE: ABSOLUTE CONTENT PRESERVATION (ADDITIVE FRONTEND ONLY)
+=============================================================================
+1. ZERO CONTENT DELETION - PRESERVE 100% OF EXISTING DATA AND CONTENT:
+   - You are STRICTLY FORBIDDEN from deleting, removing, simplifying, or truncating ANY existing content, data structures, or card loops!
+   - Every single item rendered in the original code MUST remain rendered.
+   - If this is the Tirthankaras page/gallery, ALL 24 Tirthankaras MUST remain rendered using the exact data mapping: \`tirthankaras.map(...)\`. NEVER replace or truncate the 24 Tirthankaras with a mock array or partial list!
+   - If the file has a \`.map(...)\` loop, the \`.map(...)\` loop MUST be preserved!
+   - Preserve all existing imports, symbols, multi-language translation dictionaries (\`translations.en\`, \`translations.hi\`, \`translations.kn\`), images, and functional routing.
+2. ADDITIVE FRONTEND-ONLY IMMERSIVE 3D UPGRADES:
+   - Whatever changes you make MUST be purely visual, layout, and motion enhancements layered ON TOP of the existing content.
+   - Elevate the EXISTING cards and layout to look like an award-winning site from Awwwards, Godly.website, and Aceternity UI.
+   - Add modern 3D spatial depth:
+     * Multi-plane 3D perspective tilts (\`perspective: 1000px\`, \`transformStyle: 'preserve-3d'\`, dynamic hover elevation with \`translateZ(20px)\`).
+     * Specular light reflection sheen that tracks cursor/touch position.
+     * Framer Motion smooth spring physics (\`stiffness: 300, damping: 25\`).
+     * Luminous glowing glassmorphism borders (\`backdrop-blur-xl\`, \`border-amber-500/20\`).
+     * Celestial particle stardust and ambient depth.
+     * Tactile audio click feedback on interactions (\`/sounds/resources/click2.mp3\` with volume 0.65).
+3. DO NOT REPLACE THE PAGE WITH A NEW ONE:
+   - Enhance the EXISTING code. Keep its foundational structure, data connections, and logic intact.
+
 CRITICAL UI, AUDIO & POSITIONING MANDATES:
 1. AUDIO TACTILE CLICKS: MUST use the real audio file '/sounds/resources/click2.mp3' with volume 0.65:
    const playTapSound = () => { if (!soundEnabled) return; try { const a = new Audio("/sounds/resources/click2.mp3"); a.volume = 0.65; a.play().catch(()=>{}); if (typeof navigator !== 'undefined' && navigator.vibrate) navigator.vibrate(12); } catch (e) {} };
    NEVER synthesize silent or quiet Web Audio oscillators!
 2. FLOATING CONTROLS POSITIONING: If adding a persistent floating sound toggle or controls, position them at "fixed bottom-6 right-6 z-50". NEVER position floating controls at "top-4 right-4" or "top-0" because that directly collides with the Navbar and language toggle!
-3. PAGE HIERARCHY & NAVIGATION: Keep the 5 primary navigation cards immediately prominent below the Hero title and subtitle. Do NOT push cards down by inserting large blocking panels above them. Any archival scripture quote panels must be placed gracefully underneath the cards grid!
+3. PAGE HIERARCHY & NAVIGATION: Keep the primary navigation cards immediately prominent below the Hero title and subtitle. Do NOT push cards down by inserting large blocking panels above them. Any archival scripture quote panels must be placed gracefully underneath the cards grid!
 4. NEXT.JS 16 APP ROUTER RULE: If this is a page.tsx file, params MUST be typed as Promise<{ lang: string }>: export default function Page({ params }: { params: Promise<{ lang: string }> }) and unwrapped using const { lang } = React.use(params);
 5. REVERENCE MANDATE: The revered author of Tattvārtha Sūtra must be written strictly as Acharya Umāsvāmi (NEVER Umasvati).
 
-EXISTING FILE CONTENT:
+EXISTING FILE CONTENT (MUST BE PRESERVED AS THE FOUNDATION):
 \`\`\`tsx
 ${currentCode}
 \`\`\`
@@ -398,12 +441,18 @@ ${initialCode}
 \`\`\`
 
 YOUR TASK - CRITIQUE AND ELEVATE (Take it from an 8/10 to a 9.5/10):
-1. Micro-animations & Motion: Refine Framer Motion spring physics (stiffness: 300, damping: 25).
-2. Audio Realism: Verify that audio click uses new Audio("/sounds/resources/click2.mp3") with volume 0.65. Eliminate any silent custom oscillators.
-3. Element Positioning: Ensure floating controls are docked at "bottom-6 right-6" (NEVER top-4 right-4 which collides with Navbar). Ensure the 5 primary navigation cards remain immediately below the title/subtitle.
-4. Mobile Viewport Excellence: Ensure seamless responsive wrapping, touch targets of at least 44px, and zero horizontal scroll overflow.
-5. Strict Canonical Reverence: Ensure the author of Tattvārtha Sūtra is written as "Acharya Umāsvāmi" (NEVER Umasvati).
-6. Output ONLY the refined, drop-in replacement TSX code. Do not wrap in extra JSON or markdown explanations.
+1. STRICT CONTENT PRESERVATION MANDATE:
+   - ZERO CONTENT REMOVAL: You must verify that 100% of the original content, cards, and data mappings are preserved.
+   - If this is the Tirthankaras gallery, ALL 24 Tirthankaras and their data map MUST be preserved.
+   - Do NOT delete, replace, or simplify any data loops, text, or buttons.
+2. 3D Spatial Immersion & Motion Physics:
+   - Refine Framer Motion spring physics (stiffness: 300, damping: 25).
+   - Enhance 3D perspective depth tilts, specular glare reflections, and multi-plane Z-depth layers.
+3. Audio Realism: Verify that audio click uses new Audio("/sounds/resources/click2.mp3") with volume 0.65. Eliminate any silent custom oscillators.
+4. Element Positioning: Ensure floating controls are docked at "bottom-6 right-6" (NEVER top-4 right-4 which collides with Navbar). Ensure primary navigation cards remain immediately below the title/subtitle.
+5. Mobile Viewport Excellence: Ensure seamless responsive wrapping, touch targets of at least 44px, and zero horizontal scroll overflow.
+6. Strict Canonical Reverence: Ensure the author of Tattvārtha Sūtra is written as "Acharya Umāsvāmi" (NEVER Umasvati).
+7. Output ONLY the refined, drop-in replacement TSX code. Do not wrap in extra JSON or markdown explanations.
 `;
 
   try {
@@ -426,6 +475,76 @@ YOUR TASK - CRITIQUE AND ELEVATE (Take it from an 8/10 to a 9.5/10):
 }
 
 // ----------------------------------------------------------------------------
+// 6.8 AUTOMATED CONTENT PRESERVATION GUARDRAIL
+// ----------------------------------------------------------------------------
+function verifyContentPreservation(originalCode, candidateCode, relPath) {
+  // 1. Array map preservation (.map)
+  const origMapMatches = originalCode.match(/\.map\s*\(/g);
+  const origMapCount = origMapMatches ? origMapMatches.length : 0;
+  const candMapMatches = candidateCode.match(/\.map\s*\(/g);
+  const candMapCount = candMapMatches ? candMapMatches.length : 0;
+
+  if (origMapCount > 0 && candMapCount === 0) {
+    return {
+      valid: false,
+      reason: `Content Preservation Violation: Original code contained ${origMapCount} .map() render loop(s), but candidate code deleted all of them! All existing item maps must be preserved.`
+    };
+  }
+
+  // 2. Tirthankaras gallery specific checks
+  if (relPath.toLowerCase().includes("tirthankar")) {
+    if (originalCode.includes("tirthankaras") && !candidateCode.includes("tirthankaras")) {
+      return {
+        valid: false,
+        reason: "Content Preservation Violation: The 'tirthankaras' data source was removed! All 24 Tirthankaras must remain fully rendered."
+      };
+    }
+    if (originalCode.includes("t.tirthankaraImage") && !candidateCode.includes("tirthankaraImage")) {
+      return {
+        valid: false,
+        reason: "Content Preservation Violation: Tirthankar images were removed from the cards!"
+      };
+    }
+    if (originalCode.includes("t.symbol") && !candidateCode.includes("symbol")) {
+      return {
+        valid: false,
+        reason: "Content Preservation Violation: Tirthankar symbols were removed from the cards!"
+      };
+    }
+  }
+
+  // 3. Kalchakra cosmic eras specific checks
+  if (relPath.toLowerCase().includes("kalchakra")) {
+    if (originalCode.includes("aras") && !candidateCode.includes("aras")) {
+      return {
+        valid: false,
+        reason: "Content Preservation Violation: Kalchakra cosmic eras (aras) data mapping was removed!"
+      };
+    }
+  }
+
+  // 4. Multilingual translations preservation
+  if (originalCode.includes("translations") && !candidateCode.includes("translations")) {
+    return {
+      valid: false,
+      reason: "Content Preservation Violation: Multilingual translations dictionary was deleted!"
+    };
+  }
+
+  // 5. Line reduction sanity check (cannot delete > 35% of code)
+  const origLines = originalCode.trim().split(/\r?\n/).length;
+  const candLines = candidateCode.trim().split(/\r?\n/).length;
+  if (origLines > 60 && candLines < origLines * 0.65) {
+    return {
+      valid: false,
+      reason: `Content Preservation Violation: Candidate code lost over 35% of original lines (${candLines} lines vs ${origLines} lines in original). Core content was stripped instead of elevated!`
+    };
+  }
+
+  return { valid: true };
+}
+
+// ----------------------------------------------------------------------------
 // 7. MULTI-PASS QA
 // ----------------------------------------------------------------------------
 async function verifyMultiPass(workspaceRoot, targetRelPath, candidateCode) {
@@ -435,6 +554,43 @@ async function verifyMultiPass(workspaceRoot, targetRelPath, candidateCode) {
   let code = candidateCode;
   let attempts = 0;
   const maxAttempts = 2;
+
+  // Step 0: Check Content Preservation Guardrail
+  const initialCheck = verifyContentPreservation(backup, code, targetRelPath);
+  if (!initialCheck.valid) {
+    console.warn(`⚠️ ${initialCheck.reason}`);
+    console.log("[QA Content Preservation] Reprimanding Gemini to restore all original content...");
+    const restorePrompt = `
+YOUR CODE WAS REJECTED BY THE STRICT CONTENT PRESERVATION GUARDRAIL:
+${initialCheck.reason}
+
+MANDATORY RULES:
+1. You are strictly forbidden from deleting, replacing, or simplifying ANY of the existing content, data lists, or maps.
+2. All changes must be ADDITIVE ONLY: Add 3D perspective tilts, Framer Motion animations, lighting, and audio clicks to the EXISTING content.
+3. Keep 100% of the original content, maps, and cards intact.
+
+ORIGINAL CODE (MUST BE PRESERVED AS FOUNDATION):
+\`\`\`tsx
+${backup}
+\`\`\`
+
+Return ONLY the drop-in replacement TSX code with all original content preserved.
+`;
+    try {
+      const restored = await queryGemini(restorePrompt, false);
+      const restoredCode = restored.replace(/^```tsx?\n?/i, "").replace(/```$/i, "").trim();
+      const secondCheck = verifyContentPreservation(backup, restoredCode, targetRelPath);
+      if (secondCheck.valid) {
+        code = restoredCode;
+      } else {
+        fs.writeFileSync(fullPath, backup, "utf8");
+        return { passed: false, iterations: 1, error: secondCheck.reason };
+      }
+    } catch (e) {
+      fs.writeFileSync(fullPath, backup, "utf8");
+      return { passed: false, iterations: 1, error: initialCheck.reason };
+    }
+  }
 
   while (attempts <= maxAttempts) {
     fs.writeFileSync(fullPath, code, "utf8");
@@ -461,6 +617,9 @@ You generated this Next.js TypeScript code, but running 'tsc --noEmit' gave this
 ${errorText}
 \`\`\`
 
+CRITICAL PRESERVATION MANDATE:
+Do NOT fix the error by deleting cards, mappings, or content! All original content and .map() loops must be preserved.
+
 CURRENT CODE:
 \`\`\`tsx
 ${code}
@@ -469,7 +628,13 @@ ${code}
 Fix the error completely. Return ONLY the drop-in replacement TSX code. Do not wrap in markdown or backticks.
 `;
       const fixed = await queryGemini(healPrompt, false);
-      code = fixed.replace(/^```tsx?\n?/i, "").replace(/```$/i, "").trim();
+      const fixedCode = fixed.replace(/^```tsx?\n?/i, "").replace(/```$/i, "").trim();
+      const healedCheck = verifyContentPreservation(backup, fixedCode, targetRelPath);
+      if (healedCheck.valid) {
+        code = fixedCode;
+      } else {
+        console.warn(`⚠️ Self-healing pass violated content preservation: ${healedCheck.reason}`);
+      }
     }
   }
 
@@ -528,6 +693,8 @@ async function getDirectVercelPreviewUrl(branchName) {
 // ----------------------------------------------------------------------------
 // 7.4 DYNAMIC GEMINI FEATURE RESEARCHER
 // ----------------------------------------------------------------------------
+// 7.4 DYNAMIC GEMINI FEATURE RESEARCHER (IMMERSIVE 3D & MOTION)
+// ----------------------------------------------------------------------------
 async function generateDynamicFeatures(target, pattern, workspaceRoot) {
   try {
     const fullPath = path.join(workspaceRoot, target.sourceFilePath);
@@ -541,9 +708,11 @@ Design Pattern / Inspiration: ${pattern.name} (${pattern.concept})
 Source Code Context Excerpt:
 ${existingCode.slice(0, 1200)}
 
-Task: Propose exactly 4 to 5 cutting-edge, highly innovative, novel visual, interactive, or architectural features tailored specifically for this page.
-Do NOT suggest generic things that are already implemented on this page.
-Suggest page-specific, thrilling enhancements (e.g. interactive timeline slider, audio pronunciation/chant player, 3D card tilt, sacred geometry visualizer, interactive quiz, search filter tabs, parchment manuscript view, etc.).
+Task: Propose exactly 4 to 5 cutting-edge, highly innovative visual, 3D, motion, or interactive enhancements tailored specifically for this page.
+Inspiration sources: Godly.website, Awwwards, Aceternity UI, Apple VisionOS, Spline 3D.
+CRITICAL CONSTRAINT: All proposed features MUST be ADDITIVE FRONTEND ENHANCEMENTS (e.g. 3D spatial depth tilt with specular glare, interactive category search/filter tabs, luminous glassmorphism, celestial particle stardust, tactile sound feedback, 3D perspective layers).
+NEVER propose deleting, replacing, or simplifying the existing content, cards, or data mappings.
+Suggest page-specific, thrilling enhancements (e.g. 3D card tilt & hover elevation, audio pronunciation/chant player, sacred geometry visualizer, instant search filter tabs, parchment manuscript view, celestial stardust field, etc.).
 
 Return ONLY a JSON array of 5 objects in this format, with NO markdown formatting:
 [
@@ -573,8 +742,8 @@ Return ONLY a JSON array of 5 objects in this format, with NO markdown formattin
   }
 
   return [
-    { id: 1, name: `${pattern.name} Spatial UI`, selected: true, note: "" },
-    { id: 2, name: "Interactive Scripture Motion Physics", selected: true, note: "" },
+    { id: 1, name: `${pattern.name} 3D Spatial UI`, selected: true, note: "" },
+    { id: 2, name: "Interactive 3D Tilt & Specular Glare", selected: true, note: "" },
     { id: 3, name: "Sacred Sanskrit Audio & Chanting Waves", selected: false, note: "" },
     { id: 4, name: "Verified Digambar Shastra Inscriptions", selected: false, note: "" },
     { id: 5, name: "Responsive Mobile Glassmorphic Overlays", selected: false, note: "" }
@@ -946,17 +1115,18 @@ ${userFeedback}
 ${DIGAMBAR_CANONICAL_RULES}
 
 CRITICAL MANDATES:
-1. AUDIO: MUST use real audio file '/sounds/resources/click2.mp3' with volume 0.65.
-2. POSITIONING: Floating controls MUST be docked at "fixed bottom-6 right-6 z-50" (never top-right colliding with Navbar).
-3. HIERARCHY: Navigation cards must remain prominent below hero title. Shastra quotes below the grid.
-4. REVERENCE: Author of Tattvārtha Sūtra must be strictly written as Acharya Umāsvāmi.
+1. CONTENT PRESERVATION: Strictly FORBIDDEN from removing or simplifying existing content, maps, or cards! All 24 Tirthankaras and existing loops must remain 100% intact.
+2. AUDIO: MUST use real audio file '/sounds/resources/click2.mp3' with volume 0.65.
+3. POSITIONING: Floating controls MUST be docked at "fixed bottom-6 right-6 z-50" (never top-right colliding with Navbar).
+4. HIERARCHY: Navigation cards must remain prominent below hero title. Shastra quotes below the grid.
+5. REVERENCE: Author of Tattvārtha Sūtra must be strictly written as Acharya Umāsvāmi.
 
-CURRENT CODE:
+CURRENT CODE (FOUNDATION - DO NOT STRIP):
 \`\`\`tsx
 ${currentCode}
 \`\`\`
 
-Apply all requested corrections. Return ONLY the drop-in replacement TSX code.
+Apply all requested corrections while strictly preserving all existing content, maps, and cards. Return ONLY the drop-in replacement TSX code.
 `;
 
             const revisedRaw = await queryGemini(revisionPrompt, false);
