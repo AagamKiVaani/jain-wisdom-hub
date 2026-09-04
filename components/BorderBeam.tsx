@@ -37,7 +37,7 @@ export default function BorderBeam({
           animation: `border-beam ${duration}s infinite linear`,
           background: `linear-gradient(to right, transparent, ${colorFrom}, ${colorTo}, transparent)`,
         }}
-        className="absolute aspect-square [offset-anchor:calc(var(--size)/2)_50%] [offset-path:rect(0_auto_auto_0_round_calc(var(--size)))]"
+        className="absolute aspect-square [offset-anchor:calc(var(--size)/2)_50%] [offset-path:rect(0_auto_auto_0_round_calc(var(--size)))] [animation-play-state:paused] group-hover:[animation-play-state:running]"
       />
     </div>
   );

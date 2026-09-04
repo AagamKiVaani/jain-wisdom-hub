@@ -17,52 +17,57 @@ export const Card3DContainer = ({
   onClick?: () => void;
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const glareRef = useRef<HTMLDivElement>(null);
+  const rectRef = useRef<DOMRect | null>(null);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
-  const [glarePosition, setGlarePosition] = useState({ x: 50, y: 50, opacity: 0 });
+  const rafId = useRef<number | null>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
-    const { left, top, width, height } = containerRef.current.getBoundingClientRect();
-    const x = (e.clientX - left - width / 2) / 20;
-    const y = (e.clientY - top - height / 2) / 20;
-    containerRef.current.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+    
+    // Throttle tilt calculations to display refresh rate via requestAnimationFrame
+    if (rafId.current) cancelAnimationFrame(rafId.current);
+    
+    const clientX = e.clientX;
+    const clientY = e.clientY;
 
-    // Calculate glare reflection
-    const glareX = ((e.clientX - left) / width) * 100;
-    const glareY = ((e.clientY - top) / height) * 100;
-    setGlarePosition({ x: glareX, y: glareY, opacity: 0.22 });
-  };
+    rafId.current = requestAnimationFrame(() => {
+      if (!containerRef.current) return;
+      if (!rectRef.current) {
+        rectRef.current = containerRef.current.getBoundingClientRect();
+      }
+      const { left, top, width, height } = rectRef.current;
+      const x = (clientX - left - width / 2) / 20;
+      const y = (clientY - top - height / 2) / 20;
+      containerRef.current.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
 
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!containerRef.current || e.touches.length === 0) return;
-    const touch = e.touches[0];
-    const { left, top, width, height } = containerRef.current.getBoundingClientRect();
-    const x = (touch.clientX - left - width / 2) / 25;
-    const y = (touch.clientY - top - height / 2) / 25;
-    containerRef.current.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
-
-    const glareX = ((touch.clientX - left) / width) * 100;
-    const glareY = ((touch.clientY - top) / height) * 100;
-    setGlarePosition({ x: glareX, y: glareY, opacity: 0.2 });
+      // Direct DOM update for glare reflection to avoid triggering React re-renders on mousemove
+      if (glareRef.current) {
+        const glareX = ((clientX - left) / width) * 100;
+        const glareY = ((clientY - top) / height) * 100;
+        glareRef.current.style.opacity = "0.22";
+        glareRef.current.style.background = `radial-gradient(circle 350px at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.45), transparent 75%)`;
+      }
+    });
   };
 
   const handleMouseEnter = () => {
+    if (containerRef.current) {
+      rectRef.current = containerRef.current.getBoundingClientRect();
+    }
     setIsMouseEntered(true);
-    if (!containerRef.current) return;
   };
 
   const handleMouseLeave = () => {
-    if (!containerRef.current) return;
+    if (rafId.current) cancelAnimationFrame(rafId.current);
+    rectRef.current = null;
     setIsMouseEntered(false);
-    containerRef.current.style.transform = `rotateY(0deg) rotateX(0deg)`;
-    setGlarePosition(prev => ({ ...prev, opacity: 0 }));
-  };
-
-  const handleTouchEnd = () => {
-    if (!containerRef.current) return;
-    setIsMouseEntered(false);
-    containerRef.current.style.transform = `rotateY(0deg) rotateX(0deg)`;
-    setGlarePosition(prev => ({ ...prev, opacity: 0 }));
+    if (containerRef.current) {
+      containerRef.current.style.transform = "rotateY(0deg) rotateX(0deg)";
+    }
+    if (glareRef.current) {
+      glareRef.current.style.opacity = "0";
+    }
   };
 
   return (
@@ -76,11 +81,8 @@ export const Card3DContainer = ({
           onMouseEnter={handleMouseEnter}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          onTouchStart={handleMouseEnter}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
           onClick={onClick}
-          whileTap={{ scale: 0.97 }}
+          whileTap={{ scale: 0.98 }}
           transition={{
             type: "spring",
             stiffness: 400,
@@ -93,13 +95,11 @@ export const Card3DContainer = ({
         >
           {children}
 
-          {/* Dynamic Specular Glass Glare Layer */}
+          {/* Dynamic Specular Glass Glare Layer (Direct DOM styled to prevent React re-renders) */}
           <div
-            className="pointer-events-none absolute -inset-px rounded-[inherit] transition-opacity duration-300 z-30"
-            style={{
-              opacity: glarePosition.opacity,
-              background: `radial-gradient(circle 350px at ${glarePosition.x}% ${glarePosition.y}%, rgba(255, 255, 255, 0.45), transparent 75%)`,
-            }}
+            ref={glareRef}
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-px rounded-[inherit] transition-opacity duration-300 z-30 opacity-0"
           />
         </motion.div>
       </div>

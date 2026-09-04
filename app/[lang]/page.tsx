@@ -159,7 +159,10 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
       });
     }
 
+    let isRunning = true;
+
     const animate = () => {
+      if (!isRunning) return;
       const width = window.innerWidth;
       const height = window.innerHeight;
       ctx.clearRect(0, 0, width, height);
@@ -172,22 +175,43 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
         if (p.alpha <= 0 || p.y < -10) {
           particles[index] = createParticle();
         } else {
+          // Soft ambient outer halo (zero-overhead glow)
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius * 2.2, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(245, 158, 11, ${p.alpha * 0.25})`;
+          ctx.fill();
+
+          // Bright radiant core
           ctx.beginPath();
           ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
           ctx.fillStyle = `rgba(245, 158, 11, ${p.alpha})`; // Radiant Sacred Amber-Gold
-          ctx.shadowBlur = 6;
-          ctx.shadowColor = `rgba(245, 158, 11, ${p.alpha * 0.7})`;
           ctx.fill();
         }
       });
 
-      ctx.shadowBlur = 0;
       animationFrameId = requestAnimationFrame(animate);
     };
     animate();
 
+    const handleVisibility = () => {
+      if (document.hidden) {
+        isRunning = false;
+        cancelAnimationFrame(animationFrameId);
+      } else {
+        if (!isRunning) {
+          isRunning = true;
+          animate();
+        }
+      }
+    };
+
+    window.addEventListener("resize", resizeCanvas, { passive: true });
+    document.addEventListener("visibilitychange", handleVisibility);
+
     return () => {
+      isRunning = false;
       window.removeEventListener("resize", resizeCanvas);
+      document.removeEventListener("visibilitychange", handleVisibility);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
@@ -198,7 +222,7 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
       {/* HTML5 Canvas for Celestial Golden Stardust */}
       <canvas 
         ref={canvasRef} 
-        className="absolute inset-0 pointer-events-none z-0 opacity-50 dark:opacity-70"
+        className="fixed inset-0 pointer-events-none z-0 opacity-50 dark:opacity-70"
       />
 
       {/* Optimized Background Gradient Blur */}

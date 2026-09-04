@@ -479,12 +479,12 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
 
   const getSeriesPoster = (seriesName: string) => {
     const name = seriesName.toLowerCase();
-    if (name.includes('decoding')) return '/images/resources/posters/decoding_jainism.jpeg';
-    if (name.includes('tatvarth')) return '/images/resources/posters/tatvarth-series.png';
-    if (name.includes('the jain ramayan') || name.includes('ramayan')) return '/images/resources/posters/the-jain-ramayan.jpeg';
-    if (name.includes('stotra') || name.includes('stavan')) return '/images/resources/posters/stotra-stavan.png';
-    if (name.includes('mahaveer') || name.includes('mahavir') || name.includes('mahagatha')) return '/images/resources/posters/Bhagwan-Mahveer.png';
-    if (name.includes('gems')) return '/images/resources/posters/gems-of-jainism.png';
+    if (name.includes('decoding')) return '/images/resources/posters/decoding_jainism.webp';
+    if (name.includes('tatvarth')) return '/images/resources/posters/tatvarth-series.webp';
+    if (name.includes('the jain ramayan') || name.includes('ramayan')) return '/images/resources/posters/the-jain-ramayan.webp';
+    if (name.includes('stotra') || name.includes('stavan')) return '/images/resources/posters/stotra-stavan.webp';
+    if (name.includes('mahaveer') || name.includes('mahavir') || name.includes('mahagatha')) return '/images/resources/posters/Bhagwan-Mahveer.webp';
+    if (name.includes('gems')) return '/images/resources/posters/gems-of-jainism.webp';
     return null;
   };
 
@@ -524,17 +524,17 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
 
   const getSectionPoster = (sectionName: string) => {
     const name = sectionName.toLowerCase();
-    if (name.includes('intro')) return '/images/resources/posters/introduction-to-tatvarth-series.jpeg';
-    if (name.includes('adhyay 10')) return '/images/resources/posters/adhyay-10.jpeg';
-    if (name.includes('adhyay 1')) return '/images/resources/posters/adhyay-1.jpeg';
-    if (name.includes('adhyay 2')) return '/images/resources/posters/adhyay-2.jpeg';
-    if (name.includes('adhyay 3')) return '/images/resources/posters/adhyay-3.jpeg';
-    if (name.includes('adhyay 4')) return '/images/resources/posters/adhyay-4.jpeg';
-    if (name.includes('adhyay 5')) return '/images/resources/posters/adhyay-5.jpeg';
-    if (name.includes('adhyay 6')) return '/images/resources/posters/adhyay-6.jpeg';
-    if (name.includes('adhyay 7')) return '/images/resources/posters/adhyay-7.jpeg';
-    if (name.includes('adhyay 8')) return '/images/resources/posters/adhyay-8.jpeg';
-    if (name.includes('adhyay 9')) return '/images/resources/posters/adhyay-9.jpeg';
+    if (name.includes('intro')) return '/images/resources/posters/introduction-to-tatvarth-series.webp';
+    if (name.includes('adhyay 10')) return '/images/resources/posters/adhyay-10.webp';
+    if (name.includes('adhyay 1')) return '/images/resources/posters/adhyay-1.webp';
+    if (name.includes('adhyay 2')) return '/images/resources/posters/adhyay-2.webp';
+    if (name.includes('adhyay 3')) return '/images/resources/posters/adhyay-3.webp';
+    if (name.includes('adhyay 4')) return '/images/resources/posters/adhyay-4.webp';
+    if (name.includes('adhyay 5')) return '/images/resources/posters/adhyay-5.webp';
+    if (name.includes('adhyay 6')) return '/images/resources/posters/adhyay-6.webp';
+    if (name.includes('adhyay 7')) return '/images/resources/posters/adhyay-7.webp';
+    if (name.includes('adhyay 8')) return '/images/resources/posters/adhyay-8.webp';
+    if (name.includes('adhyay 9')) return '/images/resources/posters/adhyay-9.webp';
     // Add more Adhyay images here as you create them!
     return null;
   };

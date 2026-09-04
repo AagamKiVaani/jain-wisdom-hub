@@ -31,12 +31,12 @@ export default function SacredParticlesCanvas({
     if (!ctx) return;
 
     let animationFrameId: number;
-    let width = (canvas.width = canvas.parentElement?.clientWidth || window.innerWidth);
-    let height = (canvas.height = canvas.parentElement?.clientHeight || window.innerHeight);
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
 
-    // Dynamic particle count: optimal density for mobile & desktop
+    // Optimal particle count: 35 for mobile, 60 for desktop
     const isMobile = width < 768;
-    const particleCount = isMobile ? Math.min(45, quantity) : quantity;
+    const particleCount = isMobile ? Math.min(30, quantity) : Math.min(55, quantity);
 
     // Sacred golden and amber color palette
     const goldTones = [
@@ -53,20 +53,22 @@ export default function SacredParticlesCanvas({
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        radius: Math.random() * 2.2 + 1.0,
-        baseAlpha: Math.random() * 0.4 + 0.35,
-        alpha: Math.random() * 0.4 + 0.35,
+        radius: Math.random() * 1.8 + 0.8,
+        baseAlpha: Math.random() * 0.35 + 0.25,
+        alpha: Math.random() * 0.35 + 0.25,
         pulseSpeed: Math.random() * 0.02 + 0.008,
         pulseOffset: Math.random() * Math.PI * 2,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: -(Math.random() * 0.35 + 0.12), // Gentle upward celestial ascent
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: -(Math.random() * 0.3 + 0.1),
         color: goldTones[Math.floor(Math.random() * goldTones.length)],
       });
     }
 
     let time = 0;
+    let isRunning = true;
 
     const render = () => {
+      if (!isRunning) return;
       time += 0.02;
       ctx.clearRect(0, 0, width, height);
 
@@ -75,11 +77,12 @@ export default function SacredParticlesCanvas({
 
         // Move upward with a subtle gentle wave
         p.y += p.vy;
-        p.x += p.vx + Math.sin(time + p.pulseOffset) * 0.15;
+        p.x += p.vx + Math.sin(time + p.pulseOffset) * 0.12;
 
         // Pulsing glow
-        p.alpha = p.baseAlpha + Math.sin(time * p.pulseSpeed * 60 + p.pulseOffset) * 0.2;
-        p.alpha = Math.max(0.05, Math.min(0.85, p.alpha));
+        p.alpha = p.baseAlpha + Math.sin(time * p.pulseSpeed * 60 + p.pulseOffset) * 0.15;
+        if (p.alpha < 0.05) p.alpha = 0.05;
+        if (p.alpha > 0.8) p.alpha = 0.8;
 
         // Wrap around boundaries
         if (p.y < -10) {
@@ -89,23 +92,17 @@ export default function SacredParticlesCanvas({
         if (p.x < -10) p.x = width + 10;
         if (p.x > width + 10) p.x = -10;
 
-        // Draw glowing ember
-        ctx.save();
+        // Draw soft ambient outer halo (zero-cost blur effect without Gaussian kernel)
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius * 2.2, 0, Math.PI * 2);
+        ctx.fillStyle = `${p.color} ${p.alpha * 0.25})`;
+        ctx.fill();
+
+        // Draw bright core ember
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-
-        // Soft radial glow
-        const glowRadius = p.radius * 3.5;
-        const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowRadius);
-        gradient.addColorStop(0, `${p.color} ${p.alpha})`);
-        gradient.addColorStop(0.5, `${p.color} ${p.alpha * 0.4})`);
-        gradient.addColorStop(1, `${p.color} 0)`);
-
-        ctx.fillStyle = gradient;
-        ctx.shadowColor = "rgba(245, 158, 11, 0.4)";
-        ctx.shadowBlur = p.radius * 4;
+        ctx.fillStyle = `${p.color} ${p.alpha})`;
         ctx.fill();
-        ctx.restore();
       }
 
       animationFrameId = requestAnimationFrame(render);
@@ -115,16 +112,31 @@ export default function SacredParticlesCanvas({
 
     // Handle resize
     const handleResize = () => {
-      if (!canvas.parentElement) return;
-      width = canvas.width = canvas.parentElement.clientWidth;
-      height = canvas.height = canvas.parentElement.clientHeight;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
     };
 
-    window.addEventListener("resize", handleResize);
+    // Pause when tab is not active to save battery and CPU
+    const handleVisibility = () => {
+      if (document.hidden) {
+        isRunning = false;
+        cancelAnimationFrame(animationFrameId);
+      } else {
+        if (!isRunning) {
+          isRunning = true;
+          render();
+        }
+      }
+    };
+
+    window.addEventListener("resize", handleResize, { passive: true });
+    document.addEventListener("visibilitychange", handleVisibility);
 
     return () => {
+      isRunning = false;
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("resize", handleResize);
+      document.removeEventListener("visibilitychange", handleVisibility);
     };
   }, [quantity]);
 
@@ -132,7 +144,7 @@ export default function SacredParticlesCanvas({
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className={`pointer-events-none absolute inset-0 z-0 h-full w-full ${className}`}
+      className={`pointer-events-none fixed inset-0 z-0 h-screen w-screen ${className}`}
     />
   );
 }
