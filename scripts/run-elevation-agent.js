@@ -291,11 +291,10 @@ async function queryGemini(prompt, jsonMode = false) {
 }
 
 // ----------------------------------------------------------------------------
-async function synthesize(target, currentCode, pattern, approvedFeatures = []) {
-  const featuresDirective = approvedFeatures.length > 0
-    ? `\nUSER-APPROVED FEATURES TO BUILD (BUILD STRICTLY AS ADDITIVE FRONTEND ENHANCEMENTS - DO NOT REMOVE ANY EXISTING CONTENT):\n` +
-      approvedFeatures.map(f => `- ${f.name}${f.note ? ` (USER NOTE / CUSTOM INSTRUCTION: "${f.note}")` : ""}`).join("\n")
-    : `1. Elevate this component to an award-winning visual and 3D standard implementing ${pattern.name}.`;
+async function synthesize(target, currentCode, pattern, focusFeature = null) {
+  const featureName = focusFeature?.name || `${pattern.name} Visual Elevation`;
+  const featureConcept = focusFeature?.concept || pattern.concept;
+  const userNote = focusFeature?.note || "";
 
   const prompt = `
 You are an expert Frontend Architect (Next.js 15+, Tailwind, Framer Motion) and Digambar Jain scholar.
@@ -303,29 +302,37 @@ You are an expert Frontend Architect (Next.js 15+, Tailwind, Framer Motion) and 
 PAGE: ${target.pageRoute} (${target.sourceFilePath})
 DESIGN INSPIRATION: ${pattern.name} (${pattern.concept})
 
-${DIGAMBAR_CANONICAL_RULES}
+=============================================================================
+CRITICAL MANDATE: SINGLE FEATURE DEEP CRAFTSMANSHIP (DO NOT DO TOO MANY THINGS)
+=============================================================================
+CRITICAL INSTRUCTION: You must focus 100% of your engineering on ONE SINGLE FEATURE WITH EXTRAORDINARY DEPTH.
+Do NOT scatter your implementation across multiple superficial tweaks or basic surface-level additions.
+Every animation, interaction, state, and visual flourish must be dedicated to making this ONE feature feel like an Apple HIG, Linear, or Awwwards Site of the Year benchmark.
 
-=============================================================================
-CRITICAL MANDATE: ABSOLUTE CONTENT PRESERVATION (ADDITIVE FRONTEND ONLY)
-=============================================================================
-1. ZERO CONTENT DELETION - PRESERVE 100% OF EXISTING DATA AND CONTENT:
-   - You are STRICTLY FORBIDDEN from deleting, removing, simplifying, or truncating ANY existing content, data structures, or card loops!
+PRIMARY FEATURE TO BUILD DEEPLY:
+• Feature Title: ${featureName}
+• Architectural Scope & Detail: ${featureConcept}
+${userNote ? `• USER'S EXPLICIT CUSTOM INSTRUCTIONS: "${userNote}"` : ""}
+
+STANDARDS FOR DEEP CRAFTSMANSHIP ON THIS SINGLE FEATURE:
+1. COMPLETE, ROBUST ARCHITECTURE:
+   - Implement full state management, responsive variants, seamless animations, and complete UI flow.
+   - Rich tactile micro-interactions:
+     * Multi-plane 3D perspective tilts (\`perspective: 1000px\`, \`transformStyle: 'preserve-3d'\`, dynamic hover elevation with \`translateZ(20px)\`).
+     * Specular light reflection sheen that tracks cursor/touch position.
+     * Framer Motion smooth spring physics (\`stiffness: 300, damping: 25\`).
+     * Luminous glowing glassmorphic borders (\`backdrop-blur-xl\`, \`border-amber-500/20\`).
+     * Tactile audio click feedback on interactions (\`/sounds/resources/click2.mp3\` with volume 0.65).
+   - Zero placeholders, zero mock data, zero half-baked components.
+
+2. STRICT 100% CONTENT PRESERVATION (ABSOLUTE MANDATE):
+   - ZERO CONTENT DELETION: You are STRICTLY FORBIDDEN from deleting, removing, simplifying, or truncating ANY existing content, data structures, or card loops!
    - Every single item rendered in the original code MUST remain rendered.
    - If this is the Tirthankaras page/gallery, ALL 24 Tirthankaras MUST remain rendered using the exact data mapping: \`tirthankaras.map(...)\`. NEVER replace or truncate the 24 Tirthankaras with a mock array or partial list!
    - If the file has a \`.map(...)\` loop, the \`.map(...)\` loop MUST be preserved!
    - Preserve all existing imports, symbols, multi-language translation dictionaries (\`translations.en\`, \`translations.hi\`, \`translations.kn\`), images, and functional routing.
-2. ADDITIVE FRONTEND-ONLY IMMERSIVE 3D UPGRADES:
-   - Whatever changes you make MUST be purely visual, layout, and motion enhancements layered ON TOP of the existing content.
-   - Elevate the EXISTING cards and layout to look like an award-winning site from Awwwards, Godly.website, and Aceternity UI.
-   - Add modern 3D spatial depth:
-     * Multi-plane 3D perspective tilts (\`perspective: 1000px\`, \`transformStyle: 'preserve-3d'\`, dynamic hover elevation with \`translateZ(20px)\`).
-     * Specular light reflection sheen that tracks cursor/touch position.
-     * Framer Motion smooth spring physics (\`stiffness: 300, damping: 25\`).
-     * Luminous glowing glassmorphism borders (\`backdrop-blur-xl\`, \`border-amber-500/20\`).
-     * Celestial particle stardust and ambient depth.
-     * Tactile audio click feedback on interactions (\`/sounds/resources/click2.mp3\` with volume 0.65).
-3. DO NOT REPLACE THE PAGE WITH A NEW ONE:
-   - Enhance the EXISTING code. Keep its foundational structure, data connections, and logic intact.
+
+${DIGAMBAR_CANONICAL_RULES}
 
 CRITICAL UI, AUDIO & POSITIONING MANDATES:
 1. AUDIO TACTILE CLICKS: MUST use the real audio file '/sounds/resources/click2.mp3' with volume 0.65:
@@ -346,8 +353,9 @@ Return your response in exactly two clearly demarcated sections:
 
 === METADATA ===
 {
-  "summary": "1-sentence executive headline of the elevation.",
+  "summary": "1-sentence executive headline of the single feature deeply elevated.",
   "detailedChanges": [
+    "🎯 Deep Feature: Specific detailed description of the single feature implemented",
     "🎨 Visual & Motion: Specific description of UI/motion upgrades applied",
     "🔊 Tactile & Audio: Specific description of haptic/sound feedback added",
     "✨ Atmosphere: Specific description of background/textures/canvas effects",
@@ -369,9 +377,9 @@ Return your response in exactly two clearly demarcated sections:
   const rawResponse = await queryGemini(prompt, false);
 
   let metadata = {
-    summary: `Elevated ${target.name} with ${pattern.name}`,
+    summary: `Elevated ${target.name} with ${featureName}`,
     detailedChanges: [
-      `Integrated ${pattern.name} visual design pattern`,
+      `Deeply implemented ${featureName} with high-craft 3D motion and state`,
       "Added tactile audio click micro-haptics and responsive spring physics",
       "Optimized atmospheric parchment noise and smooth layout transitions",
       "Embedded verified Digambar Aagam canonical citations"
@@ -423,14 +431,18 @@ Return your response in exactly two clearly demarcated sections:
 // ----------------------------------------------------------------------------
 // 6.5 AUTONOMOUS FRONTEND CRITIC & POLISH PASS
 // ----------------------------------------------------------------------------
-async function refineAndPolishFrontend(target, initialCode, pattern, userNotes = "") {
+async function refineAndPolishFrontend(target, initialCode, pattern, focusFeature = null) {
   console.log("🎨 Initiating Autonomous Frontend Refinement & Polish Pass...");
+  const featureName = focusFeature?.name || pattern.name;
+  const featureConcept = focusFeature?.concept || pattern.concept;
+  const userNotes = focusFeature?.note || "";
 
   const criticPrompt = `
 You are an award-winning Creative Director, Senior Design Engineer, and scholar of authentic Digambar Jain Philosophy.
 
 Review this newly drafted Next.js 15+ React component for: ${target.name} (${target.pageRoute}).
-Inspiration: ${pattern.name}
+Focused Feature to Polish: ${featureName}
+Scope & Intent: ${featureConcept}
 ${userNotes ? `USER'S CUSTOM REQUIREMENTS: ${userNotes}` : ""}
 
 ${DIGAMBAR_CANONICAL_RULES}
@@ -441,13 +453,14 @@ ${initialCode}
 \`\`\`
 
 YOUR TASK - CRITIQUE AND ELEVATE (Take it from an 8/10 to a 9.5/10):
-1. STRICT CONTENT PRESERVATION MANDATE:
+1. SINGLE FEATURE DEEP CRAFTSMANSHIP AUDIT:
+   - Verify that the single focused feature (${featureName}) is built with true depth, complete state handling, and nuanced micro-interactions rather than being a superficial or basic addition.
+   - Refine Framer Motion spring physics (stiffness: 300, damping: 25).
+   - Enhance 3D perspective depth tilts, specular glare reflections, and multi-plane Z-depth layers.
+2. STRICT CONTENT PRESERVATION MANDATE:
    - ZERO CONTENT REMOVAL: You must verify that 100% of the original content, cards, and data mappings are preserved.
    - If this is the Tirthankaras gallery, ALL 24 Tirthankaras and their data map MUST be preserved.
    - Do NOT delete, replace, or simplify any data loops, text, or buttons.
-2. 3D Spatial Immersion & Motion Physics:
-   - Refine Framer Motion spring physics (stiffness: 300, damping: 25).
-   - Enhance 3D perspective depth tilts, specular glare reflections, and multi-plane Z-depth layers.
 3. Audio Realism: Verify that audio click uses new Audio("/sounds/resources/click2.mp3") with volume 0.65. Eliminate any silent custom oscillators.
 4. Element Positioning: Ensure floating controls are docked at "bottom-6 right-6" (NEVER top-4 right-4 which collides with Navbar). Ensure primary navigation cards remain immediately below the title/subtitle.
 5. Mobile Viewport Excellence: Ensure seamless responsive wrapping, touch targets of at least 44px, and zero horizontal scroll overflow.
@@ -645,28 +658,50 @@ Fix the error completely. Return ONLY the drop-in replacement TSX code. Do not w
 // ----------------------------------------------------------------------------
 // 8. TELEGRAM NOTIFIER WITH DIRECT VERCEL PREVIEW
 // ----------------------------------------------------------------------------
-async function getDirectVercelPreviewUrl(branchName) {
-  console.log(`Fetching exact direct Vercel preview deployment URL for branch: ${branchName}...`);
+async function getDirectVercelPreviewUrl(branchName, targetPageRoute = "", commitSha = "") {
+  console.log(`Fetching exact direct Vercel preview deployment URL for branch: ${branchName} (target: ${targetPageRoute || "/"}, commit: ${commitSha || "HEAD"})...`);
   const headers = { "User-Agent": "AntigravityAgent" };
   if (process.env.GITHUB_TOKEN) {
     headers["Authorization"] = `Bearer ${process.env.GITHUB_TOKEN}`;
   }
 
+  const branchSlug = branchName.replace(/\//g, "-").replace(/[^a-zA-Z0-9-]/g, "").toLowerCase();
+  // Exact deterministic Vercel branch preview URL for project 'aagamkivaani'
+  const vercelBranchBase = `https://aagamkivaani-git-${branchSlug}-aagams-projects-b0e9e8b5.vercel.app`;
+
+  const formatFinalUrl = (baseUrl) => {
+    const cleanBase = baseUrl.replace(/\/$/, "");
+    if (!targetPageRoute || targetPageRoute === "/") return cleanBase;
+    const cleanRoute = targetPageRoute.startsWith("/") ? targetPageRoute : `/${targetPageRoute}`;
+    return `${cleanBase}${cleanRoute}`;
+  };
+
   // Poll for up to 90 seconds (18 attempts * 5s) for Vercel to complete building
   for (let i = 0; i < 18; i++) {
     try {
       await new Promise(r => setTimeout(r, 5000));
-      const res = await fetch("https://api.github.com/repos/AagamKiVaani/jain-wisdom-hub/deployments?per_page=8", { headers });
+      const res = await fetch("https://api.github.com/repos/AagamKiVaani/jain-wisdom-hub/deployments?per_page=15", { headers });
       const deployments = await res.json();
       if (Array.isArray(deployments) && deployments.length > 0) {
         for (const dep of deployments) {
+          // CRITICAL: NEVER match Production deployments (which point to main/production domain)!
+          const envName = (dep.environment || "").toLowerCase();
+          if (envName.includes("production")) continue;
+
+          // Match only the preview deployment for this exact branch or commit
+          const isMatchingRef = dep.ref === branchName ||
+            (commitSha && (dep.ref === commitSha || dep.ref.startsWith(commitSha.slice(0, 7)))) ||
+            (dep.payload && typeof dep.payload === "string" && dep.payload.includes(branchName));
+
+          if (!isMatchingRef && commitSha) continue;
+
           const statusRes = await fetch(dep.statuses_url, { headers });
           const statuses = await statusRes.json();
           if (Array.isArray(statuses) && statuses.length > 0) {
             const url = statuses[0].environment_url || statuses[0].target_url;
-            if (url && url.includes(".vercel.app") && statuses[0].state === "success") {
-              console.log("✅ Live direct Vercel URL verified:", url);
-              return url;
+            if (url && url.includes(".vercel.app") && !url.includes("aagamkivaani.org") && statuses[0].state === "success") {
+              console.log("✅ Live direct Vercel Preview URL verified:", url);
+              return formatFinalUrl(url);
             }
           }
         }
@@ -676,24 +711,13 @@ async function getDirectVercelPreviewUrl(branchName) {
     }
   }
 
-  // Fallback to latest deployment environment_url if timeout reached
-  try {
-    const res = await fetch("https://api.github.com/repos/AagamKiVaani/jain-wisdom-hub/deployments?per_page=1");
-    const deployments = await res.json();
-    if (deployments[0]) {
-      const statuses = await (await fetch(deployments[0].statuses_url)).json();
-      if (statuses[0]?.environment_url) return statuses[0].environment_url;
-    }
-  } catch (e) {}
-
-  const branchSlug = branchName.replace(/\//g, "-").toLowerCase();
-  return `https://jain-wisdom-git-${branchSlug}-aagams-projects-b0e9e8b5.vercel.app`;
+  // Fallback to deterministic Vercel preview domain with target page route
+  console.log(`Using deterministic Vercel preview branch URL: ${vercelBranchBase}`);
+  return formatFinalUrl(vercelBranchBase);
 }
 
 // ----------------------------------------------------------------------------
-// 7.4 DYNAMIC GEMINI FEATURE RESEARCHER
-// ----------------------------------------------------------------------------
-// 7.4 DYNAMIC GEMINI FEATURE RESEARCHER (IMMERSIVE 3D & MOTION)
+// 7.4 DYNAMIC GEMINI FEATURE RESEARCHER (SINGLE FEATURE DEEP FOCUS)
 // ----------------------------------------------------------------------------
 async function generateDynamicFeatures(target, pattern, workspaceRoot) {
   try {
@@ -701,29 +725,36 @@ async function generateDynamicFeatures(target, pattern, workspaceRoot) {
     const existingCode = fs.existsSync(fullPath) ? fs.readFileSync(fullPath, "utf8").slice(0, 2500) : "";
     
     const prompt = `
-You are the Lead Creative Director & Frontend Architect for Aagam Ki Vaani (a world-class Digambar Jain web portal).
+You are the Lead Creative Director & Principal Frontend Architect for Aagam Ki Vaani (world-class Digambar Jain web portal).
 Target Page: ${target.name} (${target.pageRoute})
 Design Pattern / Inspiration: ${pattern.name} (${pattern.concept})
 
 Source Code Context Excerpt:
 ${existingCode.slice(0, 1200)}
 
-Task: Propose exactly 4 to 5 cutting-edge, highly innovative visual, 3D, motion, or interactive enhancements tailored specifically for this page.
-Inspiration sources: Godly.website, Awwwards, Aceternity UI, Apple VisionOS, Spline 3D.
-CRITICAL CONSTRAINT: All proposed features MUST be ADDITIVE FRONTEND ENHANCEMENTS (e.g. 3D spatial depth tilt with specular glare, interactive category search/filter tabs, luminous glassmorphism, celestial particle stardust, tactile sound feedback, 3D perspective layers).
-NEVER propose deleting, replacing, or simplifying the existing content, cards, or data mappings.
-Suggest page-specific, thrilling enhancements (e.g. 3D card tilt & hover elevation, audio pronunciation/chant player, sacred geometry visualizer, instant search filter tabs, parchment manuscript view, celestial stardust field, etc.).
+CRITICAL MANDATE: SINGLE FEATURE DEEP FOCUS
+The user has commanded: DO NOT DO TOO MANY THINGS AT ONCE.
+Propose exactly 4 to 5 distinct, STANDALONE, DEEP-DIVE feature concepts tailored specifically for this page.
+Do NOT propose a bundle of multiple small tweaks or superficial surface changes.
+Instead, each proposal must be a single, substantial, deeply-architected feature (e.g. An Interactive Gyroscopic 3D Tilt Card Suite with Specular Glare; or An Audio Syllable Chanting Visualizer; or An Interactive Filter Bento System with Fluid Layout Animations).
 
-Return ONLY a JSON array of 5 objects in this format, with NO markdown formatting:
+For each feature, provide:
+- "id": number (1 to 5)
+- "name": Concise, compelling feature title (under 35 chars)
+- "concept": Detailed 2-sentence architectural scope explaining what will be built deeply (state management, micro-interactions, spring physics, tactile audio, responsive polish).
+- "selected": boolean (true ONLY for id 1, false for all others - strict single-choice radio selection).
+- "note": ""
+
+Return ONLY a valid JSON array of 5 objects, with NO markdown wrapping:
 [
-  { "id": 1, "name": "Feature 1 title under 35 chars", "selected": true, "note": "" },
-  { "id": 2, "name": "Feature 2 title under 35 chars", "selected": true, "note": "" },
-  { "id": 3, "name": "Feature 3 title under 35 chars", "selected": false, "note": "" },
-  { "id": 4, "name": "Feature 4 title under 35 chars", "selected": false, "note": "" },
-  { "id": 5, "name": "Feature 5 title under 35 chars", "selected": false, "note": "" }
+  { "id": 1, "name": "Feature Title", "concept": "Detailed deep architecture description...", "selected": true, "note": "" },
+  { "id": 2, "name": "Feature Title", "concept": "Detailed deep architecture description...", "selected": false, "note": "" },
+  { "id": 3, "name": "Feature Title", "concept": "Detailed deep architecture description...", "selected": false, "note": "" },
+  { "id": 4, "name": "Feature Title", "concept": "Detailed deep architecture description...", "selected": false, "note": "" },
+  { "id": 5, "name": "Feature Title", "concept": "Detailed deep architecture description...", "selected": false, "note": "" }
 ]
 `;
-    console.log(`🧠 Querying Gemini to research custom features for ${target.name}...`);
+    console.log(`🧠 Querying Gemini to research custom single-focus features for ${target.name}...`);
     const res = await queryGemini(prompt, false);
     const match = res.match(/\[[\s\S]*\]/);
     if (match) {
@@ -732,7 +763,8 @@ Return ONLY a JSON array of 5 objects in this format, with NO markdown formattin
         return parsed.slice(0, 5).map((item, idx) => ({
           id: idx + 1,
           name: (item.name || `Enhancement #${idx + 1}`).slice(0, 42),
-          selected: idx < 2,
+          concept: item.concept || `${pattern.name} deeply integrated into ${target.name}.`,
+          selected: idx === 0,
           note: ""
         }));
       }
@@ -742,32 +774,36 @@ Return ONLY a JSON array of 5 objects in this format, with NO markdown formattin
   }
 
   return [
-    { id: 1, name: `${pattern.name} 3D Spatial UI`, selected: true, note: "" },
-    { id: 2, name: "Interactive 3D Tilt & Specular Glare", selected: true, note: "" },
-    { id: 3, name: "Sacred Sanskrit Audio & Chanting Waves", selected: false, note: "" },
-    { id: 4, name: "Verified Digambar Shastra Inscriptions", selected: false, note: "" },
-    { id: 5, name: "Responsive Mobile Glassmorphic Overlays", selected: false, note: "" }
+    { id: 1, name: `${pattern.name} 3D Deep Architecture`, concept: `Comprehensive spatial depth, perspective transforms, dynamic specular glare sheen, and tactile sound clicks.`, selected: true, note: "" },
+    { id: 2, name: "Interactive 3D Tilt & Specular Glare", concept: `Gyroscope-like multi-axis cursor tracking with smooth spring physics and zero layout thrashing.`, selected: false, note: "" },
+    { id: 3, name: "Sacred Sanskrit Audio Chanting Waves", concept: `Interactive audio player with syllable resonance, volume controls, and tactile tap feedback.`, selected: false, note: "" },
+    { id: 4, name: "Verified Digambar Shastra Inscriptions", concept: `Rich gold-foil scripture inscription cards citing authentic Digambar canonical verses.`, selected: false, note: "" },
+    { id: 5, name: "Responsive Glassmorphic Bento Explorer", concept: `High-density card grid with category tabs, layout animations, and instant keyboard search.`, selected: false, note: "" }
   ];
 }
 
 // ----------------------------------------------------------------------------
-// 7.5 INTERACTIVE FEATURE PROPOSAL & CHECKBOX ENGINE
+// 7.5 INTERACTIVE SINGLE-FEATURE PROPOSAL & RADIO SELECTION ENGINE
 // ----------------------------------------------------------------------------
 async function requestProposalApproval(target, pattern, token, chatId, workspaceRoot) {
   if (!token || !chatId) {
     console.warn("Telegram tokens not set. Proceeding in non-interactive mode.");
-    return [{ id: 1, name: `${pattern.name} Visual Elevation`, selected: true, note: "" }];
+    return { id: 1, name: `${pattern.name} Visual Elevation`, concept: pattern.concept, selected: true, note: "" };
   }
 
   const features = await generateDynamicFeatures(target, pattern, workspaceRoot);
+
+  function getActiveFeature() {
+    return features.find(f => f.selected) || features[0];
+  }
 
   function buildKeyboard() {
     const rows = [];
     features.forEach((f, idx) => {
       rows.push([
         {
-          text: `${f.selected ? "✅" : "⬜"} ${f.id}. ${f.name}`,
-          callback_data: `prop_toggle:${idx}`
+          text: `${f.selected ? "🔘" : "⚪"} ${f.id}. ${f.name}`,
+          callback_data: `prop_select:${idx}`
         },
         {
           text: f.note ? `📝 Note: "${f.note.slice(0, 8)}..."` : `💬 Note #${f.id}`,
@@ -776,30 +812,39 @@ async function requestProposalApproval(target, pattern, token, chatId, workspace
       ]);
     });
 
+    const active = getActiveFeature();
     rows.push([
-      { text: "🚀 Build Selected Features", callback_data: "prop_build" },
+      { text: `🚀 Build Focused Feature #${active.id}`, callback_data: "prop_build" },
       { text: "❌ Skip This Cycle", callback_data: "prop_skip" }
     ]);
 
     return { inline_keyboard: rows };
   }
 
-  const messageText = `
-🏛️ *AAGAM KI VAANI DESIGN PROPOSAL*
+  function buildMessageText() {
+    const active = getActiveFeature();
+    return `
+🏛️ *AAGAM KI VAANI - SINGLE FEATURE DEEP FOCUS*
 
 📍 *TARGET PAGE:* \`${target.name}\` (${target.pageRoute})
 📁 *SOURCE FILE:* \`${target.sourceFilePath}\`
-🌟 *RESEARCH INSPIRATION:* ${pattern.name}
+🌟 *INSPIRATION:* ${pattern.name}
 
-_Tap any item to toggle (✅ / ⬜) or tap 💬 to add custom instructions:_
+🎯 *CURRENT ACTIVE FOCUS:*
+*#${active.id}: ${active.name}*
+_${active.concept}_
+${active.note ? `\n📝 *Custom Instructions:* "${active.note}"` : ""}
+
+_Tap any button (⚪) to switch the single focus feature, or tap 💬 to add instructions:_
 `.trim();
+  }
 
   const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       chat_id: chatId,
-      text: messageText,
+      text: buildMessageText(),
       parse_mode: "Markdown",
       reply_markup: buildKeyboard()
     })
@@ -808,12 +853,12 @@ _Tap any item to toggle (✅ / ⬜) or tap 💬 to add custom instructions:_
   const msgData = await res.json();
   if (!msgData.ok) {
     console.error("Failed to send proposal message:", msgData);
-    return features.filter(f => f.selected);
+    return getActiveFeature();
   }
   const messageId = msgData.result.message_id;
 
-  console.log(`[Proposal] Interactive checklist dispatched to Telegram (Msg ID: ${messageId}).`);
-  console.log("Listening for user checkbox toggles and custom notes on Telegram...");
+  console.log(`[Proposal] Single-feature radio checklist dispatched to Telegram (Msg ID: ${messageId}).`);
+  console.log("Listening for user radio selections and custom notes on Telegram...");
 
   const maxWaitMs = 15 * 60 * 1000; // 15 minutes
   const startTime = Date.now();
@@ -839,17 +884,19 @@ _Tap any item to toggle (✅ / ⬜) or tap 💬 to add custom instructions:_
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 chat_id: chatId,
-                text: `✅ *Note Saved for Feature #${features[awaitingNoteForIdx].id}:* "${update.message.text}"\n\n_Tap [🚀 Build Selected Features] when ready!_`,
+                text: `✅ *Note Saved for Feature #${features[awaitingNoteForIdx].id}:* "${update.message.text}"\n\n_Tap [🚀 Build Focused Feature #${features[awaitingNoteForIdx].id}] when ready!_`,
                 parse_mode: "Markdown"
               })
             });
 
-            await fetch(`https://api.telegram.org/bot${token}/editMessageReplyMarkup`, {
+            await fetch(`https://api.telegram.org/bot${token}/editMessageText`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 chat_id: chatId,
                 message_id: messageId,
+                text: buildMessageText(),
+                parse_mode: "Markdown",
                 reply_markup: buildKeyboard()
               })
             });
@@ -861,16 +908,21 @@ _Tap any item to toggle (✅ / ⬜) or tap 💬 to add custom instructions:_
           if (update.callback_query && update.callback_query.data) {
             const cb = update.callback_query.data;
 
-            if (cb.startsWith("prop_toggle:")) {
+            if (cb.startsWith("prop_select:")) {
               const idx = parseInt(cb.split(":")[1], 10);
-              features[idx].selected = !features[idx].selected;
+              // Strict radio selection: only one active feature
+              features.forEach((f, i) => {
+                f.selected = (i === idx);
+              });
 
-              await fetch(`https://api.telegram.org/bot${token}/editMessageReplyMarkup`, {
+              await fetch(`https://api.telegram.org/bot${token}/editMessageText`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                   chat_id: chatId,
                   message_id: messageId,
+                  text: buildMessageText(),
+                  parse_mode: "Markdown",
                   reply_markup: buildKeyboard()
                 })
               });
@@ -878,7 +930,10 @@ _Tap any item to toggle (✅ / ⬜) or tap 💬 to add custom instructions:_
               await fetch(`https://api.telegram.org/bot${token}/answerCallbackQuery`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ callback_query_id: update.callback_query.id })
+                body: JSON.stringify({
+                  callback_query_id: update.callback_query.id,
+                  text: `Focused on: #${features[idx].id} ${features[idx].name}`
+                })
               });
             } else if (cb.startsWith("prop_note:")) {
               const idx = parseInt(cb.split(":")[1], 10);
@@ -900,12 +955,13 @@ _Tap any item to toggle (✅ / ⬜) or tap 💬 to add custom instructions:_
                 body: JSON.stringify({ callback_query_id: update.callback_query.id })
               });
             } else if (cb === "prop_build") {
+              const chosen = getActiveFeature();
               await fetch(`https://api.telegram.org/bot${token}/answerCallbackQuery`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                   callback_query_id: update.callback_query.id,
-                  text: "Building selected features now!"
+                  text: `Building Feature #${chosen.id} with deep focus!`
                 })
               });
 
@@ -914,12 +970,12 @@ _Tap any item to toggle (✅ / ⬜) or tap 💬 to add custom instructions:_
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                   chat_id: chatId,
-                  text: `⚙️ *Building your selected features...*\n• Enforcing Acharya Umāsvāmi & Kundkund canonical reverence\n• Running Creative Director Polish Pass\n• Compiling Next.js build\n\n_You will receive the direct live preview link shortly!_`,
+                  text: `⚙️ *Building single feature with deep focus...*\n\n🎯 *Target Feature:* #${chosen.id}. ${chosen.name}\n• Focusing 100% effort on deep architecture & micro-interactions\n• Enforcing Acharya Umāsvāmi & Kundkund canonical reverence\n• Compiling Next.js build & verifying preview deployment\n\n_You will receive the direct live preview link shortly!_`,
                   parse_mode: "Markdown"
                 })
               });
 
-              return features.filter(f => f.selected);
+              return chosen;
             } else if (cb === "prop_skip") {
               await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
                 method: "POST",
@@ -940,14 +996,14 @@ _Tap any item to toggle (✅ / ⬜) or tap 💬 to add custom instructions:_
     await new Promise(r => setTimeout(r, 2500));
   }
 
-  console.log("Proposal timed out awaiting user interaction. Proceeding with selected features.");
-  return features.filter(f => f.selected);
+  console.log("Proposal timed out awaiting user interaction. Proceeding with active feature.");
+  return getActiveFeature();
 }
 
 // ----------------------------------------------------------------------------
 // 8. TELEGRAM NOTIFIER WITH DIRECT VERCEL PREVIEW
 // ----------------------------------------------------------------------------
-async function sendTelegramBriefing(synthesis, pattern, target, branchName, qaPasses) {
+async function sendTelegramBriefing(synthesis, pattern, target, branchName, qaPasses, focusFeature = null, commitSha = "") {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) {
@@ -955,19 +1011,24 @@ async function sendTelegramBriefing(synthesis, pattern, target, branchName, qaPa
     return;
   }
 
-  const directPreviewUrl = await getDirectVercelPreviewUrl(branchName);
+  const directPreviewUrl = await getDirectVercelPreviewUrl(branchName, target.pageRoute, commitSha);
   const githubCompareUrl = `https://github.com/AagamKiVaani/jain-wisdom-hub/compare/main...${branchName}`;
 
   const changesList = Array.isArray(synthesis.detailedChanges) && synthesis.detailedChanges.length > 0
     ? synthesis.detailedChanges.map(c => `• ${c}`).join("\n")
     : `• ${synthesis.summary}`;
 
+  const featureTitle = focusFeature?.name || synthesis.summary;
+  const featureConcept = focusFeature?.concept ? `\n🎯 *Focus Scope:* _${focusFeature.concept}_\n` : "";
+
   const messageText = `
 🏛️ *JAIN WISDOM ELEVATION REPORT*
 
-📍 *Target:* \`${target.name}\` (${target.pageRoute})
-✨ *Inspiration:* ${pattern.name}
-🔬 *QA Status:* Passed compiler in ${qaPasses} pass(es)
+📍 *Target Page:* \`${target.name}\` (${target.pageRoute})
+🌟 *Inspiration:* ${pattern.name}
+✨ *Deep Focus Feature:* *${featureTitle}*
+${featureConcept}
+🔬 *QA Status:* Passed Next.js compiler in ${qaPasses} pass(es)
 
 📜 *DIGAMBAR AAGAM VERIFICATION:*
 • *Shastra:* ${synthesis.digambarProof.shastra}
@@ -975,18 +1036,18 @@ async function sendTelegramBriefing(synthesis, pattern, target, branchName, qaPa
 • *Reference:* ${synthesis.digambarProof.reference}
 • *Doctrinal Proof:* ${synthesis.digambarProof.explanation}
 
-✨ *DETAILED POINTWISE ELEVATION BREAKDOWN:*
+✨ *DEEP CRAFTSMANSHIP BREAKDOWN:*
 ${changesList}
 
 🌿 *Git Branch:* \`${branchName}\`
-🌐 *Direct Live Preview:*
+🌐 *Direct Live Preview (Exact Page):*
 ${directPreviewUrl}
 
 🔍 *Code Diff on GitHub:*
 ${githubCompareUrl}
 
 ---
-_Tap below to review live or command your agent:_
+_Tap below to review the live preview on your phone or command your agent:_
 `.trim();
 
   const inlineKeyboard = {
@@ -1138,14 +1199,15 @@ Apply all requested corrections while strictly preserving all existing content, 
               execSync(`git commit -m "Apply user feedback: ${userFeedback.slice(0, 50)}"`, { cwd: workspaceRoot, stdio: "pipe" });
               execSync(`git push origin ${branchName}`, { cwd: workspaceRoot, stdio: "pipe" });
 
-              const directPreviewUrl = await getDirectVercelPreviewUrl(branchName);
+              const revisedCommitSha = execSync("git rev-parse HEAD", { cwd: workspaceRoot, stdio: "pipe" }).toString().trim();
+              const directPreviewUrl = await getDirectVercelPreviewUrl(branchName, target.pageRoute, revisedCommitSha);
 
               await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                   chat_id: chatId,
-                  text: `✨ *CHANGES APPLIED & VERIFIED!*\n\n📍 *Target:* \`${target.name}\`\n🌐 *Updated Live Preview:*\n${directPreviewUrl}\n\n_Tap below to review the updated preview:_`,
+                  text: `✨ *CHANGES APPLIED & VERIFIED!*\n\n📍 *Target Page:* \`${target.name}\` (${target.pageRoute})\n🌐 *Updated Live Preview:*\n${directPreviewUrl}\n\n_Tap below to review the updated live preview on your phone:_`,
                   parse_mode: "Markdown",
                   reply_markup: {
                     inline_keyboard: [
@@ -1263,12 +1325,12 @@ async function main() {
   const pattern = getInspirationPattern(target.pageRoute, workspaceRoot);
   console.log(`\n[2/5] Selected Pattern: ${pattern.name}`);
 
-  // 2.5 Interactive Proposal Menu with Checkboxes & Custom Notes
+  // 2.5 Interactive Proposal Menu with Single Deep Focus Selection
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
-  const approvedFeatures = await requestProposalApproval(target, pattern, token, chatId, workspaceRoot);
-  if (!approvedFeatures || approvedFeatures.length === 0) {
-    console.log("No features selected or cycle skipped by user.");
+  const focusFeature = await requestProposalApproval(target, pattern, token, chatId, workspaceRoot);
+  if (!focusFeature) {
+    console.log("No feature selected or cycle skipped by user.");
     return;
   }
 
@@ -1283,15 +1345,15 @@ async function main() {
     fs.writeFileSync(histPath, JSON.stringify(hist.slice(-20), null, 2), "utf8");
   } catch (e) {}
 
-  // 3. Synthesize ONLY user-approved features with custom notes
-  console.log("\n[3/5] Synthesizing user-approved features with Gemini & Digambar Guardrails...");
+  // 3. Deeply synthesize ONLY the single focus feature with custom notes
+  console.log(`\n[3/5] Deeply synthesizing single focus feature: "${focusFeature.name}"...`);
   const currentCode = fs.readFileSync(path.join(workspaceRoot, target.sourceFilePath), "utf8");
-  const result = await synthesize(target, currentCode, pattern, approvedFeatures);
+  const result = await synthesize(target, currentCode, pattern, focusFeature);
   console.log(`📜 Digambar Source: ${result.digambarProof.shastra} (${result.digambarProof.author})`);
 
   // 3.5 Autonomous Frontend Polish Pass (Creative Director Refinement Loop)
   console.log("\n[3.5/5] Executing Creative Director Frontend Polish Pass...");
-  result.code = await refineAndPolishFrontend(target, result.code, pattern);
+  result.code = await refineAndPolishFrontend(target, result.code, pattern, focusFeature);
 
   // 4. Create Branch & Run QA
   const timestamp = new Date().toISOString().replace(/[-:T]/g, "").slice(0, 12);
@@ -1313,7 +1375,8 @@ async function main() {
 
   // Commit and push branch
   execSync("git add .", { cwd: workspaceRoot, stdio: "pipe" });
-  execSync(`git commit -m "Autonomous Elevation: ${pattern.name} on ${target.name}"`, { cwd: workspaceRoot, stdio: "pipe" });
+  execSync(`git commit -m "Autonomous Elevation: ${focusFeature.name} on ${target.name}"`, { cwd: workspaceRoot, stdio: "pipe" });
+  const commitSha = execSync("git rev-parse HEAD", { cwd: workspaceRoot, stdio: "pipe" }).toString().trim();
   try {
     execSync(`git push -u origin ${branchName}`, { cwd: workspaceRoot, stdio: "pipe" });
     console.log(`🌿 Branch ${branchName} pushed to origin.`);
@@ -1321,9 +1384,9 @@ async function main() {
     console.warn("Could not push branch to origin:", e.message);
   }
 
-  // 5. Notify Telegram
+  // 5. Notify Telegram with direct page-specific preview link
   console.log("\n[5/5] Dispatching briefing to Telegram...");
-  await sendTelegramBriefing(result, pattern, target, branchName, qa.iterations);
+  await sendTelegramBriefing(result, pattern, target, branchName, qa.iterations, focusFeature, commitSha);
 
   // 6. Active Command Center: Listen for User Feedback & Merge Actions
   await waitForUserFeedbackAndApproval(target, pattern, branchName, workspaceRoot);
