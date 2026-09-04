@@ -21,10 +21,14 @@ export interface Note {
 
 const getThemeColors = (series: string, section?: string) => {
   let themeName = 'blue'; 
+  const sLower = series.toLowerCase();
   
-  if (series.toLowerCase().includes('ramayan')) themeName = 'golden';
-  else if (series.toLowerCase().includes('decoding')) themeName = 'cyan';
-  else if (series.toLowerCase().includes('tatvarth') && section) {
+  if (sLower.includes('ramayan')) themeName = 'golden';
+  else if (sLower.includes('decoding')) themeName = 'cyan';
+  else if (sLower.includes('stotra') || sLower.includes('stavan')) themeName = 'pink';
+  else if (sLower.includes('mahaveer') || sLower.includes('mahavir') || sLower.includes('mahagatha')) themeName = 'golden';
+  else if (sLower.includes('gems')) themeName = 'teal';
+  else if (sLower.includes('tatvarth') && section) {
     const s = section.toLowerCase();
     if (s.includes('adhyay 10')) themeName = 'red';
     else if (s.includes('adhyay 1')) themeName = 'purple';
@@ -96,6 +100,30 @@ const getSeriesTheme = (seriesName: string) => {
       borderHover: 'hover:border-cyan-500/60',
       shadow: 'hover:shadow-cyan-500/20',
       accentText: 'text-cyan-500',
+    };
+  }
+  if (name.includes('stotra') || name.includes('stavan')) {
+    return {
+      glow: 'from-pink-500/25 via-rose-500/20 to-purple-500/10',
+      borderHover: 'hover:border-pink-500/60',
+      shadow: 'hover:shadow-pink-500/20',
+      accentText: 'text-pink-500',
+    };
+  }
+  if (name.includes('mahaveer') || name.includes('mahavir') || name.includes('mahagatha')) {
+    return {
+      glow: 'from-amber-500/30 via-yellow-500/25 to-orange-500/15',
+      borderHover: 'hover:border-amber-500/70',
+      shadow: 'hover:shadow-amber-500/25',
+      accentText: 'text-amber-500',
+    };
+  }
+  if (name.includes('gems')) {
+    return {
+      glow: 'from-emerald-500/25 via-teal-500/20 to-cyan-500/10',
+      borderHover: 'hover:border-emerald-500/60',
+      shadow: 'hover:shadow-emerald-500/20',
+      accentText: 'text-emerald-500',
     };
   }
   return {
@@ -416,8 +444,8 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
 
   const getVideoThumbnail = (urlOrId: string) => {
     const { type, id } = getVideoTypeAndId(urlOrId);
-    if (type === 'youtube') return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
-    if (type === 'drive') return `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
+    if (type === 'youtube') return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
+    if (type === 'drive') return `https://drive.google.com/thumbnail?id=${id}&sz=w1200`;
     return "";
   };
 
@@ -425,8 +453,44 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
     const name = seriesName.toLowerCase();
     if (name.includes('decoding')) return '/images/resources/posters/decoding_jainism.jpeg';
     if (name.includes('tatvarth')) return '/images/resources/posters/tatvarth-series.png';
-    if (name.includes('the jain ramayan')) return '/images/resources/posters/the-jain-ramayan.jpeg';
+    if (name.includes('the jain ramayan') || name.includes('ramayan')) return '/images/resources/posters/the-jain-ramayan.jpeg';
+    if (name.includes('stotra') || name.includes('stavan')) return '/images/resources/posters/stotra-stavan.png';
+    if (name.includes('mahaveer') || name.includes('mahavir') || name.includes('mahagatha')) return '/images/resources/posters/Bhagwan-Mahveer.png';
     return null;
+  };
+
+  const hasValidVideo = (note: Note) => {
+    if (!note.videoLink) return false;
+    const v = note.videoLink.trim().toLowerCase();
+    if (!v || ['no', 'none', 'n', 'false', 'na', 'n/a', 'coming soon', 'coming_soon', '-', '#'].includes(v)) return false;
+    const { type, id } = getVideoTypeAndId(note.videoLink);
+    if (type === 'youtube' && id) return true;
+    if (type === 'drive' && id) return true;
+    if (note.videoLink.trim().startsWith('http://') || note.videoLink.trim().startsWith('https://')) return true;
+    return false;
+  };
+
+  const hasValidPdf = (note: Note) => {
+    if (!note.driveFileId) return false;
+    const d = note.driveFileId.trim().toLowerCase();
+    if (!d || ['no', 'none', 'n', 'false', 'na', 'n/a', 'coming soon', 'coming_soon', '-', '#'].includes(d)) return false;
+    return true;
+  };
+
+  const formatResourceCounts = (notes: Note[]) => {
+    const videoCount = notes.filter(hasValidVideo).length;
+    const pdfCount = notes.filter(hasValidPdf).length;
+
+    if (videoCount > 0 && pdfCount > 0) {
+      return `${videoCount} ${videoCount === 1 ? 'Video' : 'Videos'} • ${pdfCount} ${pdfCount === 1 ? 'Note' : 'Notes'}`;
+    }
+    if (videoCount > 0 && pdfCount === 0) {
+      return `${videoCount} ${videoCount === 1 ? 'Video' : 'Videos'}`;
+    }
+    if (videoCount === 0 && pdfCount > 0) {
+      return `${pdfCount} ${pdfCount === 1 ? 'Note' : 'Notes'}`;
+    }
+    return 'Coming Soon';
   };
 
   const getSectionPoster = (sectionName: string) => {
@@ -525,12 +589,15 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
           >
             {seriesList.map((series) => {
               const seriesNotes = initialNotes.filter(n => n.series === series);
-              const seriesNotesCount = seriesNotes.length;
+              const seriesVideoCount = seriesNotes.filter(hasValidVideo).length;
+              const seriesPdfCount = seriesNotes.filter(hasValidPdf).length;
               
-              // If the series has exactly one entry and its title OR section contains "coming soon", lock it!
-              const isComingSoon = seriesNotesCount === 1 && (
-                seriesNotes[0].title.toLowerCase().includes("coming soon") ||
-                (seriesNotes[0].section || "").toLowerCase().includes("coming soon")
+              // A series is Coming Soon if it has no valid video and no valid pdf, or marked explicitly as coming soon
+              const isComingSoon = (seriesVideoCount === 0 && seriesPdfCount === 0) || (
+                seriesNotes.length === 1 && (
+                  seriesNotes[0].title.toLowerCase().includes("coming soon") ||
+                  (seriesNotes[0].section || "").toLowerCase().includes("coming soon")
+                )
               );
 
               const seriesTheme = getSeriesTheme(series);
@@ -621,7 +688,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                         )}
 
                         <div className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mt-2 ${getSeriesPoster(series) ? 'bg-black/60 text-white backdrop-blur-md border border-white/30 shadow-lg' : 'bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300 border border-amber-200/50'}`}>
-                          {seriesNotesCount} Videos & Notes
+                          {formatResourceCounts(seriesNotes)}
                         </div>
                       </Card3DItem>
                     </div>
@@ -691,8 +758,11 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto pb-32">
               {seriesSections.map(section => {
                 const sectionNotes = initialNotes.filter(n => n.series === selectedSeries && n.section === section);
-                const sectionNotesCount = sectionNotes.length;
-                const isSectionComingSoon = sectionNotes.length > 0 && sectionNotes.every(n => n.title.toLowerCase().includes("coming soon"));
+                const sectionVideoCount = sectionNotes.filter(hasValidVideo).length;
+                const sectionPdfCount = sectionNotes.filter(hasValidPdf).length;
+                const isSectionComingSoon = (sectionVideoCount === 0 && sectionPdfCount === 0) || (
+                  sectionNotes.length > 0 && sectionNotes.every(n => n.title.toLowerCase().includes("coming soon"))
+                );
                 const theme = getThemeColors(selectedSeries || "", section);
 
                 return (
@@ -768,7 +838,7 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                         </div>
                         {!isSectionComingSoon && (
                           <div className={`mt-6 inline-flex items-center text-xs font-bold uppercase tracking-widest ${getSectionPoster(section) ? 'text-white/90' : theme.text}`}>
-                            {sectionNotesCount} items <ArrowRight size={14} className="ml-1 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all" />
+                            {formatResourceCounts(sectionNotes)} <ArrowRight size={14} className="ml-1 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all" />
                           </div>
                         )}
                       </Card3DItem>
@@ -883,14 +953,22 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                           className="w-full aspect-video relative bg-black shrink-0 overflow-hidden cursor-pointer group/video z-10"
                           onClick={() => {
                             playTapSound();
-                            if (note.videoLink) setPlayingVideoUrl(note.videoLink);
+                            if (hasValidVideo(note)) setPlayingVideoUrl(note.videoLink);
                           }}
                         >
-                          {note.videoLink ? (
+                          {hasValidVideo(note) ? (
                             <>
                               <img
                                 src={getVideoThumbnail(note.videoLink)}
                                 alt={note.title}
+                                loading="lazy"
+                                decoding="async"
+                                onError={(e) => {
+                                  const target = e.currentTarget;
+                                  if (target.src.includes('maxresdefault.jpg')) {
+                                    target.src = target.src.replace('maxresdefault.jpg', 'hqdefault.jpg');
+                                  }
+                                }}
                                 className="absolute inset-0 w-full h-full object-cover opacity-95 md:opacity-90 group-hover/video:opacity-100 transition-all duration-700 group-hover/video:scale-105"
                               />
                               <div className="absolute inset-0 bg-black/25 group-hover/video:bg-black/10 transition-colors duration-500"></div>
@@ -909,9 +987,9 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                               </div>
                             </>
                           ) : (
-                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-900">
-                              <PlayCircle className="text-zinc-700 w-12 h-12 mb-2" />
-                              <span className="text-xs font-bold uppercase tracking-widest text-zinc-600">No Video</span>
+                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-900/90 dark:bg-zinc-950">
+                              <PlayCircle className="text-zinc-600 dark:text-zinc-700 w-12 h-12 mb-2 opacity-50" />
+                              <span className="text-xs font-bold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Video Coming Soon</span>
                             </div>
                           )}
                         </div>
@@ -955,6 +1033,12 @@ export default function NotesClient({ initialNotes: rawInitialNotes, isIndic, t 
                               // If user entered 'no', 'none', 'false', 'n/a' etc in Google Sheet -> hide PDF option completely
                               const isNoPdf = rawDrive === 'no' || rawDrive === 'none' || rawDrive === 'n' || rawDrive === 'false' || rawDrive === 'na' || rawDrive === 'n/a';
                               if (isNoPdf) {
+                                return null;
+                              }
+
+                              // If this series does not offer PDFs (e.g. Gems of Jainism where series has no PDFs) -> hide PDF section completely
+                              const seriesHasPdfs = initialNotes.some(n => n.series === note.series && hasValidPdf(n));
+                              if (!seriesHasPdfs && !hasValidPdf(note)) {
                                 return null;
                               }
 
