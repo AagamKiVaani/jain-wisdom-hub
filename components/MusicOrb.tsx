@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Play, Pause, SkipForward, SkipBack, Music2, X, Volume2, VolumeX, Sparkles, Maximize2, Minimize2, Eye, Infinity, RotateCcw, Moon } from "lucide-react";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import Image from "next/image";
@@ -28,6 +29,10 @@ const TRACKS = [
 ];
 
 export default function MusicOrb() {
+  const pathname = usePathname();
+  // The music orb should only be present on the homescreen
+  const isHomePage = /^\/(en|hi|kn)?\/?$/.test(pathname || "");
+
   const [isOpen, setIsOpen] = useState(false); 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isImmersive, setIsImmersive] = useState(false); 
@@ -74,6 +79,18 @@ export default function MusicOrb() {
   useEffect(() => { localStorage.setItem("jain-mala-count", malaCount.toString()); }, [malaCount]);
   useEffect(() => { localStorage.setItem("jain-player-volume", volume.toString()); }, [volume]);
   useEffect(() => { localStorage.setItem("jain-last-track", currentTrackIndex.toString()); }, [currentTrackIndex]);
+
+  // 🚪 HIDE & PAUSE ON NAVIGATION AWAY FROM HOMESCREEN
+  useEffect(() => {
+    if (!isHomePage) {
+      setIsOpen(false);
+      setIsImmersive(false);
+      if (audioRef.current && isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+    }
+  }, [isHomePage, isPlaying]);
 
   // 🔒 SCROLL LOCK
   useEffect(() => {
@@ -216,9 +233,16 @@ export default function MusicOrb() {
 
   return (
     <>
-      {/* 1. FLOATING ORB (Unchanged) */}
-      {!isImmersive && (
-        <div className="fixed bottom-6 left-6 z-[40] group">
+      {/* 1. FLOATING ORB (Homescreen Only) */}
+      <AnimatePresence>
+        {isHomePage && !isImmersive && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.6, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.6, y: 20 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="fixed bottom-6 left-6 z-[40] group"
+          >
             <div className={`absolute -inset-4 rounded-full blur-2xl transition-all duration-1000 opacity-0 pointer-events-none
                 ${isPlaying ? "bg-rose-500/40 opacity-100 animate-[spin_3s_linear_infinite]" : "bg-indigo-500/0"}`}></div>
 
@@ -247,8 +271,9 @@ export default function MusicOrb() {
             </div>
             <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-full" style={{ maskImage: 'linear-gradient(black, transparent)' }}></div>
             </motion.button>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* 2. MAIN PLAYER */}
       <AnimatePresence>
