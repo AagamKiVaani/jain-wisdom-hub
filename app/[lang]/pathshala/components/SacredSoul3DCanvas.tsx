@@ -13,9 +13,15 @@ export default function SacredSoul3DCanvas({
   const [activeState, setActiveState] = useState<"pure" | "anger" | "forgiveness">("pure");
   const [purityPercentage, setPurityPercentage] = useState(100);
 
+  // References accessed inside the continuous 60fps render loop
   const stateRef = useRef<"pure" | "anger" | "forgiveness">("pure");
+  const karmicProgressRef = useRef<number>(0.0); // 0.0 = pure, 1.0 = heavy anger, ~0.20 = forgiveness residual
+  const targetKarmicProgressRef = useRef<number>(0.0);
+
   const targetColorRef = useRef<THREE.Color>(new THREE.Color(0xffffff));
   const targetEmissiveRef = useRef<THREE.Color>(new THREE.Color(0xffffff));
+  const targetEmissiveIntensityRef = useRef<number>(0.9);
+  const targetShackleScaleRef = useRef<number>(1.0);
 
   const playClick = () => {
     if (!soundEnabled) return;
@@ -26,27 +32,32 @@ export default function SacredSoul3DCanvas({
     } catch (e) {}
   };
 
-  const handleStateChange = (state: "pure" | "anger" | "forgiveness") => {
+  const handleStateChange = (newState: "pure" | "anger" | "forgiveness") => {
     playClick();
-    setActiveState(state);
-    stateRef.current = state;
+    setActiveState(newState);
+    stateRef.current = newState;
 
-    if (state === "anger") {
-      setPurityPercentage(20);
-      targetColorRef.current.setHex(0x1a1a24); // Dark smoky charcoal
-      targetEmissiveRef.current.setHex(0x311042); // Deep dusk violet glow for visibility
-    } else if (state === "forgiveness") {
-      setPurityPercentage(90);
-      targetColorRef.current.setHex(0xd1fae5); // Emerald hint transition
-      targetEmissiveRef.current.setHex(0x10b981);
-      setTimeout(() => {
-        targetColorRef.current.setHex(0xffffff); // Return to 100% white
-        targetEmissiveRef.current.setHex(0xffffff);
-      }, 1000);
+    if (newState === "anger") {
+      // 1. ANGER: Accumulate karma continuously, tighten shackles, turn grey-bluish dark
+      targetKarmicProgressRef.current = 1.0;
+      targetShackleScaleRef.current = 1.0; // Tightly bound to soul
+      targetColorRef.current.setHex(0x182436); // Grey-bluish dark
+      targetEmissiveRef.current.setHex(0x28193d); // Deep dusky violet glow for clear silhouette
+      targetEmissiveIntensityRef.current = 0.25;
+    } else if (newState === "forgiveness") {
+      // 2. FORGIVENESS: Loosen shackles to a distance, release most karma but keep a few attached, distinct reddish-yellowish white
+      targetKarmicProgressRef.current = 0.22; // Keeps ~8-9 particles attached!
+      targetShackleScaleRef.current = 1.38; // Loosened, stays at this distance
+      targetColorRef.current.setHex(0xffdcb5); // Distinct warm reddish-yellowish white
+      targetEmissiveRef.current.setHex(0xea580c); // Warm amber-reddish inner glow
+      targetEmissiveIntensityRef.current = 0.6;
     } else {
-      setPurityPercentage(100);
-      targetColorRef.current.setHex(0xffffff); // 100% Pure White
+      // 3. PURE ATMAN: 100% pure brilliant white, radiating aura, ZERO shackles, ZERO particles
+      targetKarmicProgressRef.current = 0.0;
+      targetShackleScaleRef.current = 1.0;
+      targetColorRef.current.setHex(0xffffff); // 100% pure brilliant white
       targetEmissiveRef.current.setHex(0xffffff);
+      targetEmissiveIntensityRef.current = 0.95;
     }
   };
 
@@ -54,7 +65,7 @@ export default function SacredSoul3DCanvas({
     const container = containerRef.current;
     if (!container) return;
 
-    // 1. SCENE & OPTIMIZED RENDERER
+    // 1. SCENE SETUP
     const scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x040407, 0.05);
 
@@ -65,15 +76,15 @@ export default function SacredSoul3DCanvas({
     camera.position.set(0, 0, 8.2);
 
     const renderer = new THREE.WebGLRenderer({
-      antialias: false, // Performance optimization
+      antialias: false,
       alpha: true,
       powerPreference: "default",
     });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.25)); // Clamped for smooth FPS
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.25));
     container.appendChild(renderer.domElement);
 
-    // 2. LIGHTS SETUP
+    // 2. LIGHTING SETUP
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
     scene.add(ambientLight);
 
@@ -93,70 +104,65 @@ export default function SacredSoul3DCanvas({
     const soulGroup = new THREE.Group();
     scene.add(soulGroup);
 
-    // 32x24 segments for ultra-fast, lag-free morphing
     const baseGeo = new THREE.SphereGeometry(1.6, 32, 24);
     const origPositions = baseGeo.attributes.position.clone();
 
     const soulMat = new THREE.MeshStandardMaterial({
       color: 0xffffff,
       emissive: 0xffffff,
-      emissiveIntensity: 0.8,
-      metalness: 0.1,
-      roughness: 0.25,
+      emissiveIntensity: 0.9,
+      metalness: 0.05,
+      roughness: 0.2,
       transparent: true,
-      opacity: 0.95,
-      wireframe: false,
+      opacity: 0.96,
     });
     const soulMesh = new THREE.Mesh(baseGeo, soulMat);
     soulGroup.add(soulMesh);
 
-    // Ethereal subtle halo aura
-    const haloGeo = new THREE.SphereGeometry(1.78, 24, 18);
+    // Radiating pure white aura halo
+    const haloGeo = new THREE.SphereGeometry(1.82, 24, 18);
     const haloMat = new THREE.MeshBasicMaterial({
       color: 0xffffff,
       transparent: true,
-      opacity: 0.18,
+      opacity: 0.35,
       wireframe: true,
     });
     const haloMesh = new THREE.Mesh(haloGeo, haloMat);
     soulGroup.add(haloMesh);
 
     // 4. THE 8 KARMIC SHACKLES (ASHTA KARMA)
-    // In pure state: completely invisible.
-    // In bound state: 8 distinct dark metallic binding toruses clasp around the soul.
     const shackleGroup = new THREE.Group();
     scene.add(shackleGroup);
-    shackleGroup.visible = false; // Initially pure!
+    shackleGroup.visible = false; // Pure atman has NO shackles!
 
     const shackleMat = new THREE.MeshStandardMaterial({
-      color: 0x4b5563,
-      emissive: 0x1f2937,
+      color: 0x64748b,
+      emissive: 0x1e293b,
       metalness: 0.85,
-      roughness: 0.35,
+      roughness: 0.3,
     });
 
-    const shackleMeshes: THREE.Mesh[] = [];
-    const shackleAngles = [
-      { rx: 0.2, ry: 0.0, rz: 0.3, radius: 2.1 },
-      { rx: 0.8, ry: 0.4, rz: 0.1, radius: 2.15 },
-      { rx: 1.4, ry: 0.9, rz: 0.6, radius: 2.2 },
-      { rx: 2.0, ry: 1.3, rz: 1.1, radius: 2.1 },
-      { rx: -0.5, ry: 1.8, rz: 0.4, radius: 2.25 },
-      { rx: -1.1, ry: 2.2, rz: 0.8, radius: 2.15 },
-      { rx: -1.7, ry: 2.7, rz: 1.3, radius: 2.2 },
-      { rx: 2.6, ry: 3.1, rz: 1.7, radius: 2.1 },
+    const shackleConfigs = [
+      { rx: 0.2, ry: 0.0, rz: 0.3, radius: 1.95 },
+      { rx: 0.8, ry: 0.4, rz: 0.1, radius: 2.0 },
+      { rx: 1.4, ry: 0.9, rz: 0.6, radius: 2.05 },
+      { rx: 2.0, ry: 1.3, rz: 1.1, radius: 1.95 },
+      { rx: -0.5, ry: 1.8, rz: 0.4, radius: 2.05 },
+      { rx: -1.1, ry: 2.2, rz: 0.8, radius: 2.0 },
+      { rx: -1.7, ry: 2.7, rz: 1.3, radius: 2.05 },
+      { rx: 2.6, ry: 3.1, rz: 1.7, radius: 1.98 },
     ];
 
-    shackleAngles.forEach((cfg) => {
-      const sGeo = new THREE.TorusGeometry(cfg.radius, 0.035, 8, 36);
+    shackleConfigs.forEach((cfg) => {
+      const sGeo = new THREE.TorusGeometry(cfg.radius, 0.038, 8, 36);
       const mesh = new THREE.Mesh(sGeo, shackleMat);
       mesh.rotation.set(cfg.rx, cfg.ry, cfg.rz);
       shackleGroup.add(mesh);
-      shackleMeshes.push(mesh);
     });
 
     // 5. STICKY KARMA PARTICLES (VARGANAS)
-    const karmaCount = 45;
+    // 40 particles. As karmicProgress rises, particles gradually move from outer space to the surface.
+    const karmaCount = 40;
     const karmaGroup = new THREE.Group();
     scene.add(karmaGroup);
     karmaGroup.visible = false;
@@ -164,15 +170,16 @@ export default function SacredSoul3DCanvas({
     const karmaMeshes: {
       mesh: THREE.Mesh;
       surfacePos: THREE.Vector3;
-      explodeVel: THREE.Vector3;
+      outerPos: THREE.Vector3;
+      activationThreshold: number;
     }[] = [];
 
     const karmaGeo = new THREE.DodecahedronGeometry(0.12, 0);
     const karmaMat = new THREE.MeshStandardMaterial({
-      color: 0x27272a,
-      emissive: 0x7f1d1d, // subtle crimson ember
-      metalness: 0.7,
-      roughness: 0.5,
+      color: 0x334155,
+      emissive: 0x450a0a, // faint rusty ember
+      metalness: 0.6,
+      roughness: 0.6,
     });
 
     for (let i = 0; i < karmaCount; i++) {
@@ -180,23 +187,33 @@ export default function SacredSoul3DCanvas({
       const phi = Math.acos(-1 + (2 * i) / karmaCount);
       const theta = Math.sqrt(karmaCount * Math.PI) * phi;
 
-      // Position anchored directly on the surface of the soul
+      // Surface anchor on the soul
       const surfacePos = new THREE.Vector3(
         1.62 * Math.cos(theta) * Math.sin(phi),
         1.62 * Math.sin(theta) * Math.sin(phi),
         1.62 * Math.cos(phi)
       );
 
-      mesh.position.copy(surfacePos);
+      // Outer space floating origin
+      const outerDistance = 4.5 + (i % 5) * 0.7;
+      const outerPos = surfacePos.clone().normalize().multiplyScalar(outerDistance);
+      outerPos.x += (Math.random() - 0.5) * 1.5;
+      outerPos.y += (Math.random() - 0.5) * 1.5;
+      outerPos.z += (Math.random() - 0.5) * 1.5;
+
+      mesh.position.copy(outerPos);
+      mesh.visible = false;
       karmaGroup.add(mesh);
+
       karmaMeshes.push({
         mesh,
         surfacePos,
-        explodeVel: surfacePos.clone().normalize().multiplyScalar(0.08 + Math.random() * 0.06),
+        outerPos,
+        activationThreshold: i / karmaCount, // Sequential threshold
       });
     }
 
-    // 6. LEAN CELESTIAL STARDUST (120 PARTICLES FOR 60FPS SMOOTHNESS)
+    // 6. CELESTIAL STARDUST (120 PARTICLES)
     const starCount = 120;
     const starGeo = new THREE.BufferGeometry();
     const starPos = new Float32Array(starCount * 3);
@@ -216,12 +233,12 @@ export default function SacredSoul3DCanvas({
       size: 0.06,
       color: 0xffffff,
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.65,
     });
     const starField = new THREE.Points(starGeo, starMaterial);
     scene.add(starField);
 
-    // 7. TOUCH / MOUSE INTERACTIVE ORBIT
+    // 7. TOUCH / MOUSE INTERACTION
     let mouseX = 0;
     let mouseY = 0;
     let targetRotX = 0;
@@ -269,9 +286,10 @@ export default function SacredSoul3DCanvas({
     };
     window.addEventListener("resize", handleResize);
 
-    // 8. BUTTER-SMOOTH ANIMATION LOOP
+    // 8. CONTINUOUS ANIMATION LOOP
     let clock = new THREE.Clock();
     let animId: number;
+    let lastUiUpdate = 0;
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
@@ -290,7 +308,7 @@ export default function SacredSoul3DCanvas({
       karmaGroup.rotation.y = soulGroup.rotation.y;
       karmaGroup.rotation.x = soulGroup.rotation.x;
 
-      // FORMLESS AMOEBA VERTEX MORPHING
+      // FORMLESS AMOEBA VERTEX DISPLACEMENT
       const posAttr = baseGeo.attributes.position;
       const orig = origPositions;
       const time = elapsed * 1.6;
@@ -300,7 +318,6 @@ export default function SacredSoul3DCanvas({
         const oy = orig.getY(i);
         const oz = orig.getZ(i);
 
-        // Multi-frequency harmonic wave for fluid formless amoeba movement
         const wave =
           Math.sin(ox * 2.2 + time) * 0.12 +
           Math.cos(oy * 2.5 + time * 1.1) * 0.12 +
@@ -312,40 +329,93 @@ export default function SacredSoul3DCanvas({
       posAttr.needsUpdate = true;
       baseGeo.computeVertexNormals();
 
-      // Smooth color transitions
-      soulMat.color.lerp(targetColorRef.current, 0.06);
-      soulMat.emissive.lerp(targetEmissiveRef.current, 0.06);
-      coreLight.color.lerp(targetColorRef.current, 0.06);
+      // CONTINUOUS ACCUMULATION / RELEASE RATE
+      const currentProg = karmicProgressRef.current;
+      const targetProg = targetKarmicProgressRef.current;
 
+      if (currentProg < targetProg) {
+        // Slowly accumulating karma continuously (takes ~5 seconds)
+        karmicProgressRef.current = Math.min(targetProg, currentProg + 0.004);
+      } else if (currentProg > targetProg) {
+        // Slowly releasing karma (takes ~4 seconds)
+        karmicProgressRef.current = Math.max(targetProg, currentProg - 0.005);
+      }
+
+      const activeProg = karmicProgressRef.current;
       const currentState = stateRef.current;
 
+      // Shackles visibility and distance logic
       if (currentState === "pure") {
-        // PURE ATMAN: 100% White, ZERO Shackles, ZERO Karma particles
         shackleGroup.visible = false;
         karmaGroup.visible = false;
         haloMesh.visible = true;
-        haloMat.opacity = 0.25;
-      } else if (currentState === "anger") {
-        // ANGER / KASHAYAS: Dark Soul, 8 Shackles Bound, Sticky Karma Clamped
+        haloMat.color.setHex(0xffffff);
+        haloMat.opacity = 0.28 + Math.sin(elapsed * 2.5) * 0.08; // Pulsing radiant white aura
+      } else {
         shackleGroup.visible = true;
         karmaGroup.visible = true;
-        haloMesh.visible = false;
 
-        // Stick karma particles right on the undulating surface
-        karmaMeshes.forEach((k) => {
-          k.mesh.position.lerp(k.surfacePos, 0.08);
-          k.mesh.scale.set(1, 1, 1);
-        });
-      } else if (currentState === "forgiveness") {
-        // FORGIVENESS: Shackles shatter and karma particles fly away
-        shackleGroup.visible = true;
-        shackleGroup.scale.multiplyScalar(1.006); // Shackles breaking open
-        karmaGroup.visible = true;
+        if (currentState === "forgiveness") {
+          haloMesh.visible = true;
+          haloMat.color.setHex(0xf59e0b); // Soft amber warmth
+          haloMat.opacity = 0.18 + Math.sin(elapsed * 1.8) * 0.05;
+        } else {
+          haloMesh.visible = false;
+        }
 
-        karmaMeshes.forEach((k) => {
-          k.mesh.position.add(k.explodeVel);
-          k.mesh.scale.multiplyScalar(0.96); // Disintegrating
-        });
+        // Lerp shackle scale to target (1.0 = tightly bound, 1.38 = loosened at a distance)
+        const currentScale = shackleGroup.scale.x;
+        const targetScale = targetShackleScaleRef.current;
+        const newScale = THREE.MathUtils.lerp(currentScale, targetScale, 0.04);
+        shackleGroup.scale.set(newScale, newScale, newScale);
+      }
+
+      // Karma particles gradual movement:
+      // When progress exceeds activationThreshold, particle glides smoothly from outerPos to surfacePos.
+      karmaMeshes.forEach((k) => {
+        if (currentState === "pure") {
+          k.mesh.visible = false;
+        } else {
+          // If progress is higher than this particle's threshold, it is moving towards or attached to surface
+          if (activeProg > k.activationThreshold) {
+            k.mesh.visible = true;
+            // Transition t between 0 (outer space) and 1 (firmly attached on surface)
+            const t = Math.min(1.0, (activeProg - k.activationThreshold) / 0.15);
+            k.mesh.position.lerpVectors(k.outerPos, k.surfacePos, t);
+            k.mesh.scale.setScalar(0.4 + t * 0.6);
+          } else {
+            // Still in space or drifting away
+            k.mesh.position.lerp(k.outerPos, 0.05);
+            k.mesh.scale.setScalar(0.2);
+            if (k.mesh.position.distanceTo(k.outerPos) < 0.5) {
+              k.mesh.visible = false;
+            }
+          }
+        }
+      });
+
+      // SLOW, SMOOTH COLOR TRANSITIONS
+      soulMat.color.lerp(targetColorRef.current, 0.025);
+      soulMat.emissive.lerp(targetEmissiveRef.current, 0.025);
+      soulMat.emissiveIntensity = THREE.MathUtils.lerp(
+        soulMat.emissiveIntensity,
+        targetEmissiveIntensityRef.current,
+        0.03
+      );
+      coreLight.color.lerp(targetColorRef.current, 0.03);
+
+      // Periodically sync the purity percentage counter in the UI smoothly
+      if (elapsed - lastUiUpdate > 0.15) {
+        lastUiUpdate = elapsed;
+        let pct = 100;
+        if (currentState === "pure") {
+          pct = 100;
+        } else if (currentState === "anger") {
+          pct = Math.max(15, Math.round(100 - activeProg * 85));
+        } else if (currentState === "forgiveness") {
+          pct = Math.round(100 - activeProg * 75);
+        }
+        setPurityPercentage(pct);
       }
 
       renderer.render(scene, camera);
@@ -374,7 +444,7 @@ export default function SacredSoul3DCanvas({
       <div className="pointer-events-none absolute -top-16 -left-16 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl" />
       <div className="pointer-events-none absolute -bottom-16 -right-16 w-80 h-80 bg-amber-600/10 rounded-full blur-3xl" />
 
-      {/* Top Header: Pure Wisdom Philosophy (NO TECH JARGON) */}
+      {/* Top Header */}
       <div className="relative z-10 w-full flex items-center justify-between pb-3 border-b border-white/10">
         <div className="flex items-center gap-2">
           <span
@@ -382,8 +452,8 @@ export default function SacredSoul3DCanvas({
               activeState === "pure"
                 ? "bg-white shadow-[0_0_12px_#ffffff]"
                 : activeState === "anger"
-                ? "bg-purple-400"
-                : "bg-emerald-400"
+                ? "bg-blue-400"
+                : "bg-amber-400"
             } animate-pulse`}
           />
           <span className="text-xs font-mono font-bold tracking-widest text-amber-300 uppercase">
@@ -398,8 +468,8 @@ export default function SacredSoul3DCanvas({
               activeState === "pure"
                 ? "text-white"
                 : activeState === "anger"
-                ? "text-purple-300"
-                : "text-emerald-300"
+                ? "text-blue-300"
+                : "text-amber-300"
             }`}
           >
             {purityPercentage}% {activeState === "pure" ? "(Mukta Atman)" : "(Samsari Atman)"}
@@ -413,13 +483,13 @@ export default function SacredSoul3DCanvas({
         className="relative z-10 w-full flex-1 flex items-center justify-center cursor-grab active:cursor-grabbing select-none"
         title="Touch or drag to orbit in 3D"
       >
-        {/* Floating Hint Pill */}
+        {/* Floating Dynamic Hint Pill */}
         <div className="pointer-events-none absolute bottom-4 flex items-center gap-2 px-3 py-1 rounded-full bg-black/70 border border-white/10 text-[11px] font-mono text-gray-300 backdrop-blur-md">
           <RotateCw className="w-3 h-3 text-amber-400 animate-spin" style={{ animationDuration: "12s" }} />
           <span>
-            {activeState === "pure"
-              ? "Touch or drag to orbit the Formless Pure Soul"
-              : "Showing 8 Karmic Shackles (Ashta Karma) & Clustered Dust"}
+            {activeState === "pure" && "Touch or drag to orbit the Pure White Formless Soul"}
+            {activeState === "anger" && "8 Shackles tightly bound • Karma dust continuously accumulating"}
+            {activeState === "forgiveness" && "Loosened shackles at distance • Warm tone • Residual karma"}
           </span>
         </div>
       </div>
@@ -432,11 +502,11 @@ export default function SacredSoul3DCanvas({
             onClick={() => handleStateChange("anger")}
             className={`flex items-center justify-center gap-2 py-3 px-2 rounded-xl text-xs md:text-sm font-semibold transition-all duration-300 cursor-pointer ${
               activeState === "anger"
-                ? "bg-purple-950/60 border-2 border-purple-500 text-purple-200 shadow-xl shadow-purple-900/30 scale-[0.98]"
-                : "bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 hover:text-white hover:border-purple-500/30"
+                ? "bg-slate-900/80 border-2 border-blue-400 text-blue-200 shadow-xl shadow-blue-900/30 scale-[0.98]"
+                : "bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 hover:text-white hover:border-blue-500/30"
             }`}
           >
-            <Lock className="w-4 h-4 text-purple-400 shrink-0" />
+            <Lock className="w-4 h-4 text-blue-400 shrink-0" />
             <span className="truncate">Anger (Kashayas)</span>
           </button>
 
@@ -445,11 +515,11 @@ export default function SacredSoul3DCanvas({
             onClick={() => handleStateChange("forgiveness")}
             className={`flex items-center justify-center gap-2 py-3 px-2 rounded-xl text-xs md:text-sm font-semibold transition-all duration-300 cursor-pointer ${
               activeState === "forgiveness"
-                ? "bg-emerald-950/60 border-2 border-emerald-500 text-emerald-200 shadow-xl shadow-emerald-900/30 scale-[0.98]"
-                : "bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 hover:text-white hover:border-emerald-500/30"
+                ? "bg-amber-950/60 border-2 border-amber-400 text-amber-200 shadow-xl shadow-amber-900/30 scale-[0.98]"
+                : "bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 hover:text-white hover:border-amber-500/30"
             }`}
           >
-            <HeartHandshake className="w-4 h-4 text-emerald-400 shrink-0" />
+            <HeartHandshake className="w-4 h-4 text-amber-400 shrink-0" />
             <span className="truncate">Forgive (Kshama)</span>
           </button>
 
@@ -470,11 +540,11 @@ export default function SacredSoul3DCanvas({
         {/* Informative Explanation Footnote */}
         <div className="mt-2.5 text-center text-[11px] font-mono text-gray-300">
           {activeState === "pure" &&
-            "🕊️ Pure Atman: 100% luminous, formless, self-illumined consciousness. Completely free from all 8 karmic shackles."}
+            "🕊️ Pure Atman: 100% luminous white, formless, radiating aura. Completely unhindered by any shackles or karma."}
           {activeState === "anger" &&
-            "⛓️ Kashaya Binding: Anger obscures the soul's light, binding it in 8 Karmic Shackles (Ashta Karma) with heavy karma dust."}
+            "⛓️ Kashaya Binding: 8 Ashta Karma shackles clamp tightly onto the soul as karma dust continuously accumulates."}
           {activeState === "forgiveness" &&
-            "✨ Nirjara Cleansing: Supreme forgiveness dissolves the 8 shackles, casting off karmic dust to reveal pure luminosity."}
+            "🌅 Kshama Loosening: Shackles loosen to a distance, karma particles depart leaving minimal residue, soul shines warm reddish-yellowish white."}
         </div>
       </div>
     </div>
