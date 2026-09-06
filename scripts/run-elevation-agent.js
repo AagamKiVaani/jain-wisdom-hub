@@ -7,6 +7,13 @@ const fs = require("fs");
 const path = require("path");
 const { execSync } = require("child_process");
 
+// Check if agent has been explicitly paused by user
+const pauseLockPath = path.join(__dirname, "..", "data", "agent_paused.lock");
+if (fs.existsSync(pauseLockPath)) {
+  console.log("⏸️ Autonomous Elevation Agent is currently PAUSED by user. Exiting immediately.");
+  process.exit(0);
+}
+
 // ----------------------------------------------------------------------------
 // 1. ENVIRONMENT LOADER
 // ----------------------------------------------------------------------------
