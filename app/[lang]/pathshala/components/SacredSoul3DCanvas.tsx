@@ -15,7 +15,7 @@ export default function SacredSoul3DCanvas({
 
   // References accessed inside continuous animation loop
   const stateRef = useRef<"pure" | "anger" | "forgiveness">("pure");
-  const karmicProgressRef = useRef<number>(0.0); // 0.0 = pure, 1.0 = heavy anger, ~0.22 = forgiveness residual
+  const karmicProgressRef = useRef<number>(0.0); // 0.0 = pure, 1.0 = heavy anger, 0.22 = forgiveness residual
   const targetKarmicProgressRef = useRef<number>(0.0);
 
   const targetColorRef = useRef<THREE.Color>(new THREE.Color(0xffffff));
@@ -34,30 +34,36 @@ export default function SacredSoul3DCanvas({
 
   const handleStateChange = (newState: "pure" | "anger" | "forgiveness") => {
     playClick();
+    const prevState = stateRef.current;
     setActiveState(newState);
     stateRef.current = newState;
 
     if (newState === "anger") {
-      // 1. ANGER: Accumulate karma dust continuously onto surface, 8 shackles tightly bound
+      // 1. ANGER: Karma particles slowly fly in and attach to soul, shackles tightly clamp, soul turns dark
+      // Reset accumulation if coming from pure or if clicked again, so user sees the accumulation every time!
+      if (prevState === "pure" || prevState === "anger") {
+        karmicProgressRef.current = 0.0;
+      }
       targetKarmicProgressRef.current = 1.0;
       targetShackleScaleRef.current = 1.0; // Tightly bound to soul surface
-      targetColorRef.current.setHex(0x182436); // Grey-bluish dark
-      targetEmissiveRef.current.setHex(0x28193d); // Deep dusky violet glow for clear silhouette
-      targetEmissiveIntensityRef.current = 0.25;
+      targetColorRef.current.setHex(0x1a2333); // Grey-bluish dark soul
+      targetEmissiveRef.current.setHex(0x2d1b4e); // Deep dusky violet glow for clear silhouette against cosmos
+      targetEmissiveIntensityRef.current = 0.35;
     } else if (newState === "forgiveness") {
-      // 2. FORGIVENESS: Loosen shackles to distance, release most karma, keep ~8 residual on surface, reddish-yellowish white
-      targetKarmicProgressRef.current = 0.22; // Exactly ~8 particles remain stuck on the soul
-      targetShackleScaleRef.current = 1.38; // Loosened, stays hovering at this distance
-      targetColorRef.current.setHex(0xffdcb5); // Distinct warm reddish-yellowish white
+      // 2. FORGIVENESS: Karma particles fly away leaving ~7-8 residual, shackles loosen to distance, soul turns reddish-yellowish white
+      targetKarmicProgressRef.current = 0.20; // ~7-8 particles remain stuck on soul
+      targetShackleScaleRef.current = 1.42; // Loosened, stays hovering at this distance
+      targetColorRef.current.setHex(0xffd5ad); // Distinct warm reddish-yellowish white (dawn peach)
       targetEmissiveRef.current.setHex(0xea580c); // Warm amber-reddish inner glow
-      targetEmissiveIntensityRef.current = 0.6;
+      targetEmissiveIntensityRef.current = 0.65;
     } else {
-      // 3. PURE ATMAN: 100% pure brilliant white, NO wireframes, ZERO shackles, ZERO particles
+      // 3. PURE ATMAN: 100% pure brilliant white, ZERO shackles, ZERO particles, NO wireframes
       targetKarmicProgressRef.current = 0.0;
+      karmicProgressRef.current = 0.0;
       targetShackleScaleRef.current = 1.0;
       targetColorRef.current.setHex(0xffffff); // 100% pure brilliant white
       targetEmissiveRef.current.setHex(0xffffff);
-      targetEmissiveIntensityRef.current = 0.95;
+      targetEmissiveIntensityRef.current = 1.0;
     }
   };
 
@@ -100,7 +106,7 @@ export default function SacredSoul3DCanvas({
     frontLight.position.set(4, 5, 6);
     scene.add(frontLight);
 
-    // 3. LIVING FORMLESS AMOEBA SOUL (NO WIREFRAME GLOBES AT ALL)
+    // 3. LIVING FORMLESS AMOEBA SOUL (NO WIREFRAME GLOBES)
     const soulGroup = new THREE.Group();
     scene.add(soulGroup);
 
@@ -110,7 +116,7 @@ export default function SacredSoul3DCanvas({
     const soulMat = new THREE.MeshStandardMaterial({
       color: 0xffffff,
       emissive: 0xffffff,
-      emissiveIntensity: 0.95,
+      emissiveIntensity: 1.0,
       metalness: 0.05,
       roughness: 0.2,
       transparent: true,
@@ -149,22 +155,23 @@ export default function SacredSoul3DCanvas({
       shackleGroup.add(mesh);
     });
 
-    // 5. STICKY KARMA PARTICLES DIRECTLY ATTACHED TO THE SOUL
-    // They are added directly as children of soulGroup, so they rotate with the soul as surface dust.
-    // They NEVER revolve or orbit in mid-air!
+    // 5. KARMA PARTICLES: VISIBLY ATTACHING IN ANGER & VISIBLY LEAVING IN FORGIVE
+    // Each particle moves along its own radial ray straight between outer space (radius 4.0) and soul surface (radius 1.62).
+    // They are added directly to soulGroup so they NEVER orbit/revolve in space!
     const karmaCount = 40;
     const karmaMeshes: {
       mesh: THREE.Mesh;
       surfacePos: THREE.Vector3;
+      outerPos: THREE.Vector3;
       activationThreshold: number;
     }[] = [];
 
-    const karmaGeo = new THREE.DodecahedronGeometry(0.11, 0);
+    const karmaGeo = new THREE.DodecahedronGeometry(0.13, 0);
     const karmaMat = new THREE.MeshStandardMaterial({
-      color: 0x334155,
-      emissive: 0x450a0a, // faint rusty ember
-      metalness: 0.6,
-      roughness: 0.6,
+      color: 0x222a38,
+      emissive: 0x581c87, // faint dark violet ember
+      metalness: 0.65,
+      roughness: 0.55,
       transparent: true,
       opacity: 0.95,
     });
@@ -174,25 +181,32 @@ export default function SacredSoul3DCanvas({
       const phi = Math.acos(-1 + (2 * i) / karmaCount);
       const theta = Math.sqrt(karmaCount * Math.PI) * phi;
 
-      // Anchored strictly on the soul's surface
+      // Surface position on the soul
       const surfacePos = new THREE.Vector3(
         1.62 * Math.cos(theta) * Math.sin(phi),
         1.62 * Math.sin(theta) * Math.sin(phi),
         1.62 * Math.cos(phi)
       );
 
-      mesh.position.copy(surfacePos);
-      mesh.visible = false; // Initially invisible
-      soulGroup.add(mesh); // Direct child of soulGroup so it sticks to surface, NO orbiting!
+      // Radial outer origin straight outward along normal
+      const outerPos = surfacePos.clone().normalize().multiplyScalar(4.0 + (i % 3) * 0.4);
+
+      mesh.position.copy(outerPos);
+      mesh.visible = false;
+      soulGroup.add(mesh);
+
+      // Distributed thresholds: first particle activates at 0.06, last at 0.94
+      const activationThreshold = 0.06 + (i / karmaCount) * 0.88;
 
       karmaMeshes.push({
         mesh,
         surfacePos,
-        activationThreshold: i / karmaCount,
+        outerPos,
+        activationThreshold,
       });
     }
 
-    // 6. BACKGROUND CELESTIAL STARDUST (120 PARTICLES IN SCENE)
+    // 6. BACKGROUND CELESTIAL STARDUST (120 PARTICLES)
     const starCount = 120;
     const starGeo = new THREE.BufferGeometry();
     const starPos = new Float32Array(starCount * 3);
@@ -311,11 +325,11 @@ export default function SacredSoul3DCanvas({
       const targetProg = targetKarmicProgressRef.current;
 
       if (currentProg < targetProg) {
-        // Slowly accumulating karma dust continuously onto surface
-        karmicProgressRef.current = Math.min(targetProg, currentProg + 0.004);
+        // Slowly accumulating karma dust continuously (takes ~4 seconds)
+        karmicProgressRef.current = Math.min(targetProg, currentProg + 0.0042);
       } else if (currentProg > targetProg) {
-        // Slowly releasing karma dust away
-        karmicProgressRef.current = Math.max(targetProg, currentProg - 0.005);
+        // Slowly releasing karma dust (takes ~3.5 seconds)
+        karmicProgressRef.current = Math.max(targetProg, currentProg - 0.0052);
       }
 
       const activeProg = karmicProgressRef.current;
@@ -327,41 +341,53 @@ export default function SacredSoul3DCanvas({
       } else {
         shackleGroup.visible = true;
 
-        // Lerp shackle scale (1.0 = tightly bound, 1.38 = loosened hovering at a distance)
+        // Lerp shackle scale (1.0 = tightly bound, 1.42 = loosened hovering at a distance)
         const currentScale = shackleGroup.scale.x;
         const targetScale = targetShackleScaleRef.current;
         const newScale = THREE.MathUtils.lerp(currentScale, targetScale, 0.04);
         shackleGroup.scale.set(newScale, newScale, newScale);
       }
 
-      // KARMA PARTICLES: FIRMLY ATTACHED TO SURFACE, NO REVOLVING IN AIR!
+      // DYNAMIC VISUAL ATTACHMENT & RELEASE OF KARMA PARTICLES
       karmaMeshes.forEach((k) => {
         if (currentState === "pure") {
           k.mesh.visible = false;
         } else {
-          if (activeProg > k.activationThreshold) {
-            // Particle is active and stuck directly on the soul surface!
-            k.mesh.visible = true;
-            k.mesh.position.copy(k.surfacePos); // Firmly on surface
-            (k.mesh.material as THREE.MeshStandardMaterial).opacity = 0.95;
-            k.mesh.scale.set(1, 1, 1);
-          } else {
-            // If it is leaving during forgiveness, smoothly fade out and hide.
-            // NEVER hover or revolve in mid-air!
+          // Window of flight [activationThreshold - 0.12, activationThreshold]
+          const flightWindow = 0.12;
+          const startFlight = Math.max(0, k.activationThreshold - flightWindow);
+          const endFlight = k.activationThreshold;
+
+          if (activeProg < startFlight) {
+            // Not yet accumulating / has completely departed into space
             k.mesh.visible = false;
+          } else if (activeProg < endFlight) {
+            // IN FLIGHT: Visibly flying straight along radial ray
+            // In Anger: flying inward to surface. In Forgive: flying outward into space!
+            k.mesh.visible = true;
+            const t = Math.max(0, Math.min(1, (activeProg - startFlight) / (endFlight - startFlight)));
+            k.mesh.position.lerpVectors(k.outerPos, k.surfacePos, t);
+            k.mesh.scale.setScalar(0.25 + t * 0.75);
+            (k.mesh.material as THREE.MeshStandardMaterial).opacity = 0.25 + t * 0.7;
+          } else {
+            // FIRMLY ATTACHED: Clamped directly on the soul surface
+            k.mesh.visible = true;
+            k.mesh.position.copy(k.surfacePos);
+            k.mesh.scale.setScalar(1.0);
+            (k.mesh.material as THREE.MeshStandardMaterial).opacity = 0.95;
           }
         }
       });
 
-      // SLOW, SMOOTH COLOR TRANSITIONS
-      soulMat.color.lerp(targetColorRef.current, 0.025);
-      soulMat.emissive.lerp(targetEmissiveRef.current, 0.025);
+      // VISIBLE, SMOOTH COLOR TRANSITIONS (Color changes gradually)
+      soulMat.color.lerp(targetColorRef.current, 0.04);
+      soulMat.emissive.lerp(targetEmissiveRef.current, 0.04);
       soulMat.emissiveIntensity = THREE.MathUtils.lerp(
         soulMat.emissiveIntensity,
         targetEmissiveIntensityRef.current,
-        0.03
+        0.04
       );
-      coreLight.color.lerp(targetColorRef.current, 0.03);
+      coreLight.color.lerp(targetColorRef.current, 0.04);
 
       // Periodically sync the purity percentage counter in the UI smoothly
       if (elapsed - lastUiUpdate > 0.15) {
@@ -447,7 +473,7 @@ export default function SacredSoul3DCanvas({
           <RotateCw className="w-3 h-3 text-amber-400 animate-spin" style={{ animationDuration: "12s" }} />
           <span>
             {activeState === "pure" && "Touch or drag to orbit the Pure White Formless Soul"}
-            {activeState === "anger" && "8 Shackles tightly bound • Karma dust steadily accumulating on surface"}
+            {activeState === "anger" && "8 Shackles tightly bound • Karma dust steadily flying in and attaching"}
             {activeState === "forgiveness" && "Loosened shackles at distance • Warm tone • Residual karma on surface"}
           </span>
         </div>
