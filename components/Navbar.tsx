@@ -101,33 +101,35 @@ export default function Navbar({ lang }: { lang: string }) {
           {/* 🟢 SHARE BUTTON (New) */}
           <GlobalShare />
 
-          {/* LANGUAGE BUTTON */}
-          <div className="relative">
-            <button 
-              onClick={() => setIsLangOpen(!isLangOpen)}
-              // 🟢 Reduced padding and gap for mobile
-              className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-1 md:gap-2 text-sm font-medium transition-colors"
-            >
-              <Languages size={18} />
-              {/* 🟢 HIDDEN TEXT on Mobile (Only shows on md+) */}
-              <span className="uppercase hidden md:block">{lang}</span>
-              <ChevronDown size={14} className={`transition-transform ${isLangOpen ? "rotate-180" : ""}`} />
-            </button>
-            
-            {isLangOpen && (
-              <>
-                <div 
-                  className="fixed inset-0 z-10" 
-                  onClick={() => setIsLangOpen(false)}
-                />
-                <div className="absolute right-0 top-full mt-2 w-32 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl z-20 overflow-hidden">
-                  <button onClick={() => switchLanguage('en')} className="block w-full text-left px-4 py-3 hover:bg-orange-50 dark:hover:bg-gray-800 text-sm transition-colors">English</button>
-                  <button onClick={() => switchLanguage('hi')} className="block w-full text-left px-4 py-3 hover:bg-orange-50 dark:hover:bg-gray-800 text-sm transition-colors">Hindi</button>
-                  <button onClick={() => switchLanguage('kn')} className="block w-full text-left px-4 py-3 hover:bg-orange-50 dark:hover:bg-gray-800 text-sm transition-colors">Kannada</button>
-                </div>
-              </>
-            )}
-          </div>
+          {/* LANGUAGE BUTTON (Hidden in Pathshala section) */}
+          {!pathname?.includes("/pathshala") && (
+            <div className="relative">
+              <button 
+                onClick={() => setIsLangOpen(!isLangOpen)}
+                // 🟢 Reduced padding and gap for mobile
+                className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-1 md:gap-2 text-sm font-medium transition-colors"
+              >
+                <Languages size={18} />
+                {/* 🟢 HIDDEN TEXT on Mobile (Only shows on md+) */}
+                <span className="uppercase hidden md:block">{lang}</span>
+                <ChevronDown size={14} className={`transition-transform ${isLangOpen ? "rotate-180" : ""}`} />
+              </button>
+              
+              {isLangOpen && (
+                <>
+                  <div 
+                    className="fixed inset-0 z-10" 
+                    onClick={() => setIsLangOpen(false)}
+                  />
+                  <div className="absolute right-0 top-full mt-2 w-32 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl z-20 overflow-hidden">
+                    <button onClick={() => switchLanguage('en')} className="block w-full text-left px-4 py-3 hover:bg-orange-50 dark:hover:bg-gray-800 text-sm transition-colors">English</button>
+                    <button onClick={() => switchLanguage('hi')} className="block w-full text-left px-4 py-3 hover:bg-orange-50 dark:hover:bg-gray-800 text-sm transition-colors">Hindi</button>
+                    <button onClick={() => switchLanguage('kn')} className="block w-full text-left px-4 py-3 hover:bg-orange-50 dark:hover:bg-gray-800 text-sm transition-colors">Kannada</button>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
 
           {/* THEME BUTTON */}
           <button

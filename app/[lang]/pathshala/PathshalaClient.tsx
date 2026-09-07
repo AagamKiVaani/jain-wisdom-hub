@@ -38,7 +38,86 @@ interface LessonShowcase {
   category: string;
 }
 
-const LESSON_SHOWCASE: LessonShowcase[] = [
+// =========================================================================
+// CURRICULUM TRACK 1: LITTLE SEEKERS (AGES 5–7)
+// =========================================================================
+const TIER_KIDS_LESSONS: LessonShowcase[] = [
+  {
+    number: "01",
+    title: "The Secret Greeting: What Does 'Jai Jinendra' Mean?",
+    subtitle: "Discovering the secret superpower of bowing to the pure goodness in every friend, elder, and pet.",
+    duration: "4 mins",
+    category: "Sacred Greeting",
+  },
+  {
+    number: "02",
+    title: "The Bird with the Hurt Wing: The Magic of Karunā",
+    subtitle: "Why we never step on tiny ants or scare birds: how gentle hands make us protectors of the earth.",
+    duration: "5 mins",
+    category: "Kindness to Bugs",
+  },
+  {
+    number: "03",
+    title: "The Navkar Superpower Song: Meeting the 5 Great Heroes",
+    subtitle: "Singing and understanding Arihants, Siddhas, and Gurus who defeated the anger monsters inside.",
+    duration: "5 mins",
+    category: "The 5 Superheroes",
+  },
+  {
+    number: "04",
+    title: "The Magic Lamp: You Are Not Just Your Clothes!",
+    subtitle: "Understanding the soul like a warm golden light inside a beautiful lamp or a hand inside a soft mitten.",
+    duration: "5 mins",
+    category: "The Light Inside",
+  },
+  {
+    number: "05",
+    title: "The Clean Plate Champion: Why Every Grain Matters",
+    subtitle: "Eating with gratitude, avoiding food waste, and thanking the farmers and soil that nourish us.",
+    duration: "4 mins",
+    category: "Sacred Food",
+  },
+  {
+    number: "06",
+    title: "The Sunset Story: Why the Sun Smiles Before We Sleep",
+    subtitle: "Why birds fly home early, why our tummy likes to rest at night, and having tasty dinner before dark.",
+    duration: "5 mins",
+    category: "Sunset Routine",
+  },
+  {
+    number: "07",
+    title: "The Honeybee Secret: Taking Without Breaking",
+    subtitle: "How bees take sweet nectar without hurting a single petal: sharing toys and playing without fighting.",
+    duration: "5 mins",
+    category: "Sharing & Nature",
+  },
+  {
+    number: "08",
+    title: "The Red Anger Monster vs. The Gentle Breath",
+    subtitle: "What happens inside when we feel mad, taking 3 slow deep breaths, and saying 'Michhami Dukkadam'.",
+    duration: "5 mins",
+    category: "Feelings & Hugs",
+  },
+  {
+    number: "09",
+    title: "The Gentle Elephant & The Injured Swan",
+    subtitle: "Timeless, heartwarming Jain bedtime tales of courage, forgiveness, and animal friendship.",
+    duration: "6 mins",
+    category: "Wonder Stories",
+  },
+  {
+    number: "10",
+    title: "My Morning Wonder Box: 3 Happy Habits to Start the Day",
+    subtitle: "Waking up with a smile, folded hands for the universe, and filling the day with sunshine deeds.",
+    duration: "5 mins",
+    category: "Daily Habits",
+  },
+];
+
+// =========================================================================
+// CURRICULUM TRACK 2: YOUNG SHRAVAKS (AGES 8–12) - CORE FLAGSHIP
+// =========================================================================
+const TIER_CORE_LESSONS: LessonShowcase[] = [
   {
     number: "01",
     title: "The Secret Compass: Navkar Mantra Decoded",
@@ -58,7 +137,7 @@ const LESSON_SHOWCASE: LessonShowcase[] = [
     title: "The Ultimate Boomerang: Karma Physics",
     subtitle: "How emotional passions (Kashayas) attract subtle karma dust, and how forgiveness cleanses the soul.",
     duration: "8 mins",
-    category: "Core Philosophy",
+    category: "Karma Physics",
   },
   {
     number: "04",
@@ -111,6 +190,82 @@ const LESSON_SHOWCASE: LessonShowcase[] = [
   },
 ];
 
+// =========================================================================
+// CURRICULUM TRACK 3: TRUTH SEEKERS (AGES 13+)
+// =========================================================================
+const TIER_TEENS_LESSONS: LessonShowcase[] = [
+  {
+    number: "01",
+    title: "Anekāntavāda & Intellectual Humility: Beyond Binary Dogma",
+    subtitle: "The multi-faceted doctrine of relativity to de-escalate modern ideological polarization and internet outrage.",
+    duration: "9 mins",
+    category: "Epistemology",
+  },
+  {
+    number: "02",
+    title: "Quantum Physics & Pudgala: Atoms, Fields & Subtle Matter",
+    subtitle: "Analyzing Paramāṇu physics, energy-matter transformations, and comparing Shad-Dravya with quantum field theory.",
+    duration: "10 mins",
+    category: "Physics & Ontology",
+  },
+  {
+    number: "03",
+    title: "The Bioethics of Consumption: Factory Farming & Fast Fashion",
+    subtitle: "Applying ancient Ahimsa to modern dairy supply chains, animal testing, leather, and conscious lifestyle minimalism.",
+    duration: "8 mins",
+    category: "Modern Bioethics",
+  },
+  {
+    number: "04",
+    title: "The 4 Thermodynamic Gates: Asrava, Bandha, Samvara & Nirjara",
+    subtitle: "The precise scientific formula for plugging incoming karmic influx and incinerating past latent impressions.",
+    duration: "10 mins",
+    category: "Karmic Mechanics",
+  },
+  {
+    number: "05",
+    title: "Hacking the Amygdala: Kashayas as Cognitive Distortions",
+    subtitle: "Deconstructing anger, ego, deceit, and greed using Jain psychology and modern cognitive behavioral science.",
+    duration: "9 mins",
+    category: "Mind Neuroscience",
+  },
+  {
+    number: "06",
+    title: "Determinism vs. Purushārtha: Radical Free Will",
+    subtitle: "Do past karmas script your fate? Discovering the sovereign power of conscious self-effort in every present moment.",
+    duration: "8 mins",
+    category: "Existential Inquiry",
+  },
+  {
+    number: "07",
+    title: "The Science of Fasting: Autophagy, Willpower & Tapas",
+    subtitle: "How intentional fasting cleanses physiological cellular debris and builds unshakeable mental mastery.",
+    duration: "8 mins",
+    category: "Physiology & Tapas",
+  },
+  {
+    number: "08",
+    title: "Authenticity Under Pressure: College, Career & Social Dynamics",
+    subtitle: "Handling peer pressure at social events, alcohol culture, and corporate ethics without feeling defensive or isolated.",
+    duration: "10 mins",
+    category: "Social Navigation",
+  },
+  {
+    number: "09",
+    title: "The 14 Spiritual Ladders: The Gunasthana Map of Consciousness",
+    subtitle: "From unconscious delusion (Mithyātva) to total omniscient liberation (Kevala Jnāna): the step-by-step soul ascent.",
+    duration: "11 mins",
+    category: "Spiritual Roadmap",
+  },
+  {
+    number: "10",
+    title: "Living as an Enlightened Citizen: 12 Anuvrats in the 21st Century",
+    subtitle: "Executing small voluntary vows: ethical finance, digital mindfulness, carbon footprint reduction, and civic integrity.",
+    duration: "9 mins",
+    category: "Modern Application",
+  },
+];
+
 export default function PathshalaClient({ lang }: { lang: string }) {
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [activeTier, setActiveTier] = useState<"kids" | "core" | "teens">("core");
@@ -147,17 +302,25 @@ export default function PathshalaClient({ lang }: { lang: string }) {
     setTimeout(() => setFloatingXp(null), 1800);
   };
 
+  // Select dynamic curriculum based on active tier
+  const activeCurriculum =
+    activeTier === "kids"
+      ? TIER_KIDS_LESSONS
+      : activeTier === "teens"
+      ? TIER_TEENS_LESSONS
+      : TIER_CORE_LESSONS;
+
   return (
-    <div className="relative min-h-screen bg-[#040407] text-white selection:bg-amber-400 selection:text-black overflow-x-hidden">
+    <div className="relative min-h-screen bg-stone-50 dark:bg-[#040407] text-gray-900 dark:text-white selection:bg-amber-400 selection:text-black overflow-x-hidden transition-colors duration-300">
       {/* Dynamic Ambient Background Glows */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-b from-amber-500/10 via-orange-600/5 to-transparent blur-[160px] rounded-full" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-b from-amber-500/10 via-orange-500/5 to-transparent dark:from-amber-500/10 dark:via-orange-600/5 blur-[160px] rounded-full" />
         <div className="absolute top-[35%] right-[-12%] w-[600px] h-[600px] bg-amber-600/10 blur-[180px] rounded-full" />
         <div className="absolute top-[70%] left-[-15%] w-[700px] h-[700px] bg-yellow-500/10 blur-[200px] rounded-full" />
 
         {/* Subtle geometric dot matrix */}
         <div
-          className="absolute inset-0 opacity-[0.025] bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:32px_32px]"
+          className="absolute inset-0 opacity-[0.03] dark:opacity-[0.025] bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:32px_32px]"
           aria-hidden="true"
         />
       </div>
@@ -172,17 +335,17 @@ export default function PathshalaClient({ lang }: { lang: string }) {
             setSoundEnabled(next);
             if (next) playSound();
           }}
-          className="flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-amber-500/30 bg-black/85 backdrop-blur-2xl shadow-xl text-xs font-mono text-amber-300 hover:border-amber-400 transition-all cursor-pointer"
+          className="flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-amber-500/30 bg-white/90 dark:bg-black/85 backdrop-blur-2xl shadow-xl text-xs font-mono text-amber-800 dark:text-amber-300 hover:border-amber-400 transition-all cursor-pointer"
         >
           {soundEnabled ? (
             <>
-              <Volume2 className="w-4 h-4 text-amber-400 animate-pulse" />
+              <Volume2 className="w-4 h-4 text-amber-500 dark:text-amber-400 animate-pulse" />
               <span className="font-semibold tracking-wide">Audio Active</span>
             </>
           ) : (
             <>
-              <VolumeX className="w-4 h-4 text-gray-400" />
-              <span className="text-gray-400">Audio Muted</span>
+              <VolumeX className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+              <span className="text-gray-500 dark:text-gray-400">Audio Muted</span>
             </>
           )}
         </motion.button>
@@ -197,10 +360,10 @@ export default function PathshalaClient({ lang }: { lang: string }) {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-amber-500/35 bg-gradient-to-r from-amber-500/15 via-amber-400/20 to-amber-500/15 backdrop-blur-2xl shadow-lg"
+            className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-amber-500/35 bg-amber-50 dark:bg-gradient-to-r dark:from-amber-500/15 dark:via-amber-400/20 dark:to-amber-500/15 backdrop-blur-2xl shadow-lg"
           >
-            <Sparkle className="w-4 h-4 text-amber-300 animate-spin" style={{ animationDuration: "12s" }} />
-            <span className="text-xs md:text-sm font-bold text-amber-200 tracking-wider font-mono uppercase">
+            <Sparkle className="w-4 h-4 text-amber-500 dark:text-amber-300 animate-spin" style={{ animationDuration: "12s" }} />
+            <span className="text-xs md:text-sm font-bold text-amber-800 dark:text-amber-200 tracking-wider font-mono uppercase">
               Aagam Ki Vaani • Digital Pathshala
             </span>
           </motion.div>
@@ -212,10 +375,10 @@ export default function PathshalaClient({ lang }: { lang: string }) {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.08] mb-6 font-serif"
+            className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.08] mb-6 font-serif text-gray-900 dark:text-white"
           >
             Ancient Jain Wisdom. <br />
-            <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-400 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(245,158,11,0.25)]">
+            <span className="bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 dark:from-amber-200 dark:via-amber-400 dark:to-yellow-400 bg-clip-text text-transparent drop-shadow-sm dark:drop-shadow-[0_0_35px_rgba(245,158,11,0.25)]">
               Modern Young Minds.
             </span>
           </motion.h1>
@@ -224,9 +387,9 @@ export default function PathshalaClient({ lang }: { lang: string }) {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto font-light"
+            className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto font-light"
           >
-            An interactive learning academy for young shravaks aged <strong>8–12</strong>. Master the science of Ahimsa, karma physics, and the logical confidence to live and proudly explain Jainism anywhere.
+            An interactive learning academy for young shravaks aged <strong>8–12</strong>, scaled for <strong>5–7</strong> and <strong>13+</strong>. Master the science of Ahimsa, karma physics, and the logical confidence to live and proudly explain Jainism anywhere.
           </motion.p>
 
           {/* Action CTAs */}
@@ -248,9 +411,9 @@ export default function PathshalaClient({ lang }: { lang: string }) {
             <a
               href="#practical-scenarios"
               onClick={() => playSound()}
-              className="px-6 py-3.5 rounded-2xl font-semibold text-sm md:text-base border border-amber-500/30 bg-amber-500/5 hover:bg-amber-500/15 hover:border-amber-400 text-amber-200 hover:text-white transition-all flex items-center gap-2 backdrop-blur-xl cursor-pointer"
+              className="px-6 py-3.5 rounded-2xl font-semibold text-sm md:text-base border border-amber-500/30 bg-white/80 dark:bg-amber-500/5 hover:bg-amber-50 dark:hover:bg-amber-500/15 hover:border-amber-400 text-amber-900 dark:text-amber-200 transition-all flex items-center gap-2 backdrop-blur-xl shadow-sm cursor-pointer"
             >
-              <Zap className="w-4 h-4 text-amber-400" />
+              <Zap className="w-4 h-4 text-amber-500 dark:text-amber-400" />
               <span>Try Practical Situations</span>
             </a>
           </motion.div>
@@ -259,7 +422,7 @@ export default function PathshalaClient({ lang }: { lang: string }) {
         {/* 3D CONSCIOUSNESS CENTERPIECE */}
         <div className="max-w-6xl mx-auto mt-6">
           <div className="relative rounded-3xl p-1 bg-gradient-to-b from-amber-500/40 via-amber-500/15 to-transparent shadow-[0_0_50px_rgba(245,158,11,0.15)]">
-            <div className="relative rounded-[22px] bg-black/90 border border-amber-500/30 overflow-hidden backdrop-blur-2xl">
+            <div className="relative rounded-[22px] bg-[#070913] border border-amber-500/30 overflow-hidden backdrop-blur-2xl">
               {/* Spiritual Header Bar */}
               <div className="px-6 py-3.5 bg-gradient-to-r from-amber-950/40 via-black to-amber-950/40 border-b border-amber-500/25 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
                 <div className="flex items-center gap-2.5">
@@ -306,27 +469,27 @@ export default function PathshalaClient({ lang }: { lang: string }) {
       {/* ========================================================================= */}
       {/* 2. ADAPTIVE AGE HORIZONS (LITTLE SEEKERS, YOUNG SHRAVAKS, TRUTH SEEKERS) */}
       {/* ========================================================================= */}
-      <section className="relative z-10 py-16 px-4 max-w-7xl mx-auto border-t border-white/10">
+      <section className="relative z-10 py-16 px-4 max-w-7xl mx-auto border-t border-gray-200 dark:border-white/10">
         <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-xs font-mono text-amber-300 uppercase tracking-widest mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-xs font-mono text-amber-800 dark:text-amber-300 uppercase tracking-widest mb-3">
             Scaled Horizons
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-serif mb-3">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-serif mb-3 text-gray-900 dark:text-white">
             One Timeless Wisdom. <br />
-            <span className="text-amber-400">Tailored for Every Stage.</span>
+            <span className="text-amber-600 dark:text-amber-400">Tailored for Every Stage.</span>
           </h2>
-          <p className="text-sm md:text-base text-gray-300">
-            Handpicked canonical concepts scaled so young toddlers build gentle compassion, kids master daily biology, and older seekers explore uncreated cosmology.
+          <p className="text-sm md:text-base text-gray-600 dark:text-gray-300">
+            Switch between age stages below. The foundational roadmap and practical scenarios dynamically adapt to match each developmental journey.
           </p>
 
           {/* Interactive Tier Switcher */}
-          <div className="mt-8 inline-flex p-1.5 rounded-2xl bg-white/5 border border-amber-500/30 backdrop-blur-xl shadow-lg">
+          <div className="mt-8 inline-flex p-1.5 rounded-2xl bg-white dark:bg-white/5 border border-amber-500/30 backdrop-blur-xl shadow-lg">
             <button
               onClick={() => handleTierChange("kids")}
-              className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                 activeTier === "kids"
                   ? "bg-amber-500 text-black shadow-lg shadow-amber-500/30 scale-[1.02]"
-                  : "text-gray-400 hover:text-white"
+                  : "text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
               }`}
             >
               🧒 Ages 5 – 7 (Little Seekers)
@@ -334,10 +497,10 @@ export default function PathshalaClient({ lang }: { lang: string }) {
 
             <button
               onClick={() => handleTierChange("core")}
-              className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                 activeTier === "core"
                   ? "bg-amber-500 text-black shadow-lg shadow-amber-500/30 scale-[1.02]"
-                  : "text-gray-400 hover:text-white"
+                  : "text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
               }`}
             >
               🚀 Ages 8 – 12 (Young Shravaks)
@@ -345,10 +508,10 @@ export default function PathshalaClient({ lang }: { lang: string }) {
 
             <button
               onClick={() => handleTierChange("teens")}
-              className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                 activeTier === "teens"
                   ? "bg-amber-500 text-black shadow-lg shadow-amber-500/30 scale-[1.02]"
-                  : "text-gray-400 hover:text-white"
+                  : "text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
               }`}
             >
               ✨ Ages 13+ (Truth Seekers)
@@ -365,26 +528,26 @@ export default function PathshalaClient({ lang }: { lang: string }) {
                 initial={{ opacity: 0, scale: 0.97 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.97 }}
-                className="p-6 md:p-8 rounded-3xl border border-amber-500/30 bg-gradient-to-b from-amber-950/20 via-black/80 to-black backdrop-blur-2xl shadow-2xl"
+                className="p-6 md:p-8 rounded-3xl border border-amber-500/30 bg-white dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black/80 dark:to-black backdrop-blur-2xl shadow-xl dark:shadow-2xl"
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <span className="text-4xl p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30">🧒</span>
+                  <span className="text-4xl p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 shadow-sm">🧒</span>
                   <div>
-                    <h3 className="text-2xl font-bold text-white font-serif">Tier 1: Little Seekers (Ages 5–7)</h3>
-                    <p className="text-xs text-amber-300 font-mono tracking-wide">Foundation of Kindness, Stories & Gentle Habits</p>
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white font-serif">Tier 1: Little Seekers (Ages 5–7)</h3>
+                    <p className="text-xs text-amber-700 dark:text-amber-300 font-mono tracking-wide font-semibold">Foundation of Kindness, Stories & Gentle Habits</p>
                   </div>
                 </div>
-                <p className="text-sm md:text-base text-gray-300 leading-relaxed mb-6">
-                  Nurtures natural empathy for birds and small creatures. Morning and bedtime Navkar recitations, joy in Mandir darshan, and colorful illustrated storytelling (The Elephant of Parshwanath, Chandanbala's pure spirit).
+                <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                  Nurtures natural empathy for birds, butterflies, and small creatures. Morning and bedtime Navkar recitations, joy in Mandir darshan, and colorful illustrated storytelling (The Elephant of Parshwanath, Chandanbala's pure spirit).
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 text-xs text-gray-300">
+                  <div className="p-3.5 rounded-2xl bg-amber-50/60 dark:bg-white/5 border border-amber-200/60 dark:border-white/10 text-xs text-gray-700 dark:text-gray-300">
                     🐾 <strong>Animal Empathy:</strong> Understanding that every tiny insect feels joy and pain just like us.
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 text-xs text-gray-300">
+                  <div className="p-3.5 rounded-2xl bg-amber-50/60 dark:bg-white/5 border border-amber-200/60 dark:border-white/10 text-xs text-gray-700 dark:text-gray-300">
                     🪔 <strong>Mandir Etiquette:</strong> Purity of thoughts, singing stutis, and bowing with reverence.
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 text-xs text-gray-300">
+                  <div className="p-3.5 rounded-2xl bg-amber-50/60 dark:bg-white/5 border border-amber-200/60 dark:border-white/10 text-xs text-gray-700 dark:text-gray-300">
                     🎨 <strong>Visual Rhymes:</strong> Vibrant picture songs and easy memory rhymes.
                   </div>
                 </div>
@@ -397,28 +560,28 @@ export default function PathshalaClient({ lang }: { lang: string }) {
                 initial={{ opacity: 0, scale: 0.97 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.97 }}
-                className="p-6 md:p-8 rounded-3xl border-2 border-amber-500/50 bg-gradient-to-b from-amber-900/25 via-black/90 to-black backdrop-blur-2xl shadow-[0_0_50px_rgba(245,158,11,0.2)]"
+                className="p-6 md:p-8 rounded-3xl border-2 border-amber-500/50 bg-white dark:bg-gradient-to-b dark:from-amber-900/25 dark:via-black/90 dark:to-black backdrop-blur-2xl shadow-xl dark:shadow-[0_0_50px_rgba(245,158,11,0.2)]"
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <span className="text-4xl p-3 rounded-2xl bg-amber-500/20 border border-amber-500/40">🚀</span>
+                  <span className="text-4xl p-3 rounded-2xl bg-amber-500/20 border border-amber-500/40 shadow-sm">🚀</span>
                   <div>
-                    <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-500/20 border border-amber-500/40 text-[11px] font-mono text-amber-300 uppercase tracking-wider mb-1">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-500/20 border border-amber-500/40 text-[11px] font-mono text-amber-800 dark:text-amber-300 uppercase tracking-wider mb-1 font-bold">
                       ⭐ Flagship Core Academy
                     </div>
-                    <h3 className="text-2xl font-bold text-white font-serif">Tier 2: Young Shravaks (Ages 8–12)</h3>
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white font-serif">Tier 2: Young Shravaks (Ages 8–12)</h3>
                   </div>
                 </div>
-                <p className="text-sm md:text-base text-gray-300 leading-relaxed mb-6">
-                  The primary comprehensive pathshala. Equips children with crystal-clear logic: Soul vs Body, Karma Magnetism, the microbiology of root vegetables & sunset meals, and calm confidence in social situations.
+                <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                  The primary comprehensive pathshala. Equips children with crystal-clear logic: Soul vs Body, Karma Magnetism, the microbiology of root vegetables & sunset meals, and calm confidence in everyday social situations.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/25 text-xs text-amber-100">
+                  <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/25 text-xs text-amber-900 dark:text-amber-100 font-medium">
                     🔬 <strong>Microbiology of Ahimsa:</strong> Circadian enzymes and infinite life centers in roots.
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/25 text-xs text-amber-100">
+                  <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/25 text-xs text-amber-900 dark:text-amber-100 font-medium">
                     💎 <strong>Jīva & Karma Magnetics:</strong> Who am I? Understanding the driver vs the body car.
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/25 text-xs text-amber-100">
+                  <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/25 text-xs text-amber-900 dark:text-amber-100 font-medium">
                     🏆 <strong>Social Poise:</strong> Clear, respectful explanations of Jain habits in daily life.
                   </div>
                 </div>
@@ -431,26 +594,26 @@ export default function PathshalaClient({ lang }: { lang: string }) {
                 initial={{ opacity: 0, scale: 0.97 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.97 }}
-                className="p-6 md:p-8 rounded-3xl border border-amber-500/30 bg-gradient-to-b from-amber-950/20 via-black/80 to-black backdrop-blur-2xl shadow-2xl"
+                className="p-6 md:p-8 rounded-3xl border border-amber-500/30 bg-white dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black/80 dark:to-black backdrop-blur-2xl shadow-xl dark:shadow-2xl"
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <span className="text-4xl p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30">✨</span>
+                  <span className="text-4xl p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 shadow-sm">✨</span>
                   <div>
-                    <h3 className="text-2xl font-bold text-white font-serif">Tier 3: Truth Seekers (Ages 13+)</h3>
-                    <p className="text-xs text-amber-300 font-mono tracking-wide">Ontology, Cosmology, Quantum Physics & Universal Truth</p>
+                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white font-serif">Tier 3: Truth Seekers (Ages 13+)</h3>
+                    <p className="text-xs text-amber-700 dark:text-amber-300 font-mono tracking-wide font-semibold">Ontology, Cosmology, Quantum Physics & Modern Ethics</p>
                   </div>
                 </div>
-                <p className="text-sm md:text-base text-gray-300 leading-relaxed mb-6">
-                  Deepens into canonical Tattvārtha Sūtra and Samayasāra. Unpacking the 6 Eternal Realities (Shad Dravya), Anekantavada (multi-perspective intellect), and the timeless law of energy conservation.
+                <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                  Deepens into canonical Tattvārtha Sūtra and Samayasāra. Unpacking the 6 Eternal Realities (Shad Dravya), Anekāntavāda (intellectual humility & multi-faceted truth), and the timeless laws of consciousness and energy conservation.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 text-xs text-gray-300">
+                  <div className="p-3.5 rounded-2xl bg-amber-50/60 dark:bg-white/5 border border-amber-200/60 dark:border-white/10 text-xs text-gray-700 dark:text-gray-300">
                     🌌 <strong>Uncreated Cosmos:</strong> 6 eternal realities operating by perpetual natural laws.
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 text-xs text-gray-300">
-                    ⚖️ <strong>Anekantavada:</strong> The intellectual foundation of open-minded truth.
+                  <div className="p-3.5 rounded-2xl bg-amber-50/60 dark:bg-white/5 border border-amber-200/60 dark:border-white/10 text-xs text-gray-700 dark:text-gray-300">
+                    ⚖️ <strong>Anekāntavāda:</strong> The intellectual foundation of open-minded truth.
                   </div>
-                  <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 text-xs text-gray-300">
+                  <div className="p-3.5 rounded-2xl bg-amber-50/60 dark:bg-white/5 border border-amber-200/60 dark:border-white/10 text-xs text-gray-700 dark:text-gray-300">
                     📜 <strong>Canonical Shastras:</strong> Authentic Acharya Umāsvāmi & Kundkund texts.
                   </div>
                 </div>
@@ -461,128 +624,128 @@ export default function PathshalaClient({ lang }: { lang: string }) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 3. THE 4 LEARNING SUPERPOWERS (NO REMOTION MENTION) */}
+      {/* 3. THE 4 LEARNING SUPERPOWERS */}
       {/* ========================================================================= */}
-      <section className="relative z-10 py-16 px-4 max-w-7xl mx-auto border-t border-white/10">
+      <section className="relative z-10 py-16 px-4 max-w-7xl mx-auto border-t border-gray-200 dark:border-white/10">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-xs font-mono text-amber-300 uppercase tracking-widest mb-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-xs font-mono text-amber-800 dark:text-amber-300 uppercase tracking-widest mb-3">
             Learning Framework
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-serif">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-serif text-gray-900 dark:text-white">
             The 4 Pillars in Every Lesson
           </h2>
-          <p className="text-sm md:text-base text-gray-400 mt-2">
+          <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 mt-2">
             No dry walls of text. Every concept is learned through four synchronized visual and practical channels.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {/* Pillar 1: Animated 4K Video Lessons */}
-          <div className="rounded-3xl border border-amber-500/30 bg-gradient-to-b from-amber-950/20 via-black/80 to-black p-7 backdrop-blur-2xl hover:border-amber-400 transition-all shadow-xl group">
+          <div className="rounded-3xl border border-amber-500/25 bg-white dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black/80 dark:to-black p-7 backdrop-blur-2xl hover:border-amber-400 transition-all shadow-lg dark:shadow-xl group">
             <div className="flex items-center justify-between mb-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/20 border border-amber-500/30 text-2xl">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/20 border border-amber-500/30 text-2xl shadow-sm">
                 🎬
               </div>
-              <span className="text-xs font-mono text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full">
-                English & Hindi Audio
+              <span className="text-xs font-mono text-amber-700 dark:text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full font-semibold">
+                Bilingual Audio
               </span>
             </div>
-            <h3 className="text-2xl font-bold text-white mb-2 font-serif">1. 5-Minute Animated 4K Lessons</h3>
-            <p className="text-sm text-gray-300 leading-relaxed mb-5 font-light">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 font-serif">1. 5-Minute Animated 4K Lessons</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-5 font-light">
               Crisp visual storytelling with high-resolution animations. Visualizing soul radiance, microscopic organism clusters, and karma physics with crystal clarity.
             </p>
-            <div className="h-28 rounded-2xl bg-black/80 border border-white/10 p-4 flex items-center gap-3">
+            <div className="h-28 rounded-2xl bg-stone-100 dark:bg-black/80 border border-gray-200 dark:border-white/10 p-4 flex items-center gap-3">
               <div className="h-10 w-10 rounded-full bg-amber-500 text-black flex items-center justify-center shadow-lg shadow-amber-500/30 shrink-0">
                 <Play className="w-4 h-4 fill-current ml-0.5" />
               </div>
               <div className="text-left">
-                <div className="text-xs font-bold text-white">Punchy, Fast-Paced Episodes</div>
-                <div className="text-[11px] font-mono text-amber-300">Made for modern attention spans</div>
+                <div className="text-xs font-bold text-gray-900 dark:text-white">Punchy, Fast-Paced Episodes</div>
+                <div className="text-[11px] font-mono text-amber-700 dark:text-amber-300">Made for modern attention spans</div>
               </div>
             </div>
           </div>
 
           {/* Pillar 2: Interactive Concept Visualizers */}
-          <div className="rounded-3xl border border-amber-500/30 bg-gradient-to-b from-amber-950/20 via-black/80 to-black p-7 backdrop-blur-2xl hover:border-amber-400 transition-all shadow-xl group">
+          <div className="rounded-3xl border border-amber-500/25 bg-white dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black/80 dark:to-black p-7 backdrop-blur-2xl hover:border-amber-400 transition-all shadow-lg dark:shadow-xl group">
             <div className="flex items-center justify-between mb-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/20 border border-amber-500/30 text-2xl">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/20 border border-amber-500/30 text-2xl shadow-sm">
                 🔮
               </div>
-              <span className="text-xs font-mono text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full">
+              <span className="text-xs font-mono text-amber-700 dark:text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full font-semibold">
                 Real-Time 3D
               </span>
             </div>
-            <h3 className="text-2xl font-bold text-white mb-2 font-serif">2. Interactive Concept Visualizers</h3>
-            <p className="text-sm text-gray-300 leading-relaxed mb-5 font-light">
-              Children learn best when they can touch and rotate variables. Manipulate formless soul models, trigger karmic dust inflows, and observe nirjara cleansing live.
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 font-serif">2. Interactive Concept Visualizers</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-5 font-light">
+              Children learn best when they can touch and rotate variables. Manipulate formless soul models, trigger karmic dust inflows, and observe nirjarā cleansing live.
             </p>
-            <div className="h-28 rounded-2xl bg-black/80 border border-white/10 p-4 flex items-center gap-3">
-              <div className="h-10 w-10 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/40 shrink-0">
+            <div className="h-28 rounded-2xl bg-stone-100 dark:bg-black/80 border border-gray-200 dark:border-white/10 p-4 flex items-center gap-3">
+              <div className="h-10 w-10 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center border border-amber-500/40 shrink-0">
                 <Sparkles className="w-5 h-5" />
               </div>
               <div className="text-left">
-                <div className="text-xs font-bold text-white">Real-Time Scientific Simulations</div>
-                <div className="text-[11px] font-mono text-amber-300">Hands-on visual understanding</div>
+                <div className="text-xs font-bold text-gray-900 dark:text-white">Real-Time Scientific Simulations</div>
+                <div className="text-[11px] font-mono text-amber-700 dark:text-amber-300">Hands-on visual understanding</div>
               </div>
             </div>
           </div>
 
           {/* Pillar 3: 1-Page Summary Sheets */}
-          <div className="rounded-3xl border border-amber-500/30 bg-gradient-to-b from-amber-950/20 via-black/80 to-black p-7 backdrop-blur-2xl hover:border-amber-400 transition-all shadow-xl group">
+          <div className="rounded-3xl border border-amber-500/25 bg-white dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black/80 dark:to-black p-7 backdrop-blur-2xl hover:border-amber-400 transition-all shadow-lg dark:shadow-xl group">
             <div className="flex items-center justify-between mb-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/20 border border-amber-500/30 text-2xl">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/20 border border-amber-500/30 text-2xl shadow-sm">
                 📄
               </div>
-              <span className="text-xs font-mono text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full">
+              <span className="text-xs font-mono text-amber-700 dark:text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full font-semibold">
                 Printable PDF
               </span>
             </div>
-            <h3 className="text-2xl font-bold text-white mb-2 font-serif">3. 1-Page Visual Summary Sheets</h3>
-            <p className="text-sm text-gray-300 leading-relaxed mb-5 font-light">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 font-serif">3. 1-Page Visual Summary Sheets</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-5 font-light">
               Ultra-high density infographic summaries. Pin them to study desks, lockers, or refrigerators for a 60-second glance that recalls the whole lesson.
             </p>
-            <div className="h-28 rounded-2xl bg-black/80 border border-white/10 p-4 flex items-center justify-between">
+            <div className="h-28 rounded-2xl bg-stone-100 dark:bg-black/80 border border-gray-200 dark:border-white/10 p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <FileText className="w-7 h-7 text-amber-400 shrink-0" />
+                <FileText className="w-7 h-7 text-amber-600 dark:text-amber-400 shrink-0" />
                 <div className="text-left">
-                  <div className="text-xs font-bold text-white">Curriculum Infographics</div>
-                  <div className="text-[11px] text-gray-400">1-Page High-Res Quick Summaries</div>
+                  <div className="text-xs font-bold text-gray-900 dark:text-white">Curriculum Infographics</div>
+                  <div className="text-[11px] text-gray-500 dark:text-gray-400">1-Page High-Res Quick Summaries</div>
                 </div>
               </div>
-              <span className="text-xs font-mono text-amber-300 bg-amber-500/10 border border-amber-500/25 px-3 py-1.5 rounded-xl">
+              <span className="text-xs font-mono text-amber-700 dark:text-amber-300 bg-amber-500/10 border border-amber-500/25 px-3 py-1.5 rounded-xl font-semibold">
                 Ready
               </span>
             </div>
           </div>
 
-          {/* Pillar 4: Practical Mastery Quizzes */}
-          <div className="rounded-3xl border border-amber-500/30 bg-gradient-to-b from-amber-950/20 via-black/80 to-black p-7 backdrop-blur-2xl hover:border-amber-400 transition-all shadow-xl group">
+          {/* Pillar 4: Practical Mastery Scenarios */}
+          <div className="rounded-3xl border border-amber-500/25 bg-white dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black/80 dark:to-black p-7 backdrop-blur-2xl hover:border-amber-400 transition-all shadow-lg dark:shadow-xl group">
             <div className="flex items-center justify-between mb-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/20 border border-amber-500/30 text-2xl">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/20 border border-amber-500/30 text-2xl shadow-sm">
                 🏆
               </div>
-              <span className="text-xs font-mono text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full">
+              <span className="text-xs font-mono text-amber-700 dark:text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full font-semibold">
                 Scenario Mastery
               </span>
             </div>
-            <h3 className="text-2xl font-bold text-white mb-2 font-serif">4. Practical Mastery Scenarios</h3>
-            <p className="text-sm text-gray-300 leading-relaxed mb-5 font-light">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2 font-serif">4. Practical Mastery Scenarios</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-5 font-light">
               Zero stressful exams. Real-life scenarios where children practice witty, kind, and scientifically accurate answers to everyday questions.
             </p>
-            <div className="h-28 rounded-2xl bg-black/80 border border-white/10 p-4 flex items-center justify-around text-center">
+            <div className="h-28 rounded-2xl bg-stone-100 dark:bg-black/80 border border-gray-200 dark:border-white/10 p-4 flex items-center justify-around text-center">
               <div>
-                <div className="text-xl font-bold text-amber-400 font-mono">10</div>
-                <div className="text-[11px] text-gray-400">Milestone Badges</div>
+                <div className="text-xl font-bold text-amber-600 dark:text-amber-400 font-mono">10</div>
+                <div className="text-[11px] text-gray-500 dark:text-gray-400">Milestone Badges</div>
               </div>
-              <div className="h-8 w-px bg-white/10" />
+              <div className="h-8 w-px bg-gray-200 dark:bg-white/10" />
               <div>
-                <div className="text-xl font-bold text-amber-400 font-mono">100%</div>
-                <div className="text-[11px] text-gray-400">Social Poise</div>
+                <div className="text-xl font-bold text-amber-600 dark:text-amber-400 font-mono">100%</div>
+                <div className="text-[11px] text-gray-500 dark:text-gray-400">Social Poise</div>
               </div>
-              <div className="h-8 w-px bg-white/10" />
+              <div className="h-8 w-px bg-gray-200 dark:bg-white/10" />
               <div>
-                <div className="text-xl font-bold text-amber-400 font-mono">0 Stress</div>
-                <div className="text-[11px] text-gray-400">Pure Learning</div>
+                <div className="text-xl font-bold text-amber-600 dark:text-amber-400 font-mono">0 Stress</div>
+                <div className="text-[11px] text-gray-500 dark:text-gray-400">Pure Learning</div>
               </div>
             </div>
           </div>
@@ -592,88 +755,109 @@ export default function PathshalaClient({ lang }: { lang: string }) {
       {/* ========================================================================= */}
       {/* 4. PRACTICAL LIFE SCENARIOS SIMULATOR */}
       {/* ========================================================================= */}
-      <section id="practical-scenarios" className="relative z-10 py-16 px-4 max-w-7xl mx-auto border-t border-white/10">
+      <section id="practical-scenarios" className="relative z-10 py-16 px-4 max-w-7xl mx-auto border-t border-gray-200 dark:border-white/10">
         <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-xs font-mono text-amber-300 uppercase tracking-widest mb-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-xs font-mono text-amber-800 dark:text-amber-300 uppercase tracking-widest mb-3">
             Everyday Practical Situations
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-serif mb-3">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-serif mb-3 text-gray-900 dark:text-white">
             Everyday Situations & Practical Understanding
           </h2>
-          <p className="text-sm md:text-base text-gray-400">
-            Explore how young shravaks navigate dining, social gatherings, and everyday discussions with confidence, calm logic, and scientific clarity.
+          <p className="text-sm md:text-base text-gray-600 dark:text-gray-400">
+            {activeTier === "kids"
+              ? "Gentle wonder questions and playful scenarios designed for young children ages 5–7."
+              : activeTier === "teens"
+              ? "Sophisticated ethical dilemmas and social challenges designed for young adults ages 13+."
+              : "Practical daily situations designed for young shravaks ages 8–12: dining, sunset routines, and cosmic logic."}
           </p>
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <FriendSimulator soundEnabled={soundEnabled} />
+          <FriendSimulator activeTier={activeTier} soundEnabled={soundEnabled} />
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* 5. SEQUENTIAL 10-LESSON SHOWCASE (CLEAN, ELEGANT LIST) */}
+      {/* 5. SEQUENTIAL 10-LESSON SHOWCASE (DYNAMICALLY ADAPTS BY AGE) */}
       {/* ========================================================================= */}
-      <section id="curriculum-showcase" className="relative z-10 py-16 px-4 max-w-7xl mx-auto border-t border-white/10">
+      <section id="curriculum-showcase" className="relative z-10 py-16 px-4 max-w-7xl mx-auto border-t border-gray-200 dark:border-white/10">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-xs font-mono text-amber-300 uppercase tracking-widest mb-3">
-            Curriculum Structure
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-xs font-mono text-amber-800 dark:text-amber-300 uppercase tracking-widest mb-3 font-semibold">
+            {activeTier === "kids"
+              ? "Little Seekers Track (Ages 5–7)"
+              : activeTier === "teens"
+              ? "Truth Seekers Track (Ages 13+)"
+              : "Young Shravaks Track (Ages 8–12)"}
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-serif mb-3">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-serif mb-3 text-gray-900 dark:text-white">
             The 10-Lesson Learning Roadmap
           </h2>
-          <p className="text-sm md:text-base text-gray-400">
-            A sequential overview of the upcoming digital course modules. The full interactive journey page will launch alongside the video series.
+          <p className="text-sm md:text-base text-gray-600 dark:text-gray-400">
+            {activeTier === "kids"
+              ? "10 gentle, story-driven lessons building animal empathy, wonder, bedtime gratitude, and positive habits."
+              : activeTier === "teens"
+              ? "10 deep intellectual lessons exploring Anekāntavāda, quantum Pudgala, modern vegan bioethics, and spiritual ascension."
+              : "The 10 flagship core modules: Navkar decoded, the car vs driver, karma physics, sunset science, and social confidence."}
           </p>
         </div>
 
         {/* Clean Sequential List Showcase */}
-        <div className="max-w-4xl mx-auto space-y-3">
-          {LESSON_SHOWCASE.map((lesson) => (
-            <motion.div
-              key={lesson.number}
-              whileHover={{ x: 4 }}
-              className="p-4 md:p-5 rounded-2xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.04] hover:border-amber-500/40 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 group"
-            >
-              {/* Number and Info */}
-              <div className="flex items-start sm:items-center gap-4">
-                <span className="text-lg md:text-xl font-mono font-bold text-amber-400/80 bg-amber-500/10 border border-amber-500/20 h-11 w-11 rounded-xl flex items-center justify-center shrink-0 group-hover:border-amber-400 group-hover:text-amber-300 transition-colors">
-                  {lesson.number}
-                </span>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTier}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.35 }}
+            className="max-w-4xl mx-auto space-y-3"
+          >
+            {activeCurriculum.map((lesson) => (
+              <motion.div
+                key={lesson.number}
+                whileHover={{ x: 4 }}
+                className="p-4 md:p-5 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.02] hover:bg-amber-50/50 dark:hover:bg-white/[0.04] hover:border-amber-500/40 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 group shadow-sm hover:shadow-md"
+              >
+                {/* Number and Info */}
+                <div className="flex items-start sm:items-center gap-4">
+                  <span className="text-lg md:text-xl font-mono font-bold text-amber-600 dark:text-amber-400/80 bg-amber-500/10 border border-amber-500/20 h-11 w-11 rounded-xl flex items-center justify-center shrink-0 group-hover:border-amber-400 group-hover:text-amber-700 dark:group-hover:text-amber-300 transition-colors">
+                    {lesson.number}
+                  </span>
 
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[10px] font-mono text-amber-300 uppercase tracking-wider bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
-                      {lesson.category}
-                    </span>
-                    <span className="text-[10px] font-mono text-gray-400">
-                      {lesson.duration}
-                    </span>
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-[10px] font-mono text-amber-800 dark:text-amber-300 uppercase tracking-wider bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 font-semibold">
+                        {lesson.category}
+                      </span>
+                      <span className="text-[10px] font-mono text-gray-500 dark:text-gray-400">
+                        {lesson.duration}
+                      </span>
+                    </div>
+                    <h4 className="text-sm md:text-base font-bold text-gray-900 dark:text-white font-serif group-hover:text-amber-700 dark:group-hover:text-amber-200 transition-colors">
+                      {lesson.title}
+                    </h4>
+                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5 leading-relaxed font-light">
+                      {lesson.subtitle}
+                    </p>
                   </div>
-                  <h4 className="text-sm md:text-base font-bold text-white font-serif group-hover:text-amber-200 transition-colors">
-                    {lesson.title}
-                  </h4>
-                  <p className="text-xs text-gray-400 mt-0.5 leading-relaxed font-light">
-                    {lesson.subtitle}
-                  </p>
                 </div>
-              </div>
 
-              {/* Status Badge */}
-              <div className="shrink-0 sm:text-right pl-15 sm:pl-0">
-                <span className="text-[11px] font-mono text-gray-400 bg-white/5 border border-white/10 px-3 py-1 rounded-full">
-                  Volume 1 Module
-                </span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+                {/* Status Badge */}
+                <div className="shrink-0 sm:text-right pl-15 sm:pl-0">
+                  <span className="text-[11px] font-mono text-gray-500 dark:text-gray-400 bg-stone-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 px-3 py-1 rounded-full">
+                    {activeTier === "kids" ? "Wonder Series" : activeTier === "teens" ? "Advanced Series" : "Volume 1 Module"}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </section>
 
       {/* ========================================================================= */}
       {/* 6. FAMILY GUILD & SPIRIT LEVEL SYSTEM */}
       {/* ========================================================================= */}
-      <section className="relative z-10 py-16 px-4 max-w-7xl mx-auto border-t border-white/10">
-        <div className="max-w-4xl mx-auto rounded-3xl border-2 border-amber-500/30 bg-gradient-to-b from-amber-950/20 via-black to-black p-8 md:p-12 backdrop-blur-2xl shadow-2xl relative overflow-hidden">
+      <section className="relative z-10 py-16 px-4 max-w-7xl mx-auto border-t border-gray-200 dark:border-white/10">
+        <div className="max-w-4xl mx-auto rounded-3xl border-2 border-amber-500/30 bg-white/95 dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black dark:to-black p-8 md:p-12 backdrop-blur-2xl shadow-xl dark:shadow-2xl relative overflow-hidden">
           {/* Floating XP Notification */}
           <AnimatePresence>
             {floatingXp && (
@@ -689,15 +873,15 @@ export default function PathshalaClient({ lang }: { lang: string }) {
           </AnimatePresence>
 
           <div className="text-center max-w-2xl mx-auto mb-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-xs font-mono text-amber-300 mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-500/30 bg-amber-500/10 text-xs font-mono text-amber-800 dark:text-amber-300 mb-4 font-semibold">
               <Users className="w-3.5 h-3.5" />
               <span>Family Team Hub</span>
             </div>
 
-            <h3 className="text-3xl md:text-4xl font-bold font-serif text-white mb-3">
+            <h3 className="text-3xl md:text-4xl font-bold font-serif text-gray-900 dark:text-white mb-3">
               One Family Hub. Infinite Growth.
             </h3>
-            <p className="text-sm text-gray-300 leading-relaxed font-light">
+            <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed font-light">
               Track progress together across all siblings. Log daily sadachar habits, practice scenarios, and unlock badges on a single shared family hub.
             </p>
           </div>
@@ -712,31 +896,31 @@ export default function PathshalaClient({ lang }: { lang: string }) {
               }}
               className={`p-5 rounded-2xl border transition-all cursor-pointer ${
                 activeProfile === "aarav"
-                  ? "bg-amber-500/15 border-2 border-amber-400 shadow-xl shadow-amber-500/20"
-                  : "bg-white/[0.03] border-white/10 hover:border-amber-500/30"
+                  ? "bg-amber-50 dark:bg-amber-500/15 border-2 border-amber-400 shadow-xl shadow-amber-500/20"
+                  : "bg-stone-50 dark:bg-white/[0.03] border-gray-200 dark:border-white/10 hover:border-amber-500/30"
               }`}
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
                   <span className="text-3xl p-2 rounded-xl bg-amber-500/20">🦁</span>
                   <div>
-                    <div className="text-base font-bold text-white font-serif">Aarav (Age 9)</div>
-                    <div className="text-[11px] text-amber-400 font-mono">Young Shravak • Level 2</div>
+                    <div className="text-base font-bold text-gray-900 dark:text-white font-serif">Aarav (Age 9)</div>
+                    <div className="text-[11px] text-amber-700 dark:text-amber-400 font-mono font-medium">Young Shravak • Level 2</div>
                   </div>
                 </div>
-                <div className="text-xs font-mono text-amber-300 font-bold">{aaravXp} XP</div>
+                <div className="text-xs font-mono text-amber-700 dark:text-amber-300 font-bold">{aaravXp} XP</div>
               </div>
 
-              <div className="w-full bg-white/10 h-2.5 rounded-full overflow-hidden mb-2">
+              <div className="w-full bg-gray-200 dark:bg-white/10 h-2.5 rounded-full overflow-hidden mb-2">
                 <div
                   className="bg-gradient-to-r from-amber-500 to-yellow-400 h-full rounded-full transition-all duration-500"
                   style={{ width: `${Math.min(100, (aaravXp / 1000) * 100)}%` }}
                 />
               </div>
 
-              <div className="flex justify-between text-[11px] font-mono text-gray-400">
+              <div className="flex justify-between text-[11px] font-mono text-gray-500 dark:text-gray-400">
                 <span>Progress: 4/10 Lessons</span>
-                <span className="text-amber-300">🔥 7-Day Ahimsa Streak</span>
+                <span className="text-amber-700 dark:text-amber-300 font-semibold">🔥 7-Day Ahimsa Streak</span>
               </div>
             </div>
 
@@ -748,31 +932,31 @@ export default function PathshalaClient({ lang }: { lang: string }) {
               }}
               className={`p-5 rounded-2xl border transition-all cursor-pointer ${
                 activeProfile === "ananya"
-                  ? "bg-amber-500/15 border-2 border-amber-400 shadow-xl shadow-amber-500/20"
-                  : "bg-white/[0.03] border-white/10 hover:border-amber-500/30"
+                  ? "bg-amber-50 dark:bg-amber-500/15 border-2 border-amber-400 shadow-xl shadow-amber-500/20"
+                  : "bg-stone-50 dark:bg-white/[0.03] border-gray-200 dark:border-white/10 hover:border-amber-500/30"
               }`}
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
                   <span className="text-3xl p-2 rounded-xl bg-amber-500/20">🦚</span>
                   <div>
-                    <div className="text-base font-bold text-white font-serif">Ananya (Age 12)</div>
-                    <div className="text-[11px] text-amber-400 font-mono">Young Shravak • Level 3</div>
+                    <div className="text-base font-bold text-gray-900 dark:text-white font-serif">Ananya (Age 12)</div>
+                    <div className="text-[11px] text-amber-700 dark:text-amber-400 font-mono font-medium">Young Shravak • Level 3</div>
                   </div>
                 </div>
-                <div className="text-xs font-mono text-amber-300 font-bold">{ananyaXp} XP</div>
+                <div className="text-xs font-mono text-amber-700 dark:text-amber-300 font-bold">{ananyaXp} XP</div>
               </div>
 
-              <div className="w-full bg-white/10 h-2.5 rounded-full overflow-hidden mb-2">
+              <div className="w-full bg-gray-200 dark:bg-white/10 h-2.5 rounded-full overflow-hidden mb-2">
                 <div
                   className="bg-gradient-to-r from-amber-500 to-yellow-400 h-full rounded-full transition-all duration-500"
                   style={{ width: `${Math.min(100, (ananyaXp / 1500) * 100)}%` }}
                 />
               </div>
 
-              <div className="flex justify-between text-[11px] font-mono text-gray-400">
+              <div className="flex justify-between text-[11px] font-mono text-gray-500 dark:text-gray-400">
                 <span>Progress: 7/10 Lessons</span>
-                <span className="text-amber-300">🔥 12-Day Ahimsa Streak</span>
+                <span className="text-amber-700 dark:text-amber-300 font-semibold">🔥 12-Day Ahimsa Streak</span>
               </div>
             </div>
           </div>
@@ -781,7 +965,7 @@ export default function PathshalaClient({ lang }: { lang: string }) {
           <div className="text-center">
             <button
               onClick={handleAddXp}
-              className="px-6 py-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-200 font-mono text-xs font-bold hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-lg"
+              className="px-6 py-3 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-900 dark:text-amber-200 font-mono text-xs font-bold hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-lg"
             >
               ⚡ Complete Daily Sadachar Challenge (+50 XP)
             </button>
@@ -792,11 +976,11 @@ export default function PathshalaClient({ lang }: { lang: string }) {
       {/* ========================================================================= */}
       {/* 7. FOOTER */}
       {/* ========================================================================= */}
-      <footer className="relative z-10 py-12 px-4 max-w-7xl mx-auto border-t border-white/10 text-center">
-        <p className="text-xs md:text-sm text-gray-400 leading-relaxed max-w-xl mx-auto">
+      <footer className="relative z-10 py-12 px-4 max-w-7xl mx-auto border-t border-gray-200 dark:border-white/10 text-center">
+        <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400 leading-relaxed max-w-xl mx-auto">
           Dedicated to the timeless Digambar Jain canonical tradition of Acharya Kundkund and Acharya Umāsvāmi.
         </p>
-        <div className="mt-4 flex items-center justify-center gap-4 text-xs font-mono text-amber-400">
+        <div className="mt-4 flex items-center justify-center gap-4 text-xs font-mono text-amber-700 dark:text-amber-400 font-semibold">
           <Link href={`/${lang}`} className="hover:underline">
             Home
           </Link>
