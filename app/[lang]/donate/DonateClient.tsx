@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, Sparkles, Star, Crown, Shield, Gem, CheckCircle2, ArrowRight } from "lucide-react";
+import { Heart, Sparkles, Star, Crown, Shield, Gem, CheckCircle2, ArrowRight, ChevronDown } from "lucide-react";
 import { siteConfig } from "@/lib/constants"; // Or just use the URL directly if this path is wrong.
 
 // Let's make sure the path to constants is correct. If not, I'll fallback to a hardcoded URL.
@@ -24,6 +24,13 @@ interface DonateClientProps {
     mostPopular: string;
     subscribeBtn: string;
     tiers: Tier[];
+    faq: {
+      title: string;
+      q1: string;
+      a1Intro: string;
+      a1Points: string[];
+      a1Outro: string;
+    }
   };
   lang: string;
   isIndic: boolean;
@@ -64,6 +71,14 @@ function RazorpaySubscriptionForm({ config }: { config: { id: string, theme: str
 export default function DonateClient({ t, lang, isIndic }: DonateClientProps) {
   const [activeTab, setActiveTab] = useState<"subscription" | "onetime">("subscription");
   const [checkoutPlanId, setCheckoutPlanId] = useState<string | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % t.faq.a1Points.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [t.faq.a1Points.length]);
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -72,7 +87,7 @@ export default function DonateClient({ t, lang, isIndic }: DonateClientProps) {
       <div className="flex p-1.5 bg-gray-200/50 dark:bg-zinc-900/50 backdrop-blur-md rounded-2xl mb-12 relative z-10 border border-gray-300/50 dark:border-white/10">
         <button
           onClick={() => setActiveTab("onetime")}
-          className={`relative px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 z-10 ${activeTab === "onetime" ? "text-white" : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"}`}
+          className="relative px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 z-10"
         >
           {activeTab === "onetime" && (
             <motion.div 
@@ -81,12 +96,14 @@ export default function DonateClient({ t, lang, isIndic }: DonateClientProps) {
               transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
             />
           )}
-          <span className="relative z-20 mix-blend-difference dark:mix-blend-normal">{t.oneTime}</span>
+          <span className={activeTab === "onetime" ? "relative z-20 text-white dark:text-gray-900" : "relative z-20 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"}>
+            {t.oneTime}
+          </span>
         </button>
 
         <button
           onClick={() => setActiveTab("subscription")}
-          className={`relative px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 z-10 ${activeTab === "subscription" ? "text-white" : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"}`}
+          className="relative px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 z-10"
         >
           {activeTab === "subscription" && (
             <motion.div 
@@ -95,7 +112,7 @@ export default function DonateClient({ t, lang, isIndic }: DonateClientProps) {
               transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
             />
           )}
-          <span className="relative z-20 mix-blend-difference dark:mix-blend-normal flex items-center gap-2">
+          <span className={activeTab === "subscription" ? "relative z-20 flex items-center gap-2 text-white dark:text-gray-900" : "relative z-20 flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"}>
              {t.subscription}
              <span className="flex h-2 w-2 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
@@ -222,6 +239,78 @@ export default function DonateClient({ t, lang, isIndic }: DonateClientProps) {
         </AnimatePresence>
       </div>
 
+      {/* The Vision Carousel Section */}
+      <div className="w-full max-w-4xl mt-24 mb-12 px-4 z-10 relative mx-auto">
+        <div className="text-center mb-12 relative">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-20 bg-rose-500/20 blur-[100px] -z-10 rounded-full pointer-events-none"></div>
+          <h2 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-amber-500 mb-6 drop-shadow-sm">
+            {t.faq.q1}
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto font-medium">
+            {t.faq.a1Intro}
+          </p>
+        </div>
+        
+        <div className="w-full min-h-[320px] relative flex flex-col items-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide}
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -10 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="w-full max-w-2xl bg-white dark:bg-zinc-900/40 backdrop-blur-md border border-gray-200/50 dark:border-white/10 p-10 sm:p-14 rounded-[2.5rem] shadow-2xl shadow-rose-500/5 overflow-hidden relative group"
+            >
+              <div className="absolute -top-24 -right-24 w-48 h-48 bg-gradient-to-br from-rose-500/20 to-amber-500/20 blur-3xl rounded-full pointer-events-none"></div>
+              
+              {(() => {
+                const point = t.faq.a1Points[currentSlide];
+                const splitIdx = point.indexOf(":");
+                if (splitIdx === -1) return <div className="text-center">{point}</div>;
+
+                const titlePart = point.substring(0, splitIdx);
+                const desc = point.substring(splitIdx + 1).trim();
+                const emoji = titlePart.split(" ")[0];
+                const title = titlePart.substring(emoji.length).trim();
+
+                return (
+                  <div className="flex flex-col items-center text-center">
+                    <div className="w-20 h-20 bg-gray-50 dark:bg-zinc-800/80 rounded-[1.5rem] flex items-center justify-center text-4xl mb-8 shadow-sm border border-gray-100 dark:border-white/5">
+                      {emoji}
+                    </div>
+                    <h3 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white mb-4 tracking-tight leading-tight">{title}</h3>
+                    <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg leading-relaxed">{desc}</p>
+                  </div>
+                );
+              })()}
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Pagination Dots */}
+          <div className="flex justify-center gap-3 mt-10">
+            {t.faq.a1Points.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentSlide(i)}
+                className={`transition-all duration-500 rounded-full ${
+                  currentSlide === i 
+                    ? "w-8 h-2.5 bg-gradient-to-r from-rose-500 to-amber-500 shadow-md" 
+                    : "w-2.5 h-2.5 bg-gray-300 dark:bg-zinc-700 hover:bg-gray-400 dark:hover:bg-zinc-600"
+                }`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-12 text-center flex justify-center">
+          <div className="inline-flex items-center gap-3 px-6 py-4 bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-500/20 rounded-full text-rose-600 dark:text-rose-400 font-bold shadow-sm">
+             <Sparkles className="shrink-0" size={20} />
+             <span>{t.faq.a1Outro}</span>
+          </div>
+        </div>
+      </div>
+
       {/* Checkout Modal */}
       <AnimatePresence>
         {checkoutPlanId && (
@@ -235,7 +324,7 @@ export default function DonateClient({ t, lang, isIndic }: DonateClientProps) {
               initial={{ scale: 0.95, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 20 }}
-              className="relative w-full max-w-md bg-white dark:bg-zinc-900 border border-gray-200 dark:border-white/10 rounded-3xl p-8 shadow-2xl flex flex-col items-center"
+              className="relative w-full max-w-md bg-white dark:bg-zinc-900 border border-gray-200 dark:border-white/10 rounded-3xl p-5 sm:p-8 shadow-2xl flex flex-col items-center"
             >
               <button 
                 onClick={() => setCheckoutPlanId(null)}
@@ -244,19 +333,19 @@ export default function DonateClient({ t, lang, isIndic }: DonateClientProps) {
                 ✕
               </button>
               
-              <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center mb-6 text-emerald-500">
-                  <CheckCircle2 className="w-8 h-8 fill-emerald-500/20" />
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center mb-4 sm:mb-6 text-emerald-500">
+                  <CheckCircle2 className="w-6 h-6 sm:w-8 sm:h-8 fill-emerald-500/20" />
               </div>
-              <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-2 text-center">Secure Checkout</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-6 text-center">Complete your offering securely via Razorpay below.</p>
+              <h3 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-white mb-2 text-center">Secure Checkout</h3>
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-4 sm:mb-6 text-center">Complete your offering securely via Razorpay below.</p>
               
-              <div className="w-full bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 p-3 rounded-xl text-sm font-bold mb-4 flex items-center justify-center gap-2 border border-rose-200 dark:border-rose-800/50 shadow-sm animate-pulse">
-                  <ArrowRight className="w-4 h-4 rotate-90" />
+              <div className="w-full bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 p-2.5 sm:p-3 rounded-xl text-xs sm:text-sm font-bold mb-4 flex items-center justify-center gap-2 border border-rose-200 dark:border-rose-800/50 shadow-sm animate-pulse">
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 rotate-90" />
                   Please click the amount box to select it first!
-                  <ArrowRight className="w-4 h-4 rotate-90" />
+                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 rotate-90" />
               </div>
 
-              <div className="w-full bg-gray-50 dark:bg-zinc-800/50 rounded-2xl p-4 border border-gray-100 dark:border-white/5 flex justify-center items-center">
+              <div className="w-full bg-gray-50 dark:bg-zinc-800/50 rounded-2xl p-2 sm:p-4 border border-gray-100 dark:border-white/5 flex justify-center items-center">
                  {checkoutPlanId !== null && subscriptionButtonConfigs[parseInt(checkoutPlanId)] && (
                     <RazorpaySubscriptionForm config={subscriptionButtonConfigs[parseInt(checkoutPlanId)]} />
                  )}
