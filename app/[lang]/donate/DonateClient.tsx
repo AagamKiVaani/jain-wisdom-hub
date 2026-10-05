@@ -93,7 +93,7 @@ export default function DonateClient({ t, lang, isIndic }: DonateClientProps) {
          audioCache.current[path] = audio;
       }
       audio.currentTime = 0;
-      audio.volume = 0.5;
+      audio.volume = 0.15;
       const playPromise = audio.play();
       if (playPromise !== undefined) {
           playPromise.catch(() => {});
@@ -172,6 +172,27 @@ export default function DonateClient({ t, lang, isIndic }: DonateClientProps) {
                  <h2 className="text-2xl font-black text-gray-900 dark:text-white mb-4">{t.oneTimeTitle}</h2>
                  <p className="text-gray-600 dark:text-gray-400 mb-8">{t.oneTimeDesc}</p>
                  
+                 <div className="w-full flex justify-center gap-3 mb-6">
+                   {[501, 1100, 2100].map(amount => (
+                     <a
+                        key={amount}
+                        href={`https://razorpay.me/@jainwisdomhub?amount=${amount}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => playSound('/sounds/resources/click2.mp3')}
+                        className="flex-1 py-3 px-2 rounded-xl border-2 border-rose-100 dark:border-rose-500/30 bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-300 font-bold hover:bg-rose-100 dark:hover:bg-rose-500/20 hover:scale-105 active:scale-95 transition-all text-center"
+                     >
+                       ₹{amount}
+                     </a>
+                   ))}
+                 </div>
+                 
+                 <div className="w-full flex items-center gap-4 mb-6">
+                   <div className="h-px bg-gray-200 dark:bg-white/10 flex-1" />
+                   <span className="text-xs font-mono text-gray-400 uppercase">Or Custom Amount</span>
+                   <div className="h-px bg-gray-200 dark:bg-white/10 flex-1" />
+                 </div>
+
                  <a
                     href="https://razorpay.me/@jainwisdomhub"
                     target="_blank"

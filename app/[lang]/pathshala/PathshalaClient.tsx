@@ -325,27 +325,31 @@ export default function PathshalaClient({ lang }: { lang: string }) {
         />
       </div>
 
-      {/* Floating Audio Controller */}
-      <div className="fixed bottom-6 right-6 z-50">
+      {/* Floating Audio Controller strictly attached below the navbar */}
+      <div className="fixed top-16 right-0 md:right-4 z-50">
         <motion.button
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.94 }}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
           onClick={() => {
             const next = !soundEnabled;
             setSoundEnabled(next);
             if (next) playSound();
           }}
-          className="flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-amber-500/30 bg-white/90 dark:bg-black/85 backdrop-blur-2xl shadow-xl text-xs font-mono text-amber-800 dark:text-amber-300 hover:border-amber-400 transition-all cursor-pointer"
+          className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 md:border-t-0 md:border-r-0 rounded-l-full md:rounded-l-none md:rounded-bl-xl border border-amber-500/30 bg-white/95 dark:bg-black/95 backdrop-blur-xl shadow-lg hover:bg-amber-50 dark:hover:bg-amber-950/40 transition-all cursor-pointer"
         >
           {soundEnabled ? (
             <>
-              <Volume2 className="w-4 h-4 text-amber-500 dark:text-amber-400 animate-pulse" />
-              <span className="font-semibold tracking-wide">Audio Active</span>
+              <Volume2 className="w-3.5 h-3.5 md:w-4 md:h-4 text-amber-600 dark:text-amber-400 animate-pulse" />
+              <span className="text-[10px] md:text-xs font-bold tracking-wide uppercase text-amber-800 dark:text-amber-300">
+                Audio Active
+              </span>
             </>
           ) : (
             <>
-              <VolumeX className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-              <span className="text-gray-500 dark:text-gray-400">Audio Muted</span>
+              <VolumeX className="w-3.5 h-3.5 md:w-4 md:h-4 text-gray-500 dark:text-gray-400" />
+              <span className="text-[10px] md:text-xs font-bold tracking-wide uppercase text-gray-500 dark:text-gray-400">
+                Audio Muted
+              </span>
             </>
           )}
         </motion.button>
@@ -354,16 +358,16 @@ export default function PathshalaClient({ lang }: { lang: string }) {
       {/* ========================================================================= */}
       {/* 1. HERO SECTION & 3D CONSCIOUSNESS LAB */}
       {/* ========================================================================= */}
-      <section className="relative z-10 pt-8 pb-16 md:pt-14 md:pb-24 px-4 max-w-7xl mx-auto">
+      <section className="relative z-10 pt-28 pb-16 md:pt-36 md:pb-24 px-4 max-w-7xl mx-auto">
         {/* Top Sacred Pill */}
         <div className="flex justify-center mb-6">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-amber-500/35 bg-amber-50 dark:bg-gradient-to-r dark:from-amber-500/15 dark:via-amber-400/20 dark:to-amber-500/15 backdrop-blur-2xl shadow-lg"
+            className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-amber-500/35 bg-amber-50 dark:bg-amber-950/60 backdrop-blur-2xl shadow-lg"
           >
-            <Sparkle className="w-4 h-4 text-amber-500 dark:text-amber-300 animate-spin" style={{ animationDuration: "12s" }} />
-            <span className="text-xs md:text-sm font-bold text-amber-800 dark:text-amber-200 tracking-wider font-mono uppercase">
+            <Sparkle className="w-4 h-4 text-amber-500 dark:text-amber-400 animate-spin" style={{ animationDuration: "12s" }} />
+            <span className="text-xs md:text-sm font-bold text-amber-800 dark:text-amber-400 tracking-wider font-mono uppercase">
               Aagam Ki Vaani • Digital Pathshala
             </span>
           </motion.div>
@@ -375,7 +379,7 @@ export default function PathshalaClient({ lang }: { lang: string }) {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.08] mb-6 font-serif text-gray-900 dark:text-white"
+            className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.08] mb-8 font-serif text-gray-900 dark:text-white"
           >
             Ancient Jain Wisdom. <br />
             <span className="bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 dark:from-amber-200 dark:via-amber-400 dark:to-yellow-400 bg-clip-text text-transparent drop-shadow-sm dark:drop-shadow-[0_0_35px_rgba(245,158,11,0.25)]">
@@ -397,7 +401,7 @@ export default function PathshalaClient({ lang }: { lang: string }) {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-8 flex flex-wrap items-center justify-center gap-4"
+            className="mt-12 mb-4 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
           >
             <a
               href="#curriculum-showcase"
@@ -420,7 +424,7 @@ export default function PathshalaClient({ lang }: { lang: string }) {
         </div>
 
         {/* 3D CONSCIOUSNESS CENTERPIECE */}
-        <div className="max-w-6xl mx-auto mt-6">
+        <div className="max-w-6xl mx-auto mt-16 md:mt-24">
           <div className="relative rounded-3xl p-1 bg-gradient-to-b from-amber-500/40 via-amber-500/15 to-transparent shadow-[0_0_50px_rgba(245,158,11,0.15)]">
             <div className="relative rounded-[22px] bg-[#070913] border border-amber-500/30 overflow-hidden backdrop-blur-2xl">
               {/* Spiritual Header Bar */}
@@ -438,27 +442,27 @@ export default function PathshalaClient({ lang }: { lang: string }) {
               </div>
 
               {/* Main 3D Canvas Viewport */}
-              <div className="w-full h-[480px] md:h-[540px]">
+              <div className="w-full h-[560px] sm:h-[580px] md:h-[600px]">
                 <SacredSoul3DCanvas soundEnabled={soundEnabled} />
               </div>
 
               {/* Philosophical Pillar Annotations */}
-              <div className="px-6 py-4 bg-gradient-to-t from-amber-950/30 via-black/80 to-transparent border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-                <div className="p-2">
-                  <div className="text-white text-base md:text-lg font-bold font-serif">Living Formless Energy</div>
-                  <div className="text-[11px] text-gray-400">Undulating fluid consciousness</div>
+              <div className="px-3 py-3 bg-gradient-to-t from-amber-950/30 via-black/80 to-transparent border-t border-white/10 grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-6 text-center">
+                <div className="p-1.5">
+                  <div className="text-white text-sm md:text-base font-bold font-serif mb-0.5">Living Formless Energy</div>
+                  <div className="text-[10px] sm:text-xs text-gray-400">Undulating fluid consciousness</div>
                 </div>
-                <div className="p-2">
-                  <div className="text-white text-base md:text-lg font-bold font-serif">100% Pure Radiance</div>
-                  <div className="text-[11px] text-gray-400">Mukta Atman free of matter</div>
+                <div className="p-1.5">
+                  <div className="text-white text-sm md:text-base font-bold font-serif mb-0.5">100% Pure Radiance</div>
+                  <div className="text-[10px] sm:text-xs text-gray-400">Mukta Atman free of matter</div>
                 </div>
-                <div className="p-2">
-                  <div className="text-white text-base md:text-lg font-bold font-serif">8 Karmic Shackles</div>
-                  <div className="text-[11px] text-gray-400">Ashta Karma binding the soul</div>
+                <div className="p-1.5">
+                  <div className="text-white text-sm md:text-base font-bold font-serif mb-0.5">8 Karmic Shackles</div>
+                  <div className="text-[10px] sm:text-xs text-gray-400">Ashta Karma binding the soul</div>
                 </div>
-                <div className="p-2">
-                  <div className="text-white text-base md:text-lg font-bold font-serif">Supreme Forgiveness</div>
-                  <div className="text-[11px] text-gray-400">Dissolves bonds through Kshama</div>
+                <div className="p-1.5">
+                  <div className="text-white text-sm md:text-base font-bold font-serif mb-0.5">Supreme Forgiveness</div>
+                  <div className="text-[10px] sm:text-xs text-gray-400">Dissolves bonds through Kshama</div>
                 </div>
               </div>
             </div>
@@ -483,7 +487,7 @@ export default function PathshalaClient({ lang }: { lang: string }) {
           </p>
 
           {/* Interactive Tier Switcher */}
-          <div className="mt-8 inline-flex p-1.5 rounded-2xl bg-white dark:bg-white/5 border border-amber-500/30 backdrop-blur-xl shadow-lg">
+          <div className="mt-8 flex flex-col sm:flex-row p-1.5 rounded-2xl bg-white dark:bg-white/5 border border-amber-500/30 backdrop-blur-xl shadow-lg gap-2 sm:gap-0 w-full sm:w-auto max-w-sm sm:max-w-none mx-auto">
             <button
               onClick={() => handleTierChange("kids")}
               className={`px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
@@ -528,7 +532,7 @@ export default function PathshalaClient({ lang }: { lang: string }) {
                 initial={{ opacity: 0, scale: 0.97 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.97 }}
-                className="p-6 md:p-8 rounded-3xl border border-amber-500/30 bg-white dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black/80 dark:to-black backdrop-blur-2xl shadow-xl dark:shadow-2xl"
+                className="p-6 md:p-8 rounded-3xl border border-amber-500/30 bg-white dark:bg-black dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black/80 dark:to-black backdrop-blur-2xl shadow-xl dark:shadow-2xl"
               >
                 <div className="flex items-center gap-4 mb-4">
                   <span className="text-4xl p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 shadow-sm">🧒</span>
@@ -560,7 +564,7 @@ export default function PathshalaClient({ lang }: { lang: string }) {
                 initial={{ opacity: 0, scale: 0.97 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.97 }}
-                className="p-6 md:p-8 rounded-3xl border-2 border-amber-500/50 bg-white dark:bg-gradient-to-b dark:from-amber-900/25 dark:via-black/90 dark:to-black backdrop-blur-2xl shadow-xl dark:shadow-[0_0_50px_rgba(245,158,11,0.2)]"
+                className="p-6 md:p-8 rounded-3xl border-2 border-amber-500/50 bg-white dark:bg-black dark:bg-gradient-to-b dark:from-amber-900/25 dark:via-black/90 dark:to-black backdrop-blur-2xl shadow-xl dark:shadow-[0_0_50px_rgba(245,158,11,0.2)]"
               >
                 <div className="flex items-center gap-4 mb-4">
                   <span className="text-4xl p-3 rounded-2xl bg-amber-500/20 border border-amber-500/40 shadow-sm">🚀</span>
@@ -594,7 +598,7 @@ export default function PathshalaClient({ lang }: { lang: string }) {
                 initial={{ opacity: 0, scale: 0.97 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.97 }}
-                className="p-6 md:p-8 rounded-3xl border border-amber-500/30 bg-white dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black/80 dark:to-black backdrop-blur-2xl shadow-xl dark:shadow-2xl"
+                className="p-6 md:p-8 rounded-3xl border border-amber-500/30 bg-white dark:bg-black dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black/80 dark:to-black backdrop-blur-2xl shadow-xl dark:shadow-2xl"
               >
                 <div className="flex items-center gap-4 mb-4">
                   <span className="text-4xl p-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 shadow-sm">✨</span>
@@ -641,7 +645,7 @@ export default function PathshalaClient({ lang }: { lang: string }) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {/* Pillar 1: Animated 4K Video Lessons */}
-          <div className="rounded-3xl border border-amber-500/25 bg-white dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black/80 dark:to-black p-7 backdrop-blur-2xl hover:border-amber-400 transition-all shadow-lg dark:shadow-xl group">
+          <div className="rounded-3xl border border-amber-500/25 bg-white dark:bg-black dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black/80 dark:to-black p-7 backdrop-blur-2xl hover:border-amber-400 transition-all shadow-lg dark:shadow-xl group">
             <div className="flex items-center justify-between mb-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/20 border border-amber-500/30 text-2xl shadow-sm">
                 🎬
@@ -666,7 +670,7 @@ export default function PathshalaClient({ lang }: { lang: string }) {
           </div>
 
           {/* Pillar 2: Interactive Concept Visualizers */}
-          <div className="rounded-3xl border border-amber-500/25 bg-white dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black/80 dark:to-black p-7 backdrop-blur-2xl hover:border-amber-400 transition-all shadow-lg dark:shadow-xl group">
+          <div className="rounded-3xl border border-amber-500/25 bg-white dark:bg-black dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black/80 dark:to-black p-7 backdrop-blur-2xl hover:border-amber-400 transition-all shadow-lg dark:shadow-xl group">
             <div className="flex items-center justify-between mb-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/20 border border-amber-500/30 text-2xl shadow-sm">
                 🔮
@@ -691,7 +695,7 @@ export default function PathshalaClient({ lang }: { lang: string }) {
           </div>
 
           {/* Pillar 3: 1-Page Summary Sheets */}
-          <div className="rounded-3xl border border-amber-500/25 bg-white dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black/80 dark:to-black p-7 backdrop-blur-2xl hover:border-amber-400 transition-all shadow-lg dark:shadow-xl group">
+          <div className="rounded-3xl border border-amber-500/25 bg-white dark:bg-black dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black/80 dark:to-black p-7 backdrop-blur-2xl hover:border-amber-400 transition-all shadow-lg dark:shadow-xl group">
             <div className="flex items-center justify-between mb-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/20 border border-amber-500/30 text-2xl shadow-sm">
                 📄
@@ -719,7 +723,7 @@ export default function PathshalaClient({ lang }: { lang: string }) {
           </div>
 
           {/* Pillar 4: Practical Mastery Scenarios */}
-          <div className="rounded-3xl border border-amber-500/25 bg-white dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black/80 dark:to-black p-7 backdrop-blur-2xl hover:border-amber-400 transition-all shadow-lg dark:shadow-xl group">
+          <div className="rounded-3xl border border-amber-500/25 bg-white dark:bg-black dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black/80 dark:to-black p-7 backdrop-blur-2xl hover:border-amber-400 transition-all shadow-lg dark:shadow-xl group">
             <div className="flex items-center justify-between mb-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/20 border border-amber-500/30 text-2xl shadow-sm">
                 🏆
@@ -857,7 +861,7 @@ export default function PathshalaClient({ lang }: { lang: string }) {
       {/* 6. FAMILY GUILD & SPIRIT LEVEL SYSTEM */}
       {/* ========================================================================= */}
       <section className="relative z-10 py-16 px-4 max-w-7xl mx-auto border-t border-gray-200 dark:border-white/10">
-        <div className="max-w-4xl mx-auto rounded-3xl border-2 border-amber-500/30 bg-white/95 dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black dark:to-black p-8 md:p-12 backdrop-blur-2xl shadow-xl dark:shadow-2xl relative overflow-hidden">
+        <div className="max-w-4xl mx-auto rounded-3xl border-2 border-amber-500/30 bg-white/95 dark:bg-black dark:bg-gradient-to-b dark:from-amber-950/20 dark:via-black dark:to-black p-8 md:p-12 backdrop-blur-2xl shadow-xl dark:shadow-2xl relative overflow-hidden">
           {/* Floating XP Notification */}
           <AnimatePresence>
             {floatingXp && (
@@ -976,22 +980,28 @@ export default function PathshalaClient({ lang }: { lang: string }) {
       {/* ========================================================================= */}
       {/* 7. FOOTER */}
       {/* ========================================================================= */}
-      <footer className="relative z-10 py-12 px-4 max-w-7xl mx-auto border-t border-gray-200 dark:border-white/10 text-center">
-        <p className="text-xs md:text-sm text-gray-500 dark:text-gray-400 leading-relaxed max-w-xl mx-auto">
-          Dedicated to the timeless Digambar Jain canonical tradition of Acharya Kundkund and Acharya Umāsvāmi.
-        </p>
-        <div className="mt-4 flex items-center justify-center gap-4 text-xs font-mono text-amber-700 dark:text-amber-400 font-semibold">
-          <Link href={`/${lang}`} className="hover:underline">
-            Home
-          </Link>
-          <span>•</span>
-          <Link href={`/${lang}/resources`} className="hover:underline">
-            Wisdom Library
-          </Link>
-          <span>•</span>
-          <Link href={`/${lang}/about`} className="hover:underline">
-            About Aagam Ki Vaani
-          </Link>
+      <footer className="relative z-10 py-8 px-4 max-w-4xl mx-auto mb-12">
+        <div className="rounded-3xl border border-amber-500/20 bg-white/50 dark:bg-black/40 backdrop-blur-md p-8 text-center shadow-lg">
+          <div className="flex justify-center mb-4">
+            <span className="text-2xl opacity-80">🙏</span>
+          </div>
+          <p className="text-[10px] md:text-xs text-gray-500 dark:text-gray-400 leading-relaxed max-w-xl mx-auto mb-5 font-medium uppercase tracking-widest">
+            Dedicated to the timeless Digambar Jain canonical tradition of Acharya Kundkund and Acharya Umāsvāmi.
+          </p>
+          <div className="w-12 h-px bg-amber-500/30 mx-auto mb-5" />
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-[10px] font-mono text-amber-700 dark:text-amber-400/80 font-bold uppercase tracking-wider">
+            <Link href={`/${lang}`} className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors">
+              Home
+            </Link>
+            <span className="hidden sm:inline text-amber-500/30">•</span>
+            <Link href={`/${lang}/resources`} className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors">
+              Wisdom Library
+            </Link>
+            <span className="hidden sm:inline text-amber-500/30">•</span>
+            <Link href={`/${lang}/about`} className="hover:text-amber-600 dark:hover:text-amber-300 transition-colors">
+              About Aagam Ki Vaani
+            </Link>
+          </div>
         </div>
       </footer>
     </div>

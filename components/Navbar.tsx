@@ -70,7 +70,7 @@ export default function Navbar({ lang }: { lang: string }) {
           {/* DIGITAL PATHSHALA (KIDS ACADEMY) LINK */}
           <Link
             href={`/${lang}/pathshala`}
-            className="group flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 via-amber-500/20 to-amber-500/10 border border-amber-500/30 hover:border-amber-400 hover:scale-105 transition-all shadow-sm shadow-amber-500/10"
+            className="group hidden md:flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500/10 via-amber-500/20 to-amber-500/10 border border-amber-500/30 hover:border-amber-400 hover:scale-105 transition-all shadow-sm shadow-amber-500/10"
           >
             <span className="text-xs sm:text-sm">✨</span>
             <span className="text-xs sm:text-sm font-bold bg-gradient-to-r from-amber-400 to-yellow-400 bg-clip-text text-transparent whitespace-nowrap">

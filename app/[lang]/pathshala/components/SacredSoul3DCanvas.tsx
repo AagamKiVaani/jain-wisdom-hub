@@ -79,7 +79,8 @@ export default function SacredSoul3DCanvas({
     const height = container.clientHeight || 450;
 
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 80);
-    camera.position.set(0, 0, 8.2);
+    const isMobile = window.innerWidth < 640;
+    camera.position.set(0, 0, isMobile ? 10.8 : 8.2);
 
     const renderer = new THREE.WebGLRenderer({
       antialias: false,
@@ -430,10 +431,10 @@ export default function SacredSoul3DCanvas({
       <div className="pointer-events-none absolute -bottom-16 -right-16 w-80 h-80 bg-amber-600/10 rounded-full blur-3xl" />
 
       {/* Top Header */}
-      <div className="relative z-10 w-full flex items-center justify-between pb-3 border-b border-white/10">
+      <div className="relative z-10 w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
         <div className="flex items-center gap-2">
           <span
-            className={`flex h-3 w-3 rounded-full ${
+            className={`flex h-3 w-3 rounded-full shrink-0 ${
               activeState === "pure"
                 ? "bg-white shadow-[0_0_12px_#ffffff]"
                 : activeState === "anger"
@@ -441,13 +442,13 @@ export default function SacredSoul3DCanvas({
                 : "bg-amber-400"
             } animate-pulse`}
           />
-          <span className="text-xs font-mono font-bold tracking-widest text-amber-300 uppercase">
-            Consciousness Lab (The Soul & Karma)
+          <span className="text-[10px] sm:text-xs font-mono font-bold tracking-widest text-amber-300 uppercase">
+            Consciousness Lab <span className="hidden sm:inline">(The Soul & Karma)</span>
           </span>
         </div>
 
-        <div className="flex items-center gap-2 bg-black/60 border border-white/15 px-3 py-1 rounded-full text-xs font-mono text-gray-200">
-          <span>Soul Radiance:</span>
+        <div className="flex items-center gap-1.5 sm:gap-2 bg-black/60 border border-white/15 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-mono text-gray-200">
+          <span>Radiance:</span>
           <span
             className={`font-extrabold ${
               activeState === "pure"
@@ -457,7 +458,7 @@ export default function SacredSoul3DCanvas({
                 : "text-amber-300"
             }`}
           >
-            {purityPercentage}% {activeState === "pure" ? "(Mukta Atman)" : "(Samsari Atman)"}
+            {purityPercentage}% <span className="hidden sm:inline">{activeState === "pure" ? "(Mukta)" : "(Samsari)"}</span>
           </span>
         </div>
       </div>
@@ -485,40 +486,40 @@ export default function SacredSoul3DCanvas({
           {/* 1. Anger (Kashayas) Button */}
           <button
             onClick={() => handleStateChange("anger")}
-            className={`flex items-center justify-center gap-2 py-3 px-2 rounded-xl text-xs md:text-sm font-semibold transition-all duration-300 cursor-pointer ${
+            className={`flex items-center justify-center gap-1.5 md:gap-2 py-2 md:py-3 px-1 md:px-2 rounded-xl text-[10px] sm:text-xs md:text-sm font-semibold transition-all duration-300 cursor-pointer ${
               activeState === "anger"
                 ? "bg-slate-900/80 border-2 border-blue-400 text-blue-200 shadow-xl shadow-blue-900/30 scale-[0.98]"
                 : "bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 hover:text-white hover:border-blue-500/30"
             }`}
           >
-            <Lock className="w-4 h-4 text-blue-400 shrink-0" />
-            <span className="truncate">Anger (Kashayas)</span>
+            <Lock className="w-3.5 h-3.5 md:w-4 md:h-4 text-blue-400 shrink-0" />
+            <span className="whitespace-normal leading-tight text-center">Anger (Kashayas)</span>
           </button>
 
           {/* 2. Forgiveness (Kshama) Button */}
           <button
             onClick={() => handleStateChange("forgiveness")}
-            className={`flex items-center justify-center gap-2 py-3 px-2 rounded-xl text-xs md:text-sm font-semibold transition-all duration-300 cursor-pointer ${
+            className={`flex items-center justify-center gap-1.5 md:gap-2 py-2 md:py-3 px-1 md:px-2 rounded-xl text-[10px] sm:text-xs md:text-sm font-semibold transition-all duration-300 cursor-pointer ${
               activeState === "forgiveness"
                 ? "bg-amber-950/60 border-2 border-amber-400 text-amber-200 shadow-xl shadow-amber-900/30 scale-[0.98]"
                 : "bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 hover:text-white hover:border-amber-500/30"
             }`}
           >
-            <HeartHandshake className="w-4 h-4 text-amber-400 shrink-0" />
-            <span className="truncate">Forgive (Kshama)</span>
+            <HeartHandshake className="w-3.5 h-3.5 md:w-4 md:h-4 text-amber-400 shrink-0" />
+            <span className="whitespace-normal leading-tight text-center">Forgive (Kshama)</span>
           </button>
 
           {/* 3. Pure Atman Button (100% White, No Shackles) */}
           <button
             onClick={() => handleStateChange("pure")}
-            className={`flex items-center justify-center gap-2 py-3 px-2 rounded-xl text-xs md:text-sm font-semibold transition-all duration-300 cursor-pointer ${
+            className={`flex items-center justify-center gap-1.5 md:gap-2 py-2 md:py-3 px-1 md:px-2 rounded-xl text-[10px] sm:text-xs md:text-sm font-semibold transition-all duration-300 cursor-pointer ${
               activeState === "pure"
                 ? "bg-white/20 border-2 border-white text-white shadow-[0_0_20px_rgba(255,255,255,0.4)] scale-[0.98]"
                 : "bg-white/5 border border-white/10 text-gray-300 hover:bg-white/10 hover:text-white hover:border-white/40"
             }`}
           >
-            <Sparkles className="w-4 h-4 text-white shrink-0" />
-            <span className="truncate">Pure Atman</span>
+            <Sparkles className="w-3.5 h-3.5 md:w-4 md:h-4 text-white shrink-0" />
+            <span className="whitespace-normal leading-tight text-center">Pure Atman</span>
           </button>
         </div>
 

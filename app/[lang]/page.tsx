@@ -287,7 +287,7 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
         )}
       </AnimatePresence>
 
-      <div className="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto pt-16 sm:pt-20">
+      <div className="relative z-10 flex flex-col items-center w-full max-w-7xl mx-auto pt-28 sm:pt-36">
         
           <DailyWisdom lang={lang} quote={todaysQuote} />
           
@@ -307,7 +307,7 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...springTransition, delay: 0.05 }}
-            className={`text-4xl sm:text-6xl md:text-8xl font-black text-center text-gray-900 dark:text-white mb-6 uppercase tracking-tighter ${isIndic ? 'leading-tight py-2' : 'leading-none'}`}
+            className={`text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-center text-gray-900 dark:text-white mb-6 uppercase tracking-tighter ${isIndic ? 'leading-tight py-2' : 'leading-none'}`}
           >
             {t.title}
           </motion.h1>
@@ -316,10 +316,27 @@ export default function Home({ params }: { params: Promise<{ lang: string }> }) 
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...springTransition, delay: 0.1 }}
-            className={`text-base sm:text-lg md:text-xl font-serif text-gray-600 dark:text-gray-400 max-w-2xl text-center mb-10 px-4 ${isIndic ? 'leading-loose' : 'leading-relaxed'}`}
+            className={`text-sm sm:text-base md:text-lg lg:text-xl font-serif text-gray-600 dark:text-gray-400 max-w-2xl text-center mb-10 px-4 ${isIndic ? 'leading-loose' : 'leading-relaxed'}`}
           >
             {t.subtitle}
           </motion.p>
+
+          {/* Pathshala Mobile Entry Button */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ ...springTransition, delay: 0.15 }}
+            className="flex md:hidden mb-12 w-full max-w-sm px-4"
+          >
+            <Link 
+              href={`/${lang}/pathshala`}
+              className="w-full group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 text-black font-extrabold uppercase tracking-widest rounded-2xl shadow-xl shadow-amber-500/20 transition-all active:scale-95"
+            >
+              <Sparkles size={18} className="animate-pulse" />
+              Digital Pathshala
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </motion.div>
 
           {/* Grid - Highly Prominent, Directly underneath the Hero header */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-4xl px-2 mb-16 relative z-10">
