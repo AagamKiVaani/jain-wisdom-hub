@@ -73,6 +73,36 @@ export default function DonateClient({ t, lang, isIndic }: DonateClientProps) {
   const [checkoutPlanId, setCheckoutPlanId] = useState<string | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  const audioCache = useRef<Record<string, HTMLAudioElement>>({});
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      ['/sounds/notification/pop.mp3', '/sounds/resources/click2.mp3'].forEach(path => {
+        const audio = new Audio(path);
+        audio.preload = 'auto';
+        audioCache.current[path] = audio;
+      });
+    }
+  }, []);
+
+  const playSound = (path: string) => {
+    try {
+      let audio = audioCache.current[path];
+      if (!audio) {
+         audio = new Audio(path);
+         audioCache.current[path] = audio;
+      }
+      audio.currentTime = 0;
+      audio.volume = 0.5;
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+          playPromise.catch(() => {});
+      }
+    } catch (e) {
+      // ignore errors if audio fails
+    }
+  };
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % t.faq.a1Points.length);
@@ -86,7 +116,7 @@ export default function DonateClient({ t, lang, isIndic }: DonateClientProps) {
       {/* Tabs */}
       <div className="flex p-1.5 bg-gray-200/50 dark:bg-zinc-900/50 backdrop-blur-md rounded-2xl mb-12 relative z-10 border border-gray-300/50 dark:border-white/10">
         <button
-          onClick={() => setActiveTab("onetime")}
+          onClick={() => { setActiveTab("onetime"); playSound('/sounds/notification/pop.mp3'); }}
           className="relative px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 z-10"
         >
           {activeTab === "onetime" && (
@@ -102,7 +132,7 @@ export default function DonateClient({ t, lang, isIndic }: DonateClientProps) {
         </button>
 
         <button
-          onClick={() => setActiveTab("subscription")}
+          onClick={() => { setActiveTab("subscription"); playSound('/sounds/notification/pop.mp3'); }}
           className="relative px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 z-10"
         >
           {activeTab === "subscription" && (
@@ -146,6 +176,7 @@ export default function DonateClient({ t, lang, isIndic }: DonateClientProps) {
                     href="https://razorpay.me/@jainwisdomhub"
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => playSound('/sounds/resources/click2.mp3')}
                     className="w-full group relative inline-flex justify-center items-center gap-2.5 px-6 py-4 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-black font-bold text-lg shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 overflow-hidden"
                  >
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 dark:via-black/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none" />
@@ -212,6 +243,7 @@ export default function DonateClient({ t, lang, isIndic }: DonateClientProps) {
                     <button
                       onClick={(e) => {
                           e.preventDefault();
+                          playSound('/sounds/resources/click2.mp3');
                           if (subscriptionButtonConfigs[idx]?.id) {
                               setCheckoutPlanId(idx.toString());
                           } else {
@@ -291,7 +323,7 @@ export default function DonateClient({ t, lang, isIndic }: DonateClientProps) {
             {t.faq.a1Points.map((_, i) => (
               <button
                 key={i}
-                onClick={() => setCurrentSlide(i)}
+                onClick={() => { setCurrentSlide(i); playSound('/sounds/notification/pop.mp3'); }}
                 className={`transition-all duration-500 rounded-full ${
                   currentSlide === i 
                     ? "w-8 h-2.5 bg-gradient-to-r from-rose-500 to-amber-500 shadow-md" 
@@ -324,28 +356,28 @@ export default function DonateClient({ t, lang, isIndic }: DonateClientProps) {
               initial={{ scale: 0.95, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 20 }}
-              className="relative w-full max-w-md bg-white dark:bg-zinc-900 border border-gray-200 dark:border-white/10 rounded-3xl p-5 sm:p-8 shadow-2xl flex flex-col items-center"
+              className="relative w-full max-w-[380px] bg-white dark:bg-zinc-900 border border-gray-200 dark:border-white/10 rounded-[2rem] p-6 shadow-2xl flex flex-col items-center mx-auto"
             >
               <button 
-                onClick={() => setCheckoutPlanId(null)}
+                onClick={() => { setCheckoutPlanId(null); playSound('/sounds/notification/pop.mp3'); }}
                 className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-zinc-800 text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 ✕
               </button>
               
-              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center mb-4 sm:mb-6 text-emerald-500">
-                  <CheckCircle2 className="w-6 h-6 sm:w-8 sm:h-8 fill-emerald-500/20" />
+              <div className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center mb-4 text-emerald-500 shrink-0">
+                  <CheckCircle2 className="w-6 h-6 fill-emerald-500/20" />
               </div>
-              <h3 className="text-xl sm:text-2xl font-black text-gray-900 dark:text-white mb-2 text-center">Secure Checkout</h3>
-              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-4 sm:mb-6 text-center">Complete your offering securely via Razorpay below.</p>
+              <h3 className="text-xl font-black text-gray-900 dark:text-white mb-2 text-center tracking-tight">Secure Checkout</h3>
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-4 text-center leading-relaxed">Complete your offering securely via Razorpay below.</p>
               
-              <div className="w-full bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 p-2.5 sm:p-3 rounded-xl text-xs sm:text-sm font-bold mb-4 flex items-center justify-center gap-2 border border-rose-200 dark:border-rose-800/50 shadow-sm animate-pulse">
-                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 rotate-90" />
-                  Please click the amount box to select it first!
-                  <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 rotate-90" />
+              <div className="w-full bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 p-2.5 rounded-xl text-xs sm:text-sm font-bold mb-4 flex items-center justify-center gap-1.5 border border-rose-200 dark:border-rose-800/50 shadow-sm animate-pulse text-center">
+                  <ArrowRight className="w-3.5 h-3.5 rotate-90 shrink-0" />
+                  <span>Click the amount box to select it first!</span>
+                  <ArrowRight className="w-3.5 h-3.5 rotate-90 shrink-0" />
               </div>
 
-              <div className="w-full bg-gray-50 dark:bg-zinc-800/50 rounded-2xl p-2 sm:p-4 border border-gray-100 dark:border-white/5 flex justify-center items-center">
+              <div className="w-full bg-gray-50 dark:bg-zinc-800/50 rounded-xl p-2 border border-gray-100 dark:border-white/5 flex justify-center items-center min-h-[60px]">
                  {checkoutPlanId !== null && subscriptionButtonConfigs[parseInt(checkoutPlanId)] && (
                     <RazorpaySubscriptionForm config={subscriptionButtonConfigs[parseInt(checkoutPlanId)]} />
                  )}
