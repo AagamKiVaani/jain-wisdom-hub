@@ -143,11 +143,9 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                 <span className="font-bold text-sm text-gray-900 dark:text-white">{t.support}</span>
             </a> */}
             
-            {/* RAZORPAY */}
-            <a 
-                href="https://razorpay.me/@jainwisdomhub"
-                target="_blank"
-                rel="noopener noreferrer"
+            {/* DONATE */}
+            <Link 
+                href={`/${lang}/donate`}
                 className="flex flex-col items-center justify-center p-6 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-white/10 rounded-2xl hover:border-blue-500 hover:shadow-[0_0_20px_rgba(59,130,246,0.2)] transition-all group"
             >
                 <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
@@ -157,7 +155,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                     </svg>
                 </div>
                 <span className="font-bold text-sm text-gray-900 dark:text-white">{t.support}</span>
-            </a>
+            </Link>
         </div>
 
         {/* 🟢 NEW: Premium Feedback Card */}
