@@ -228,11 +228,9 @@ export default function Footer({ lang }: { lang: string }) {
 
                 {/* 💖 Highlighted Donate / Support */}
                 <li className="pt-2">
-                  <a 
-                    href={siteConfig.support.razorpay}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Support Aagam Ki Vaani via Razorpay"
+                  <Link 
+                    href={`/${lang}/donate`}
+                    aria-label="Support Aagam Ki Vaani"
                     className="group relative inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-rose-500 to-amber-600 text-white font-bold text-xs sm:text-sm shadow-md shadow-rose-500/25 hover:shadow-xl hover:shadow-rose-500/40 hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 border border-white/20 overflow-hidden"
                   >
                     {/* Subtle Shimmer Ray */}
@@ -241,7 +239,7 @@ export default function Footer({ lang }: { lang: string }) {
                     <Heart size={16} className="text-white fill-white animate-pulse" />
                     <span className="tracking-wide">{t.donate}</span>
                     <Sparkles size={14} className="text-yellow-200" />
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
